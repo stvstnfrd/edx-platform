@@ -14,7 +14,7 @@ from django_comment_common.models import Role
 TEST_API_KEY = "test_api_key"
 USER_LIST_URI = "/user_api/v1/users/"
 USER_PREFERENCE_LIST_URI = "/user_api/v1/user_prefs/"
-ROLE_LIST_URI = "/user_api/v1/roles/Moderator/"
+ROLE_LIST_URI = "/user_api/v1/forum_roles/Moderator/"
 
 
 @override_settings(EDX_API_KEY=TEST_API_KEY)
