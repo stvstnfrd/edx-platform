@@ -14,7 +14,7 @@ from django_comment_common.models import Role
 TEST_API_KEY = "test_api_key"
 USER_LIST_URI = "/user_api/v1/users/"
 USER_PREFERENCE_LIST_URI = "/user_api/v1/user_prefs/"
-ROLE_LIST_URI = "/user_api/v1/forum_roles/Moderator/"
+ROLE_LIST_URI = "/user_api/v1/forum_roles/{name}/users/"
 
 
 @override_settings(EDX_API_KEY=TEST_API_KEY)
@@ -108,7 +108,7 @@ class EmptyUserTestCase(ApiTestCase):
 
 class EmptyRoleTestCase(ApiTestCase):
     course_id = "org/course/run"
-    LIST_URI = ROLE_LIST_URI + "?course_id=" + course_id
+    LIST_URI = ROLE_LIST_URI.format(name="Moderator") + "?course_id=" + course_id
 
     def test_get_list_empty(self):
         result = self.get_json(self.LIST_URI)
@@ -137,7 +137,7 @@ class UserApiTestCase(ApiTestCase):
 
 class RoleTestCase(UserApiTestCase):
     course_id = "org/course/run"
-    LIST_URI = ROLE_LIST_URI + "?course_id=" + course_id
+    LIST_URI = ROLE_LIST_URI.format(name="Moderator") + "?course_id=" + course_id
 
     def setUp(self):
         super(RoleTestCase, self).setUp()

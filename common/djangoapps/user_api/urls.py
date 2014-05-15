@@ -15,7 +15,7 @@ urlpatterns = patterns(
         user_api_views.PreferenceUsersListView.as_view()
     ),
     url(
-        r'^v1/forum_roles/(?P<name>[a-zA-Z]+)/$',
+        r'^v1/forum_roles/(?P<name>[a-zA-Z]+)/users/$',
         user_api_views.RoleUsersListView.as_view()
     ),
 )
