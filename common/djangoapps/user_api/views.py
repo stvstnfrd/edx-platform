@@ -35,7 +35,7 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     paginate_by = 10
     paginate_by_param = "page_size"
 
-class RoleUsersListView(generics.ListAPIView):
+class ForumRoleUsersListView(generics.ListAPIView):
     """
     Forum roles are represented by a list of user dicts
     """
