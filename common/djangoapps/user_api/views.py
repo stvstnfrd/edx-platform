@@ -36,6 +36,9 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     paginate_by_param = "page_size"
 
 class RoleUsersListView(generics.ListAPIView):
+    """
+    Forum roles are represented by a list of user dicts
+    """
     authentication_classes = (authentication.SessionAuthentication,)
     permission_classes = (ApiKeyHeaderPermission,)
     serializer_class = UserSerializer
@@ -43,6 +46,9 @@ class RoleUsersListView(generics.ListAPIView):
     paginate_by_param = "page_size"
 
     def get_queryset(self):
+        """
+        Return a list of users with the specified role/course pair
+        """
         name = self.kwargs['name']
         course_id = self.request.QUERY_PARAMS.get('course_id')
         role = Role.objects.get_or_create(course_id=course_id, name=name)[0]
