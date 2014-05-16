@@ -181,12 +181,12 @@ class RoleTestCase(UserApiTestCase):
         for user in self.users:
             user.roles.add(role)
         result = self.get_json(self.LIST_URI)
-        self.assertEqual(result["count"], 1)
+        self.assertEqual(result["count"], len(self.users))
         self.assertIsNone(result["next"])
         self.assertIsNone(result["previous"])
-        users = result["results"][0]["users"]
+        users = result["results"]
         for user in self.users:
-            self.assertTrue(user.email in users)
+            self.assertTrue(user.email in [u.get('email') for u in users])
         self.assertEquals(len(users), len(self.users))
 
 
