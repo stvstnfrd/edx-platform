@@ -8,13 +8,13 @@ from student.tests.factories import UserFactory
 from unittest import SkipTest
 from user_api.models import UserPreference
 from user_api.tests.factories import UserPreferenceFactory
-from django_comment_common.models import Role
+from django_comment_common import models
 
 
 TEST_API_KEY = "test_api_key"
 USER_LIST_URI = "/user_api/v1/users/"
 USER_PREFERENCE_LIST_URI = "/user_api/v1/user_prefs/"
-ROLE_LIST_URI = "/user_api/v1/forum_roles/{name}/users/"
+ROLE_LIST_URI = "/user_api/v1/forum_roles/Moderator/users/"
 
 
 @override_settings(EDX_API_KEY=TEST_API_KEY)
@@ -111,7 +111,7 @@ class EmptyRoleTestCase(ApiTestCase):
     Test that the endpoint supports empty result sets
     """
     course_id = "org/course/run"
-    LIST_URI = ROLE_LIST_URI.format(name="Moderator") + "?course_id=" + course_id
+    LIST_URI = ROLE_LIST_URI + "?course_id=" + course_id
 
     def test_get_list_empty(self):
         """
@@ -146,13 +146,20 @@ class RoleTestCase(UserApiTestCase):
     Test the forum_roles endpoint
     """
     course_id = "org/course/run"
-    LIST_URI = ROLE_LIST_URI.format(name="Moderator") + "?course_id=" + course_id
+    LIST_URI = ROLE_LIST_URI + "?course_id=" + course_id
 
     def setUp(self):
         """
         Defer setup to parent constructor
         """
         super(RoleTestCase, self).setUp()
+        roles = models.Role.objects.get_or_create(
+            name=models.FORUM_ROLE_MODERATOR,
+            course_id=self.course_id
+        )
+        role = roles[0]
+        for user in self.users:
+            user.roles.add(role)
 
     def test_options_list(self):
         """
@@ -215,18 +222,14 @@ class RoleTestCase(UserApiTestCase):
         """
         Return results from endpoint
         """
-        roles = Role.objects.get_or_create(name="Moderator", course_id=self.course_id)
-        role = roles[0]
-        for user in self.users:
-            user.roles.add(role)
         result = self.get_json(self.LIST_URI)
+        users = result["results"]
         self.assertEqual(result["count"], len(self.users))
+        self.assertEqual(len(users), len(self.users))
         self.assertIsNone(result["next"])
         self.assertIsNone(result["previous"])
-        users = result["results"]
-        for user in self.users:
-            self.assertTrue(user.email in [u.get('email') for u in users])
-        self.assertEquals(len(users), len(self.users))
+        for user in users:
+            self.assertUserIsValid(user)
 
 
 class UserViewSetTest(UserApiTestCase):
