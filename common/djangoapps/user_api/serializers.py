@@ -4,6 +4,7 @@ from student.models import UserProfile
 from user_api.models import UserPreference
 from django_comment_common.models import Role
 
+
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     name = serializers.SerializerMethodField("get_name")
     preferences = serializers.SerializerMethodField("get_preferences")
