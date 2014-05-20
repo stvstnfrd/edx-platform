@@ -107,16 +107,12 @@ class EmptyUserTestCase(ApiTestCase):
 
 
 class EmptyRoleTestCase(ApiTestCase):
-    """
-    Test that the endpoint supports empty result sets
-    """
+    """Test that the endpoint supports empty result sets"""
     course_id = "org/course/run"
     LIST_URI = ROLE_LIST_URI + "?course_id=" + course_id
 
     def test_get_list_empty(self):
-        """
-        Test that the endpoint properly returns empty result sets
-        """
+        """Test that the endpoint properly returns empty result sets"""
         result = self.get_json(self.LIST_URI)
         self.assertEqual(result["count"], 0)
         self.assertIsNone(result["next"])
@@ -142,16 +138,12 @@ class UserApiTestCase(ApiTestCase):
 
 
 class RoleTestCase(UserApiTestCase):
-    """
-    Test the forum_roles endpoint
-    """
+    """Test the forum_roles endpoint"""
     course_id = "org/course/run"
     LIST_URI = ROLE_LIST_URI + "?course_id=" + course_id
 
     def setUp(self):
-        """
-        Defer setup to parent constructor
-        """
+        """Defer setup to parent constructor"""
         super(RoleTestCase, self).setUp()
         roles = models.Role.objects.get_or_create(
             name=models.FORUM_ROLE_MODERATOR,
@@ -162,55 +154,39 @@ class RoleTestCase(UserApiTestCase):
             user.roles.add(role)
 
     def test_options_list(self):
-        """
-        Allow GET/HEAD/OPTIONS requests
-        """
+        """Allow GET/HEAD/OPTIONS requests"""
         self.assertAllowedMethods(self.LIST_URI, ["OPTIONS", "GET", "HEAD"])
 
     def test_post_list_not_allowed(self):
-        """
-        Prevent POST requests
-        """
+        """Prevent POST requests"""
         self.assertHttpMethodNotAllowed(self.request_with_auth("post", self.LIST_URI))
 
     def test_put_list_not_allowed(self):
-        """
-        Prevent PUT requests
-        """
+        """Prevent PUT requests"""
         self.assertHttpMethodNotAllowed(self.request_with_auth("put", self.LIST_URI))
 
     def test_patch_list_not_allowed(self):
-        """
-        Prevent PATCH requests
-        """
+        """Prevent PATCH requests"""
         raise SkipTest("Django 1.4's test client does not support patch")
 
     def test_delete_list_not_allowed(self):
-        """
-        Prevent DELETE requests
-        """
+        """Prevent DELETE requests"""
         self.assertHttpMethodNotAllowed(self.request_with_auth("delete", self.LIST_URI))
 
     def test_list_unauthorized(self):
-        """
-        Prevent unauthorized access
-        """
+        """Prevent unauthorized access"""
         self.assertHttpForbidden(self.client.get(self.LIST_URI))
 
     @override_settings(DEBUG=True)
     @override_settings(EDX_API_KEY=None)
     def test_debug_auth(self):
-        """
-        Authenticate with debug flag set to True
-        """
+        """Authenticate with debug flag set to True"""
         self.assertHttpOK(self.client.get(self.LIST_URI))
 
     @override_settings(DEBUG=False)
     @override_settings(EDX_API_KEY=TEST_API_KEY)
     def test_basic_auth(self):
-        """
-        Support basic authentication
-        """
+        """Support basic authentication"""
         # ensure that having basic auth headers in the mix does not break anything
         self.assertHttpOK(
             self.request_with_auth("get", self.LIST_URI,
@@ -219,9 +195,7 @@ class RoleTestCase(UserApiTestCase):
             self.client.get(self.LIST_URI, **self.basic_auth("someuser", "somepass")))
 
     def test_get_list_nonempty(self):
-        """
-        Return results from endpoint
-        """
+        """Return results from endpoint"""
         result = self.get_json(self.LIST_URI)
         users = result["results"]
         self.assertEqual(result["count"], len(self.users))
