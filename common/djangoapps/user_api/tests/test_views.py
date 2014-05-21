@@ -197,6 +197,31 @@ class RoleTestCase(UserApiTestCase):
         response = self.request_with_auth("get", ROLE_LIST_URI)
         self.assertHttpBadRequest(response)
 
+    def test_get_list_pagination(self):
+        first_page = self.get_json(self.LIST_URI, data={
+            "page_size": 3,
+            "course_id": self.course_id,
+        })
+        self.assertEqual(first_page["count"], 5)
+        first_page_next_uri = first_page["next"]
+        self.assertIsNone(first_page["previous"])
+        first_page_users = first_page["results"]
+        self.assertEqual(len(first_page_users), 3)
+
+        second_page = self.get_json(first_page_next_uri)
+        self.assertEqual(second_page["count"], 5)
+        self.assertIsNone(second_page["next"])
+        second_page_prev_uri = second_page["previous"]
+        second_page_users = second_page["results"]
+        self.assertEqual(len(second_page_users), 2)
+
+        self.assertEqual(self.get_json(second_page_prev_uri), first_page)
+
+        for user in first_page_users + second_page_users:
+            self.assertUserIsValid(user)
+        all_user_uris = [user["url"] for user in first_page_users + second_page_users]
+        self.assertEqual(len(set(all_user_uris)), 5)
+
 
 class UserViewSetTest(UserApiTestCase):
     LIST_URI = USER_LIST_URI
