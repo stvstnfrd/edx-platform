@@ -193,6 +193,10 @@ class RoleTestCase(UserApiTestCase):
         for user in users:
             self.assertUserIsValid(user)
 
+    def test_required_parameter(self):
+        response = self.request_with_auth("get", ROLE_LIST_URI)
+        self.assertHttpBadRequest(response)
+
 
 class UserViewSetTest(UserApiTestCase):
     LIST_URI = USER_LIST_URI
