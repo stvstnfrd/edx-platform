@@ -145,11 +145,10 @@ class RoleTestCase(UserApiTestCase):
     def setUp(self):
         """Defer setup to parent constructor"""
         super(RoleTestCase, self).setUp()
-        roles = models.Role.objects.get_or_create(
+        (role, _) = models.Role.objects.get_or_create(
             name=models.FORUM_ROLE_MODERATOR,
             course_id=self.course_id
         )
-        role = roles[0]
         for user in self.users:
             user.roles.add(role)
 
