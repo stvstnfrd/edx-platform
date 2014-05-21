@@ -6,7 +6,7 @@ from rest_framework import generics
 from rest_framework import permissions
 from rest_framework import status
 from rest_framework import viewsets
-from rest_framework.exceptions import APIException
+from rest_framework.exceptions import ParseError
 from rest_framework.response import Response
 from user_api.serializers import UserSerializer, UserPreferenceSerializer
 from user_api.models import UserPreference
@@ -39,13 +39,6 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     paginate_by_param = "page_size"
 
 
-class MissingParameterException(APIException):
-    """
-    This subclass is used to separately handle requests with missing params
-    """
-    pass
-
-
 class ForumRoleUsersListView(generics.ListAPIView):
     """
     Forum roles are represented by a list of user dicts
@@ -63,20 +56,10 @@ class ForumRoleUsersListView(generics.ListAPIView):
         name = self.kwargs['name']
         course_id = self.request.QUERY_PARAMS.get('course_id')
         if not course_id:
-            raise MissingParameterException()
+            raise ParseError('course_id must be specified')
         role = Role.objects.get_or_create(course_id=course_id, name=name)[0]
         users = role.users.all()
         return users
-
-    def handle_exception(self, exc):
-        """
-        Handle missing parameters; defer all other exceptions
-        """
-        if isinstance(exc, MissingParameterException):
-            response = Response(status=status.HTTP_400_BAD_REQUEST)
-        else:
-            response = super(ForumRoleUsersListView, self).handle_exception(exc)
-        return response
 
 
 class UserPreferenceViewSet(viewsets.ReadOnlyModelViewSet):
