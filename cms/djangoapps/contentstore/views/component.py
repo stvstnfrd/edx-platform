@@ -38,7 +38,7 @@ __all__ = ['OPEN_ENDED_COMPONENT_TYPES',
 log = logging.getLogger(__name__)
 
 # NOTE: it is assumed that this list is disjoint from ADVANCED_COMPONENT_TYPES
-COMPONENT_TYPES = ['discussion', 'html', 'problem', 'video', 'conditional']
+COMPONENT_TYPES = ['discussion', 'html', 'problem', 'video']
 
 # Constants for determining if these components should be enabled for this course
 SPLIT_TEST_COMPONENT_TYPE = 'split_test'

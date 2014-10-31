@@ -716,6 +716,7 @@ ADVANCED_COMPONENT_TYPES = [
     'combinedopenended',
     'peergrading',
     'notes',
+    'conditional',
 ]
 
 # Specify xblocks that should be treated as advanced problems. Each entry is a tuple
