@@ -261,3 +261,11 @@ class ConditionalDescriptor(ConditionalFields, SequenceDescriptor):
         stringified_sources_list = map(lambda loc: loc.to_deprecated_string(), self.sources_list)
         self.xml_attributes['sources'] = ';'.join(stringified_sources_list)
         return xml_object
+
+    @property
+    def non_editable_metadata_fields(self):
+        non_editable_fields = super(ConditionalDescriptor, self).non_editable_metadata_fields
+        non_editable_fields.extend([
+            ConditionalDescriptor.due
+        ])
+        return non_editable_fields
