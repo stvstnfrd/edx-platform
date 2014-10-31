@@ -1006,6 +1006,7 @@ ADVANCED_COMPONENT_TYPES = [
     'combinedopenended',
     'peergrading',
     'notes',
+    'conditional',
     'schoolyourself_review',
     'schoolyourself_lesson',
 
