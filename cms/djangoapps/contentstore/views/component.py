@@ -271,6 +271,7 @@ def get_component_templates(course):
                         )
                     )
 
+        # print('FUNK', templates_for_category)
         # Add any advanced problem types
         if category == 'problem':
             for advanced_problem_type in ADVANCED_PROBLEM_TYPES:

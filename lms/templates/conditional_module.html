@@ -15,7 +15,7 @@ def _message(module, message):
     )
 %>
 % if message:
-    % for module in module.required_modules:
+    % for module in xmodule.required_modules:
         <p class="conditional-message">${_message(module, message)}</p>
     % endfor
 % endif

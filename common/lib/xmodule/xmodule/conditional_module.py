@@ -7,6 +7,7 @@ import logging
 from lazy import lazy
 from lxml import etree
 from pkg_resources import resource_string
+from uuid import uuid4
 
 from xmodule.x_module import XModule, STUDENT_VIEW
 from xmodule.seq_module import SequenceDescriptor
@@ -15,6 +16,8 @@ from xmodule.modulestore.exceptions import ItemNotFoundError
 
 
 log = logging.getLogger('edx.' + __name__)
+_ = lambda x: x
+DEFAULT_CONDITION_NAME = _(u'Conditional ({condition})')
 
 
 class ConditionalFields(object):
@@ -97,10 +100,14 @@ class ConditionalModule(ConditionalFields, XModule):
 
     def _get_condition(self):
         # Get first valid condition.
+        # from xmodule.modulestore.django import modulestore
+        # course = modulestore().get_course(self.location.course_key)
+        # print(self.location.course_key, course)
         for xml_attr, attr_name in self.conditions_map.iteritems():
             xml_value = self.descriptor.xml_attributes.get(xml_attr)
             if xml_value:
                 return xml_value, attr_name
+        return None, None
         raise Exception(
             'Error in conditional module: no known conditional found in {!r}'.format(
                 self.descriptor.xml_attributes.keys()
@@ -154,7 +161,7 @@ class ConditionalModule(ConditionalFields, XModule):
         if not self.is_condition_satisfied():
             defmsg = "{link} must be attempted before this will become visible."
             message = self.descriptor.xml_attributes.get('message', defmsg)
-            context = {'module': self,
+            context = {'xmodule': self,
                        'message': message}
             html = self.system.render_template('conditional_module.html',
                                                context)
@@ -177,6 +184,65 @@ class ConditionalModule(ConditionalFields, XModule):
                 new_class = c
         return new_class
 
+    def studio_render_children(self, fragment, children, context):
+        """
+        Renders the specified children and returns it as an HTML string. In addition, any
+        dependencies are added to the specified fragment.
+        """
+        html = ""
+        for active_child_descriptor in children:
+            active_child = self.system.get_module(active_child_descriptor)
+            rendered_child = active_child.render(StudioEditableModule.get_preview_view_name(active_child), context)
+            if active_child.category == 'vertical':
+                group_name, group_id  = self.get_data_for_vertical(active_child)
+                if group_name:
+                    rendered_child.content = rendered_child.content.replace(
+                        DEFAULT_GROUP_NAME.format(group_id=group_id),
+                        group_name
+                    )
+            fragment.add_frag_resources(rendered_child)
+            html = html + rendered_child.content
+
+        return html
+
+    def author_view(self, context):
+        """
+        Renders the Studio preview by rendering each child so that they can all be seen and edited.
+        """
+        print('UGGGHGHGHGHGHGHGHGHGHGHGHGHGHGHGH')
+        fragment = Fragment()
+        root_xblock = context.get('root_xblock')
+        is_configured = False # not self.user_partition_id == SplitTestFields.no_partition_selected['value']
+        is_root = root_xblock and root_xblock.location == self.location
+        active_groups_preview = None
+        # inactive_groups_preview = None
+
+        if is_root:
+            [active_children, inactive_children] = self.descriptor.active_and_inactive_children()
+            active_groups_preview = self.studio_render_children(
+                fragment, active_children, context
+            )
+            # inactive_groups_preview = self.studio_render_children(
+            #     fragment, inactive_children, context
+            # )
+
+        fragment.add_content(self.system.render_template('conditional_author_view.html', {
+            'split_test': self,
+            'is_root': is_root,
+            'is_configured': is_configured,
+            'active_groups_preview': active_groups_preview,
+            # 'inactive_groups_preview': inactive_groups_preview,
+            'group_configuration_url': self.descriptor.group_configuration_url,
+        }))
+        # fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/js/split_test_author_view.js'))
+        fragment.initialize_js('(function () { alert("hi"); })')
+
+        return fragment
+
+    def student_view(self, context):
+        if self.system.user_is_staff:
+            return self.staf
+
 
 class ConditionalDescriptor(ConditionalFields, SequenceDescriptor):
     """Descriptor for conditional xmodule."""
@@ -195,6 +261,9 @@ class ConditionalDescriptor(ConditionalFields, SequenceDescriptor):
         super(ConditionalDescriptor, self).__init__(*args, **kwargs)
         # Convert sources xml_attribute to a ReferenceList field type so Location/Locator
         # substitution can be done.
+        print('FUNK', len(self.children), self.children)
+        if not self.children:
+            self.add_default_verticals()
         if not self.sources_list:
             if 'sources' in self.xml_attributes and isinstance(self.xml_attributes['sources'], basestring):
                 self.sources_list = [
@@ -266,6 +335,131 @@ class ConditionalDescriptor(ConditionalFields, SequenceDescriptor):
     def non_editable_metadata_fields(self):
         non_editable_fields = super(ConditionalDescriptor, self).non_editable_metadata_fields
         non_editable_fields.extend([
-            ConditionalDescriptor.due
+            ConditionalDescriptor.due,
         ])
         return non_editable_fields
+
+    @property
+    def editable_metadata_fields(self):
+        editable_fields = super(ConditionalDescriptor, self).editable_metadata_fields
+
+        # Explicitly add user_partition_id, which does not automatically get picked up because it is Scope.content.
+        # Note that this means it will be saved by the Studio editor as "metadata", but the field will
+        # still update correctly.
+        # editable_fields[ConditionalDescriptor.sources_list.name] = ConditionalDescriptor.sources_list
+
+        return editable_fields
+
+    def add_default_verticals(self):
+        user_id = self.runtime.user_id
+        for condition in [True, False]:
+            self._create_vertical_for_group(condition, user_id)
+
+    # TODO: This is ripped from split_test_module.py
+    # This logic will need reconciled and reworked/combined.
+    def _create_vertical_for_group(self, condition, user_id):
+        """
+        Creates a vertical to associate with the group.
+
+        This appends the new vertical to the end of children, and updates group_id_to_child.
+        A mutable modulestore is needed to call this method (will need to update after mixed
+        modulestore work, currently relies on mongo's create_item method).
+        """
+        assert hasattr(self.system, 'modulestore') and hasattr(self.system.modulestore, 'create_item'), \
+            "editor_saved should only be called when a mutable modulestore is available"
+        modulestore = self.system.modulestore
+        dest_usage_key = self.location.replace(category="vertical", name=uuid4().hex)
+        # metadata = {'display_name': DEFAULT_GROUP_NAME.format(group_id=group.id)}
+        metadata = {'display_name': _(u'Conditional ({condition})').format(condition=condition)}
+        modulestore.create_item(
+            user_id,
+            self.location.course_key,
+            dest_usage_key.block_type,
+            block_id=dest_usage_key.block_id,
+            definition_data=None,
+            metadata=metadata,
+            runtime=self.system,
+        )
+        self.children.append(dest_usage_key)  # pylint: disable=no-member
+        # self.group_id_to_child[unicode(group.id)] = dest_usage_key
+
+    def editor_saved(self, user, old_metadata, old_content):
+        print('STV SVD')
+
+    # Ripped from split_test_module.py
+    def has_dynamic_children(self):
+        """
+        Grading needs to know that only one of the children is actually "real".  This
+        makes it use module.get_child_descriptors().
+        """
+        return True
+
+    def validation_messages(self):
+        messages = []
+        if not len(self.children):
+            messages.append(ValidationMessage(
+                self,
+                'wtf no kids!',
+                ValidationMessageType.warning,
+                'edit-button',
+                'ACTION LABEL DO STUFF',
+            ))
+        return messages
+
+    @property
+    def general_validation_message(self):
+        """
+        Message for either error or warning validation message/s.
+
+        Returns message and type. Priority given to error type message.
+        """
+        validation_messages = self.validation_messages()
+        if validation_messages:
+            has_error = any(message.message_type == ValidationMessageType.error for message in validation_messages)
+            return {
+                'message': _(u"This content experiment has issues that affect content visibility."),
+                'type': ValidationMessageType.error if has_error else ValidationMessageType.warning,
+            }
+        return None
+
+
+class ValidationMessageType(object):
+    """
+    The type for a validation message -- currently 'information', 'warning' or 'error'.
+    """
+    information = 'information'
+    warning = 'warning'
+    error = 'error'
+
+    @staticmethod
+    def display_name(message_type):
+        """
+        Returns the display name for the specified validation message type.
+        """
+        if message_type == ValidationMessageType.warning:
+            # Translators: This message will be added to the front of messages of type warning,
+            # e.g. "Warning: this component has not been configured yet".
+            return _(u"Warning")
+        elif message_type == ValidationMessageType.error:
+            # Translators: This message will be added to the front of messages of type error,
+            # e.g. "Error: required field is missing".
+            return _(u"Error")
+        else:
+            return None
+
+
+# TODO: move this into the xblock repo once it has a formal validation contract
+class ValidationMessage(object):
+    """
+    Represents a single validation message for an xblock.
+    """
+    def __init__(self, xblock, message_text, message_type, action_class=None, action_label=None):
+        assert isinstance(message_text, unicode)
+        self.xblock = xblock
+        self.message_text = message_text
+        self.message_type = message_type
+        self.action_class = action_class
+        self.action_label = action_label
+
+    def __unicode__(self):
+        return self.message_text
