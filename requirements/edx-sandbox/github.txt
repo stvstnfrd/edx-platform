@@ -1,0 +1,4 @@
+# Python libraries to install directly from Github
+
+# Our libraries:
+git+https://github.com/stvstnfrd/openedx-calc.git@tests#egg=calc
