@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=E1101
+# pylint: disable=no-member
 # pylint: disable=protected-access
 """
 Tests for import_from_xml using the mongo modulestore.
@@ -56,7 +56,7 @@ class ContentStoreImportTest(ModuleStoreTestCase):
             do_import_static=False,
             verbose=True,
             target_course_id=target_course_id,
-            create_new_course_if_not_present=create_new_course_if_not_present,
+            create_course_if_not_present=create_new_course_if_not_present,
         )
         course_id = module_store.make_course_key('edX', 'test_import_course', '2012_Fall')
         course = module_store.get_course(course_id)

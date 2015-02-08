@@ -50,8 +50,6 @@ urlpatterns = patterns('',  # nopep8
         'instructor.views.api.delete_temp_query', name="delete_temp_query"),
     url(r'^get_students_features(?P<csv>/csv)?$',
         'instructor.views.api.get_students_features', name="get_students_features"),
-    url(r'^get_purchase_transaction(?P<csv>/csv)?$',
-        'instructor.views.api.get_purchase_transaction', name="get_purchase_transaction"),
     url(r'^get_user_invoice_preference$',
         'instructor.views.api.get_user_invoice_preference', name="get_user_invoice_preference"),
     url(r'^get_sale_records(?P<csv>/csv)?$',
@@ -125,4 +123,8 @@ urlpatterns = patterns('',  # nopep8
     # Collect ora2 data
     url(r'get_ora2_responses',
         'instructor.views.api.get_ora2_responses', name="get_ora2_responses"),
+
+    # Cohort management
+    url(r'add_users_to_cohorts$',
+        'instructor.views.api.add_users_to_cohorts', name="add_users_to_cohorts"),
 )

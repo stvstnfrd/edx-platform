@@ -15,10 +15,17 @@ from xmodule.modulestore import ModuleStoreEnum
 
 GROUP_CONFIGURATION_JSON = {
     u'name': u'Test name',
+    u'scheme': u'random',
     u'description': u'Test description',
+    u'version': UserPartition.VERSION,
     u'groups': [
-        {u'name': u'Group A'},
-        {u'name': u'Group B'},
+        {
+            u'name': u'Group A',
+            u'version': 1,
+        }, {
+            u'name': u'Group B',
+            u'version': 1,
+        },
     ],
 }
 
@@ -200,17 +207,7 @@ class GroupConfigurationsListHandlerTestCase(CourseTestCase, GroupConfigurations
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'First name')
         self.assertContains(response, 'Group C')
-
-    def test_view_index_disabled(self):
-        """
-        Check that group configuration page is not displayed when turned off.
-        """
-        if SPLIT_TEST_COMPONENT_TYPE in self.course.advanced_modules:
-            self.course.advanced_modules.remove(SPLIT_TEST_COMPONENT_TYPE)
-            self.store.update_item(self.course, self.user.id)
-
-        resp = self.client.get(self._url())
-        self.assertContains(resp, "module is disabled")
+        self.assertContains(response, 'Content Group Configuration')
 
     def test_unsupported_http_accept_header(self):
         """
@@ -229,18 +226,16 @@ class GroupConfigurationsListHandlerTestCase(CourseTestCase, GroupConfigurations
         expected = {
             u'description': u'Test description',
             u'name': u'Test name',
-            u'version': 1,
+            u'scheme': u'random',
+            u'version': UserPartition.VERSION,
             u'groups': [
                 {u'name': u'Group A', u'version': 1},
                 {u'name': u'Group B', u'version': 1},
             ],
         }
-        response = self.client.post(
+        response = self.client.ajax_post(
             self._url(),
-            data=json.dumps(GROUP_CONFIGURATION_JSON),
-            content_type="application/json",
-            HTTP_ACCEPT="application/json",
-            HTTP_X_REQUESTED_WITH="XMLHttpRequest",
+            data=GROUP_CONFIGURATION_JSON
         )
         self.assertEqual(response.status_code, 201)
         self.assertIn("Location", response)
@@ -258,6 +253,16 @@ class GroupConfigurationsListHandlerTestCase(CourseTestCase, GroupConfigurations
         self.assertEqual(len(user_partititons[0].groups), 2)
         self.assertEqual(user_partititons[0].groups[0].name, u'Group A')
         self.assertEqual(user_partititons[0].groups[1].name, u'Group B')
+
+    def test_lazily_creates_cohort_configuration(self):
+        """
+        Test that a cohort schemed user partition is NOT created by
+        default for the user.
+        """
+        self.assertEqual(len(self.course.user_partitions), 0)
+        self.client.get(self._url())
+        self.reload_course()
+        self.assertEqual(len(self.course.user_partitions), 0)
 
 
 # pylint: disable=no-member
@@ -279,15 +284,16 @@ class GroupConfigurationsDetailHandlerTestCase(CourseTestCase, GroupConfiguratio
             kwargs={'group_configuration_id': cid},
         )
 
-    def test_can_create_new_group_configuration_if_it_is_not_exist(self):
+    def test_can_create_new_group_configuration_if_it_does_not_exist(self):
         """
         PUT new group configuration when no configurations exist in the course.
         """
         expected = {
             u'id': 999,
             u'name': u'Test name',
+            u'scheme': u'random',
             u'description': u'Test description',
-            u'version': 1,
+            u'version': UserPartition.VERSION,
             u'groups': [
                 {u'id': 0, u'name': u'Group A', u'version': 1},
                 {u'id': 1, u'name': u'Group B', u'version': 1},
@@ -306,12 +312,12 @@ class GroupConfigurationsDetailHandlerTestCase(CourseTestCase, GroupConfiguratio
         self.assertEqual(content, expected)
         self.reload_course()
         # Verify that user_partitions in the course contains the new group configuration.
-        user_partititons = self.course.user_partitions
-        self.assertEqual(len(user_partititons), 1)
-        self.assertEqual(user_partititons[0].name, u'Test name')
-        self.assertEqual(len(user_partititons[0].groups), 2)
-        self.assertEqual(user_partititons[0].groups[0].name, u'Group A')
-        self.assertEqual(user_partititons[0].groups[1].name, u'Group B')
+        user_partitions = self.course.user_partitions
+        self.assertEqual(len(user_partitions), 1)
+        self.assertEqual(user_partitions[0].name, u'Test name')
+        self.assertEqual(len(user_partitions[0].groups), 2)
+        self.assertEqual(user_partitions[0].groups[0].name, u'Group A')
+        self.assertEqual(user_partitions[0].groups[1].name, u'Group B')
 
     def test_can_edit_group_configuration(self):
         """
@@ -323,8 +329,9 @@ class GroupConfigurationsDetailHandlerTestCase(CourseTestCase, GroupConfiguratio
         expected = {
             u'id': self.ID,
             u'name': u'New Test name',
+            u'scheme': u'random',
             u'description': u'New Test description',
-            u'version': 1,
+            u'version': UserPartition.VERSION,
             u'groups': [
                 {u'id': 0, u'name': u'New Group Name', u'version': 1},
                 {u'id': 2, u'name': u'Group C', u'version': 1},
@@ -426,12 +433,13 @@ class GroupConfigurationsUsageInfoTestCase(CourseTestCase, HelperMethods):
         Test that right data structure will be created if group configuration is not used.
         """
         self._add_user_partitions()
-        actual = GroupConfiguration.add_usage_info(self.course, self.store)
+        actual = GroupConfiguration.get_split_test_partitions_with_usage(self.course, self.store)
         expected = [{
             'id': 0,
             'name': 'Name 0',
+            'scheme': 'random',
             'description': 'Description 0',
-            'version': 1,
+            'version': UserPartition.VERSION,
             'groups': [
                 {'id': 0, 'name': 'Group A', 'version': 1},
                 {'id': 1, 'name': 'Group B', 'version': 1},
@@ -449,13 +457,14 @@ class GroupConfigurationsUsageInfoTestCase(CourseTestCase, HelperMethods):
         vertical, __ = self._create_content_experiment(cid=0, name_suffix='0')
         self._create_content_experiment(name_suffix='1')
 
-        actual = GroupConfiguration.add_usage_info(self.course, self.store)
+        actual = GroupConfiguration.get_split_test_partitions_with_usage(self.course, self.store)
 
         expected = [{
             'id': 0,
             'name': 'Name 0',
+            'scheme': 'random',
             'description': 'Description 0',
-            'version': 1,
+            'version': UserPartition.VERSION,
             'groups': [
                 {'id': 0, 'name': 'Group A', 'version': 1},
                 {'id': 1, 'name': 'Group B', 'version': 1},
@@ -469,8 +478,9 @@ class GroupConfigurationsUsageInfoTestCase(CourseTestCase, HelperMethods):
         }, {
             'id': 1,
             'name': 'Name 1',
+            'scheme': 'random',
             'description': 'Description 1',
-            'version': 1,
+            'version': UserPartition.VERSION,
             'groups': [
                 {'id': 0, 'name': 'Group A', 'version': 1},
                 {'id': 1, 'name': 'Group B', 'version': 1},
@@ -490,13 +500,14 @@ class GroupConfigurationsUsageInfoTestCase(CourseTestCase, HelperMethods):
         vertical, __ = self._create_content_experiment(cid=0, name_suffix='0')
         vertical1, __ = self._create_content_experiment(cid=0, name_suffix='1')
 
-        actual = GroupConfiguration.add_usage_info(self.course, self.store)
+        actual = GroupConfiguration.get_split_test_partitions_with_usage(self.course, self.store)
 
         expected = [{
             'id': 0,
             'name': 'Name 0',
+            'scheme': 'random',
             'description': 'Description 0',
-            'version': 1,
+            'version': UserPartition.VERSION,
             'groups': [
                 {'id': 0, 'name': 'Group A', 'version': 1},
                 {'id': 1, 'name': 'Group B', 'version': 1},
@@ -553,7 +564,7 @@ class GroupConfigurationsValidationTestCase(CourseTestCase, HelperMethods):
         validation.add(mocked_message)
         mocked_validation_messages.return_value = validation
 
-        group_configuration = GroupConfiguration.add_usage_info(self.course, self.store)[0]
+        group_configuration = GroupConfiguration.get_split_test_partitions_with_usage(self.course, self.store)[0]
         self.assertEqual(expected_result.to_json(), group_configuration['usage'][0]['validation'])
 
     def test_error_message_present(self):
