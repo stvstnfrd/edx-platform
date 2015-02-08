@@ -195,7 +195,7 @@ class @Problem
 
   syncTimer: =>
     @secondsLeft = @getSecondsLeft()
-    
+
     # On timer error, avoid showing the timer
     if @secondsLeft == -1
       @removeTimer()
@@ -222,7 +222,7 @@ class @Problem
           # When the problem has expired, remove it.
           @$timer.slice(1).remove()
         clearInterval(@timerId)
-      
+
       # Decrement the timer counter normally
       else
         @$display.text(@getDisplayText())

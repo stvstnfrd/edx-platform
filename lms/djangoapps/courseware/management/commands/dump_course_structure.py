@@ -95,7 +95,7 @@ class Command(BaseCommand):
             info = dump_module_by_position(course_id, course)
         else:
             info = dump_module(course, inherited=options['inherited'], defaults=options['inherited_defaults'])
-            
+
         if options['csv']:
             csvout = StringIO.StringIO()
             writer = csv.writer(csvout, dialect='excel')
@@ -191,4 +191,3 @@ def dump_module_by_position(course_id, module, level=0,
                                 prefix=display_name_long, 
                                 parent=module.id)
     return destination
-

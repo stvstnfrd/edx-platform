@@ -23,6 +23,7 @@ from openedx.core.djangoapps.user_api.api import profile as profile_api
 from util.bad_request_rate_limiter import BadRequestRateLimiter
 
 from student_account.helpers import auth_pipeline_urls
+
 from student.models import UserProfile
 
 AUDIT_LOG = logging.getLogger("audit")

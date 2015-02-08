@@ -209,11 +209,11 @@ class ViewsTestCase(TestCase):
         self.course.display_price = 10
         # Since registration_price is set, it overrides the cosmetic display_price and should be returned
         self.assertEqual(views.get_course_display_price(self.course, registration_price), "$99")
-        
+
         # Since registration_price is not set, display_price should be returned
         registration_price = 0
         self.assertEqual(views.get_course_display_price(self.course, registration_price), "$10")
-        
+
         # Since both prices are not set, there is no price, thus "Free"
         self.course.display_price = 0
         self.assertEqual(views.get_course_display_price(self.course, registration_price), "Free")

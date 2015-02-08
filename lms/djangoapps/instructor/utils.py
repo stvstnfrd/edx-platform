@@ -53,7 +53,7 @@ def collect_ora2_data(course_id):
         return '', ['']
 
     raw_queries = ora2_data_queries().split(';')
-    
+
     cursor.execute(raw_queries[0])
     cursor.execute(raw_queries[1], [course_id])
 

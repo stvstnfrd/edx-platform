@@ -28,21 +28,21 @@
         window.open( $(this).attr('href') );
         return false;
       });
-      
+
 //---------------------------------------- Client side registration behavior ----------------------------------------//
-      
+
       // form field label styling on focus
       $("form :input").focus(function() {
         $("label[for='" + this.id + "']").parent().addClass("is-focused");
       }).blur(function() {
         $("label").parent().removeClass("is-focused");
       });
-     
+
       // display dependent form sections
-     
+
       $('select.affiliation-controller').change(function() {
         $(this).siblings('.affiliation-controlled').slideUp('fast');
-        
+
         if ($(this).children("option:selected").val() === 'Stanford University') {
           $(this).siblings('.affiliation-controlled#sunet_id_container, .affiliation-controlled#stanford_department_container').slideDown('fast');
         } else if ($(this).children("option:selected").val() === "Packard Children's Health Alliance") {
@@ -53,7 +53,7 @@
           $(this).siblings('.affiliation-controlled#other_affiliation_container').slideDown('fast');
         }
       });
-      
+
       $('select.controller').change(function() {
         if ($(this).children("option:selected").val() === 'Other') {
           $(this).siblings('.controlled').slideDown('fast');
@@ -61,7 +61,7 @@
           $(this).siblings('.controlled').slideUp('fast');
         }
       });
-     
+
       $('select.select-controller').change(function() {
         var controllerClasses = $(this).children("option:selected").attr('class');
         var controllerClass = controllerClasses.split(' ')[0];
@@ -69,20 +69,20 @@
         var controlledField = '#' + controllerClass.split('-')[0];
         $(controlledField).html('<option value="">--</option>').siblings('.controlled').hide().children('input').val('');
         $(controlledField).parent().hide();
-       
+
         var controllerClass2 = '#' + controllerClasses.split(' ')[1];
         $(controllerClass2).html('<option value="">--</option>').siblings('.controlled').hide().children('input').val('');
         $(controllerClass2).parent().hide();
-       
+
         if ($(controlledFieldContents).html() != null) {
           $(controlledField).html($(controlledFieldContents).html()).parent().show();
         }
       });
-      
+
       // Dependent required fields
       $('select#professional_designation').change(function() {
         var dependentRequiredFields = 'li#license-number_container, li#license-country_container, li#physician_status_container, li#patient_population_container, li#specialty-container';
-        
+
         if ($(this).children("option:selected").val() === 'MD' || $(this).children("option:selected").val() === 'MD,PhD' || $(this).children("option:selected").val() === 'DO' || $(this).children("option:selected").val() === 'MBBS') {
           $(this).parent().siblings(dependentRequiredFields).addClass('required');
         } else {
@@ -98,7 +98,7 @@
       });
       $('select#license_country').change(function() {
         var dependentRequiredFields = 'li#license-state_container';
-        
+
         if ($(this).children("option:selected").val() === 'United States') {
           $(this).parent().siblings(dependentRequiredFields).addClass('required');
         } else {
@@ -107,14 +107,14 @@
       });
       $('select#country').change(function() {
         var dependentRequiredFields = 'li#state_container';
-        
+
         if ($(this).children("option:selected").val() === 'United States') {
           $(this).parent().siblings(dependentRequiredFields).addClass('required');
         } else {
           $(this).parent().siblings(dependentRequiredFields).removeClass('required');
         }
       });
-      
+
 //--------------------------------------- /Client side registration behavior ----------------------------------------//
     });
 
@@ -217,27 +217,27 @@
             <input id="name" type="text" name="name" value="" placeholder="example: Jane C Doe" required aria-required="true" />
             <span class="tip tip-input">Needed for any certificates you may earn <strong>(cannot be changed later)</strong></span>
           </li>
-          
+
           <li class="field required text" id="field-name">
             <label for="name">Last Name</label>
             <input id="last_name" type="text" name="last_name" value="" required aria-required="true" />
           </li>
-          
+
           <li class="field required text" id="field-name">
             <label for="name">First Name</label>
             <input id="first_name" type="text" name="first_name" value="" required aria-required="true" />
           </li>
-          
+
           <li class="field select" id="field-name">
             <label for="name">Middle Initial</label>
             <input id="middle_initial" type="text" name="middle_initial" value="" required aria-required="true" />
           </li>
-          
+
           <li class="field required text" id="field-name">
             <label for="name">Month and Day of Birth</label>
             <input id="birth_date" type="text" name="birth_date" value="" required aria-required="true" placeholder="MM/DD" maxlength="5" />
           </li>
-          
+
           <li class="field select" id="gender_container">
            <label for="gender">Gender</label>
            <select id="gender" name="gender">
@@ -247,7 +247,7 @@
              %endfor
            </select>
           </li>
-          
+
         </ol>
 
         % else:
@@ -258,32 +258,32 @@
         </div>
 
         <ol class="list-input">
-         
+
           % if ask_for_email:
 
           <li class="field required text" id="field-email">
             <label for="email">E-mail</label>
             <input class="" id="email" type="email" name="email" value="" placeholder="example: username@domain.com" />
           </li>
-         
+
           % endif
-         
+
           <li class="field required text" id="field-username">
             <label for="username">Public Username</label>
             <input id="username" type="text" name="username" value="${extauth_username}" placeholder="example: JaneDoe" required aria-required="true" />
             <span class="tip tip-input">Will be shown in any discussions or forums you participate in</span>
           </li>
-         
+
           % if ask_for_fullname:
-         
+
           <li class="field required text" id="field-name">
             <label for="name">Full Name</label>
             <input id="name" type="text" name="name" value="" placeholder="example: Jane Doe" />
             <span class="tip tip-input">Needed for any certificates you may earn <strong>(cannot be changed later)</strong></span>
           </li>
-         
+
           % endif
-         
+
         </ol>
 
         % endif
@@ -292,9 +292,9 @@
       <fieldset class="group group-form group-form-secondary group-form-professionalinformation form-page">
        <hr />
        <h3><strong>Professional Information</strong></h3>
-   
+
        <ol class="list-input">
-         
+
           <li class="field required text" id="field-professional-designation_container">
             <label for="professional_designation">Professional Designation</label>
             <select id="professional_designation" name="professional_designation">
@@ -304,7 +304,7 @@
               %endfor
             </select>
           </li>
-         
+
           <li class="field select" id="license-number_container">
             <label for="license_number">License Number</label>
             <input id="license_number" type="text" name="license_number" />
@@ -355,7 +355,7 @@
           #####################################################
           ## Specialty Select Field
           #####################################################
-         
+
           <li class="field select" id="specialty-container">
             <label for="specialty">Specialty</label>
             <select id="specialty" name="specialty" class="controller select-controller">
@@ -364,103 +364,103 @@
                 <option value="${code}" class="sub_specialty-${code}">${specialty}</option>
               %endfor
             </select>
-           
+
             <div class="field controlled" id="specialty_free_container" style="display: none;">
               <br />
               <input id="specialty_free" type="text" name="specialty_free" title="Please enter your Specialty here." placeholder="Please enter your Specialty here." />
            </div>
           </li>
-       
-       
+
+
           #####################################################
           ## Sub Specialty Select Field
           #####################################################
-       
+
         <li class="field" style="display: none;" id="sub-specialty-container">
           <label for="sub_specialty">Sub-Specialty</label>
           <select id="sub_specialty" name="sub_specialty" class="controller">
             <option value="">--</option>
           </select>
-         
+
           <div class="field controlled" id="sub_specialty_free_container" style="display: none;">
            <br />
            <input id="sub_specialty_free" type="text" name="sub_specialty_free" title="Please enter your Sub-Specialty here." placeholder="Please enter your Sub-Specialty here." />
           </div>
         </li>
-       
+
         <div id="sub_specialty-Cardiology" class="sub_specialty-container" style="display: none;">
           <option value="">--</option>
           %for code, sub_specialty in sub_specialty_choices['Cardiology']:
             <option value="${code}">${sub_specialty}</option>
           %endfor
         </div>
-       
+
         <div id="sub_specialty-Internal_Medicine" class="sub_specialty-container" style="display: none;">
           <option value="">--</option>
           %for code, sub_specialty in sub_specialty_choices['Internal_Medicine']:
             <option value="${code}">${sub_specialty}</option>
           %endfor
         </div>
-       
+
         <div id="sub_specialty-Obstetrics_Gynecology" class="sub_specialty-container" style="display: none;">
           <option value="">--</option>
           %for code, sub_specialty in sub_specialty_choices['Obstetrics_Gynecology']:
             <option value="${code}">${sub_specialty}</option>
           %endfor
         </div>
-       
+
         <div id="sub_specialty-Oncology" class="sub_specialty-container" style="display: none;">
           <option value="">--</option>
           %for code, sub_specialty in sub_specialty_choices['Oncology']:
             <option value="${code}">${sub_specialty}</option>
           %endfor
         </div>
-       
+
         <div id="sub_specialty-Palliative_Care" class="sub_specialty-container" style="display: none;">
           <option value="">--</option>
           %for code, sub_specialty in sub_specialty_choices['Palliative_Care']:
             <option value="${code}">${sub_specialty}</option>
           %endfor
         </div>
-       
+
         <div id="sub_specialty-Pediatrics" class="sub_specialty-container" style="display: none;">
           <option value="">--</option>
           %for code, sub_specialty in sub_specialty_choices['Pediatrics']:
             <option value="${code}">${sub_specialty}</option>
           %endfor
         </div>
-       
+
         <div id="sub_specialty-Pulmonology" class="sub_specialty-container" style="display: none;">
           <option value="">--</option>
           %for code, sub_specialty in sub_specialty_choices['Pulmonology']:
             <option value="${code}">${sub_specialty}</option>
           %endfor
         </div>
-       
+
         <div id="sub_specialty-Surgery" class="sub_specialty-container" style="display: none;">
           <option value="">--</option>
           %for code, sub_specialty in sub_specialty_choices['Surgery']:
             <option value="${code}">${sub_specialty}</option>
           %endfor
         </div>
-       
+
         <div id="sub_specialty-Transplant" class="sub_specialty-container" style="display: none;">
           <option value="">--</option>
           %for code, sub_specialty in sub_specialty_choices['Transplant']:
             <option value="${code}">${sub_specialty}</option>
           %endfor
         </div>
-        
-        
+
+
        </ol>
       </fieldset>
-      
+
       <fieldset class="group group-form group-form-secondary group-form-affiliationinformation form-page">
         <hr />
         <h3><strong>Affiliation Information</strong></h3>
-      
+
         <ol class="list-input">
-          
+
           <li class="field select" id="affiliation">
             <label for="affiliation">Affiliation</label>
             <select id="affiliation" name="affiliation" class="affiliation-controller">
@@ -469,13 +469,13 @@
                 <option value="${code}">${affiliation}</option>
               %endfor
             </select>
-           
+
             <div class="field affiliation-controlled select required" id="sunet_id_container" style="display: none;">
               <br />
               <label for="sunet_id">SUNet ID</label>
               <input id="sunet_id" type="text" name="sunet_id" />
             </div>
-            
+
             <div class="field affiliation-controlled select required" id="stanford_department_container" style="display: none;">
               <label for="stanford_department">Stanford Department</label>
               <select id="stanford_department" name="stanford_department">
@@ -485,7 +485,7 @@
                 %endfor
               </select>
             </div>
-            
+
             <div class="field affiliation-controlled select required" id="PCHA_affiliation_container" style="display: none;">
               <br />
               <label for="PCHA_affiliation">Packard Children's Health Alliance Affiliation</label>
@@ -496,7 +496,7 @@
                 %endfor
               </select>
             </div>
-            
+
             <div class="field affiliation-controlled select required" id="UHA_affiliation_container" style="display: none;">
               <br />
               <label for="UHA_affiliation">University Healthcare Alliance Affiliation</label>
@@ -507,33 +507,33 @@
                 %endfor
               </select>
             </div>
-           
+
             <div class="field affiliation-controlled" id="other_affiliation_container" style="display: none;">
               <br />
               <input id="other_affiliation" type="text" name="other_affiliation" title="Please enter your affiliation here." placeholder="Please enter your affiliation here." />
             </div>
           </li>
-          
+
         </ol>
       </fieldset>
 
       <fieldset class="group group-form group-form-secondary group-form-personalinformation">
         <hr />
         <h3><strong>Professional Contact Information</strong></h3>
-       
+
 
         <ol class="list-input">
-        
+
          <li class="field required" id="address_1_container">
            <label for="address_1">Address 1</label>
            <input id="address_1" type="text" name="address_1" />
          </li>
-       
+
          <li class="field select" id="address_2_container">
            <label for="address_2">Address 2</label>
            <input id="address_2" type="text" name="address_2" />
          </li>
-       
+
          <li class="field required" id="city_container">
            <label for="city">City</label>
            <input id="city" type="text" name="city" />
@@ -558,7 +558,7 @@
              %endfor
            </select>
          </li>
-         
+
          <li class="field" id="county_province_container">
            <label for="county_province">International Province or Territory</label>
            <input id="county_province" type="text" name="county_province" />
@@ -568,7 +568,7 @@
            <label for="postal_code">Postal/Zip Code</label>
            <input id="postal_code" type="text" name="postal_code" />
          </li>
-       
+
         </ol>
       </fieldset>
 
@@ -629,7 +629,7 @@
         </a>
       </p>
     </div>
-     
+
     % endif
 
     ## TODO: Use a %block tag or something to allow themes to

@@ -5,11 +5,9 @@
         "display_name": "Üñîçø∂é ßraded Course",
         "graded": "true"
     },
-	
     "videosequence/Homework1": {
         "display_name": "πoméwork 1", 
         "graded": true, 
         "format": "Homework"
     },
-	
 }

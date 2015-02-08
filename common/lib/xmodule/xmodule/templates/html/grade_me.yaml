@@ -6,7 +6,7 @@ data: |
 
       <p><input type=button value="Yes, I Agree." id="User_Verify_Button" style="margin-bottom: 20px;" /></p>
       <p class="verify-button-success-text" style="font-weight: bold; color: #008200;"></p>
-      
+
       <script type="text/javascript">
         var success_message = "Your grading and certification request has been received, <br />if you have passed, your certificate should be available in the next 20 minutes.";
         var failure_message = "We're sorry; users who haven't created accounts and registered for the course may not receive Statements of Accomplishment.";

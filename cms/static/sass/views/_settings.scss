@@ -245,7 +245,7 @@
 
         .list-actions {
           padding-top:  ($baseline/2);
-  
+
           .action-primary {
             @include blue-button();
             @extend %t-action3;

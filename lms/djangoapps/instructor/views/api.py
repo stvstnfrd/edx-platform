@@ -2509,6 +2509,7 @@ def _split_input_list(str_list):
 
     return new_list
 
+
 #---- Gradebook (shown to small courses only) ----
 @cache_control(no_cache=True, no_store=True, must_revalidate=True)
 @require_level('staff')
@@ -2547,6 +2548,7 @@ def spoc_gradebook(request, course_id):
         'staff_access': True,
         'ordered_grades': sorted(course.grade_cutoffs.items(), key=lambda i: i[1], reverse=True),
     })
+
 
 @ensure_csrf_cookie
 @cache_control(no_cache=True, no_store=True, must_revalidate=True)

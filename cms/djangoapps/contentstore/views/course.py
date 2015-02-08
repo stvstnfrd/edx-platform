@@ -863,7 +863,6 @@ def settings_handler(request, course_key_string):
                 'default_post_template': default_enroll_email_template_post,
                 'course_handler_url': reverse_course_url('course_handler', course_key),
             }
-
             if prerequisite_course_enabled:
                 courses, in_process_course_actions = get_courses_accessible_to_user(request)
                 # exclude current course from the list of available courses

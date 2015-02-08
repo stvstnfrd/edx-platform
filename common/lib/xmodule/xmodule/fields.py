@@ -271,4 +271,3 @@ class IntegerWithWarningField(WarningFieldSingleValueMixin, Integer):
     """
     def __init__(self, **kwargs):
         super(IntegerWithWarningField, self).__init__(**kwargs)
-

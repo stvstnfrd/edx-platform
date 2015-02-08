@@ -767,7 +767,7 @@ describe 'Problem', ->
       waitsFor(=>
         @problem.getSecondsLeft() == 48
       , "Two seconds have ticked by", 4000)
-  
+
       runs(=>
         expect(@problem.showTimerWarning).toHaveBeenCalled()
         expect(@problem.$timer.length).toEqual(2)

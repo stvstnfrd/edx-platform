@@ -144,7 +144,7 @@ window.InlineAnalytics = (function() {
                     } else {
                         answerClass = 'inline-analytics-incorrect';
                     }
-                    
+
                     tr = $('<tr>');
                     tdChoice = $('<td class="answer_box">');
                     tdChoice.attr('title', choiceText[index]);
@@ -156,7 +156,7 @@ window.InlineAnalytics = (function() {
                     tdCount.text(count);
                     tdPercent = $('<td class="answer_box">');
                     tdPercent.text(percent + '%');
-                    
+
                     tr.append(tdChoice);
                     tr.append(tdDot);
                     tr.append(tdCount);
@@ -200,7 +200,7 @@ window.InlineAnalytics = (function() {
         var tdDot;
         var tdCount;
         var tdPercent;
-        
+
         correctResponse = correctResponse.substring(2, correctResponse.length - 2);
 
         // Insert rows between currentIndex and finalIndex
@@ -210,7 +210,7 @@ window.InlineAnalytics = (function() {
             } else {
                 answerClass = 'inline-analytics-incorrect';
             }
-            
+
             tr = $('<tr>');
             tdChoice = $('<td class="answer_box">');
             tdChoice.attr('title', choiceText[currentIndex]);
@@ -222,7 +222,7 @@ window.InlineAnalytics = (function() {
             tdCount.text(0);
             tdPercent = $('<td class="answer_box">');
             tdPercent.text('0%');
-            
+
             tr.append(tdChoice);
             tr.append(tdDot);
             tr.append(tdCount);
@@ -481,7 +481,7 @@ window.InlineAnalytics = (function() {
 
                 // Build dict of number of options (choices)
                 numOptionsByPart[partId] = getChoiceTexts(partId).length;
-                
+
                 // Build dict of choice name lists
                 choiceNameListByPart[partId] = divs[index].dataset.choiceNameList;
             }

@@ -236,4 +236,5 @@ def _get_all_courses():
 
     ms_courses = modulestore().get_courses()
     courses = [c for c in ms_courses if isinstance(c, CourseDescriptor)]
+
     return courses

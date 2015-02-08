@@ -1,7 +1,7 @@
 """
     Created to fix a scoring problem caused by a bug in ORA2. This is a fix to mitigate
     the affects of that bug. (edx/edx-ora2#628)
-    
+
     Fixes submission_score.points_earned for records affected by the track changes bug.
     Updates submission_scoresummary as a reult of this.
     Updates assessment_trackchanges.edited_content with a message from the course staff.
@@ -24,13 +24,13 @@ logger = logging.getLogger(__name__)
 def read_file():
     """
     Read file containing id's of affected TrackChanges items
-    
+
     File should be named 'track_changes' and be of the format of a row for each id (no trailing commas)
-    
+
     Return:
         - list of id's
     """
-    
+
     track_changes_file = open('track_changes')
     return track_changes_file.readlines()
 
@@ -38,7 +38,7 @@ def update_edited_content(track_change):
     """
     Prepend informational string to the edited content
     """
-    
+
     information_string = """
                             <p>Message from the course staff:</p>
                             <p>This submission may have been incorrectly scored, due to a system error related to this assessment.</p>
@@ -49,7 +49,7 @@ def update_edited_content(track_change):
 
     track_change.edited_content = ''.join([information_string, track_change.edited_content])
     track_change.save()
-    
+
     logger.info((
         u"TrackChanges.edited_content for id {id} has been prepended with course staff message."
     ).format(id=track_change.id))
@@ -96,7 +96,7 @@ def generate_score(owner_submission_uuid):
 def get_submissions_score(owner_submission_uuid):
     """
     Gets the existing score for the submission
-    
+
     Input:
         - owner_submission_uuid
     """
@@ -107,9 +107,9 @@ def get_submissions_score(owner_submission_uuid):
 def update_score(owner_submission_uuid, new_generated_score, points_earned):
     """"
     Updates the score for the submission from points_earned to new_generated_score
-    
+
     Automagically, ScoreSummary is also updated with the highest and latest
-    
+
     Input:
         - owner_submission_uuid
         - new_generated_score
@@ -119,7 +119,7 @@ def update_score(owner_submission_uuid, new_generated_score, points_earned):
         submission_score = Score.objects.select_related('submission').filter(submission__uuid=owner_submission_uuid)[0]
         submission_score.points_earned = new_generated_score
         submission_score.save()
-        
+
         msg = (
             u"Score.points_earned for submission UUID {uuid} has been updated from {points_earned} to {new_generated_score}"
         ).format(uuid=owner_submission_uuid, new_generated_score=new_generated_score, points_earned=points_earned)
@@ -127,7 +127,7 @@ def update_score(owner_submission_uuid, new_generated_score, points_earned):
         msg = (
             u"Score not updated for submission_UUID {uuid}"
         ).format(uuid=owner_submission_uuid)
-        
+
     logger.info(msg)
 
 def correct_ora2_scores():
@@ -137,7 +137,7 @@ def correct_ora2_scores():
     
     Spreadsheet of track changes items affected by the bug: 
     https://docs.google.com/spreadsheets/d/1IumfVAJohQeKd-KLuaL8D0gjczucy0uA4U_LiWgxmeE/edit#gid=1739770575
-    
+
     The list below was taken from the above spreadsheet.
     """
 
@@ -149,7 +149,7 @@ def correct_ora2_scores():
     for track_change in track_changes:
         owner_submission_uuid = track_change.owner_submission_uuid
         scorer_id = track_change.scorer_id
-        
+
         # Change the scored flag on associated PeerWorkflowItem to 0
         # so it is not considered in the score calculation
         change_scored_flag(owner_submission_uuid, scorer_id)
