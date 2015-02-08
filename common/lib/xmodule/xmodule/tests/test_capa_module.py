@@ -1848,7 +1848,7 @@ class TestProblemCheckTracking(unittest.TestCase):
                 </checkboxgroup>
               </choiceresponse>
             </problem>
-           """)
+            """)
         module = factory.create()
 
         answer_input_dict = {

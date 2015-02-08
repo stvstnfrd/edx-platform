@@ -93,8 +93,7 @@ class AuthListWidget extends MemberListWidget
     if input? and input isnt ''
       @modify_member_access input, 'allow', (error) =>
         # abort on error
-        if error
-          return @show_errors error
+        return @show_errors error unless error is null
 
         @clear_errors()
         @clear_input()
@@ -107,8 +106,7 @@ class AuthListWidget extends MemberListWidget
     # @clear_rows()
     @get_member_list (error, member_list) =>
       # abort on error
-      if error
-        return @show_errors error
+      return @show_errors error unless error is null
 
       # only show the list of there are members
       @clear_rows()
@@ -125,8 +123,7 @@ class AuthListWidget extends MemberListWidget
         $revoke_btn.click =>
             @modify_member_access member.email, 'revoke', (error) =>
               # abort on error
-              if error
-                return @show_errors error
+              return @show_errors error unless error is null
               @clear_errors()
               @reload_list()
         @add_row [member.username, member.email, $revoke_btn]

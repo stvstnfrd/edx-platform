@@ -232,7 +232,7 @@ from edxmako.shortcuts import marketing_link
       % if self.carnegie_theme_enabled():
         <section class="details" style="float: none; width: 100%; margin: 0 auto;">
       % else:
-        <section class="details">
+    <section class="details">
       % endif
       % if staff_access and studio_url is not None:
         <div class="wrap-instructor-info studio-view">
@@ -385,30 +385,30 @@ from edxmako.shortcuts import marketing_link
           <%include file="theme-course_about_research.html" />
       % endif
       </section>
-  
-  
-        ## For now, ocw links are the only thing that goes in additional resources
-        % if get_course_about_section(course, "ocw_links"):
-          <section class="additional-resources">
-            <header>
-              <h1>${_("Additional Resources")}</h1>
-            </header>
-        
-            <section>
-              ## "MITOpenCourseware" should *not* be translated
-              <h2 class="opencourseware">MITOpenCourseware</h2>
-                 ${get_course_about_section(course, "ocw_links")}
-            </section>
-          </section>
-        %endif
-        
+
+
+      ## For now, ocw links are the only thing that goes in additional resources
+      % if get_course_about_section(course, "ocw_links"):
+      <section class="additional-resources">
+        <header>
+          <h1>${_("Additional Resources")}</h1>
+        </header>
+
+        <section>
+          ## "MITOpenCourseware" should *not* be translated
+          <h2 class="opencourseware">MITOpenCourseware</h2>
+             ${get_course_about_section(course, "ocw_links")}
+        </section>
+      </section>
+      %endif
+
         % if get_course_about_section(course, "about_sidebar_html"):
             <section class="about-sidebar-html">
                 ${get_course_about_section(course, "about_sidebar_html")}
             </section>
         %endif
     </section>
-    % endif
+    %endif
   </section>
 </section>
 

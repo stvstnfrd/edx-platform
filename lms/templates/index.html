@@ -39,17 +39,19 @@
 
       </div>
 
-          % if self.stanford_theme_enabled():
-            <a href="http://online.stanford.edu" class="media" >
-              <div class="hero"></div>
-            </a>
-          % elif show_homepage_promo_videos:
-            <a href="#video-modal" class="media" rel="leanModal">
-              <div class="hero">
-                <div class="play-intro"></div>
-              </div>
-            </a>
-          % endif
+    % if self.stanford_theme_enabled():
+        <a href="http://online.stanford.edu" class="media">
+          <div class="hero"></div>
+        </a>
+    % else:
+      % if show_homepage_promo_video:
+        <a href="#video-modal" class="media" rel="leanModal">
+          <div class="hero">
+            <div class="play-intro"></div>
+          </div>
+        </a>
+      % endif
+    % endif
 
     </div>
   </header>

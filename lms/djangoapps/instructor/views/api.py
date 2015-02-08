@@ -2076,7 +2076,7 @@ def list_instructor_tasks(request, course_id):
 @ensure_csrf_cookie
 @cache_control(no_cache=True, no_store=True, must_revalidate=True)
 @require_level('staff')
-def list_report_downloads(request, course_id):  # pylint: disable=unused-argument
+def list_report_downloads(_request, course_id):
     """
     List grade CSV files that are available for download for this course.
     """
