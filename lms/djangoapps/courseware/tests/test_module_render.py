@@ -1357,6 +1357,7 @@ class TestInlineAnalytics(ModuleStoreTestCase):
         result_fragment = module.render(STUDENT_VIEW)
         self.assertNotIn('Staff Analytics Info', result_fragment.content)
 
+
 @ddt.ddt
 @override_settings(MODULESTORE=TEST_DATA_MOCK_MODULESTORE)
 class TestEventPublishing(ModuleStoreTestCase, LoginEnrollmentTestCase):

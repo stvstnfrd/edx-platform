@@ -601,6 +601,7 @@ class TestCourseTreeLookup(ModuleStoreTestCase, LoginEnrollmentTestCase):
         self.assertSetEqual(section_names, check_sections)
         self.assertSetEqual(subsection_names, check_subsections)
 
+
 @override_settings(MODULESTORE=TEST_DATA_MOCK_MODULESTORE)
 @patch('bulk_email.models.html_to_text', Mock(return_value='Mocking CourseEmail.text_message'))
 @patch.dict(settings.FEATURES, {'ENABLE_INSTRUCTOR_EMAIL': True, 'REQUIRE_COURSE_EMAIL_AUTH': False})

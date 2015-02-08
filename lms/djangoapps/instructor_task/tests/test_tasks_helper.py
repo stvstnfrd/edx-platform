@@ -301,6 +301,7 @@ class TestInstructorOra2Report(TestReportMixin, InstructorTaskCourseTestCase):
                     self.assertEqual(return_val, UPDATE_STATUS_SUCCEEDED)
                     mock_store_rows.assert_called_once_with(self.course.id, filename, [test_header] + test_rows)
 
+
 class MockDefaultStorage(object):
     """Mock django's DefaultStorage"""
     def __init__(self):

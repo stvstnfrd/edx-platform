@@ -599,6 +599,7 @@ class TestNonRegisteredUser(TestCase):
             req.user = self.user
             views.progress(req, self.course_id)
 
+
 @override_settings(MODULESTORE=TEST_DATA_MOCK_MODULESTORE)
 class StartDateTests(ModuleStoreTestCase):
     """

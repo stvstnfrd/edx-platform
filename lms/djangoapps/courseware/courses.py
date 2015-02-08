@@ -393,6 +393,7 @@ def registered_for_course(course, user):
     else:
       return False
 
+
 def sort_by_start_date(courses):
     """
     Returns a list of courses sorted by their start date, latest first.
