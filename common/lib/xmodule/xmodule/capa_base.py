@@ -562,9 +562,11 @@ class CapaMixin(CapaFields):
             # then do NOT show the save button
             # If we're waiting for the user to reset a randomized problem
             # then do NOT show the save button
-            # If the question is timed, enforce that we can only attempt
-            # once. Thus, do NOT show the save button
-            elif (self.closed() and not is_survey_question) or needs_reset or submitted_timed_question:
+            elif (self.closed() and not is_survey_question) or needs_reset:
+                return False
+            elif submitted_timed_question:
+                # If the question is timed, enforce that we can only
+                # attempt once. Thus, do NOT show the save button
                 return False
             else:
                 return True
