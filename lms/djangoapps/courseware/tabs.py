@@ -13,6 +13,8 @@ if settings.FEATURES.get('MILESTONES_APP', False):
     from milestones.api import get_course_milestones_fulfillment_paths
     from util.milestones_helpers import serialize_user
 
+from student.models import UserProfile
+
 
 def get_course_tab_list(course, user):
     """
