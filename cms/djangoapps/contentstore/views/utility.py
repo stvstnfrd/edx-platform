@@ -31,7 +31,7 @@ def utility_handler(request, course_key_string):
         json: return json representing all utilities.
     """
     course_key = CourseKey.from_string(course_key_string)
-    if not get_course_and_check_access(request.user, course_key):
+    if not get_course_and_check_access(course_key, request.user):
         raise PermissionDenied()
     course_module = modulestore().get_course(course_key)
     json_request = 'application/json' in request.META.get('HTTP_ACCEPT', 'application/json')
