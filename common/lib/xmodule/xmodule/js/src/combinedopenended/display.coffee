@@ -200,11 +200,6 @@ class @CombinedOpenEnded
 #   force show the prompt
     @prompt_show()
 
-#    if @task_number>1
-#      @prompt_hide()
-#    else if @task_number==1 and @child_state!='initial'
-#      @prompt_hide()
-
     @find_assessment_elements()
     @find_hint_elements()
 
