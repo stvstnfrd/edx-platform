@@ -13,7 +13,7 @@ from contentstore.utils import reverse_course_url
 from xmodule.modulestore.django import modulestore
 from opaque_keys.edx.keys import CourseKey
 
-from ..course import get_course_and_check_access
+from .course import get_course_and_check_access
 
 __all__ = ['utility_handler']
 
