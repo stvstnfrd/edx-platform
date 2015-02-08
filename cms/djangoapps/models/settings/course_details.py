@@ -46,16 +46,10 @@ class CourseDetails(object):
         self.syllabus = None  # a pdf file asset
         self.short_description = ""
         self.overview = ""  # html to render as the overview
-        self.about_sidebar_html = "" # html to render as the about_sidebar_html
-        self.pre_enrollment_email = render_to_string('emails/default_pre_enrollment_message.txt', {})
-        self.post_enrollment_email = render_to_string('emails/default_post_enrollment_message.txt', {})
-        self.pre_enrollment_email_subject = "Thanks for Enrolling in {}".format(self.course_id)
-        self.post_enrollment_email_subject = "Thanks for Enrolling in {}".format(self.course_id)
         self.intro_video = None  # a video pointer
         self.effort = None  # int hours/week
         self.course_image_name = ""
         self.course_image_asset_path = ""  # URL of the course image
-        self.enable_enrollment_email = False
         self.pre_requisite_courses = []  # pre-requisite courses
         self.entrance_exam_enabled = ""  # is entrance exam enabled
         self.entrance_exam_id = ""  # the content location for the entrance exam
@@ -63,6 +57,14 @@ class CourseDetails(object):
             'ENTRANCE_EXAM_MIN_SCORE_PCT',
             '50'
         )  # minimum passing score for entrance exam content module/tree
+        # Stanford-specific
+        self.about_sidebar_html = "" # html to render as the about_sidebar_html
+        self.pre_enrollment_email = render_to_string('emails/default_pre_enrollment_message.txt', {})
+        self.post_enrollment_email = render_to_string('emails/default_post_enrollment_message.txt', {})
+        self.pre_enrollment_email_subject = "Thanks for Enrolling in {}".format(self.course_id)
+        self.post_enrollment_email_subject = "Thanks for Enrolling in {}".format(self.course_id)
+        self.enable_enrollment_email = False
+        # Stanford-specific
 
     @classmethod
     def _fetch_about_attribute(cls, course_key, attribute):

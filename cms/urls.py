@@ -79,9 +79,6 @@ urlpatterns += patterns(
         r'^course_info_update/{}/(?P<provided_id>\d+)?$'.format(settings.COURSE_KEY_PATTERN),
         'course_info_update_handler'
     ),
-    url(r'^utilities/{}$'.format(settings.COURSE_KEY_PATTERN), 'utility_handler'),
-    url(r'^utility/captions/{}$'.format(settings.COURSE_KEY_PATTERN), 'utility_captions_handler'),
-    url(r'^utility/bulksettings/{}$'.format(settings.COURSE_KEY_PATTERN), 'utility_bulksettings_handler'),
     url(r'^home/$', 'course_listing', name='home'),
     url(r'^course/{}?$'.format(settings.COURSE_KEY_PATTERN), 'course_handler', name='course_handler'),
     url(r'^course_notifications/{}/(?P<action_state_id>\d+)?$'.format(settings.COURSE_KEY_PATTERN), 'course_notifications_handler'),
@@ -101,7 +98,6 @@ urlpatterns += patterns(
     url(r'^settings/details/{}$'.format(settings.COURSE_KEY_PATTERN), 'settings_handler'),
     url(r'^settings/grading/{}(/)?(?P<grader_index>\d+)?$'.format(settings.COURSE_KEY_PATTERN), 'grading_handler'),
     url(r'^settings/advanced/{}$'.format(settings.COURSE_KEY_PATTERN), 'advanced_settings_handler'),
-    url(r'^settings/send_test_enrollment_email/{}$'.format(settings.COURSE_KEY_PATTERN), 'send_test_enrollment_email', name='send_test_enrollment_email'),
     url(r'^textbooks/{}$'.format(settings.COURSE_KEY_PATTERN), 'textbooks_list_handler'),
     url(r'^textbooks/{}/(?P<textbook_id>\d[^/]*)$'.format(settings.COURSE_KEY_PATTERN), 'textbooks_detail_handler'),
     url(r'^videos/{}$'.format(settings.COURSE_KEY_PATTERN), 'videos_handler'),
@@ -111,6 +107,13 @@ urlpatterns += patterns(
         'group_configurations_detail_handler'),
 
     url(r'^api/val/v0/', include('edxval.urls')),
+
+    # Stanford-specific
+    url(r'^utilities/{}$'.format(settings.COURSE_KEY_PATTERN), 'utility_handler'),
+    url(r'^utility/captions/{}$'.format(settings.COURSE_KEY_PATTERN), 'utility_captions_handler'),
+    url(r'^utility/bulksettings/{}$'.format(settings.COURSE_KEY_PATTERN), 'utility_bulksettings_handler'),
+    url(r'^settings/send_test_enrollment_email/{}$'.format(settings.COURSE_KEY_PATTERN), 'send_test_enrollment_email', name='send_test_enrollment_email'),
+    # Stanford-specific
 )
 
 js_info_dict = {

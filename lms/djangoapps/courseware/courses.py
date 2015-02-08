@@ -165,7 +165,6 @@ def get_course_about_section(course, section_key):
 
     Valid keys:
     - overview
-    - about_sidebar_html
     - title
     - university
     - number
@@ -181,6 +180,7 @@ def get_course_about_section(course, section_key):
     - faq
     - more_info
     - ocw_links
+    - about_sidebar_html
     - pre_enrollment_email
     - post_enrollment_email
     - pre_enrollment_email_subject
@@ -195,10 +195,15 @@ def get_course_about_section(course, section_key):
     if section_key in ['short_description', 'description', 'key_dates', 'video',
                        'course_staff_short', 'course_staff_extended',
                        'requirements', 'syllabus', 'textbook', 'faq', 'more_info',
-                       'number', 'instructors', 'overview', 'about_sidebar_html',
-                       'effort', 'end_date', 'prerequisites', 'ocw_links', 
-                       'pre_enrollment_email', 'post_enrollment_email', 
-                       'pre_enrollment_email_subject', 'post_enrollment_email_subject']:
+                       'number', 'instructors', 'overview',
+                        # Stanford-specific
+                       'about_sidebar_html',
+                       'pre_enrollment_email',
+                       'post_enrollment_email',
+                       'pre_enrollment_email_subject',
+                       'post_enrollment_email_subject',
+                        # Stanford-specific
+                       'effort', 'end_date', 'prerequisites', 'ocw_links']:
 
         try:
 

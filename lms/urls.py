@@ -249,9 +249,6 @@ if settings.COURSEWARE_ENABLED:
             'student.views.change_enrollment', name="change_enrollment"),
         url(r'^change_email_settings$', 'student.views.change_email_settings', name="change_email_settings"),
 
-        url(r'^course_sneakpeek/(?P<course_id>[^/]+/[^/]+/[^/]+)/$',
-            'student.views.setup_sneakpeek', name="course_sneakpeek"),
-
         #About the course
         url(r'^courses/{}/about$'.format(settings.COURSE_ID_PATTERN),
             'courseware.views.course_about', name="about_course"),
@@ -377,9 +374,13 @@ if settings.COURSEWARE_ENABLED:
         url(r'^courses/{}/lti_rest_endpoints/'.format(settings.COURSE_ID_PATTERN),
             'courseware.views.get_course_lti_endpoints', name='lti_rest_endpoints'),
 
+        # Stanford-specific
+        url(r'^course_sneakpeek/(?P<course_id>[^/]+/[^/]+/[^/]+)/$',
+            'student.views.setup_sneakpeek', name="course_sneakpeek"),
         # Analytics api endpoints for in-line analytics
         url(r'^get_analytics_answer_dist/',
             'courseware.views.get_analytics_answer_dist', name='get_analytics_answer_dist'),
+        # Stanford-specific
 
         # Student account and profile
         url(r'^account/', include('student_account.urls')),

@@ -170,9 +170,6 @@ FEATURES = {
     # Provide a UI to allow users to submit feedback from the LMS (left-hand help modal)
     'ENABLE_FEEDBACK_SUBMISSION': False,
 
-    # Provide a UI to allow users to report problems in LMS (left-hand modal)
-    'ENABLE_PROBLEM_REPORTING': False,
-
     # Turn on a page that lets staff enter Python code to be run in the
     # sandbox, for testing whether it's enabled properly.
     'ENABLE_DEBUG_RUN_PYTHON': False,
@@ -186,9 +183,6 @@ FEATURES = {
     # Don't autoplay videos for students
     'AUTOPLAY_VIDEOS': False,
 
-    # Toggle to enable chat availability (configured on a per-course
-    # basis in Studio)
-    'ENABLE_CHAT': False,
     # Enable instructor dash to submit background tasks
     'ENABLE_INSTRUCTOR_BACKGROUND_TASKS': True,
 
@@ -222,16 +216,6 @@ FEATURES = {
 
     # Toggle storing detailed billing information
     'STORE_BILLING_INFO': False,
-
-    #Toggle using CME registration instead of normal
-    'USE_CME_REGISTRATION': False,
-
-    # OP Superusers can log in as anyone
-    'ENABLE_SUPERUSER_LOGIN_AS': False,
-
-    # Sends the user's deanonymized email address to xqueue with code responses
-    # DO NOT SET if you don't want the anonymous user id to be linked with user.email in xqueue (Stanford does)
-    'SEND_USERS_EMAILADDR_WITH_CODERESPONSE': False,
 
     # Enable flow for payments for course registration (DIFFERENT from verified student flow)
     'ENABLE_PAID_COURSE_REGISTRATION': False,
@@ -344,6 +328,21 @@ FEATURES = {
 
     # For easily adding modes to courses during acceptance testing
     'MODE_CREATION_FOR_TESTING': False,
+
+    # Stanford-specific
+    # Provide a UI to allow users to report problems in LMS (left-hand modal)
+    'ENABLE_PROBLEM_REPORTING': False,
+    # Toggle to enable chat availability (configured on a per-course
+    # basis in Studio)
+    'ENABLE_CHAT': False,
+    #Toggle using CME registration instead of normal
+    'USE_CME_REGISTRATION': False,
+    # OP Superusers can log in as anyone
+    'ENABLE_SUPERUSER_LOGIN_AS': False,
+    # Sends the user's deanonymized email address to xqueue with code responses
+    # DO NOT SET if you don't want the anonymous user id to be linked with user.email in xqueue (Stanford does)
+    'SEND_USERS_EMAILADDR_WITH_CODERESPONSE': False,
+    # Stanford-specific
 }
 
 # Ignore static asset files on import which match this pattern
@@ -358,9 +357,6 @@ GENERATE_PROFILE_SCORES = False
 # Used with XQueue
 XQUEUE_WAITTIME_BETWEEN_REQUESTS = 5  # seconds
 
-# Email to give anonymous users.  Should be a black-hole email address, but not cause errors when email is sent there
-# This is actually just a base email.  We'll make it 'noreply+<username>@example.com' to ensure uniqueness
-ANONYMOUS_USER_EMAIL = 'noreply@example.com'
 
 ############################# SET PATH INFORMATION #############################
 PROJECT_ROOT = path(__file__).abspath().dirname().dirname()  # /edx-platform/lms
@@ -1510,7 +1506,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'djcelery',
-    'settings_context_processor',
     'south',
 
     # Database-backed configuration
@@ -1607,9 +1602,6 @@ INSTALLED_APPS = (
     # Student Identity Verification
     'verify_student',
 
-    # CME Registration
-    'cme_registration',
-
     # Dark-launching languages
     'dark_lang',
 
@@ -1623,8 +1615,6 @@ INSTALLED_APPS = (
 
     # Monitoring functionality
     'monitoring',
-
-    'sneakpeek_deeplink',
 
     # Course action state
     'course_action_state',
@@ -1641,10 +1631,16 @@ INSTALLED_APPS = (
     # Surveys
     'survey',
 
+    'lms.djangoapps.lms_xblock',
+
+    # Stanford-specific
+    'settings_context_processor',
+    'sneakpeek_deeplink',
     # Instructor email widget
     'instructor_email_widget',
-
-    'lms.djangoapps.lms_xblock',
+    # CME Registration
+    'cme_registration',
+    # Stanford-specific
 )
 
 ######################### MARKETING SITE ###############################
@@ -1666,16 +1662,6 @@ MKTG_URL_LINK_MAP = {
     # Verified Certificates
     'WHAT_IS_VERIFIED_CERT': 'verified-certificate',
 }
-
-######################### VISIBLE SETTINGS ###########################
-# These settings' values will be exposed to all templates
-TEMPLATE_VISIBLE_SETTINGS = [
-    'FEATURES',
-]
-
-############################### CHAT ################################
-JABBER = {}
-DATABASE_ROUTERS = []
 
 ################# Mobile URLS ##########################
 
@@ -1737,24 +1723,6 @@ GRADES_DOWNLOAD = {
     'STORAGE_TYPE': 'localfs',
     'BUCKET': 'edx-grades',
     'ROOT_PATH': '/tmp/edx-s3/grades',
-}
-
-#################### Student Responses Reports Downloads #################
-STUDENT_RESPONSES_DOWNLOAD_ROUTING_KEY = HIGH_MEM_QUEUE
-
-STUDENT_RESPONSES_DOWNLOAD = {
-    'STORAGE_TYPE': 'localfs',
-    'BUCKET': 'edx-student-responses',
-    'ROOT_PATH': '/tmp/edx-s3/student-responses',
-}
-
-##################### ORA2 Responses Download #######################
-ORA2_RESPONSES_DOWNLOAD_ROUTING_KEY = HIGH_MEM_QUEUE
-
-ORA2_RESPONSES_DOWNLOAD = {
-    'STORAGE_TYPE': 'localfs',
-    'BUCKET': 'edx-grades',
-    'ROOT_PATH': '/tmp/edx-s3/ora2-responses',
 }
 
 ######################## PROGRESS SUCCESS BUTTON ##############################
@@ -2035,16 +2003,6 @@ ANALYTICS_DASHBOARD_NAME = PLATFORM_NAME + " Insights"
 INVOICE_CORP_ADDRESS = "Please place your corporate address\nin this configuration"
 INVOICE_PAYMENT_INSTRUCTIONS = "This is where you can\nput directions on how people\nbuying registration codes"
 
-####################### In-line Analytics ######################
-ANALYTICS_ANSWER_DIST_URL = None
-INLINE_ANALYTICS_SUPPORTED_TYPES = {
-    'MultipleChoiceResponse': 'radio',
-    'ChoiceResponse': 'checkbox',
-    'OptionResponse': 'option',
-    'NumericalResponse': 'numerical',
-    'StringResponse': 'string',
-    'FormulaResponse': 'formula',
-}
 # Country code overrides
 # Used by django-countries
 COUNTRIES_OVERRIDE = {
@@ -2082,3 +2040,41 @@ PDF_RECEIPT_LOGO_HEIGHT_MM = 12
 PDF_RECEIPT_COBRAND_LOGO_PATH = PROJECT_ROOT + '/static/images/default-theme/logo.png'
 # Height of the Co-brand Logo in mm
 PDF_RECEIPT_COBRAND_LOGO_HEIGHT_MM = 12
+
+# Stanford-specific
+# Email to give anonymous users.  Should be a black-hole email address, but not cause errors when email is sent there
+# This is actually just a base email.  We'll make it 'noreply+<username>@example.com' to ensure uniqueness
+ANONYMOUS_USER_EMAIL = 'noreply@example.com'
+######################### VISIBLE SETTINGS ###########################
+# These settings' values will be exposed to all templates
+TEMPLATE_VISIBLE_SETTINGS = [
+    'FEATURES',
+]
+############################### CHAT ################################
+JABBER = {}
+DATABASE_ROUTERS = []
+#################### Student Responses Reports Downloads #################
+STUDENT_RESPONSES_DOWNLOAD_ROUTING_KEY = HIGH_MEM_QUEUE
+STUDENT_RESPONSES_DOWNLOAD = {
+    'STORAGE_TYPE': 'localfs',
+    'BUCKET': 'edx-student-responses',
+    'ROOT_PATH': '/tmp/edx-s3/student-responses',
+}
+##################### ORA2 Responses Download #######################
+ORA2_RESPONSES_DOWNLOAD_ROUTING_KEY = HIGH_MEM_QUEUE
+ORA2_RESPONSES_DOWNLOAD = {
+    'STORAGE_TYPE': 'localfs',
+    'BUCKET': 'edx-grades',
+    'ROOT_PATH': '/tmp/edx-s3/ora2-responses',
+}
+####################### In-line Analytics ######################
+ANALYTICS_ANSWER_DIST_URL = None
+INLINE_ANALYTICS_SUPPORTED_TYPES = {
+    'MultipleChoiceResponse': 'radio',
+    'ChoiceResponse': 'checkbox',
+    'OptionResponse': 'option',
+    'NumericalResponse': 'numerical',
+    'StringResponse': 'string',
+    'FormulaResponse': 'formula',
+}
+# Stanford-specific

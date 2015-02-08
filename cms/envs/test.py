@@ -31,11 +31,15 @@ from lms.envs.test import (WIKI_ENABLED, PLATFORM_NAME, SITE_NAME, DEFAULT_FILE_
 MONGO_PORT_NUM = int(os.environ.get('EDXAPP_TEST_MONGO_PORT', '27017'))
 MONGO_HOST = os.environ.get('EDXAPP_TEST_MONGO_HOST', 'localhost')
 
+# Stanford-specific
 # Remove sneakpeek during tests to prevent unwanted redirect
 MIDDLEWARE_CLASSES = tuple([
     mwc for mwc in MIDDLEWARE_CLASSES
         if mwc != 'sneakpeek.middleware.SneakPeekLogoutMiddleware'
 ])
+# This is to disable tests CME Registration tests, under common, that will not pass when run under CMS
+FEATURES['DISABLE_CME_REGISTRATION_TESTS'] = True
+# Stanford-specific
 
 THIS_UUID = uuid4().hex[:5]
 
@@ -207,9 +211,6 @@ PASSWORD_HASHERS = (
 SEGMENT_IO_KEY = '***REMOVED***'
 
 FEATURES['ENABLE_SERVICE_STATUS'] = True
-
-# This is to disable tests CME Registration tests, under common, that will not pass when run under CMS
-FEATURES['DISABLE_CME_REGISTRATION_TESTS'] = True
 
 # Toggles embargo on for testing
 FEATURES['EMBARGO'] = True

@@ -116,8 +116,6 @@ XQUEUE_INTERFACE = {
 }
 XQUEUE_WAITTIME_BETWEEN_REQUESTS = 5  # seconds
 
-TIME_ZONE = 'UTC'
-
 # Don't rely on a real staff grading backend
 MOCK_STAFF_GRADING = True
 MOCK_PEER_GRADING = True
@@ -368,6 +366,8 @@ PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.MD5PasswordHasher',
     # 'django.contrib.auth.hashers.CryptPasswordHasher',
 )
+
+TIME_ZONE = 'UTC'
 
 ################################# CHAT ######################################
 # We'll use a SQLite DB just for the purposes of testing out the
