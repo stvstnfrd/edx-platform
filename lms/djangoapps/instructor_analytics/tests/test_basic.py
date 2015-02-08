@@ -33,6 +33,7 @@ from courseware.tests.factories import StudentModuleFactory
 from courseware.tests.modulestore_config import TEST_DATA_MIXED_MODULESTORE
 from instructor_analytics.basic import student_responses
 from opaque_keys.edx.locations import Location
+from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
 # Stanford-specific
 
 

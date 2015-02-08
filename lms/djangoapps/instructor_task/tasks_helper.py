@@ -7,6 +7,7 @@ import json
 from datetime import datetime
 from time import time
 import unicodecsv
+import urllib
 
 from celery import Task, current_task
 from celery.utils.log import get_task_logger
