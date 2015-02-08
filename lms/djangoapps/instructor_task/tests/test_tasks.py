@@ -11,8 +11,6 @@ from uuid import uuid4
 from mock import Mock, MagicMock, patch
 
 from celery.states import SUCCESS, FAILURE
-from django.utils.translation import ugettext_noop
-from functools import partial
 
 from xmodule.modulestore.exceptions import ItemNotFoundError
 from opaque_keys.edx.locations import i4xEncoder
@@ -24,16 +22,15 @@ from student.tests.factories import UserFactory, CourseEnrollmentFactory
 from instructor_task.models import InstructorTask
 from instructor_task.tests.test_base import InstructorTaskModuleTestCase
 from instructor_task.tests.factories import InstructorTaskFactory
-from instructor_task.tasks import (
-    rescore_problem,
-    reset_problem_attempts,
-    delete_problem_state,
-    get_ora2_responses,
-)
-from instructor_task.tasks_helper import (
-    UpdateProblemModuleStateError,
-    push_ora2_responses_to_s3,
-)
+from instructor_task.tasks import rescore_problem, reset_problem_attempts, delete_problem_state
+from instructor_task.tasks_helper import UpdateProblemModuleStateError
+
+# Stanford-specific
+from django.utils.translation import ugettext_noop
+from functools import partial
+from instructor_task.tasks import get_ora2_responses
+from instructor_task.tasks_helper import push_ora2_responses_to_s3
+# Stanford-specific
 
 PROBLEM_URL_NAME = "test_urlname"
 

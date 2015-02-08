@@ -6,41 +6,43 @@ Unit tests for LMS instructor-initiated background tasks helper functions.
 Tests that CSV grade report generation works with unicode emails.
 
 """
-import os
-import shutil
-from datetime import datetime
-import urllib
-
 import ddt
 from mock import Mock, patch
 import tempfile
 import unicodecsv
 
-from pytz import UTC
+from xmodule.modulestore.tests.factories import CourseFactory
+from student.tests.factories import UserFactory
+from student.models import CourseEnrollment
+from xmodule.partitions.partitions import Group, UserPartition
 
+from openedx.core.djangoapps.course_groups.tests.helpers import CohortFactory
+from instructor_task.models import ReportStore
+from instructor_task.tasks_helper import cohort_students_and_upload, upload_grades_csv, upload_students_csv
+from instructor_task.tests.test_base import InstructorTaskCourseTestCase, TestReportMixin
+
+# Stanford-specific
+import os
+import shutil
+from datetime import datetime
+import urllib
+from pytz import UTC
 from courseware.courses import get_course
 from courseware.tests.factories import StudentModuleFactory
 from courseware.tests.modulestore_config import TEST_DATA_MIXED_MODULESTORE
 from opaque_keys.edx.keys import CourseKey
 from opaque_keys.edx.locations import Location
 from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
-from xmodule.modulestore.tests.factories import CourseFactory
-from student.tests.factories import CourseEnrollmentFactory
-from student.tests.factories import UserFactory
-from student.models import CourseEnrollment
-from xmodule.partitions.partitions import Group, UserPartition
-from openedx.core.djangoapps.course_groups.tests.helpers import CohortFactory
-from instructor_task.models import ReportStore
 from instructor_task.tasks_helper import (
     push_student_responses_to_s3,
     push_ora2_responses_to_s3,
     UPDATE_STATUS_FAILED,
     UPDATE_STATUS_SUCCEEDED,
 )
-from instructor_task.tasks_helper import cohort_students_and_upload, upload_grades_csv, upload_students_csv
-from instructor_task.tests.test_base import InstructorTaskCourseTestCase, TestReportMixin
 from django.conf import settings
 from django.test.utils import override_settings
+from student.tests.factories import CourseEnrollmentFactory
+# Stanford-specific
 
 TEST_COURSE_ORG = 'edx'
 TEST_COURSE_NAME = 'test_course'

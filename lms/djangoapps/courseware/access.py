@@ -26,7 +26,8 @@ from student.roles import (
     GlobalStaff, CourseStaffRole, CourseInstructorRole,
     OrgStaffRole, OrgInstructorRole, CourseBetaTesterRole
 )
-from student.models import CourseEnrollment, CourseEnrollmentAllowed, UserProfile
+from student.models import CourseEnrollment, CourseEnrollmentAllowed
+from student.models import UserProfile
 from opaque_keys.edx.keys import CourseKey, UsageKey
 from util.milestones_helpers import get_pre_requisite_courses_not_completed
 DEBUG_ACCESS = False

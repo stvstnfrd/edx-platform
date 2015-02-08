@@ -4,10 +4,7 @@ Courseware views functions
 
 import logging
 import urllib
-import urllib2
 import json
-from util.json_request import JsonResponse
-from pytz import timezone
 import cgi
 
 from datetime import datetime
@@ -24,7 +21,7 @@ from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.auth.decorators import login_required
 from django.utils.timezone import UTC
 from django.views.decorators.http import require_GET
-from django.http import Http404, HttpResponse, HttpResponseNotFound, HttpResponseServerError
+from django.http import Http404, HttpResponse
 from django.shortcuts import redirect
 from edxmako.shortcuts import render_to_response, render_to_string, marketing_link
 from django_future.csrf import ensure_csrf_cookie
@@ -37,7 +34,6 @@ from courseware.access import has_access, _adjust_start_date_for_beta_testers
 from courseware.courses import get_courses, get_course, get_studio_url, get_course_with_access, sort_by_announcement
 from courseware.courses import sort_by_start_date
 from courseware.masquerade import setup_masquerade
-from courseware.models import CoursePreference
 from courseware.model_data import FieldDataCache
 from .module_render import toc_for_course, get_module_for_descriptor, get_module
 from courseware.models import StudentModule, StudentModuleHistory
@@ -46,7 +42,7 @@ from course_modes.models import CourseMode
 from lms.djangoapps.lms_xblock.models import XBlockAsidesConfig
 
 from open_ended_grading import open_ended_notifications
-from student.models import UserTestGroup, CourseEnrollment, UserProfile
+from student.models import UserTestGroup, CourseEnrollment
 from student.views import single_course_reverification_info, is_course_blocked
 from util.cache import cache, cache_if_anonymous
 from xblock.fragment import Fragment
@@ -64,7 +60,6 @@ from util.milestones_helpers import get_prerequisite_courses_display
 from microsite_configuration import microsite
 from opaque_keys.edx.locations import SlashSeparatedCourseKey
 from instructor.enrollment import uses_shib
-from util.date_utils import get_time_display
 
 from util.db import commit_on_success_with_read_committed
 
@@ -72,6 +67,17 @@ import survey.utils
 import survey.views
 
 from util.views import ensure_valid_course_key
+
+# Stanford-specific
+import urllib2
+from util.json_request import JsonResponse
+from pytz import timezone
+from django.http import HttpResponseNotFound, HttpResponseServerError
+from courseware.models import CoursePreference
+from student.models import UserProfile
+from util.date_utils import get_time_display
+# Stanford-specific
+
 
 log = logging.getLogger("edx.courseware")
 

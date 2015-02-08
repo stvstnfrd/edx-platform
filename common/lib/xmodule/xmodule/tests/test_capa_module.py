@@ -12,7 +12,6 @@ import os
 import textwrap
 import unittest
 import ddt
-import re
 
 from mock import Mock, patch, DEFAULT
 import webob
@@ -24,7 +23,6 @@ from capa import responsetypes
 from capa.responsetypes import (StudentInputError, LoncapaProblemError,
                                 ResponseError)
 from capa.xqueue_interface import XQueueInterface
-from xmodule.exceptions import TimeExpiredError
 from xmodule.capa_module import CapaModule, CapaDescriptor, ComplexEncoder
 from opaque_keys.edx.locations import Location
 from xblock.field_data import DictFieldData
@@ -34,6 +32,11 @@ from . import get_test_system
 from pytz import UTC
 from capa.correctmap import CorrectMap
 from ..capa_base_constants import RANDOMIZATION
+
+# Stanford-specific
+import re
+from xmodule.exceptions import TimeExpiredError
+# Stanford-specific
 
 
 class CapaFactory(object):

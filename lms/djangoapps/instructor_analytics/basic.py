@@ -3,9 +3,7 @@ Student and course analytics.
 
 Serve miscellaneous course and student data
 """
-from itertools import chain
 import json
-import logging
 
 from shoppingcart.models import (
     PaidCourseRegistration, CouponRedemption, Invoice, CourseRegCodeItem,
@@ -19,6 +17,8 @@ import xmodule.graders as xmgraders
 from django.core.exceptions import ObjectDoesNotExist
 from microsite_configuration import microsite
 
+from itertools import chain
+import logging
 from courseware.models import StudentModule
 from student.models import CourseEnrollment
 

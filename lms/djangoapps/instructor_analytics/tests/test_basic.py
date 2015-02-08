@@ -2,12 +2,6 @@
 Tests for instructor.basic
 """
 
-from django.test.utils import override_settings
-
-from courseware.courses import get_course
-from courseware.tests.factories import StudentModuleFactory
-from courseware.tests.modulestore_config import TEST_DATA_MIXED_MODULESTORE
-from opaque_keys.edx.locations import Location
 import json
 from student.models import CourseEnrollment
 from django.core.urlresolvers import reverse
@@ -22,7 +16,7 @@ from shoppingcart.models import (
 from course_modes.models import CourseMode
 from instructor_analytics.basic import (
     sale_record_features, sale_order_record_features, enrolled_students_features, course_registration_features,
-    coupon_codes_features, student_responses, AVAILABLE_FEATURES, STUDENT_FEATURES, PROFILE_FEATURES,
+    coupon_codes_features, AVAILABLE_FEATURES, STUDENT_FEATURES, PROFILE_FEATURES
 )
 from openedx.core.djangoapps.course_groups.tests.helpers import CohortFactory
 from courseware.tests.factories import InstructorFactory
@@ -31,6 +25,15 @@ from xmodule.modulestore.tests.factories import CourseFactory
 import datetime
 from django.db.models import Q
 import pytz
+
+# Stanford-specific
+from django.test.utils import override_settings
+from courseware.courses import get_course
+from courseware.tests.factories import StudentModuleFactory
+from courseware.tests.modulestore_config import TEST_DATA_MIXED_MODULESTORE
+from instructor_analytics.basic import student_responses
+from opaque_keys.edx.locations import Location
+# Stanford-specific
 
 
 class TestAnalyticsBasic(ModuleStoreTestCase):

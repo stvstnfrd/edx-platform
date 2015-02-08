@@ -14,19 +14,16 @@ from django.views.decorators.http import require_http_methods
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseBadRequest, HttpResponseNotFound, HttpResponse, Http404
-from smtplib import SMTPException
 from util.json_request import JsonResponse, JsonResponseBadRequest
 from util.date_utils import get_default_time_display
 from util.db import generate_int_id, MYSQL_MAX_INT
 from edxmako.shortcuts import render_to_response
-from edxmako.shortcuts import render_to_string
 
 from xmodule.course_module import DEFAULT_START_DATE
 from xmodule.error_module import ErrorDescriptor
 from xmodule.modulestore.django import modulestore
 from xmodule.contentstore.content import StaticContent
 from xmodule.tabs import PDFTextbookTabs
-from xmodule.partitions.partitions import Group
 from xmodule.partitions.partitions import UserPartition
 from xmodule.modulestore import EdxJSONEncoder
 from xmodule.modulestore.exceptions import ItemNotFoundError, DuplicateCourseError
@@ -53,7 +50,6 @@ from models.settings.course_details import CourseDetails, CourseSettingsEncoder
 from models.settings.course_grading import CourseGradingModel
 from models.settings.course_metadata import CourseMetadata
 from util.json_request import expect_json
-from util.keyword_substitution import substitute_keywords_with_data
 from util.string_utils import _has_non_ascii_characters
 from student.auth import has_studio_write_access, has_studio_read_access
 from .component import (
@@ -84,6 +80,13 @@ from util.milestones_helpers import (
     set_prerequisite_courses,
     is_valid_course_key
 )
+
+# Stanford-specific
+from smtplib import SMTPException
+from edxmako.shortcuts import render_to_string
+from xmodule.partitions.partitions import Group
+from util.keyword_substitution import substitute_keywords_with_data
+# Stanford-specific
 
 MINIMUM_GROUP_ID = 100
 

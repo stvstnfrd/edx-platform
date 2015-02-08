@@ -17,14 +17,17 @@ from static_replace import replace_static_urls
 from xmodule.modulestore import ModuleStoreEnum
 from xmodule.x_module import STUDENT_VIEW
 from microsite_configuration import microsite
-from util.keyword_substitution import substitute_keywords_with_data
 
 from courseware.access import has_access
 from courseware.model_data import FieldDataCache
 from courseware.module_render import get_module
 from student.models import CourseEnrollment
 import branding
+
+# Stanford-specific
+from util.keyword_substitution import substitute_keywords_with_data
 from student.models import CourseEnrollment
+# Stanford-specific
 
 log = logging.getLogger(__name__)
 

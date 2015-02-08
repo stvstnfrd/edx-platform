@@ -26,7 +26,8 @@ from courseware import module_render as render
 from courseware.courses import get_course_with_access, course_image_url, get_course_info_section
 from courseware.model_data import FieldDataCache
 from courseware.models import StudentModule
-from courseware.tests.factories import StudentModuleFactory, UserFactory, GlobalStaffFactory, StaffFactory, InstructorFactory
+from courseware.tests.factories import StudentModuleFactory, UserFactory, GlobalStaffFactory
+from courseware.tests.factories import StaffFactory, InstructorFactory
 from courseware.tests.tests import LoginEnrollmentTestCase
 from xmodule.modulestore.tests.django_utils import (
     TEST_DATA_MOCK_MODULESTORE, TEST_DATA_MIXED_TOY_MODULESTORE,

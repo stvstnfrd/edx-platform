@@ -4,7 +4,7 @@ import django.db
 import unittest
 
 from student.tests.factories import UserFactory, RegistrationFactory, PendingEmailChangeFactory
-from student.views import reactivation_email_for_user, change_email_request, confirm_email_change, notify_enrollment_by_email
+from student.views import reactivation_email_for_user, change_email_request, confirm_email_change
 from student.models import UserProfile, PendingEmailChange
 from django.contrib.auth.models import User, AnonymousUser
 from django.test import TestCase, TransactionTestCase
@@ -15,8 +15,12 @@ from django.conf import settings
 from edxmako.shortcuts import render_to_string
 from edxmako.tests import mako_middleware_process_request
 from util.request import safe_get_host
+
+# Stanford-specific
+from student.views import notify_enrollment_by_email
 from xmodule.modulestore.tests.factories import CourseFactory
 from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
+# Stanford-specific
 
 
 class TestException(Exception):

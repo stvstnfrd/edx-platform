@@ -2,7 +2,8 @@
 django admin pages for courseware model
 '''
 
-from courseware.models import StudentModule, OfflineComputedGrade, OfflineComputedGradeLog, CoursePreference
+from courseware.models import StudentModule, OfflineComputedGrade, OfflineComputedGradeLog
+from courseware.models import CoursePreference
 from ratelimitbackend import admin
 
 admin.site.register(StudentModule)

@@ -24,18 +24,20 @@ from capa.responsetypes import StudentInputError, \
     ResponseError, LoncapaProblemError
 from capa.util import convert_files_to_filenames
 from .progress import Progress
-from xmodule.exceptions import NotFoundError
-from xmodule.exceptions import ProcessingError
-from xmodule.exceptions import TimeExpiredError
+from xmodule.exceptions import NotFoundError, ProcessingError
 from xblock.fields import Scope, String, Boolean, Dict, Integer, Float
-from xblock.fields import JSONField
 from .fields import Timedelta, Date
-from .fields import IntegerWithWarningField
 from django.utils.timezone import UTC
 from .util.duedate import get_extended_due_date
 from xmodule.capa_base_constants import RANDOMIZATION, SHOWANSWER
 from django.conf import settings
+
+# Stanford-specific
+from xmodule.exceptions import TimeExpiredError
+from xblock.fields import JSONField
+from .fields import IntegerWithWarningField
 from types import MethodType
+# Stanford-specific
 
 log = logging.getLogger("edx.courseware")
 

@@ -1,14 +1,9 @@
 """
 Test for LMS instructor background task queue management
 """
-
-from xmodule.modulestore.exceptions import ItemNotFoundError
-
-from mock import MagicMock
 from mock import patch, Mock
 from bulk_email.models import CourseEmail, SEND_TO_ALL
 from courseware.tests.factories import UserFactory
-from xmodule.modulestore.exceptions import ItemNotFoundError
 
 from instructor_task.api import (
     get_running_instructor_tasks,
@@ -18,21 +13,24 @@ from instructor_task.api import (
     submit_reset_problem_attempts_for_all_students,
     submit_delete_problem_state_for_all_students,
     submit_bulk_course_email,
-    submit_ora2_request_task,
     submit_calculate_students_features_csv,
     submit_cohort_students,
 )
 
 from instructor_task.api_helper import AlreadyRunningError
 from instructor_task.models import InstructorTask, PROGRESS
+from instructor_task.tests.test_base import (InstructorTaskTestCase,
+                                             InstructorTaskCourseTestCase,
+                                             InstructorTaskModuleTestCase,
+                                             TestReportMixin,
+                                             TEST_COURSE_KEY)
+
+# Stanford-specific
+from instructor_task.api import submit_ora2_request_task
 from instructor_task.tasks import get_ora2_responses
-from instructor_task.tests.test_base import (
-    InstructorTaskTestCase,
-    InstructorTaskCourseTestCase,
-    InstructorTaskModuleTestCase,
-    TestReportMixin,
-    TEST_COURSE_KEY
-)
+from xmodule.modulestore.exceptions import ItemNotFoundError
+from mock import MagicMock
+# Stanford-specific
 
 
 class InstructorTaskReportTest(InstructorTaskTestCase):

@@ -12,7 +12,6 @@ from lxml import html, etree
 
 from django.conf import settings
 from django.utils.timezone import UTC
-from django.core.urlresolvers import reverse
 from django.utils.html import escape
 from edxmako.shortcuts import render_to_string
 from xblock.exceptions import InvalidScopeError
@@ -23,7 +22,11 @@ from xmodule.vertical_module import VerticalModule
 from xmodule.x_module import shim_xmodule_js, XModuleDescriptor, XModule, PREVIEW_VIEWS, STUDIO_VIEW
 from xmodule.modulestore import ModuleStoreEnum
 from xmodule.modulestore.django import modulestore
+
+# Stanford-specific
+from django.core.urlresolvers import reverse
 from courseware.inline_analytics_utils import get_responses_data
+# Stanford-specific
 
 log = logging.getLogger(__name__)
 

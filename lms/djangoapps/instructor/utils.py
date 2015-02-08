@@ -2,13 +2,15 @@
 Helpers for instructor app.
 """
 
-from django import db
-
 from xmodule.modulestore.django import modulestore
 
 from courseware.model_data import FieldDataCache
 from courseware.module_render import get_module
+
+# Stanford-specific
+from django import db
 from util.query import get_read_replica_cursor_if_available
+# Stanford-specific
 
 
 class DummyRequest(object):

@@ -5,7 +5,6 @@ JSON views which the instructor dashboard requests.
 
 Many of these GETs may become PUTs in the future.
 """
-import hashlib
 import StringIO
 import json
 import logging
@@ -94,11 +93,15 @@ from opaque_keys.edx.keys import CourseKey
 from opaque_keys.edx.locations import SlashSeparatedCourseKey
 from opaque_keys import InvalidKeyError
 from student.models import UserProfile, Registration
+
+# Stanford-specific
+import hashlib
 import instructor.views.data_access as data_access
 from instructor.views.data_access_constants import QueryType, StudentQuery
 from instructor.views.data_access_constants import REVERSE_INCLUSION_MAP, INCLUDE_SECTION_PATTERN
 from instructor.views.data_access_constants import INCLUDE_PROBLEM_PATTERN, ALL_PROBLEM_FILTERS, ALL_SECTION_FILTERS
 from instructor.tasks import make_single_query
+# Stanford-specific
 
 log = logging.getLogger(__name__)
 

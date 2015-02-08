@@ -9,8 +9,6 @@ import time
 import json
 from collections import defaultdict
 from pytz import UTC
-from pytz import timezone
-import json
 
 from django.conf import settings
 from django.contrib.auth import logout, authenticate, login
@@ -68,15 +66,11 @@ from opaque_keys import InvalidKeyError
 from opaque_keys.edx.locations import SlashSeparatedCourseKey
 from opaque_keys.edx.locator import CourseLocator
 from xmodule.modulestore import ModuleStoreEnum
-from xmodule.course_module import CourseDescriptor
-from xmodule.modulestore.exceptions import ItemNotFoundError
 
 from collections import namedtuple
 
-from courseware.courses import get_course_about_section
 from courseware.courses import get_courses, sort_by_announcement, sort_by_start_date  # pylint: disable=import-error
 from courseware.access import has_access
-from courseware.models import CoursePreference
 
 from django_comment_common.models import Role
 
@@ -84,7 +78,6 @@ from external_auth.models import ExternalAuthMap
 import external_auth.views
 
 from bulk_email.models import Optout, CourseAuthorization
-from cme_registration.views import cme_register_user, cme_create_account
 
 import shoppingcart
 from openedx.core.djangoapps.user_api.models import UserPreference
@@ -97,7 +90,6 @@ import dogstats_wrapper as dog_stats_api
 from util.db import commit_on_success_with_read_committed
 from util.json_request import JsonResponse
 from util.bad_request_rate_limiter import BadRequestRateLimiter
-from util.keyword_substitution import substitute_keywords_with_data
 from util.milestones_helpers import (
     get_pre_requisite_courses_not_completed,
 )
@@ -120,6 +112,17 @@ from openedx.core.djangoapps.user_api.api import profile as profile_api
 
 import analytics
 from eventtracking import tracker
+
+# Stanford-specific
+from pytz import timezone
+import json
+from xmodule.course_module import CourseDescriptor
+from xmodule.modulestore.exceptions import ItemNotFoundError
+from courseware.courses import get_course_about_section
+from courseware.models import CoursePreference
+from cme_registration.views import cme_register_user, cme_create_account
+from util.keyword_substitution import substitute_keywords_with_data
+# Stanford-specific
 
 
 log = logging.getLogger("edx.student")
