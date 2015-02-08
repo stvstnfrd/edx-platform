@@ -13,7 +13,7 @@ from contentstore.utils import reverse_course_url
 from xmodule.modulestore.django import modulestore
 from opaque_keys.edx.keys import CourseKey
 
-from .access import has_course_access
+# from .access import has_course_access
 
 __all__ = ['utility_handler']
 
@@ -31,8 +31,9 @@ def utility_handler(request, course_key_string):
         json: return json representing all utilities.
     """
     course_key = CourseKey.from_string(course_key_string)
-    if not has_course_access(request.user, course_key):
-        raise PermissionDenied()
+    # if not has_course_access(request.user, course_key):
+    #    raise PermissionDenied()
+    raise PermissionDenied()
     course_module = modulestore().get_course(course_key)
     json_request = 'application/json' in request.META.get('HTTP_ACCEPT', 'application/json')
     if request.method == 'GET':
