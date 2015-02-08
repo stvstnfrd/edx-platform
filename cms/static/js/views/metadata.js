@@ -247,7 +247,7 @@ function(BaseView, _, MetadataModel, AbstractEditor, FileUpload, UploadDialog, V
             if (parseInt(value, 10)) {
                 this.showWarning();
             } else {
-                this.hideWarning(); 
+                this.hideWarning();
             }
         },
 

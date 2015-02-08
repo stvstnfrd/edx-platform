@@ -55,14 +55,14 @@
 % endif
 
     <p>${_('Have <strong>general questions about {platform_name}</strong>? You can find lots of helpful information in the {platform_name} Help Center.').format(platform_name=platform_name)}</p>
-	
-	<ul class="help-buttons">
-	  <li><a class="help-modal-button" href="https://stanfordonline.zendesk.com/hc" target="_blank">
-		${_('Access the Help Center')}
-	  </a></li>
-	</ul>
 
-	<hr>
+    <ul class="help-buttons">
+        <li><a class="help-modal-button" href="https://stanfordonline.zendesk.com/hc" target="_blank">
+        ${_('Access the Help Center')}
+      </a></li>
+    </ul>
+
+    <hr>
 % if course:
     <p>${_("Can't find an answer to your question? You can contact the {platform_name} general support team directly {link_start}by clicking here{link_end}.").format(
         platform_name=platform_name,
@@ -74,18 +74,18 @@
         platform_name=platform_name
       )}</p>
 % else:
-	<p>${_('Here are some of the most popular articles from the Help Center:')}</p>
-	<ul class="help-buttons">
-	  <li><a href="https://stanfordonline.zendesk.com/hc/en-us/articles/202275024-How-do-I-create-an-account-" target="_blank">
-		${_('How to register an account')}
-	  </a></li>
-	  <li><a href="https://stanfordonline.zendesk.com/hc/en-us/articles/201864484-How-do-I-reset-my-password-" target="_blank">
-		${_('How to reset a password')}
-	  </a></li>
-	  <li><a href="https://stanfordonline.zendesk.com/hc/en-us/articles/203009244-How-do-I-enroll-in-a-course-" id="howto-enroll-link" target="_blank">
-		${_('How to enroll in a course')}
-	  </a></li>
-	</ul>
+    <p>${_('Here are some of the most popular articles from the Help Center:')}</p>
+    <ul class="help-buttons">
+      <li><a href="https://stanfordonline.zendesk.com/hc/en-us/articles/202275024-How-do-I-create-an-account-" target="_blank">
+        ${_('How to register an account')}
+      </a></li>
+      <li><a href="https://stanfordonline.zendesk.com/hc/en-us/articles/201864484-How-do-I-reset-my-password-" target="_blank">
+        ${_('How to reset a password')}
+      </a></li>
+      <li><a href="https://stanfordonline.zendesk.com/hc/en-us/articles/203009244-How-do-I-enroll-in-a-course-" id="howto-enroll-link" target="_blank">
+        ${_('How to enroll in a course')}
+      </a></li>
+    </ul>
 % endif
 
   </div>
@@ -150,8 +150,8 @@
     <p>
     ${_(
         'Thank you for your inquiry or feedback. We typically respond to a request within three '
-	'business days. In the meantime, please review our {link_start}Help Center articles{link_end}, '
-	'where answers to many common questions have been posted.'
+        'business days. In the meantime, please review our {link_start}Help Center articles{link_end}, '
+        'where answers to many common questions have been posted.'
     ).format(
         open_time=open_time,
         close_time=close_time,

@@ -148,8 +148,14 @@ def dump_module(module, destination=None, inherited=False, defaults=False):
     return destination
 
 
-def dump_module_by_position(course_id, module, level=0, 
-                            destination=None, prefix=None, parent=None):
+def dump_module_by_position(
+    course_id,
+    module,
+    level=0,
+    destination=None,
+    prefix=None,
+    parent=None,
+):
     """
     Add a module and all of its children to the end of the list.
     Keep a running tally of position in the list and indent level.
@@ -175,19 +181,25 @@ def dump_module_by_position(course_id, module, level=0,
                          'path',
                          'parent') ]
 
-    destination.append( (course_id,
-                         pos, 
-                         level, 
-                         module.id, 
-                         module.location.category,
-                         module.display_name, 
-                         display_name_long,
-                         parent) )
+    destination.append(
+        (
+            course_id,
+            pos,
+            level,
+            module.id,
+            module.location.category,
+            module.display_name,
+            display_name_long,
+            parent,
+        )
+    )
     for child in module.get_children():
-        dump_module_by_position(course_id, 
-                                child, 
-                                level=level+1, 
-                                destination=destination, 
-                                prefix=display_name_long, 
-                                parent=module.id)
+        dump_module_by_position(
+            course_id,
+            child,
+            level=level+1,
+            destination=destination,
+            prefix=display_name_long,
+            parent=module.id,
+        )
     return destination

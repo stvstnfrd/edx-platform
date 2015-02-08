@@ -24,12 +24,12 @@ window.InlineAnalytics = (function() {
         var arrayLength = partsToGet.length;
         for (index = 0; index < arrayLength; index++) {
             partId = partsToGet[index];
-            
+
             if (messageByPart[partId]) {
-            	// An error was encountered processing the API data so set the appropriate
-            	// error message and continue.
-            	setErrorMessageOnPart(partId, messageByPart[partId]);
-            	continue;
+                // An error was encountered processing the API data so set the appropriate
+                // error message and continue.
+                setErrorMessageOnPart(partId, messageByPart[partId]);
+                continue;
             }
 
             if (countByPart[partId]) {
@@ -110,29 +110,28 @@ window.InlineAnalytics = (function() {
 
         // Build the array of choice texts
         var choiceText = getChoiceTexts(partId);
-        
+
         // Generate choice name array
         var choiceNameArray = JSON.parse(choiceNameString);
 
         if (result) {
             // Build the array of value_id's
             valueIdArray = constructValueIdArray(result);
-        	
+
             // Loop through choiceNameArray and construct row array.
             // We can determine if any rows are "missing" from the api data
             // since the choiceNameArray is a list of all possible rows.
             arrayLength = choiceNameArray.length;
             for (index = 0; index < arrayLength; index++) {
-            
                 // If value is not in array then add row
                 if (valueIdArray.indexOf(choiceNameArray[index]) === -1) {
-                	insertMissingRows(partId,
-                	    index,
-                	    index + 1,
-                	    correctResponse,
-                	    choiceText,
-                	    choiceNameArray,
-                	    trs);
+                    insertMissingRows(partId,
+                        index,
+                        index + 1,
+                        correctResponse,
+                        choiceText,
+                        choiceNameArray,
+                        trs);
                 } else {
                     currentResult = result[valueIdArray.indexOf(choiceNameArray[index])]
                     correct = currentResult['correct'];
@@ -363,7 +362,7 @@ window.InlineAnalytics = (function() {
     function getChoiceTexts(partId) {
         var choiceText = [];
         $('#inputtype_' + partId).find("fieldset label").each(function(index) {
-        	// Filter out the tick or cross text indicating correctness if present
+            // Filter out the tick or cross text indicating correctness if present
             choiceText[index] = $(this).contents().filter(function() {
                 return this.nodeType === 3; //Node.TEXT_NODE
             }).text();
@@ -418,7 +417,7 @@ window.InlineAnalytics = (function() {
         elementId,
         message) {
         // Set the error message on the element
-    	$('#' + elementId + '_analytics').html(message);
+        $('#' + elementId + '_analytics').html(message);
     }
 
 
@@ -427,7 +426,7 @@ window.InlineAnalytics = (function() {
         valueIdArray = result.map(function(element) {
             return element['value_id'];
         });
-    	return valueIdArray;
+        return valueIdArray;
     }
 
 
@@ -487,10 +486,10 @@ window.InlineAnalytics = (function() {
             }
 
             var data = {
-            		module_id: location,
-            		question_types_by_part: questionTypesByPart,
-            		num_options_by_part: numOptionsByPart,
-            		course_id: courseId,
+                    module_id: location,
+                    question_types_by_part: questionTypesByPart,
+                    num_options_by_part: numOptionsByPart,
+                    course_id: courseId,
             };
 
             if (partsToGet.length > 0) {
@@ -518,8 +517,8 @@ window.InlineAnalytics = (function() {
                 });
 
             } else {
-            	// API was not called, (no parts to get) so display the existing messages
-            	$('#' + elementId + '_analytics_close').show();
+                // API was not called, (no parts to get) so display the existing messages
+                $('#' + elementId + '_analytics_close').show();
             }
         });
 
