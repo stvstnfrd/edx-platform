@@ -103,9 +103,9 @@ __all__ = ['course_info_handler', 'course_handler', 'course_listing',
            'grading_handler',
            'advanced_settings_handler',
            'course_notifications_handler',
+           'send_test_enrollment_email',
            'textbooks_list_handler', 'textbooks_detail_handler',
-           'group_configurations_list_handler', 'group_configurations_detail_handler',
-           'send_test_enrollment_email']
+           'group_configurations_list_handler', 'group_configurations_detail_handler']
 
 log = logging.getLogger(__name__)
 
