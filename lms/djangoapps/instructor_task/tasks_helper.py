@@ -673,7 +673,7 @@ def push_student_responses_to_s3(_xmodule_instance_args, _entry_id, course_id, _
         rows
     )
 
-    return "succeeded" 
+    return "succeeded"
 
 
 def push_ora2_responses_to_s3(_xmodule_instance_args, _entry_id, course_id, _task_input, action_name):

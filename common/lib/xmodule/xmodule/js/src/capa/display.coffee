@@ -163,7 +163,7 @@ class @Problem
             @maybeSetupTimer()
 
   getSecondsLeft: =>
-    # Returns 
+    # Returns
     #   a nonnegative integer representing seconds left on a timed exam.
     #   -1 on error
     if _.isUndefined(@startTime) or _.isUndefined(@totalSeconds)
@@ -180,7 +180,7 @@ class @Problem
       @secondsBeforeWarning = parseInt(@$timer.data('secondsBeforeWarning'), 10)
       @submittedBeforeTimeExpired = false
 
-      # The timer is initially hidden by CSS 
+      # The timer is initially hidden by CSS
       @$timer.show()
 
       # Clear old timers, eg. if we press the submit button

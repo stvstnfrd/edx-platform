@@ -950,7 +950,7 @@ class CourseEnrollment(models.Model):
                until we have these mapped out.
 
         `should_send_email` is a boolean that specifies if a course enrollment
-        email should be sent to the given user. 
+        email should be sent to the given user.
 
         `check_access`: if True, we check that an accessible course actually
                 exists for the given course_key before we enroll the student.

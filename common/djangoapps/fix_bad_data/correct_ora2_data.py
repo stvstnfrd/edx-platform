@@ -5,8 +5,8 @@
     Fixes submission_score.points_earned for records affected by the track changes bug.
     Updates submission_scoresummary as a reult of this.
     Updates assessment_trackchanges.edited_content with a message from the course staff.
-    
-    To run this, create a file of TrackChanges ID's (see read_file method) and run the 
+
+    To run this, create a file of TrackChanges ID's (see read_file method) and run the
     "correct_ora2_scores" method from the command line.
 """
 
@@ -134,8 +134,8 @@ def correct_ora2_scores():
     """
     Fix up the ora2 scores affected by ORA2 bug (see top of file)". Also, update the assessment edited content with a message
     informing the student of this action.
-    
-    Spreadsheet of track changes items affected by the bug: 
+
+    Spreadsheet of track changes items affected by the bug:
     https://docs.google.com/spreadsheets/d/1IumfVAJohQeKd-KLuaL8D0gjczucy0uA4U_LiWgxmeE/edit#gid=1739770575
 
     The list below was taken from the above spreadsheet.
