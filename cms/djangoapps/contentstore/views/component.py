@@ -308,7 +308,7 @@ def get_component_templates(courselike, library=False):
     advanced_component_templates = {"type": "advanced", "templates": [], "display_name": _("Advanced")}
     advanced_component_types = _advanced_component_types()
     # Set component types according to course policy file
-    if isinstance(course_advanced_keys, list):
+    if hasattr(course_advanced_keys, '__iter__'):
         for category in course_advanced_keys:
             if category in advanced_component_types and category not in categories:
                 # boilerplates not supported for advanced components
