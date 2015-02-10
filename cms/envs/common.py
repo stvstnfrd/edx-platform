@@ -862,6 +862,10 @@ ADVANCED_COMPONENT_TYPES = [
     'schoolyourself_lesson',
 ]
 
+# XBlock types listed here will _always_ be selectable as Studio components
+XBLOCKS_ALWAYS_IN_STUDIO = [
+]
+
 # Adding components in this list will disable the creation of new problem for those
 # compoenents in studio. Existing problems will work fine and one can edit them in studio
 DEPRECATED_ADVANCED_COMPONENT_TYPES = []
