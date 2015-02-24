@@ -29,7 +29,7 @@ import urllib
 from pytz import UTC
 from courseware.courses import get_course
 from courseware.tests.factories import StudentModuleFactory
-from courseware.tests.modulestore_config import TEST_DATA_MIXED_MODULESTORE
+from courseware.tests.modulestore_config import TEST_DATA_MOCK_MODULESTORE
 from opaque_keys.edx.keys import CourseKey
 from opaque_keys.edx.locations import Location
 from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
@@ -229,7 +229,7 @@ class TestStudentReport(TestReportMixin, InstructorTaskCourseTestCase):
         self.assertDictContainsSubset({'attempted': num_students, 'succeeded': num_students, 'failed': 0}, result)
 
 
-@override_settings(MODULESTORE=TEST_DATA_MIXED_MODULESTORE)
+@override_settings(MODULESTORE=TEST_DATA_MOCK_MODULESTORE)
 class TestReponsesReport(TestReportMixin, ModuleStoreTestCase):
     """
     Tests that CSV student responses report generation works.

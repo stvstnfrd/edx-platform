@@ -388,7 +388,7 @@ class AboutWithClosedEnrollment(ModuleStoreTestCase):
         self.assertNotIn('<span class="important-dates-item-text">$10</span>', resp.content)
 
 
-@override_settings(MODULESTORE=TEST_DATA_MIXED_MODULESTORE)
+@override_settings(MODULESTORE=TEST_DATA_MOCK_MODULESTORE)
 class AboutSidebarHTMLTestCase(ModuleStoreTestCase):
     """
     This test case will check the About page for the content in the HTML sidebar.

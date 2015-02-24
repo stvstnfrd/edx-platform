@@ -28,10 +28,10 @@ from .helpers import CohortFactory, config_course_cohorts
 
 TEST_DATA_DIR = settings.COMMON_TEST_DATA_ROOT
 TEST_MAPPING = {'edX/toy/2012_Fall': 'xml'}
-TEST_DATA_MIXED_MODULESTORE = mixed_store_config(TEST_DATA_DIR, TEST_MAPPING, include_xml=True)
+TEST_DATA_MOCK_MODULESTORE = mixed_store_config(TEST_DATA_DIR, TEST_MAPPING, include_xml=True)
 
 
-@override_settings(MODULESTORE=TEST_DATA_MIXED_MODULESTORE)
+@override_settings(MODULESTORE=TEST_DATA_MOCK_MODULESTORE)
 class TestCohortPartitionScheme(django.test.TestCase):
     """
     Test the logic for linking a user to a partition group based on their cohort.
@@ -272,7 +272,7 @@ class TestExtension(django.test.TestCase):
             UserPartition.get_scheme('other')
 
 
-@override_settings(MODULESTORE=TEST_DATA_MIXED_MODULESTORE)
+@override_settings(MODULESTORE=TEST_DATA_MOCK_MODULESTORE)
 class TestGetCohortedUserPartition(django.test.TestCase):
     """
     Test that `get_cohorted_user_partition` returns the first user_partition with scheme `CohortPartitionScheme`.

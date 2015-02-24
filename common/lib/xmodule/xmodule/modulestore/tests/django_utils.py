@@ -175,7 +175,7 @@ TEST_DATA_MIXED_GRADED_MODULESTORE = mixed_store_config(
 # All store requests now go through mixed
 # Use this modulestore if you specifically want to test mongo and not a mocked modulestore.
 # This modulestore definition below will not load any xml courses.
-TEST_DATA_MONGO_MODULESTORE = mixed_store_config(mkdtemp(), {}, include_xml=False)
+TEST_DATA_MOCK_MODULESTORE = mixed_store_config(mkdtemp(), {}, include_xml=False)
 
 # Unit tests that are not specifically testing the modulestore implementation but just need course context can use a mocked modulestore.
 # Use this modulestore if you do not care about the underlying implementation.

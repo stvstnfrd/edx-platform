@@ -30,7 +30,7 @@ import pytz
 from django.test.utils import override_settings
 from courseware.courses import get_course
 from courseware.tests.factories import StudentModuleFactory
-from courseware.tests.modulestore_config import TEST_DATA_MIXED_MODULESTORE
+from courseware.tests.modulestore_config import TEST_DATA_MOCK_MODULESTORE
 from instructor_analytics.basic import student_responses
 from opaque_keys.edx.locations import Location
 from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
@@ -364,7 +364,7 @@ class TestCourseRegistrationCodeAnalyticsBasic(ModuleStoreTestCase):
             )
 
 
-@override_settings(MODULESTORE=TEST_DATA_MIXED_MODULESTORE)
+@override_settings(MODULESTORE=TEST_DATA_MOCK_MODULESTORE)
 class TestStudentSubmissionsAnalyticsBasic(ModuleStoreTestCase):
     """ Test basic student responses analytics function. """
     def load_course(self, course_id):

@@ -22,7 +22,7 @@ from ..tests.helpers import topic_name_to_id, config_course_cohorts, CohortFacto
 
 TEST_DATA_DIR = settings.COMMON_TEST_DATA_ROOT
 TEST_MAPPING = {'edX/toy/2012_Fall': 'xml'}
-TEST_DATA_MIXED_MODULESTORE = mixed_store_config(TEST_DATA_DIR, TEST_MAPPING)
+TEST_DATA_MOCK_MODULESTORE = mixed_store_config(TEST_DATA_DIR, TEST_MAPPING)
 
 
 @patch("openedx.core.djangoapps.course_groups.cohorts.tracker")
@@ -594,7 +594,7 @@ class TestCohorts(TestCase):
         )
 
 
-@override_settings(MODULESTORE=TEST_DATA_MIXED_MODULESTORE)
+@override_settings(MODULESTORE=TEST_DATA_MOCK_MODULESTORE)
 class TestCohortsAndPartitionGroups(TestCase):
 
     def setUp(self):
