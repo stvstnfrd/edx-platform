@@ -367,40 +367,36 @@ class TestCourseRegistrationCodeAnalyticsBasic(ModuleStoreTestCase):
 @override_settings(MODULESTORE=TEST_DATA_MOCK_MODULESTORE)
 class TestStudentSubmissionsAnalyticsBasic(ModuleStoreTestCase):
     """ Test basic student responses analytics function. """
-    def load_course(self, course_id):
-        course_key = SlashSeparatedCourseKey.from_deprecated_string(course_id)
-        self.course = get_course(course_key)
-
-    def create_student(self):
+    def create_student(self, course):
         self.student = UserFactory()
-        CourseEnrollment.enroll(self.student, self.course.id)
+        CourseEnrollment.enroll(self.student, course.id)
 
     def test_empty_course(self):
-        self.course = CourseFactory.create()
-        self.create_student()
+        course = CourseFactory.create()
+        self.create_student(course)
 
-        datarows = list(student_responses(self.course))
+        datarows = list(student_responses(course))
         self.assertEqual(datarows, [])
 
     def test_full_course_no_students(self):
-        self.load_course('edX/simple/2012_Fall')
+        course = CourseFactory.create()
 
-        datarows = list(student_responses(self.course))
+        datarows = list(student_responses(course))
         self.assertEqual(datarows, [])
 
     def test_invalid_module_state(self):
-        self.load_course('edX/graded/2012_Fall')
+        course = CourseFactory.create()
         self.problem_location = Location("edX", "graded", "2012_Fall", "problem", "H1P2")
 
-        self.create_student()
+        self.create_student(course)
         StudentModuleFactory.create(
-            course_id=self.course.id,
+            course_id=course.id,
             module_state_key=self.problem_location,
             student=self.student,
             grade=0,
             state=u'{"student_answers":{"fake-problem":"No idea"}}}'
         )
 
-        datarows = list(student_responses(self.course))
+        datarows = list(student_responses(course))
         #Invalid module state response will be skipped, so datarows should be empty
         self.assertEqual(len(datarows), 0)

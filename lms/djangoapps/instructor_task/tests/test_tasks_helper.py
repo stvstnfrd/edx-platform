@@ -235,8 +235,7 @@ class TestReponsesReport(TestReportMixin, ModuleStoreTestCase):
     Tests that CSV student responses report generation works.
     """
     def test_unicode(self):
-        course_key = CourseKey.from_string('edX/unicode_graded/2012_Fall')
-        self.course = get_course(course_key)
+        self.course = CourseFactory.create()
         self.problem_location = Location("edX", "unicode_graded", "2012_Fall", "problem", "H1P1")
 
         self.student = UserFactory(username=u'student\xec')
