@@ -156,7 +156,7 @@ class ModuleRenderTestCase(ModuleStoreTestCase, LoginEnrollmentTestCase):
         module = render.get_module(
             self.mock_user,
             mock_request,
-            self.location,
+            self.course_key.make_usage_key('html', 'toyjumpto'),
             field_data_cache,
             self.toy_course.id,
         )
@@ -178,7 +178,7 @@ class ModuleRenderTestCase(ModuleStoreTestCase, LoginEnrollmentTestCase):
         module = render.get_module(
             self.mock_user,
             mock_request,
-            self.location,
+            self.course_key.make_usage_key('html', 'toyjumpto'),
             field_data_cache,
             self.toy_course.id,
         )
