@@ -364,26 +364,6 @@ section.wiki {
     padding: 7px;
   }
 
-  .schematic_container {
-    position: relative;
-
-    canvas {
-      box-shadow: 0 0 1px 1px $shadow-l1, 0 1px 6px $shadow;
-    }
-
-    &:before {
-      @extend %ui-depth4;
-      content: 'click to edit schematic';
-      position: absolute;
-      top: 10px;
-      left: 7px;
-      font-family: $sans-serif;
-      font-size: 0.75em;
-      color: #aaa;
-      pointer-events: none;
-    }
-  }
-
   .markItUpContainer {
     margin-right: 0;
   }
@@ -971,58 +951,4 @@ section.wiki {
 .modal-preview .main-article {
   width: 100% !important;
   margin-left: 0;
-}
-
-
-#circuit_editor_modal.modal {
-  @extend %ui-depth4;
-  width: 648px;
-  margin-left: -325px;
-  top: 150px;
-
-  .modal-header {
-    h1, p {
-      color: $white;
-    }
-
-    h1 {
-      margin: 3px 12px 8px;
-      font-size: 1.1em;
-    }
-
-    p {
-      font-size: 0.9em;
-      margin: 5px 12px 20px;
-      line-height: 1em;
-    }
-  }
-
-  .modal-body {
-    padding-bottom: 8px;
-  }
-
-  .modal-footer {
-    margin: 12px;
-  }
-
-  .modal-footer .btn {
-    @include button(simple, #eee);
-    font-size: 0.8em;
-    margin-right: ($baseline/4);
-    line-height: 1.2em;
-    text-transform: none !important;
-    letter-spacing: 0 !important;
-
-    &:hover, &:focus {
-      color: $base-font-color;
-      text-decoration: none;
-    }
-
-    &.btn-primary {
-      @include button;
-      font-size: 0.8em;
-    }
-
-    margin-right: ($baseline/2);
-  }
 }
