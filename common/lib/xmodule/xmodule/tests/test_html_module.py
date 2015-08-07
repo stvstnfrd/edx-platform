@@ -1,6 +1,7 @@
 import unittest
 
-from mock import Mock, patch
+from mock import Mock
+from mock import patch
 
 from xblock.field_data import DictFieldData
 from xmodule.html_module import HtmlModule, HtmlDescriptor

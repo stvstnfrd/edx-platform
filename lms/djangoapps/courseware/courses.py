@@ -25,7 +25,6 @@ from courseware.model_data import FieldDataCache
 from courseware.module_render import get_module
 from student.models import CourseEnrollment
 import branding
-from student.models import CourseEnrollment
 
 from opaque_keys.edx.keys import UsageKey
 

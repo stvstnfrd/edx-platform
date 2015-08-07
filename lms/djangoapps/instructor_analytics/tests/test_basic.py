@@ -4,7 +4,7 @@ Tests for instructor.basic
 
 from courseware.courses import get_course
 from courseware.tests.factories import StudentModuleFactory
-from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase, TEST_DATA_MIXED_GRADED_MODULESTORE
+from xmodule.modulestore.tests.django_utils import TEST_DATA_MIXED_GRADED_MODULESTORE
 from opaque_keys.edx.keys import CourseKey
 from opaque_keys.edx.locations import Location
 
@@ -20,11 +20,13 @@ from shoppingcart.models import (
 )
 from course_modes.models import CourseMode
 from instructor_analytics.basic import (
+    student_responses,
     sale_record_features, sale_order_record_features, enrolled_students_features, course_registration_features,
-    coupon_codes_features, student_responses, AVAILABLE_FEATURES, STUDENT_FEATURES, PROFILE_FEATURES,
+    coupon_codes_features, AVAILABLE_FEATURES, STUDENT_FEATURES, PROFILE_FEATURES
 )
 from openedx.core.djangoapps.course_groups.tests.helpers import CohortFactory
 from courseware.tests.factories import InstructorFactory
+from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
 from xmodule.modulestore.tests.factories import CourseFactory
 
 import datetime

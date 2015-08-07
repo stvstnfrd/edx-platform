@@ -28,7 +28,8 @@ from courseware.grades import iterate_grades_for
 from courseware.models import StudentModule
 from courseware.model_data import FieldDataCache
 from courseware.module_render import get_module_for_descriptor_internal
-from instructor_analytics.basic import student_response_rows, enrolled_students_features
+from instructor_analytics.basic import enrolled_students_features
+from instructor_analytics.basic import student_response_rows
 from instructor_analytics.csvs import format_dictlist
 from instructor_task.models import ReportStore, InstructorTask, PROGRESS
 from lms.djangoapps.lms_xblock.runtime import LmsPartitionService
