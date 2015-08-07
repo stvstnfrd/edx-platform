@@ -120,7 +120,6 @@ class StubYouTubeHandler(StubHttpRequestHandler):
 
         # Construct the response content
         callback = self.get_params['callback']
-
         data = OrderedDict({
             'items': list(
                 OrderedDict({

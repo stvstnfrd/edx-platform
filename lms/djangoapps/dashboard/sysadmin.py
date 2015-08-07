@@ -52,6 +52,7 @@ from xmodule.modulestore import ModuleStoreEnum
 from xmodule.modulestore.django import modulestore
 from xmodule.modulestore.xml import XMLModuleStore
 
+
 log = logging.getLogger(__name__)
 
 
@@ -636,7 +637,6 @@ class Courses(SysadminDashboardView):
                                  page='courses_sysdashboard')
 
         courses = {course.id: course for course in self.get_courses()}
-
         if action == 'add_course':
             gitloc = request.POST.get('repo_location', '').strip().replace(' ', '').replace(';', '')
             branch = request.POST.get('repo_branch', '').strip().replace(' ', '').replace(';', '')

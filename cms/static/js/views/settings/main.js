@@ -76,7 +76,7 @@ var DetailsView = ValidatingView.extend({
 
         this.$el.find('#' + this.fieldToSelectorMap['overview']).val(this.model.get('overview'));
         this.codeMirrorize(null, $('#course-overview')[0]);
-        
+
         this.$el.find('#' + this.fieldToSelectorMap['about_sidebar_html']).val(this.model.get('about_sidebar_html'));
         this.codeMirrorize(null, $('#course-about-sidebar-html')[0]);
 

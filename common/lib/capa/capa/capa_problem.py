@@ -114,6 +114,7 @@ class LoncapaProblem(object):
     """
     Main class for capa Problems.
     """
+
     def __init__(self, problem_text, id, capa_system, capa_module,  # pylint: disable=redefined-builtin
                  state=None, seed=None):
         """

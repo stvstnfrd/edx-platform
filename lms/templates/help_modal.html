@@ -12,7 +12,7 @@
 % if settings.FEATURES.get('ENABLE_FEEDBACK_SUBMISSION', False):
 
 <div class="help-tab">
-    <a href="#help-modal" rel="leanModal" role="button">${_("Help")}</a>
+  <a href="#help-modal" rel="leanModal" role="button">${_("Help")}</a>
 </div>
 
 <section id="help-modal" class="modal" aria-hidden="true" role="dialog" aria-label="${_("{platform_name} Help").format(platform_name=platform_name)}">
@@ -50,7 +50,6 @@
 % endif
 
     <p>${_('Have <strong>general questions about {platform_name}</strong>? You can find lots of helpful information in the {platform_name} Help Center.').format(platform_name=platform_name)}</p>
-	
 	<ul class="help-buttons">
 	  <li><a class="help-modal-button" href="https://stanfordonline.zendesk.com/hc" target="_blank">
 		${_('Access the Help Center')}
@@ -68,6 +67,7 @@
     <p class="note">${_('Please note: The {platform_name} support team is English speaking. While we will do our best to address your inquiry in any language, our responses will be in English.').format(
         platform_name=platform_name
       )}</p>
+
 % else:
 	<p>${_('Here are some of the most popular articles from the Help Center:')}</p>
 	<ul class="help-buttons">

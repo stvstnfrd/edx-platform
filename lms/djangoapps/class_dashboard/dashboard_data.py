@@ -431,6 +431,7 @@ def get_d3_section_grade_distrib(course_id, section, enrollment):
         'value' - Maps to the height of the bar, along the y-axis
         'tooltip' - (Optional) Text to display on mouse hover
     """
+
     # Retrieve course object down to problems
     course = modulestore().get_course(course_id, depth=4)
 
@@ -565,7 +566,6 @@ def get_students_opened_subsection(request, csv=False):
     ).exclude(student_id__in=non_student_list).values('student__id', 'student__username', 'student__profile__name').order_by('student__profile__name')
 
     results = []
-
     if not csv:
         # Restrict screen list length
         # Adding 1 so can tell if list is larger than MAX_SCREEN_LIST_LENGTH
@@ -575,6 +575,7 @@ def get_students_opened_subsection(request, csv=False):
                 'name': student['student__profile__name'],
                 'username': student['student__username'],
             })
+
         max_exceeded = False
         if len(results) > MAX_SCREEN_LIST_LENGTH:
             # Remove the last item so list length is exactly MAX_SCREEN_LIST_LENGTH
@@ -590,6 +591,7 @@ def get_students_opened_subsection(request, csv=False):
 
         # Subsection name is everything after 3rd space in tooltip
         filename = sanitize_filename(' '.join(tooltip.split(' ')[3:]))
+
         header = [_("Name").encode('utf-8'), _("Username").encode('utf-8')]
         for student in students:
             results.append([student['student__profile__name'], student['student__username']])
@@ -621,7 +623,6 @@ def get_students_problem_grades(request, csv=False):
     ).exclude(student_id__in=non_student_list).values('student__username', 'student__profile__name', 'grade', 'max_grade').order_by('student__profile__name')
 
     results = []
-
     if not csv:
         # Restrict screen list length
         # Adding 1 so can tell if list is larger than MAX_SCREEN_LIST_LENGTH
@@ -637,6 +638,7 @@ def get_students_problem_grades(request, csv=False):
             if student['max_grade'] > 0:
                 student_dict['percent'] = round(student['grade'] * 100 / student['max_grade'])
             results.append(student_dict)
+
         max_exceeded = False
         if len(results) > MAX_SCREEN_LIST_LENGTH:
             # Remove the last item so list length is exactly MAX_SCREEN_LIST_LENGTH
@@ -654,6 +656,7 @@ def get_students_problem_grades(request, csv=False):
 
         header = [_("Name").encode('utf-8'), _("Username").encode('utf-8'), _("Grade").encode('utf-8'), _("Percent").encode('utf-8')]
         for student in students:
+
             percent = 0
             if student['max_grade'] > 0:
                 percent = round(student['grade'] * 100 / student['max_grade'])

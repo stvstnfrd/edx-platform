@@ -21,6 +21,7 @@ from xmodule.fields import Date
 from xmodule.modulestore import ModuleStoreEnum
 from xmodule.modulestore.django import modulestore
 from opaque_keys.edx.keys import UsageKey
+
 from bulk_email.models import CourseAuthorization
 import csv
 

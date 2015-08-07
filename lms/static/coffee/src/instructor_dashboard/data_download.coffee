@@ -32,7 +32,6 @@ class DataDownload
     @$reports_request_response        = @$reports.find '.request-response'
     @$reports_request_response_error  = @$reports.find '.request-response-error'
 
-
     @report_downloads = new ReportDownloads(@$section)
     @instructor_tasks = new (PendingInstructorTasks()) @$section
     @clear_display()

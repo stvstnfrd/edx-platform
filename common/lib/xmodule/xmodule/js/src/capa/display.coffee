@@ -821,4 +821,3 @@ class @Problem
       @$('.problem-hint').html(response.contents)
       @$('.problem-hint').attr('hint_index', response.hint_index)
       @$('.hint-button').focus()  # a11y focus on click, like the Check button
-
