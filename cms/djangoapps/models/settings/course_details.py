@@ -51,11 +51,11 @@ class CourseDetails(object):
         self.post_enrollment_email = render_to_string('emails/default_post_enrollment_message.txt', {})
         self.pre_enrollment_email_subject = "Thanks for Enrolling in {}".format(self.course_id)
         self.post_enrollment_email_subject = "Thanks for Enrolling in {}".format(self.course_id)
+        self.enable_enrollment_email = False
         self.intro_video = None  # a video pointer
         self.effort = None  # int hours/week
         self.course_image_name = ""
         self.course_image_asset_path = ""  # URL of the course image
-        self.enable_enrollment_email = False
         self.pre_requisite_courses = []  # pre-requisite courses
         self.entrance_exam_enabled = ""  # is entrance exam enabled
         self.entrance_exam_id = ""  # the content location for the entrance exam
