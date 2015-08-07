@@ -885,7 +885,6 @@ def course_about(request, course_id):
         # - Student is already registered for course
         # - Course is already full
         # - Student cannot enroll in course
-        # active_reg_button = not(registered or is_course_full or not can_enroll)
         active_reg_button = not(regularly_registered or is_course_full or not can_enroll)
 
         is_shib_course = uses_shib(course)
