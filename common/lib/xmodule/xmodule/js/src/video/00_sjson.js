@@ -62,8 +62,6 @@ function() {
         };
 
         function filter(start, end) {
-// TODO:FUNK <<<<<<< HEAD
-// TODO:FUNK =======
             /* filters captions that occur between inputs
              * `start` and `end`. Start and end should
              * be Numbers (doubles) corresponding to the
@@ -75,22 +73,13 @@ function() {
              * parallel arrays of start times and
              * their corresponding captions.
              */
-// TODO:FUNK >>>>>>> 00b75f0119b981641833240be214ef2076329747
             var filteredTimes = [];
             var filteredCaptions = [];
             var startTimes = getStartTimes();
             var captions = getCaptions();
-// TODO:FUNK <<<<<<< HEAD
-//           var currentStartTime;
-//           var i;
-//
-//            if (startTimes.length !== captions.length) {
-//                return [];
-// TODO:FUNK =======
 
             if (startTimes.length !== captions.length) {
                 throw new Exception("video caption and start time arrays do not match in length");
-// TODO:FUNK >>>>>>> 00b75f0119b981641833240be214ef2076329747
             }
 
             // if end is null, then it's been set to
@@ -100,19 +89,6 @@ function() {
                 end = startTimes[startTimes.length - 1];
             }
 
-// TODO:FUNK <<<<<<< HEAD
-//            for (i = 0; i < startTimes.length; i++) {
-//              currentStartTime = startTimes[i];
-//              if (currentStartTime >= start && currentStartTime <= end) {
-//                filteredTimes.push(currentStartTime);
-//                filteredCaptions.push(captions[i]);
-//              }
-//            }
-//
-//            return {
-//              'start': filteredTimes,
-//              'captions': filteredCaptions
-// TODO:FUNK =======
             _.filter(startTimes, function(currentStartTime, i) {
                 if (currentStartTime >= start && currentStartTime <= end) {
                     filteredTimes.push(currentStartTime);
@@ -123,7 +99,6 @@ function() {
             return {
                 'start': filteredTimes,
                 'captions': filteredCaptions
-// TODO:FUNK >>>>>>> 00b75f0119b981641833240be214ef2076329747
             };
         }
 

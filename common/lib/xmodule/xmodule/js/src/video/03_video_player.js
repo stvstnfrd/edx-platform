@@ -817,13 +817,8 @@ function (HTML5Video, Resizer) {
         var videoPlayer = this.videoPlayer,
             youTubeId;
 
-// TODO:FUNK <<<<<<< HEAD
-//       if (this.config.endTime !== null) {
-//           duration = Math.min(this.config.endTime, duration);
-// TODO:FUNK =======
         if (this.config.endTime) {
             endTime = Math.min(this.config.endTime, endTime);
-// TODO:FUNK >>>>>>> 00b75f0119b981641833240be214ef2076329747
         }
 
         this.trigger(
