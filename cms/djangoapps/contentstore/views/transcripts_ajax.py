@@ -197,8 +197,7 @@ def check_transcripts(request):
         `video` is html5 or youtube video_id
         `mode` is youtube, ,p4 or webm
 
-    Returns transcripts_presence: dictionary containing the status of the video
-
+    Returns transcripts_presence dict::
     """
     response = {
         'html5_local': [],
