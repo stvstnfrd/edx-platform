@@ -2,9 +2,9 @@
 Test CRUD for authorization.
 """
 import copy
-import mock
 
 from django.contrib.auth.models import User
+from django.test.utils import override_settings
 
 from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
 from contentstore.tests.utils import AjaxEnabledTestClient
@@ -17,6 +17,7 @@ class TestCourseAccess(ModuleStoreTestCase):
     """
     Course-based access (as opposed to access of a non-course xblock)
     """
+    @override_settings(DEFAULT_STORE_FOR_NEW_COURSE=None)
     def setUp(self):
         """
         Create a staff user and log them in (creating the client).
@@ -31,16 +32,15 @@ class TestCourseAccess(ModuleStoreTestCase):
         # create a course via the view handler which has a different strategy for permissions than the factory
         self.course_key = self.store.make_course_key('myu', 'mydept.mycourse', 'myrun')
         course_url = reverse_url('course_handler')
-        with mock.patch.dict('django.conf.settings.FEATURES', {"DEFAULT_STORE_FOR_NEW_COURSE": None}):
-            self.client.ajax_post(
-                course_url,
-                {
-                    'org': self.course_key.org,
-                    'number': self.course_key.course,
-                    'display_name': 'My favorite course',
-                    'run': self.course_key.run,
-                }
-            )
+        self.client.ajax_post(
+            course_url,
+            {
+                'org': self.course_key.org,
+                'number': self.course_key.course,
+                'display_name': 'My favorite course',
+                'run': self.course_key.run,
+            },
+        )
 
         self.users = self._create_users()
 
