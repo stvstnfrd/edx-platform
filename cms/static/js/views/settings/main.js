@@ -25,7 +25,7 @@ var DetailsView = ValidatingView.extend({
         // would love to move to a general superclass, but event hashes don't inherit in backbone :-(
         'focus :input' : "inputFocus",
         'blur :input' : "inputUnfocus",
-        'click .action-upload-image': "uploadImage",
+        'click .action-upload-image': "uploadImage"
     },
 
     initialize : function() {
