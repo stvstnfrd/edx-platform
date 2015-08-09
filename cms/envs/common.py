@@ -45,7 +45,6 @@ from lms.envs.common import (
     PROFILE_IMAGE_SECRET_KEY, PROFILE_IMAGE_MIN_BYTES, PROFILE_IMAGE_MAX_BYTES,
     YOUTUBE_API_KEY,
 )
-from lms.envs.common import ACCOUNT_NAME
 from path import path
 from warnings import simplefilter
 
@@ -118,12 +117,6 @@ FEATURES = {
     # Turn off Advanced Security by default
     'ADVANCED_SECURITY': False,
 
-    # Modulestore to use for new courses
-    'DEFAULT_STORE_FOR_NEW_COURSE': None,
-
-    # Display option to send email confirmation of course enrollment
-    'ENABLE_ENROLLMENT_EMAIL': False,
-
     # Turn off Video Upload Pipeline through Studio, by default
     'ENABLE_VIDEO_UPLOAD_PIPELINE': False,
 
@@ -158,7 +151,7 @@ FEATURES = {
     'ENABLE_LIBRARY_INDEX': False,
 
     # Enable course reruns, which will always use the split modulestore
-    'ALLOW_COURSE_RERUNS': False,
+    'ALLOW_COURSE_RERUNS': True,
 
     # Social Media Sharing on Student Dashboard
     'DASHBOARD_SHARE_SETTINGS': {
@@ -306,9 +299,6 @@ MIDDLEWARE_CLASSES = (
 
     # use Django built in clickjacking protection
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    # Log out sneakpeek users
-    'sneakpeek.middleware.SneakPeekLogoutMiddleware',
 )
 
 # Clickjacking protection can be enabled by setting this to 'DENY'
@@ -674,36 +664,6 @@ YOUTUBE = {
     },
 }
 
-############################## Utilities ##########################################
-
-# Todo: add aws entries for this
-COURSE_UTILITIES = [
-    {
-        'short_description': 'Bulk Operations',
-        'items': [
-            {
-                'short_description': 'Get all captions from YouTube',
-                'long_description': (
-                    'This utility will attempt to get or update captions for all videos '
-                    'in the course from YouTube. Please allow it a couple of minutes to run.'
-                ),
-                'action_url': 'utility_captions_handler',
-                'action_text': 'Check Captions',
-                'action_external': False,
-            },
-            {
-                'short_description': 'Bulk view problem settings',
-                'long_description': (
-                    'This utility will allow you to view all section, subsection '
-                    'and problem settings in one page.'
-                ),
-                'action_url': 'utility_bulksettings_handler',
-                'action_text': 'View Problem Settings',
-                'action_external': False,
-            },
-        ],
-    }
-]
 ############################# VIDEO UPLOAD PIPELINE #############################
 
 VIDEO_UPLOAD_PIPELINE = {
@@ -889,11 +849,6 @@ ADVANCED_SECURITY_CONFIG = {}
 SHIBBOLETH_DOMAIN_PREFIX = 'shib:'
 OPENID_DOMAIN_PREFIX = 'openid:'
 
-### SHIB
-# For SHIB backup register and login URLs
-SHIB_ONLY_SITE = False
-SHIB_REDIRECT_DOMAIN_WHITELIST = {}
-
 ### Size of chunks into which asset uploads will be divided
 UPLOAD_CHUNK_SIZE_IN_MB = 10
 
@@ -944,9 +899,6 @@ ADVANCED_COMPONENT_TYPES = [
     'google-calendar',
 ]
 
-# XBlock types listed here will _always_ be selectable as Studio components
-XBLOCKS_ALWAYS_IN_STUDIO = [
-]
 # Adding components in this list will disable the creation of new problem for those
 # compoenents in studio. Existing problems will work fine and one can edit them in studio
 DEPRECATED_ADVANCED_COMPONENT_TYPES = []

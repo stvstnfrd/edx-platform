@@ -73,8 +73,8 @@ def parse_args():
         help='Turn on pycontracts for local development')
     cms.set_defaults(
         help_string=cms.format_help(),
-        settings_base='cms/envs',
-        default_settings='cms.envs.dev',
+        settings_base='openedx/contrib/stanford/cms/envs',
+        default_settings='openedx.contrib.stanford.cms.envs.dev',
         service_variant='cms',
         startup='cms.startup',
     )

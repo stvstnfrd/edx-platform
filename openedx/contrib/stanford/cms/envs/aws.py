@@ -1,0 +1,12 @@
+# -*- coding: utf-8 -*-
+from openedx.contrib.stanford.lms.envs.common import *
+from cms.envs.aws import *
+
+
+ACCOUNT_NAME = ENV_TOKENS.get('ACCOUNT_NAME', 'Your Account Name Here')
+
+##### SHIB #####
+SHIB_ONLY_SITE = ENV_TOKENS.get('SHIB_ONLY_SITE', SHIB_ONLY_SITE)
+SHIB_REDIRECT_DOMAIN_WHITELIST = ENV_TOKENS.get('SHIB_REDIRECT_DOMAIN_WHITELIST', SHIB_REDIRECT_DOMAIN_WHITELIST)
+
+XBLOCKS_ALWAYS_IN_STUDIO = ENV_TOKENS.get('XBLOCKS_ALWAYS_IN_STUDIO', XBLOCKS_ALWAYS_IN_STUDIO)
