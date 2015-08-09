@@ -45,7 +45,6 @@ from lms.djangoapps.lms_xblock.mixin import LmsBlockMixin
 ################################### FEATURES ###################################
 # The display name of the platform to be used in templates/emails/etc.
 PLATFORM_NAME = "Your Platform Name Here"
-ACCOUNT_NAME = "Your Account Name Here"
 CC_MERCHANT_NAME = PLATFORM_NAME
 # Shows up in the platform footer, eg "(c) COPYRIGHT_YEAR"
 COPYRIGHT_YEAR = "2015"
@@ -192,9 +191,6 @@ FEATURES = {
     # Provide a UI to allow users to submit feedback from the LMS (left-hand help modal)
     'ENABLE_FEEDBACK_SUBMISSION': False,
 
-    # Provide a UI to allow users to report problems in LMS (left-hand modal)
-    'ENABLE_PROBLEM_REPORTING': False,
-
     # Turn on a page that lets staff enter Python code to be run in the
     # sandbox, for testing whether it's enabled properly.
     'ENABLE_DEBUG_RUN_PYTHON': False,
@@ -208,9 +204,6 @@ FEATURES = {
     # Don't autoplay videos for students
     'AUTOPLAY_VIDEOS': False,
 
-    # Toggle to enable chat availability (configured on a per-course
-    # basis in Studio)
-    'ENABLE_CHAT': False,
     # Enable instructor dash to submit background tasks
     'ENABLE_INSTRUCTOR_BACKGROUND_TASKS': True,
 
@@ -252,16 +245,6 @@ FEATURES = {
     # Toggle storing detailed billing information
     'STORE_BILLING_INFO': False,
 
-    #Toggle using CME registration instead of normal
-    'USE_CME_REGISTRATION': False,
-
-    # OP Superusers can log in as anyone
-    'ENABLE_SUPERUSER_LOGIN_AS': False,
-
-    # Sends the user's deanonymized email address to xqueue with code responses
-    # DO NOT SET if you don't want the anonymous user id to be linked with user.email in xqueue (Stanford does)
-    'SEND_USERS_EMAILADDR_WITH_CODERESPONSE': False,
-
     # Enable flow for payments for course registration (DIFFERENT from verified student flow)
     'ENABLE_PAID_COURSE_REGISTRATION': False,
 
@@ -275,14 +258,14 @@ FEATURES = {
     # when enrollment exceeds this number
     'MAX_ENROLLMENT_INSTR_BUTTONS': 200,
 
-    # Grade calculation and response report requests started from the new instructor dashboard will write
-    # CSV files to S3 and give links for downloads.
+    # Grade calculation started from the new instructor dashboard will write
+    # grades CSV files to S3 and give links for downloads.
     'ENABLE_S3_GRADE_DOWNLOADS': False,
 
     # whether to use password policy enforcement or not
     'ENFORCE_PASSWORD_POLICY': True,
 
-    # Give course staff unrestricted access to grade and student responses downloads (if set to False,
+    # Give course staff unrestricted access to grade downloads (if set to False,
     # only edX superusers can perform the downloads)
     'ALLOW_COURSE_STAFF_GRADE_DOWNLOADS': False,
 
@@ -332,7 +315,7 @@ FEATURES = {
     # When a user goes to the homepage ('/') the user see the
     # courses listed in the announcement dates order - this is default Open edX behavior.
     # Set to True to change the course sorting behavior by their start dates, latest first.
-    'ENABLE_COURSE_SORTING_BY_START_DATE': False,
+    'ENABLE_COURSE_SORTING_BY_START_DATE': True,
 
     # Expose Mobile REST API. Note that if you use this, you must also set
     # ENABLE_OAUTH2_PROVIDER to True
@@ -394,8 +377,6 @@ FEATURES = {
         'TWITTER_SHARING': False,
         'TWITTER_SHARING_TEXT': None
     },
-
-    'ENABLE_PROGRESS_SUMMARY': True,
 }
 
 # Ignore static asset files on import which match this pattern
@@ -410,9 +391,6 @@ GENERATE_PROFILE_SCORES = False
 # Used with XQueue
 XQUEUE_WAITTIME_BETWEEN_REQUESTS = 5  # seconds
 
-# Email to give anonymous users.  Should be a black-hole email address, but not cause errors when email is sent there
-# This is actually just a base email.  We'll make it 'noreply+<username>@example.com' to ensure uniqueness
-ANONYMOUS_USER_EMAIL = 'noreply@example.com'
 
 ############################# SET PATH INFORMATION #############################
 PROJECT_ROOT = path(__file__).abspath().dirname().dirname()  # /edx-platform/lms
@@ -507,9 +485,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
     # Hack to get required link URLs to password reset templates
     'edxmako.shortcuts.marketing_link_context_processor',
-
-    # Include TEMPLATE_VISIBLE_SETTINGS in templates
-    'settings_context_processor.context_processors.settings',
 
     # Allows the open edX footer to be leveraged in Django Templates.
     'edxmako.shortcuts.open_source_footer_context_processor',
@@ -950,14 +925,6 @@ WIKI_LINK_DEFAULT_LEVEL = 2
 ##### Feedback submission mechanism #####
 FEEDBACK_SUBMISSION_EMAIL = None
 
-#### Help Modal Links ####
-# List of dict objects representing links
-# For example:
-# HELP_MODAL_LINKS = [
-#     {'url': 'https://help.com', 'text': 'How to register an account'}
-# ]
-HELP_MODAL_LINKS = []
-
 ##### Zendesk #####
 ZENDESK_URL = None
 ZENDESK_USER = None
@@ -1065,9 +1032,6 @@ MIDDLEWARE_CLASSES = (
     #'django.contrib.auth.middleware.AuthenticationMiddleware',
     'cache_toolbox.middleware.CacheBackedAuthenticationMiddleware',
     'student.middleware.UserStandingMiddleware',
-
-    # sneakpeek deeplinks
-    'sneakpeek_deeplink.middleware.SneakPeekDeepLinkMiddleware',
     'contentserver.middleware.StaticContentServer',
     'crum.CurrentRequestUserMiddleware',
 
@@ -1620,7 +1584,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'djcelery',
-    'settings_context_processor',
     'south',
 
     # Database-backed configuration
@@ -1720,9 +1683,6 @@ INSTALLED_APPS = (
     # Student Identity Verification
     'verify_student',
 
-    # CME Registration
-    'cme_registration',
-
     # Dark-launching languages
     'dark_lang',
 
@@ -1736,8 +1696,6 @@ INSTALLED_APPS = (
 
     # Monitoring functionality
     'monitoring',
-
-    'sneakpeek_deeplink',
 
     # Course action state
     'course_action_state',
@@ -1753,9 +1711,6 @@ INSTALLED_APPS = (
 
     # Surveys
     'survey',
-
-    # Instructor email widget
-    'instructor_email_widget',
 
     'lms.djangoapps.lms_xblock',
 
@@ -1795,15 +1750,6 @@ MKTG_URL_LINK_MAP = {
     'WHAT_IS_VERIFIED_CERT': 'verified-certificate',
 }
 
-######################### VISIBLE SETTINGS ###########################
-# These settings' values will be exposed to all templates
-TEMPLATE_VISIBLE_SETTINGS = [
-    'FEATURES',
-]
-
-############################### CHAT ################################
-JABBER = {}
-DATABASE_ROUTERS = []
 ################# Social Media Footer Links #######################
 # The names list controls the order of social media
 # links in the footer.
@@ -1948,28 +1894,6 @@ GRADES_DOWNLOAD = {
     'ROOT_PATH': '/tmp/edx-s3/grades',
 }
 
-#################### Student Responses Reports Downloads #################
-STUDENT_RESPONSES_DOWNLOAD_ROUTING_KEY = HIGH_MEM_QUEUE
-
-STUDENT_RESPONSES_DOWNLOAD = {
-    'STORAGE_TYPE': 'localfs',
-    'BUCKET': 'edx-student-responses',
-    'ROOT_PATH': '/tmp/edx-s3/student-responses',
-}
-
-##################### ORA2 Responses Download #######################
-ORA2_RESPONSES_DOWNLOAD_ROUTING_KEY = HIGH_MEM_QUEUE
-
-ORA2_RESPONSES_DOWNLOAD = {
-    'STORAGE_TYPE': 'localfs',
-    'BUCKET': 'edx-grades',
-    'ROOT_PATH': '/tmp/edx-s3/ora2-responses',
-}
-
-######################## PROGRESS SUCCESS BUTTON ##############################
-# The following fields are available in the URL: {course_id} {student_id}
-PROGRESS_SUCCESS_BUTTON_URL = 'http://<domain>/<path>/{course_id}'
-PROGRESS_SUCCESS_BUTTON_TEXT_OVERRIDE = None
 
 #### PASSWORD POLICY SETTINGS #####
 PASSWORD_MIN_LENGTH = 8
@@ -1999,11 +1923,6 @@ MAX_FAILED_LOGIN_ATTEMPTS_LOCKOUT_PERIOD_SECS = 15 * 60
 ##### LMS DEADLINE DISPLAY TIME_ZONE #######
 TIME_ZONE_DISPLAYED_FOR_DEADLINES = 'UTC'
 
-# Course Forums Download
-COURSE_FORUMS_DOWNLOAD_ROUTING_KEY = HIGH_MEM_QUEUE
-
-# Student Forums Download
-STUDENT_FORUMS_DOWNLOAD_ROUTING_KEY = HIGH_MEM_QUEUE
 
 # Source:
 # http://loc.gov/standards/iso639-2/ISO-639-2_utf-8.txt according to http://en.wikipedia.org/wiki/ISO_639-1
@@ -2245,16 +2164,6 @@ ADVANCED_SECURITY_CONFIG = {}
 SHIBBOLETH_DOMAIN_PREFIX = 'shib:'
 OPENID_DOMAIN_PREFIX = 'openid:'
 
-### SHIB
-# For SHIB backup register and login URLs
-SHIB_ONLY_SITE = False
-# Mapping of hosts to a list of safe redirect domains from that host (not including itself)
-# For example:
-# SHIB_REDIRECT_DOMAIN_WHITELIST = {
-#    'suclass.stanford.edu': ['studio.suclass.stanford.edu']
-# }
-SHIB_REDIRECT_DOMAIN_WHITELIST = {}
-
 ### Analytics Data API + Dashboard (Insights) settings
 ANALYTICS_DATA_URL = ""
 ANALYTICS_DATA_TOKEN = ""
@@ -2265,16 +2174,6 @@ ANALYTICS_DASHBOARD_NAME = PLATFORM_NAME + " Insights"
 INVOICE_CORP_ADDRESS = "Please place your corporate address\nin this configuration"
 INVOICE_PAYMENT_INSTRUCTIONS = "This is where you can\nput directions on how people\nbuying registration codes"
 
-####################### In-line Analytics ######################
-ANALYTICS_ANSWER_DIST_URL = None
-INLINE_ANALYTICS_SUPPORTED_TYPES = {
-    'MultipleChoiceResponse': 'radio',
-    'ChoiceResponse': 'checkbox',
-    'OptionResponse': 'option',
-    'NumericalResponse': 'numerical',
-    'StringResponse': 'string',
-    'FormulaResponse': 'formula',
-}
 # Country code overrides
 # Used by django-countries
 COUNTRIES_OVERRIDE = {
@@ -2289,25 +2188,7 @@ COURSE_CATALOG_VISIBILITY_PERMISSION = 'see_exists'
 # visible. We default this to the legacy permission 'see_exists'.
 COURSE_ABOUT_VISIBILITY_PERMISSION = 'see_exists'
 
-# Metrics tab data source setting
-MAX_ENROLLEES_FOR_METRICS_USING_DB = 100
-
-# MONGO Connection parameters for the forum servers.  Bypassing cs_comment_client
-FORUM_MONGO_PARAMS = {
-    'host': 'localhost',
-    'port': 27017,
-    'password': '',
-    'user': '',
-    'database': 'forum',
-}
-
-################### branding - for database driven tiles ##################
-INSTALLED_APPS += ('branding_stanford',)
-DISPLAY_COURSE_TILES = True
-
-# Set to True for systems where students are auto-registered on login
-DISABLE_REGISTER_BUTTON = False
-# date format the api will be formatting the datetime values
+#date format the api will be formatting the datetime values
 API_DATE_FORMAT = '%Y-%m-%d'
 
 # Enrollment API Cache Timeout

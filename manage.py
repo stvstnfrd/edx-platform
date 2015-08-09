@@ -50,8 +50,8 @@ def parse_args():
         help='Turn on pycontracts for local development')
     lms.set_defaults(
         help_string=lms.format_help(),
-        settings_base='lms/envs',
-        default_settings='lms.envs.dev',
+        settings_base='openedx/contrib/stanford/lms/envs',
+        default_settings='openedx.contrib.stanford.lms.envs.dev',
         startup='lms.startup',
     )
 
