@@ -7,6 +7,8 @@ import django.contrib.auth.views
 from microsite_configuration import microsite
 import oauth_exchange.views
 
+from openedx.contrib.stanford.lms.urls import urlpatterns as stanford_urls
+
 # Uncomment the next two lines to enable the admin:
 if settings.DEBUG or settings.FEATURES.get('ENABLE_DJANGO_ADMIN_SITE'):
     admin.autodiscover()
@@ -93,12 +95,6 @@ urlpatterns = (
     # Profile Images API endpoints
     url(r'^api/profile_images/', include('openedx.core.djangoapps.profile_images.urls')),
 )
-
-if settings.SHIB_ONLY_SITE:
-    urlpatterns += (
-        url(r'^backup_login$', 'student.views.signin_user', name="backup_signin_user"),
-        url(r'^backup_register$', 'student.views.register_user', name="backup_register_user"),
-    )
 
 if settings.FEATURES["ENABLE_COMBINED_LOGIN_REGISTRATION"]:
     # Backwards compatibility with old URL structure, but serve the new views
@@ -289,8 +285,6 @@ if settings.COURSEWARE_ENABLED:
         url(r'^change_enrollment$',
             'student.views.change_enrollment', name="change_enrollment"),
         url(r'^change_email_settings$', 'student.views.change_email_settings', name="change_email_settings"),
-        url(r'^course_sneakpeek/{}/$'.format(settings.COURSE_ID_PATTERN),
-            'student.views.setup_sneakpeek', name="course_sneakpeek"),
 
         #About the course
         url(r'^courses/{}/about$'.format(settings.COURSE_ID_PATTERN),
@@ -425,10 +419,6 @@ if settings.COURSEWARE_ENABLED:
         url(r'^courses/{}/lti_rest_endpoints/'.format(settings.COURSE_ID_PATTERN),
             'courseware.views.get_course_lti_endpoints', name='lti_rest_endpoints'),
 
-        # Analytics api endpoints for in-line analytics
-        url(r'^get_analytics_answer_dist/',
-            'courseware.views.get_analytics_answer_dist', name='get_analytics_answer_dist'),
-
         # Student account
         url(r'^account/', include('student_account.urls')),
 
@@ -526,11 +516,6 @@ urlpatterns += (
     url(r'^shoppingcart/', include('shoppingcart.urls')),
     url(r'^commerce/', include('commerce.urls', namespace='commerce')),
 )
-
-if settings.FEATURES.get('ENABLE_SUPERUSER_LOGIN_AS'):
-    urlpatterns += (
-        url(r'^su_login_as/(?P<username>[\w.@+-]+)/?$', 'student.views.superuser_login_as', name='impersonate'),
-    )
 
 # Embargo
 if settings.FEATURES.get('EMBARGO'):
@@ -675,3 +660,5 @@ urlpatterns += (
     url(r'404', handler404),
     url(r'500', handler500),
 )
+
+urlpatterns += stanford_urls
