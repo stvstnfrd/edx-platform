@@ -40,11 +40,3 @@ FORUM_MONGO_PARAMS = AUTH_TOKENS.get('FORUM_MONGO_PARAMS', FORUM_MONGO_PARAMS)
 
 # Register button on home page
 DISABLE_REGISTER_BUTTON = ENV_TOKENS.get('DISABLE_REGISTER_BUTTON', DISABLE_REGISTER_BUTTON)
-
-JABBER = ENV_TOKENS.get('JABBER', {})
-DATABASE_ROUTERS = ENV_TOKENS.get('DATABASE_ROUTERS', [])
-
-# Chat
-if FEATURES.get("ENABLE_CHAT"):
-    MAKO_TEMPLATES['main'].append(PROJECT_ROOT / 'djangoapps' / 'jabber' / 'templates')
-    STATICFILES_DIRS.append(PROJECT_ROOT / 'djangoapps' / 'jabber' / 'static')
