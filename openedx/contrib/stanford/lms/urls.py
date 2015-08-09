@@ -1,5 +1,7 @@
 from django.conf import settings
 from django.conf.urls import url
+
+
 urlpatterns = tuple()
 
 if settings.FEATURES.get('ENABLE_SUPERUSER_LOGIN_AS'):
