@@ -38,19 +38,19 @@ from courseware.courses import get_course_by_id
 import dashboard.git_import as git_import
 from django_comment_client.management_utils import rename_user as rename_user_util
 from dashboard.git_import import GitImportError
+from student.roles import CourseStaffRole, CourseInstructorRole
 from dashboard.sysadmin_extensions import sysadmin_course_tabs
 from dashboard.models import CourseImportLog
 from external_auth.models import ExternalAuthMap
 from external_auth.views import generate_password
 from instructor_task.models import InstructorTask
-from opaque_keys.edx.locations import SlashSeparatedCourseKey
 from student.models import CourseEnrollment, UserProfile, Registration
-from student.roles import CourseStaffRole, CourseInstructorRole
 import track.views
 from util.json_request import JsonResponse
 from xmodule.modulestore import ModuleStoreEnum
 from xmodule.modulestore.django import modulestore
 from xmodule.modulestore.xml import XMLModuleStore
+from opaque_keys.edx.locations import SlashSeparatedCourseKey
 
 
 log = logging.getLogger(__name__)

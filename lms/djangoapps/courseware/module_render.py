@@ -60,8 +60,8 @@ from xmodule_modifiers import (
     replace_static_urls,
     add_staff_markup,
     wrap_xblock,
-    request_token,
     add_inline_analytics,
+    request_token
 )
 from xmodule.lti_module import LTIModule
 from xmodule.x_module import XModuleDescriptor
