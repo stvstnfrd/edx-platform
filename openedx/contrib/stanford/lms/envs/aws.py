@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from openedx.contrib.stanford.lms.envs.common import *
 from lms.envs.aws import *
+from openedx.contrib.stanford.lms.envs.common import *
 
 
 ACCOUNT_NAME = ENV_TOKENS.get('ACCOUNT_NAME', ACCOUNT_NAME)
