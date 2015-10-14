@@ -1,5 +1,10 @@
 This is the main edX platform which consists of LMS and Studio.
 
+TODO
+----
+
+Document certificate work...
+
 
 Installation
 ------------
