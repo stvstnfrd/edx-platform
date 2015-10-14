@@ -27,6 +27,8 @@ from certificates.models import (
     ExampleCertificate
 )
 
+from openedx_certificates.gen_cert import CertificateGen
+
 
 LOGGER = logging.getLogger(__name__)
 
@@ -361,7 +363,33 @@ class XQueueCertInterface(object):
 
                     if generate_pdf:
                         try:
-                            self._send_to_xqueue(contents, key)
+                            cert2 = CertificateGen(
+                                unicode(course_id),
+                                template_pdf,
+                                # aws_id=args.aws_id,
+                                # aws_key=args.aws_key,
+                                long_course=course_name.encode('utf-8'),
+                                # issued_date=issued_date,
+                            )
+                            LOGGER.info(
+                                "Generating certificate for {username} ({name}), "
+                                "in {course_id}, with grade {grade}".format(
+                                    username=student.username.encode('utf-8'),
+                                    name=profile_name,
+                                    course_id=unicode(course_id),
+                                    grade=grade,
+                                )
+                            )
+                            designation = None
+                            (download_uuid, verify_uuid, download_url) = cert2.create_and_upload(
+                                profile_name.encode('utf-8'),
+                                grade=grade, designation=designation,
+                                upload=False,
+                             )
+                            LOGGER.error('download_uuid: %s', download_uuid)
+                            LOGGER.error('verify_uuid: %s', verify_uuid)
+                            LOGGER.error('download_url: %s', download_url)
+                            raise Exception(unicode(cert2))
                         except XQueueAddToQueueError as exc:
                             new_status = ExampleCertificate.STATUS_ERROR
                             cert.status = new_status
