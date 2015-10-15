@@ -196,6 +196,7 @@ def request_certificate(
                     profile_name.encode('utf-8'),
                     grade=grade, designation=designation,
                     upload=False,
+                    cleanup=False,
                  )
                 LOGGER.info(
                     (
