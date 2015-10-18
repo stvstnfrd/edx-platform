@@ -263,21 +263,10 @@ def add_staff_markup(user, has_instructor_access, disable_staff_debug_info, bloc
         histogram = None
         render_histogram = False
 
-    if settings.FEATURES.get('ENABLE_LMS_MIGRATION') and hasattr(block.runtime, 'filestore'):
-        [filepath, filename] = getattr(block, 'xml_attributes', {}).get('filename', ['', None])
-        osfs = block.runtime.filestore
-        if filename is not None and osfs.exists(filename):
-            # if original, unmangled filename exists then use it (github
-            # doesn't like symlinks)
-            filepath = filename
-        data_dir = block.static_asset_path or osfs.root_path.rsplit('/')[-1]
-        giturl = block.giturl or 'https://github.com/MITx'
-        edit_link = "%s/%s/tree/master/%s" % (giturl, data_dir, filepath)
-    else:
-        edit_link = False
-        # Need to define all the variables that are about to be used
-        giturl = ""
-        data_dir = ""
+    edit_link = False
+    # Need to define all the variables that are about to be used
+    giturl = ""
+    data_dir = ""
 
     source_file = block.source_file  # source used to generate the problem XML, eg latex or word
 

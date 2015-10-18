@@ -877,7 +877,7 @@ def course_about(request, course_id):
             (
                 has_access(request.user, 'load', course) and
                 has_access(request.user, 'view_courseware_with_prerequisites', course)
-            ) or settings.FEATURES.get('ENABLE_LMS_MIGRATION')
+            )
         )
 
         # Note: this is a flow for payment for course registration, not the Verified Certificate flow.
