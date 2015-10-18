@@ -159,13 +159,7 @@ if os.path.isdir(DATA_DIR):
 
 EDX_PLATFORM_VERSION_STRING = os.popen('cd %s; git describe' % REPO_ROOT).read().strip()
 
-############################## LMS Migration ##################################
-FEATURES['ENABLE_LMS_MIGRATION'] = True
 FEATURES['XQA_SERVER'] = 'http://xqa:server@content-qa.edX.mit.edu/xqa'
-
-INSTALLED_APPS += ('lms_migration',)
-
-LMS_MIGRATION_ALLOWED_IPS = ['127.0.0.1']
 
 ################################ OpenID Auth #################################
 

@@ -93,7 +93,6 @@ FEATURES = {
 
     'ENABLE_DJANGO_ADMIN_SITE': True,  # set true to enable django's admin site, even on prod (e.g. for course ops)
     'ENABLE_SQL_TRACKING_LOGS': False,
-    'ENABLE_LMS_MIGRATION': False,
     'ENABLE_MANUAL_GIT_RELOAD': False,
 
     'ENABLE_MASQUERADE': True,  # allow course staff to change to student view of courseware
@@ -566,10 +565,6 @@ COURSE_SETTINGS = {
         'location': 'i4x://edx/6002xs12/course/6.002x_Fall_2012',
     }
 }
-
-# IP addresses that are allowed to reload the course, etc.
-# TODO (vshnayder): Will probably need to change as we get real access control in.
-LMS_MIGRATION_ALLOWED_IPS = []
 
 # These are standard regexes for pulling out info like course_ids, usage_ids, etc.
 # They are used so that URLs with deprecated-format strings still work.
