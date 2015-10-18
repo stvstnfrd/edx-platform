@@ -35,3 +35,21 @@ if settings.FEATURES.get("ENABLE_OPENBADGES", False):
             name='badge_share_tracker'
         ),
     )
+
+if settings.FEATURES.get('ENABLE_PDF_CERTIFICATES'):
+    urlpatterns += (
+        url(
+            r'^pdf/view/user/(?P<user_id>[^/]*)/course/{course_id}'.format(
+                course_id=settings.COURSE_ID_PATTERN,
+            ),
+            views.redirect_pdf,
+            name='pdf_view',
+        ),
+        url(
+            r'^pdf/request/course/{course_id}'.format(
+                course_id=settings.COURSE_ID_PATTERN,
+            ),
+            views.request_pdf,
+            name='pdf_request',
+        ),
+    )
