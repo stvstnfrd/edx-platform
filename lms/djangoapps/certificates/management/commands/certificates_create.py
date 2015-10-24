@@ -86,6 +86,15 @@ class Command(BaseCommand):
                 "Don't actually request certificate creation"
             ),
         ),
+        make_option(
+            '-s',
+            '--status',
+            default=None,
+            dest='status',
+            help=(
+                "Don't actually request certificate creation"
+            ),
+        ),
     )
 
     def handle(self, *args, **options):
@@ -97,6 +106,7 @@ class Command(BaseCommand):
         noop = options['noop']
         grade = options['grade']
         should_whitelist = options['whitelist']
+        status = options['status']
         for user in users:
             _whitelist(user, course, noop, should_whitelist)
             _request_certificate(user, course, noop, grade)
