@@ -3,6 +3,8 @@
 Generate a certificate for a user
 """
 
+from __future__ import unicode_literals
+
 import logging
 from optparse import make_option
 
@@ -21,96 +23,123 @@ LOGGER = logging.getLogger(__name__)
 
 
 class Command(BaseCommand):
+    """
+    Request certificates for users in a course
+    """
     help = __doc__
     option_list = BaseCommand.option_list + (
         make_option(
             '-c',
             '--course-id',
-            dest='course_id',
             default=None,
+            dest='course_id',
             help=(
-                u'The course for which the certifcate should be requested'
+                'The course for which the certifcate should be requested'
             ),
         ),
         make_option(
             '-u',
             '--user',
-            dest='username_and_or_email',
+            default=None,
+            dest='username_or_email',
             help=(
-                u'The username or email address for whom certification should be requested'
+                'The username or email address for whom certification should be requested'
             ),
         ),
         make_option(
             '-g',
             '--grade',
-            dest='grade',
             default=None,
+            dest='grade',
             help=(
-                u'The grade string, such as "Distinction", '
-                u'which should be passed to the certificate agent'
+                'The grade string, such as "Distinction", '
+                'which should be passed to the certificate agent'
+            ),
+        ),
+        make_option(
+            '-w',
+            '--whitelist-add',
+            action='store_true',
+            default=True,
+            dest='whitelist',
+            help=(
+                "Add to whitelist before requesting certificate"
+            ),
+        ),
+        make_option(
+            '-W',
+            '--whitelist-remove',
+            action='store_false',
+            default=None,
+            dest='whitelist',
+            help=(
+                "Remove from whitelist before requesting certificate"
             ),
         ),
         make_option(
             '-n',
             '--noop',
-            dest='noop',
             action='store_true',
-            default=False,
+            dest='noop',
             help=(
-                u"Don't actually request certificate creation"
+                "Don't actually request certificate creation"
             ),
         ),
     )
 
     def handle(self, *args, **options):
-        print(type('hi'))
+        """
+        Attempt to request certificates for users in a course
+        """
         course = _get_course(options['course_id'])
-        users = _get_users(options['username_and_or_email'], course)
+        users = _get_users(options['username_or_email'], course)
         noop = options['noop']
+        grade = options['grade']
+        whitelist = options['whitelist']
         for user in users:
-            LOGGER.info(
-                u"Requesting certificate "
-                u"for user %s in course '%s'...",
-                user.id,
-                unicode(course.id),
-            )
-            if not noop:
-                result = request_certificate(
-                    course,
-                    user,
-                    grade=options['grade'],
-                )
-                LOGGER.info(
-                    (
-                        u"Requested certificate "
-                        u"for user %s in course '%s' (status=%s)."
-                    ),
-                    user.id,
-                    unicode(course.id),
-                    result,
-                )
+            _whitelist(user, course, noop, whitelist)
+            _request_certificate(user, course, noop)
+            _delete_badge(user, course, noop)
 
 
-def _delete_badge(user, course):
+def _delete_badge(user, course, noop):
+    """
+    Delete badges for a user in a given course
+    """
+    LOGGER.debug(
+        "Deleting badge: "
+        "user_id=%s, course_id='%s'",
+        user.id,
+        course.id,
+    )
     try:
         badge = BadgeAssertion.objects.get(
             user=user,
-            course_id=unicode(course.id),
+            course_id=course.id,
         )
-        badge.delete()
+        if not noop:
+            badge.delete()
         LOGGER.info(
-            u"Cleared badge for user %s.",
+            "Cleared badge: "
+            "user_id=%s, course_id='%s', "
+            "badge_id=%s",
             user.id,
+            course.id,
+            badge.id,  # TODO: is this correct?
         )
     except BadgeAssertion.DoesNotExist:
         LOGGER.debug(
-            u"No badge to delete for user '%s' in course '%s'",
-            user,
-            course,
+            "No badge to delete: "
+            "user_id=%s, course_id='%s'",
+            user.id,
+            course.id,
         )
 
 
 def _get_course(course_id):
+    """
+    Get the course for which to generate certificates
+    """
     if not course_id:
         raise CommandError('You must specify a course identifier.')
     try:
@@ -123,14 +152,104 @@ def _get_course(course_id):
     return course
 
 
-def _get_users(username_and_or_email, course):
-    if username_and_or_email is None:
+def _get_users(username_or_email, course):
+    """
+    Get a list of users for whom to request certificates
+
+    If no user is specified, all users enrolled in the course will be yielded.
+    """
+    if username_or_email is None:
         users = User.objects.filter(
             courseenrollment__course_id=course.id,
         )
         for user in users:
             yield user
-    elif '@' in username_and_or_email:
-        yield User.objects.get(email=username_and_or_email)
+    elif '@' in username_or_email:
+        yield User.objects.get(email=username_or_email)
     else:
-        yield User.objects.get(username=username_and_or_email)
+        yield User.objects.get(username=username_or_email)
+
+
+def _request_certificate(user, course, noop):
+    """
+    Request a certificate for a user in a given course
+    """
+    LOGGER.debug(
+        "Requesting certificate: "
+        "user_id=%s, course_id='%s'",
+        user.id,
+        unicode(course.id),
+    )
+    status = "'noop'"
+    if not noop:
+        status = request_certificate(
+            course,
+            user,
+            grade=grade,
+        )
+    LOGGER.info(
+        (
+            "Requested certificate: "
+            "user_id=%s, course_id='%s', "
+            "status=%s"
+        ),
+        user.id,
+        unicode(course.id),
+        status,
+    )
+
+
+def _whitelist(user, course, noop, whitelist):
+    """
+    Add/remove user to/from whitelist for a given course
+    """
+    if whitelist is True:
+        return _whitelist_add(user, course, noop)
+    elif whitelist is False:
+        return _whitelist_remove(user, course, noop)
+    else:
+        return None
+
+
+def _whitelist_add(user, course, noop):
+    """
+    Add user to whitelist for given a course
+    """
+    LOGGER.info(
+        "Adding to whitelist: "
+        "user_id=%s, course_id='%s'"
+        "noop=%s",
+        user.id,
+        course.id,
+        noop,
+    )
+    LOGGER.debug(
+        "Added to whitelist: "
+        "user_id=%s, course_id='%s'"
+        "noop=%s",
+        user.id,
+        course.id,
+        noop,
+    )
+
+
+def _whitelist_remove(user, course, noop):
+    """
+    Remove user from whitelist for a given course
+    """
+    LOGGER.info(
+        "Removing from whitelist: "
+        "user_id=%s, course_id='%s'"
+        "noop=%s",
+        user.id,
+        course.id,
+        noop,
+    )
+    LOGGER.debug(
+        "Removed from whitelist: "
+        "user_id=%s, course_id='%s'"
+        "noop=%s",
+        user.id,
+        course.id,
+        noop,
+    )
