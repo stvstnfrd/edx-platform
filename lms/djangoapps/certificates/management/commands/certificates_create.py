@@ -50,7 +50,7 @@ class Command(BaseCommand):
         make_option(
             '-g',
             '--grade',
-            default=None,
+            default=True,
             dest='grade',
             help=(
                 'The grade string, such as "Distinction", '
@@ -98,8 +98,8 @@ class Command(BaseCommand):
         grade = options['grade']
         should_whitelist = options['whitelist']
         for user in users:
-            _request_certificate(user, course, noop)
             _whitelist(user, course, noop, should_whitelist)
+            _request_certificate(user, course, noop, grade)
             _delete_badge(user, course, noop)
 
 
@@ -171,7 +171,7 @@ def _get_users(username_or_email, course):
         yield User.objects.get(username=username_or_email)
 
 
-def _request_certificate(user, course, noop):
+def _request_certificate(user, course, noop, grade):
     """
     Request a certificate for a user in a given course
     """
