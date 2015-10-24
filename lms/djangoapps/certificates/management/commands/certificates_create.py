@@ -17,6 +17,7 @@ from opaque_keys.edx.locations import SlashSeparatedCourseKey
 from xmodule.modulestore.django import modulestore
 
 from certificates.models import BadgeAssertion
+from certificates.models import CertificateWhitelist
 from certificates.tasks import request_certificate
 
 LOGGER = logging.getLogger(__name__)
@@ -95,10 +96,10 @@ class Command(BaseCommand):
         users = _get_users(options['username_or_email'], course)
         noop = options['noop']
         grade = options['grade']
-        whitelist = options['whitelist']
+        should_whitelist = options['whitelist']
         for user in users:
-            _whitelist(user, course, noop, whitelist)
             _request_certificate(user, course, noop)
+            _whitelist(user, course, noop, should_whitelist)
             _delete_badge(user, course, noop)
 
 
@@ -199,57 +200,32 @@ def _request_certificate(user, course, noop):
     )
 
 
-def _whitelist(user, course, noop, whitelist):
+def _whitelist(user, course, noop, should_whitelist):
     """
     Add/remove user to/from whitelist for a given course
     """
-    if whitelist is True:
-        return _whitelist_add(user, course, noop)
-    elif whitelist is False:
-        return _whitelist_remove(user, course, noop)
-    else:
-        return None
-
-
-def _whitelist_add(user, course, noop):
-    """
-    Add user to whitelist for given a course
-    """
-    LOGGER.info(
+    LOGGER.debug(
         "Adding to whitelist: "
         "user_id=%s, course_id='%s'"
-        "noop=%s",
+        "noop=%s, whitelist=%s",
         user.id,
         course.id,
         noop,
+        should_whitelist,
     )
-    LOGGER.debug(
-        "Added to whitelist: "
-        "user_id=%s, course_id='%s'"
-        "noop=%s",
-        user.id,
-        course.id,
-        noop,
-    )
-
-
-def _whitelist_remove(user, course, noop):
-    """
-    Remove user from whitelist for a given course
-    """
-    LOGGER.info(
-        "Removing from whitelist: "
-        "user_id=%s, course_id='%s'"
-        "noop=%s",
-        user.id,
-        course.id,
-        noop,
-    )
-    LOGGER.debug(
-        "Removed from whitelist: "
-        "user_id=%s, course_id='%s'"
-        "noop=%s",
-        user.id,
-        course.id,
-        noop,
-    )
+    if should_whitelist is not None:
+        whitelist, _created = CertificateWhitelist.objects.get_or_create(
+            user=user,
+            course_id=course.id,
+        )
+        whitelist.whitelist = should_whitelist
+        whitelist.save()
+        LOGGER.info(
+            "Added to whitelist: "
+            "user_id=%s, course_id='%s'"
+            "noop=%s, whitelist=%s",
+            user.id,
+            course.id,
+            noop,
+            should_whitelist,
+        )
