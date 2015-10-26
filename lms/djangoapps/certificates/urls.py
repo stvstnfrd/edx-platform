@@ -22,6 +22,15 @@ urlpatterns = patterns(
     # to retrieve certificate information and regenerate certificates.
     url(r'search', views.search_by_user, name="search"),
     url(r'regenerate', views.regenerate_certificate_for_user, name="regenerate_certificate_for_user"),
+
+# GET /view
+
+# GET /view/<certificate_id>
+# DELETE /view/<certificate_id>
+
+# GET /course/<course_id>
+# POST /course/<course_id>
+# PUT /course/<course_id>
 )
 
 

@@ -46,14 +46,13 @@ def request_certificate(
         )
         LOGGER.info(
             (
-                u"While regenerating certificates, "
-                u"found an existing certificate entry "
+                u"Found existing certificate "
                 u"for user %s "
                 u"in course '%s' "
                 u"with status '%s'"
             ),
             user.id,
-            unicode(course_id),
+            course_id,
             certificate.status
         )
         if regen:
@@ -62,7 +61,8 @@ def request_certificate(
             regrade = False
             LOGGER.info(
                 (
-                    u"The certificate status for user %s "
+                    u"Changed certificate status "
+                    u"for user %s "
                     u"in course '%s' has been changed to '%s'."
                 ),
                 user.id,
