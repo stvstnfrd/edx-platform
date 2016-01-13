@@ -80,14 +80,14 @@ def get_certificates_for_user(username):
 
 
 def generate_user_certificates(
-            student,
-            course_key,
-            course=None,
-            designation='None',
-            insecure=False,
-            generation_mode='batch',
-            forced_grade=None,
-    ):
+        student,
+        course_key,
+        course=None,
+        designation='None',
+        insecure=False,
+        generation_mode='batch',
+        forced_grade=None,
+):
     """
     It will add the add-cert request into the xqueue.
 
@@ -130,14 +130,14 @@ def generate_user_certificates(
 
 
 def regenerate_user_certificates(
-            student,
-            course_key,
-            course=None,
-            designation='None',
-            forced_grade=None,
-            template_file=None,
-            insecure=False,
-    ):
+        student,
+        course_key,
+        course=None,
+        designation='None',
+        forced_grade=None,
+        template_file=None,
+        insecure=False,
+):
     """
     It will add the regen-cert request into the xqueue.
 
