@@ -6,6 +6,7 @@
 #     to check system requirements
 
 # Python libraries to install directly from github
+-e git+https://github.com/stvstnfrd/django-openedx-geoinfo.git@dev#egg=geoinfo
 
 # Third-party:
 git+https://github.com/edx/django-staticfiles.git@031bdeaea85798b8c284e2a09977df3e32d06b5d#egg=django-staticfiles==1.2.1.0003
