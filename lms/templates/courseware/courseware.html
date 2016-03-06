@@ -29,13 +29,6 @@ ${static.get_page_title_breadcrumbs(course_name())}
 </title></%block>
 
 <%block name="header_extras">
-
-% for template_name in ["image-modal"]:
-<script type="text/template" id="${template_name}-tpl">
-    <%static:include path="common/templates/${template_name}.underscore" />
-</script>
-% endfor
-
 % if settings.FEATURES.get('ENABLE_COURSEWARE_SEARCH'):
     % for template_name in ["course_search_item", "course_search_results", "search_loading", "search_error"]:
         <script type="text/template" id="${template_name}-tpl">
