@@ -97,8 +97,6 @@ class HtmlModuleMixin(HtmlBlock, XModule):
         ],
         'js': [
             resource_string(__name__, 'js/src/collapsible.js'),
-            resource_string(__name__, 'js/src/html/imageModal.js'),
-            resource_string(__name__, 'js/common_static/js/vendor/draggabilly.pkgd.js'),
         ]
     }
     js_module_name = "HTMLModule"
