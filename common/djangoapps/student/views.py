@@ -1185,9 +1185,17 @@ def _check_can_enroll_in_course(user, course_key, access_type="enroll"):
     """
     try:
         course = modulestore().get_course(course_key)
+        if not course:
+            raise ItemNotFoundError
     except ItemNotFoundError:
-        log.warning("User {0} tried to enroll in non-existent course {1}"
-                    .format(user.username, course_key))
+        username = ''
+        if user:
+            username = user.username
+        log.warning(
+            "User '%s' tried to enroll in non-existent course '%s'",
+            username,
+            course_key,
+        )
         return False, _("Course id is invalid")
 
     if not has_access(user, access_type, course):
