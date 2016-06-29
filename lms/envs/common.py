@@ -2236,6 +2236,7 @@ REGISTRATION_EXTRA_FIELDS = {
     'country': 'hidden',
 }
 REGISTRATION_FOOTER_HTML = ''
+REGISTRATION_ADD_PRIVACY_TO_TOS_CHECKBOX = False
 
 ########################## CERTIFICATE NAME ########################
 CERT_NAME_SHORT = "Certificate"

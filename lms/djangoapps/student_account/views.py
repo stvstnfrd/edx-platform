@@ -96,7 +96,6 @@ def login_and_registration_form(request, initial_mode="login"):
         except (KeyError, ValueError, IndexError):
             pass
 
-
     # Otherwise, render the combined login/registration page
     registration_footer = _(settings.REGISTRATION_FOOTER_HTML).format(
         university_name="Stanford University",

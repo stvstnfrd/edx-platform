@@ -669,26 +669,58 @@ class RegistrationView(APIView):
         terms_text = _(u"Terms of Service")
         terms_link = u"<a href=\"{url}\">{terms_text}</a>".format(
             url=marketing_link("TOS"),
-            terms_text=terms_text
+            terms_text=terms_text,
         )
 
-        # Translators: "Terms of service" is a legal document users must agree to
-        # in order to register a new account.
-        label = _(
-            u"I agree to the {platform_name} {terms_of_service}."
-        ).format(
-            platform_name=settings.PLATFORM_NAME,
-            terms_of_service=terms_link
-        )
+        # Add privacy policy to terms of service checkbox label and error
+        if settings.REGISTRATION_ADD_PRIVACY_TO_TOS_CHECKBOX:
+            # Translators: This is a legal document users must agree to
+            # in order to register a new account.
+            terms_text_privacy = _(u"Privacy Policy")
+            terms_link_privacy = u"<a href=\"{url}#privacy\">{terms_text_privacy}</a>".format(
+                url=marketing_link("TOS"),
+                terms_text_privacy=terms_text_privacy,
+            )
 
-        # Translators: "Terms of service" is a legal document users must agree to
-        # in order to register a new account.
-        error_msg = _(
-            u"You must agree to the {platform_name} {terms_of_service}."
-        ).format(
-            platform_name=settings.PLATFORM_NAME,
-            terms_of_service=terms_link
-        )
+            # Translators: "Terms of service" is a legal document users must agree to
+            # in order to register a new account.
+            label = _(
+                u"I agree to the {platform_name} {terms_of_service} and {privacy_policy}."
+            ).format(
+                platform_name=settings.PLATFORM_NAME,
+                terms_of_service=terms_link,
+                privacy_policy=terms_link_privacy,
+            )
+
+            # Translators: "Terms of service" is a legal document users must agree to
+            # in order to register a new account.
+            error_msg = _(
+                u"You must agree to the {platform_name} {terms_of_service} and {privacy_policy}."
+            ).format(
+                platform_name=settings.PLATFORM_NAME,
+                terms_of_service=terms_link,
+                privacy_policy=terms_link_privacy,
+            )
+
+        #Default to terms of service only
+        else:
+            # Translators: "Terms of service" is a legal document users must agree to
+            # in order to register a new account.
+            label = _(
+                u"I agree to the {platform_name} {terms_of_service}."
+            ).format(
+                platform_name=settings.PLATFORM_NAME,
+                terms_of_service=terms_link
+            )
+
+            # Translators: "Terms of service" is a legal document users must agree to
+            # in order to register a new account.
+            error_msg = _(
+                u"You must agree to the {platform_name} {terms_of_service}."
+            ).format(
+                platform_name=settings.PLATFORM_NAME,
+                terms_of_service=terms_link
+            )
 
         form_desc.add_field(
             "terms_of_service",
