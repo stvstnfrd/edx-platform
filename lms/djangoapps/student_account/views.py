@@ -97,13 +97,17 @@ def login_and_registration_form(request, initial_mode="login"):
             pass
 
     # Otherwise, render the combined login/registration page
-    registration_footer = _(settings.REGISTRATION_FOOTER_DISCLAIMER_HTML).format(
-        university_name="Stanford University",
+    disclaimer = settings.REGISTRATION_FOOTER_DISCLAIMER
+    registration_footer = disclaimer['html'].format(
+        institution_name=disclaimer['institution_name'],
+        institution_name_short=disclaimer['institution_name_short'],
+        institution_name_general=disclaimer['institution_name_general'],
+        platform_name_on_tos=disclaimer['platform_name_on_tos'],
         pii_link_start='<a href="/tos#pii"><strong>',
         privacy_link_start='<a href="/tos#privacy"><strong>',
         link_end='</strong></a>',
         paragraph_start='<p class="instructions">',
-        paragraph_end='</p>'
+        paragraph_end='</p>',
     )
     context = {
         'data': {
