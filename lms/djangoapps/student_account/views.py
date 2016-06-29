@@ -97,7 +97,7 @@ def login_and_registration_form(request, initial_mode="login"):
             pass
 
     # Otherwise, render the combined login/registration page
-    registration_footer = _(settings.REGISTRATION_FOOTER_HTML).format(
+    registration_footer = _(settings.REGISTRATION_FOOTER_DISCLAIMER_HTML).format(
         university_name="Stanford University",
         pii_link_start='<a href="/tos#pii"><strong>',
         privacy_link_start='<a href="/tos#privacy"><strong>',

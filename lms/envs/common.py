@@ -2235,7 +2235,7 @@ REGISTRATION_EXTRA_FIELDS = {
     'city': 'hidden',
     'country': 'hidden',
 }
-REGISTRATION_FOOTER_HTML = ''
+REGISTRATION_FOOTER_DISCLAIMER_HTML = ''
 REGISTRATION_ADD_PRIVACY_TO_TOS_CHECKBOX = False
 
 ########################## CERTIFICATE NAME ########################
