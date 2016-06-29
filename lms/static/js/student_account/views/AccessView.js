@@ -74,6 +74,7 @@
                 };
 
                 this.platformName = options.platform_name;
+                this.registrationFooter = options.registration_footer;
 
                 // The login view listens for 'sync' events from the reset model
                 this.resetModel = new PasswordResetModel({}, {
@@ -161,7 +162,8 @@
                         fields: data.fields,
                         model: model,
                         thirdPartyAuth: this.thirdPartyAuth,
-                        platformName: this.platformName
+                        platformName: this.platformName,
+                        registrationFooter: this.registrationFooter,
                     });
 
                     // Listen for 'auth-complete' event so we can enroll/redirect the user appropriately.

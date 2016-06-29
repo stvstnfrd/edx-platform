@@ -2235,6 +2235,7 @@ REGISTRATION_EXTRA_FIELDS = {
     'city': 'hidden',
     'country': 'hidden',
 }
+REGISTRATION_FOOTER_HTML = ''
 
 ########################## CERTIFICATE NAME ########################
 CERT_NAME_SHORT = "Certificate"

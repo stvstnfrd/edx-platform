@@ -30,6 +30,7 @@
                 this.errorMessage = data.thirdPartyAuth.errorMessage || '';
                 this.platformName = data.platformName;
                 this.autoSubmit = data.thirdPartyAuth.autoSubmitRegForm;
+                this.registrationFooter = data.registrationFooter;
 
                 this.listenTo( this.model, 'sync', this.saveSuccess );
             },
@@ -47,7 +48,8 @@
                         errorMessage: this.errorMessage,
                         providers: this.providers,
                         hasSecondaryProviders: this.hasSecondaryProviders,
-                        platformName: this.platformName
+                        platformName: this.platformName,
+                        registrationFooter: this.registrationFooter,
                     }
                 }));
 
