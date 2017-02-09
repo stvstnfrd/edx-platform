@@ -453,6 +453,9 @@ def _accessible_libraries_list(user):
     return [lib for lib in modulestore().get_libraries() if has_studio_read_access(user, lib.location.library_key)]
 
 
+
+from openedx.stanford.lib import profile_it
+@profile_it.log()
 @login_required
 @ensure_csrf_cookie
 def course_listing(request):
