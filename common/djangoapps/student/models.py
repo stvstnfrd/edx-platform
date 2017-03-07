@@ -345,7 +345,6 @@ class UserProfile(models.Model):
         return candidate
 
     @classmethod
-    @transaction.atomic
     def create_nonregistered_user(cls):
         anon_username = cls.get_random_anon_username()
         email_split = settings.ANONYMOUS_USER_EMAIL.split('@')
