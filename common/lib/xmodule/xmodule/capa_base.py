@@ -448,20 +448,8 @@ class CapaMixin(CapaFields):
         # translation while also running _() just once for each string.
         _ = self.runtime.service(self, "i18n").ugettext
         submit = _('Submit')
-        final_submit = _('Final Submit')
 
-        # Apply customizations if present
-        if 'custom_check' in self.text_customization:
-            submit = _(self.text_customization.get('custom_check'))                # pylint: disable=translation-of-non-string
-        if 'custom_final_check' in self.text_customization:
-            final_submit = _(self.text_customization.get('custom_final_check'))    # pylint: disable=translation-of-non-string
-        # TODO: need a way to get the customized words into the list of
-        # words to be translated
-
-        if self.max_attempts is not None and self.attempts >= self.max_attempts - 1:
-            return final_submit
-        else:
-            return submit
+        return submit
 
     def submit_button_submitting_name(self):
         """
