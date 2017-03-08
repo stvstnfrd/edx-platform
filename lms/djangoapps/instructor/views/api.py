@@ -1200,7 +1200,7 @@ def get_saved_queries(request, course_id):  # pylint: disable=unused-argument
 @ensure_csrf_cookie
 @cache_control(no_cache=True, no_store=True, must_revalidate=True)
 @require_level('staff')
-@require_query_params(existing="Ids of previously issued queries")
+@require_post_params(existing="Ids of previously issued queries")
 def get_all_students(request, course_id, make_csv=False):
     """
     Returns the students for a given set of queries
@@ -1239,7 +1239,7 @@ def get_all_students(request, course_id, make_csv=False):
 @ensure_csrf_cookie
 @cache_control(no_cache=True, no_store=True, must_revalidate=True)
 @require_level('staff')
-@require_query_params(
+@require_post_params(
     filter="Type of filter",
     entityName="Human readable name of entity"
 )
