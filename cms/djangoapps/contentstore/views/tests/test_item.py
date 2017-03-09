@@ -1695,6 +1695,7 @@ class TestComponentTemplates(CourseTestCase):
         template_display_names = sorted(template_display_names)
         self.assertEqual(template_display_names, expected_xblocks)
         template_support_levels = [template['support_level'] for template in templates[0]['templates']]
+        template_support_levels = sorted(template_support_levels, reverse=True)
         self.assertEqual(template_support_levels, expected_support_levels)
 
     def _verify_basic_component(self, component_type, display_name, support_level=True):
