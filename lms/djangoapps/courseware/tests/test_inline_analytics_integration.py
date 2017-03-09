@@ -6,7 +6,7 @@ from mock import patch
 from django.test import RequestFactory
 from django.test.utils import override_settings
 
-from courseware.views import get_analytics_answer_dist, process_analytics_answer_dist
+from courseware.views.views import get_analytics_answer_dist, process_analytics_answer_dist
 from courseware.tests.factories import UserFactory, InstructorFactory, StaffFactory
 from xmodule.modulestore.tests.factories import CourseFactory
 from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
