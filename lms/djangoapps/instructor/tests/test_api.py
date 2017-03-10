@@ -3546,7 +3546,7 @@ class TestInstructorAPILevelsDataDump(SharedModuleStoreTestCase, LoginEnrollment
             """method to be used as a side_effect for LocalFSReportStore.delete_file"""
             pass
         url = reverse('delete_report_download', kwargs={'course_id': unicode(self.course.id)})
-        with patch('instructor_task.models.LocalFSReportStore.delete_file', side_effect=noop()):
+        with patch('lms.djangoapps.instructor_task.models.LocalFSReportStore.delete_file', side_effect=noop()):
             response = self.client.post(url, {})
         self.assertEqual(response.status_code, 200)
 
@@ -3635,7 +3635,7 @@ class TestInstructorAPILevelsDataDump(SharedModuleStoreTestCase, LoginEnrollment
     def test_collect_course_forums_data_success(self):
         url = reverse('get_course_forums_usage', kwargs={'course_id': unicode(self.course.id)})
 
-        with patch('instructor_task.api.submit_course_forums_usage_task'):
+        with patch('lms.djangoapps.instructor_task.api.submit_course_forums_usage_task'):
             response = self.client.get(url, {})
         success_status = "The course forums usage report is being generated."
         self.assertIn(success_status, response.content)
@@ -3643,7 +3643,7 @@ class TestInstructorAPILevelsDataDump(SharedModuleStoreTestCase, LoginEnrollment
     def test_collect_course_forums_data_already_running(self):
         url = reverse('get_course_forums_usage', kwargs={'course_id': unicode(self.course.id)})
 
-        with patch('instructor_task.api.submit_course_forums_usage_task') as mock_submit_course_forums_usage_task:
+        with patch('lms.djangoapps.instructor_task.api.submit_course_forums_usage_task') as mock_submit_course_forums_usage_task:
             mock_submit_course_forums_usage_task.side_effect = AlreadyRunningError()
             response = self.client.get(url, {})
         already_running_status = "A course forums usage report task is already in progress."
@@ -3652,7 +3652,7 @@ class TestInstructorAPILevelsDataDump(SharedModuleStoreTestCase, LoginEnrollment
     def test_get_student_forums_usage_success(self):
         url = reverse('get_student_forums_usage', kwargs={'course_id': unicode(self.course.id)})
 
-        with patch('instructor_task.api.submit_student_forums_usage_task'):
+        with patch('lms.djangoapps.instructor_task.api.submit_student_forums_usage_task'):
             response = self.client.get(url, {})
         success_status = "The student forums usage report is being generated."
         self.assertIn(success_status, response.content)
@@ -3660,7 +3660,7 @@ class TestInstructorAPILevelsDataDump(SharedModuleStoreTestCase, LoginEnrollment
     def test_get_student_forums_usage_already_running(self):
         url = reverse('get_student_forums_usage', kwargs={'course_id': unicode(self.course.id)})
 
-        with patch('instructor_task.api.submit_student_forums_usage_task') as mock_submit_student_forums_task:
+        with patch('lms.djangoapps.instructor_task.api.submit_student_forums_usage_task') as mock_submit_student_forums_task:
             mock_submit_student_forums_task.side_effect = AlreadyRunningError()
             response = self.client.get(url, {})
         already_running_status = "A student forums usage report task is already in progress."
