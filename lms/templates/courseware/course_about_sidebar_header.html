@@ -1,4 +1,5 @@
 <%namespace name='static' file='../static_content.html'/>
+<%page args="social_file"/>
 <%!
 from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
@@ -9,8 +10,8 @@ from django.conf import settings
   % if static.get_value('course_about_show_social_links', True):
   <div class="social-sharing">
     <div class="sharing-message">${_("Share with friends and family!")}</div>
-    % if self.course_about_social_sharing_file:
-      <%include file="${self.course_about_social_sharing_file}" />
+    % if social_file:
+      <%include file="${social_file}" />
     % else:
     ## TODO: this should probably be an overrideable block,
     ##       or something allowing themes to do whatever they
