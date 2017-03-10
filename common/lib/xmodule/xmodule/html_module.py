@@ -113,7 +113,7 @@ class HtmlModuleMixin(HtmlBlock, XModule):
             context = {
                 'username': user.username if user else '',
                 'user_id': user.id if user else None,
-                'name': user.profile.name if user and hasattr(user, 'profile') else '',
+                'name': user.profile.name if user else '',
                 'course_title': course.display_name,
                 'course_id': self.course_id,
                 'course_start_date': get_default_time_display(course.start),
