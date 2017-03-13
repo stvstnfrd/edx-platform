@@ -198,6 +198,8 @@ INSTRUCTOR_POST_ENDPOINTS = set([
     'list_course_sections',
     'get_student_responses',
     'list_course_problems',
+    'delete_temp_query_batch',
+    'save_query',
 ])
 
 
