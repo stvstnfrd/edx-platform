@@ -187,6 +187,17 @@ INSTRUCTOR_POST_ENDPOINTS = set([
     'spent_registration_codes',
     'students_update_enrollment',
     'update_forum_role_membership',
+
+    'get_ora2_responses',
+    'get_temp_queries',
+    'get_single_query',
+    'delete_report_download',
+    'get_student_forums_usage',
+    'get_course_forums_usage',
+    'list_course_tree',
+    'list_course_sections',
+    'get_student_responses',
+    'list_course_problems',
 ])
 
 
