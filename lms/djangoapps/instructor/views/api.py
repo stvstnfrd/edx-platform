@@ -1018,6 +1018,7 @@ def _process_new_query(course_id, query_incl, query_type, query_id, query_filter
         return StudentQuery(query_type, query_incl, query_id, query_filtering, entity_name)
 
 
+@require_POST
 @ensure_csrf_cookie
 @cache_control(no_cache=True, no_store=True, must_revalidate=True)
 @require_level('staff')
@@ -1043,6 +1044,7 @@ def delete_temp_query_batch(request, course_id):  # pylint: disable=unused-argum
     return JsonResponse(response_payload)
 
 
+@require_POST
 @ensure_csrf_cookie
 @cache_control(no_cache=True, no_store=True, must_revalidate=True)
 @require_level('staff')
@@ -1065,6 +1067,7 @@ def delete_temp_query(request, course_id):  # pylint: disable=unused-argument
     return JsonResponse(response_payload)
 
 
+@require_POST
 @ensure_csrf_cookie
 @cache_control(no_cache=True, no_store=True, must_revalidate=True)
 @require_level('staff')
@@ -1086,6 +1089,7 @@ def delete_saved_query(request, course_id):  # pylint: disable=unused-argument
     return JsonResponse(response_payload)
 
 
+@require_POST
 @ensure_csrf_cookie
 @cache_control(no_cache=True, no_store=True, must_revalidate=True)
 @require_level('staff')
@@ -1236,6 +1240,7 @@ def get_all_students(request, course_id, make_csv=False):
         return instructor_analytics.csvs.create_csv_response(filename, ['email', 'name'], email_pairs)
 
 
+@require_POST
 @ensure_csrf_cookie
 @cache_control(no_cache=True, no_store=True, must_revalidate=True)
 @require_level('staff')
@@ -1361,6 +1366,7 @@ def list_course_problems(request, course_id):
     return JsonResponse(response_payload)
 
 
+@require_POST
 @ensure_csrf_cookie
 @cache_control(no_cache=True, no_store=True, must_revalidate=True)
 @require_level('staff')
@@ -2975,6 +2981,7 @@ def list_forum_members(request, course_id):
     return JsonResponse(response_payload)
 
 
+@require_POST
 @ensure_csrf_cookie
 @cache_control(no_cache=True, no_store=True, must_revalidate=True)
 @require_level('staff')
@@ -2992,6 +2999,7 @@ def delete_report_download(request, course_id):
     return JsonResponse(message)
 
 
+@require_POST
 @transaction.non_atomic_requests
 @ensure_csrf_cookie
 @cache_control(no_cache=True, no_store=True, must_revalidate=True)
@@ -3018,6 +3026,7 @@ def get_student_forums_usage(request, course_id):
         })
 
 
+@require_POST
 @transaction.non_atomic_requests
 @ensure_csrf_cookie
 @cache_control(no_cache=True, no_store=True, must_revalidate=True)
@@ -3044,6 +3053,7 @@ def get_ora2_responses(request, course_id, include_email):
         })
 
 
+@require_POST
 @transaction.non_atomic_requests
 @ensure_csrf_cookie
 @cache_control(no_cache=True, no_store=True, must_revalidate=True)
