@@ -15,7 +15,6 @@ class ResetButtonTestCase(unittest.TestCase):
         """
         Initialize context and expectations
         """
-        super(ResetButtonTestCase, self).setUp()
         self.context = {
             'answer_available': True,
             'answer_notification_type': None,
