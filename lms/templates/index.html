@@ -34,16 +34,7 @@ from openedx.core.djangolib.markup import HTML, Text
             % endif
 
           </div>
-
-          % if self.homepage_promo_video_file:
-            <%include file="${self.homepage_promo_video_file}" />
-          % elif show_homepage_promo_video:
-            <a href="#video-modal" class="media" rel="leanModal">
-              <div class="hero">
-                <div class="play-intro"></div>
-              </div>
-            </a>
-          % endif
+          <%include file="index_promo_video.html" />
         </div>
 
       </header>
