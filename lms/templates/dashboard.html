@@ -175,9 +175,7 @@ from openedx.core.djangolib.markup import HTML, Text
 
           </ul>
             </div>
-        % if self.dashboard_extra_file:
-          <%include file='${self.dashboard_extra_file}' />
-        % endif
+          <%include file='dashboard/user_info_extra.html' />
         </div>
     </div>
 </main>

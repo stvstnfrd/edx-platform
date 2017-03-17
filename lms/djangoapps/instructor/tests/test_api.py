@@ -146,6 +146,7 @@ INSTRUCTOR_GET_ENDPOINTS = set([
     'get_sale_order_records',
     'get_sale_records',
 
+    'get_saved_queries',
     'get_temp_queries',
     'list_course_problems',
     'list_course_sections',
