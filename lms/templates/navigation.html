@@ -18,7 +18,9 @@ from status.status import get_site_status_msg
 %>
 
 ## Provide a hook for themes to inject branding on top.
-<%block name="navigation_top" />
+<%block name="navigation_top">
+    <%static:optional_include_mako file="navigation_top.html" />
+</%block>
 
 ## Add UI Toolkit components if using the Pattern Library
 % if uses_pattern_library:
