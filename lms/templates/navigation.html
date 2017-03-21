@@ -54,7 +54,8 @@ site_status_msg = get_site_status_msg(course_id)
     <h1 class="logo">
       <a href="${marketing_link('ROOT')}">
         <%block name="navigation_logo">
-            <img src="${branding_api.get_logo_url(is_secure)}" alt="${_("{platform_name} Home Page").format(platform_name=static.get_platform_name())}"/>
+            <img height="50"
+                 src="${branding_api.get_logo_url(is_secure)}" alt="${_("{platform_name} Home Page").format(platform_name=static.get_platform_name())}"/>
         </%block>
       </a>
     </h1>
@@ -130,6 +131,10 @@ site_status_msg = get_site_status_msg(course_id)
             % endif
             <li class="item nav-global-03">
               <a href="${marketing_link('SCHOOLS')}">${_("Schools")}</a>
+            </li>
+          % else:
+            <li class="nav nav-global-01">
+              <a class="btn" href="${marketing_link('ABOUT')}">${_('About')}</a>
             </li>
           % endif
         </%block>
