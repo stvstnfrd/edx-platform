@@ -4,8 +4,11 @@ from third_party_auth import pipeline, provider
 from django.utils.translation import ugettext as _
 from django_countries import countries
 from student.models import UserProfile
+from microsite_configuration import microsite
 %>
-<%namespace file='main.html' import="stanford_theme_enabled"/>
+<%def name="theme_enabled()"><% return settings.FEATURES.get("USE_CUSTOM_THEME", False) %></%def>
+<%def name="is_microsite()"><% return microsite.is_request_in_microsite() %></%def>
+<%def name="stanford_theme_enabled()"><% return theme_enabled() and not is_microsite() %></%def>
 <%namespace name='static' file='static_content.html'/>
 
 <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }">
