@@ -847,9 +847,17 @@ class TestEndpointHttpMethods(SharedModuleStoreTestCase, LoginEnrollmentTestCase
         """
         Tests that POST endpoints are rejected with 405 when using GET.
         """
-        url = reverse(data, kwargs={'course_id': unicode(self.course.id)})
+        if data == 'get_ora2_responses':
+            url = reverse(
+                data,
+                kwargs={
+                    'course_id': unicode(self.course.id),
+                    'include_email': 'True',
+                }
+            )
+        else:
+            url = reverse(data, kwargs={'course_id': unicode(self.course.id)})
         response = self.client.get(url)
-
         self.assertEqual(
             response.status_code, 405,
             "Endpoint {} returned status code {} instead of a 405. It should not allow GET.".format(

@@ -3083,6 +3083,7 @@ def get_course_forums_usage(request, course_id):
 @ensure_csrf_cookie
 @cache_control(no_cache=True, no_store=True, must_revalidate=True)
 @require_level('staff')
+@require_POST
 def graph_course_forums_usage(request, course_id):
     """
     Generate a d3 graphable csv-string by checking the report store for the clicked_on file
