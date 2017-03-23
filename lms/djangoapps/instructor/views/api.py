@@ -1209,7 +1209,7 @@ def get_all_students(request, course_id, make_csv=False):
     """
     Returns the students for a given set of queries
     """
-    existing = request.GET.get('existing')
+    existing = request.POST.get('existing')
     existing_queries = existing.split(',')
     if len(existing) == 0:
         return JsonResponse({
@@ -1257,8 +1257,8 @@ def get_single_query(request, course_id, inclusion, query_type, state_type, stat
             'success': False,
         })
 
-    filtering = request.GET.get('filter')
-    entity_name = request.GET.get('entityName')
+    filtering = request.POST.get('filter')
+    entity_name = request.POST.get('entityName')
     course_id = SlashSeparatedCourseKey.from_deprecated_string(course_id)
     state_type_id = state_type + "/" + state_id
     processed = _process_new_query(course_id, inclusion, query_type, state_type_id, filtering, entity_name)

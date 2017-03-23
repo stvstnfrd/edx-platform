@@ -357,7 +357,7 @@ class TestEmailQueries(ModuleStoreTestCase, LoginEnrollmentTestCase):
         }
         encoded_args = '/'.join(function_args)
         query_url = '/'.join([url, encoded_args])
-        _unused_response = self.client.get(query_url, single_args)
+        _unused_response = self.client.post(query_url, single_args)
 
     def _get_temp_query_ids(self):
         """
@@ -390,7 +390,7 @@ class TestEmailQueries(ModuleStoreTestCase, LoginEnrollmentTestCase):
         }
         if csv:
             get_all_url += "/csv"
-        all_response = self.client.get(get_all_url, all_args)
+        all_response = self.client.post(get_all_url, all_args)
         if csv:
             return all_response.content
         students = json.loads(all_response.content)['data']
@@ -3664,7 +3664,7 @@ class TestInstructorAPILevelsDataDump(SharedModuleStoreTestCase, LoginEnrollment
         url = reverse('get_course_forums_usage', kwargs={'course_id': unicode(self.course.id)})
 
         with patch('lms.djangoapps.instructor_task.api.submit_course_forums_usage_task'):
-            response = self.client.get(url, {})
+            response = self.client.post(url, {})
         success_status = "The course forums usage report is being generated."
         self.assertIn(success_status, response.content)
 
@@ -3673,7 +3673,7 @@ class TestInstructorAPILevelsDataDump(SharedModuleStoreTestCase, LoginEnrollment
 
         with patch('lms.djangoapps.instructor_task.api.submit_course_forums_usage_task') as mock_submit_course_forums_usage_task:
             mock_submit_course_forums_usage_task.side_effect = AlreadyRunningError()
-            response = self.client.get(url, {})
+            response = self.client.post(url, {})
         already_running_status = "A course forums usage report task is already in progress."
         self.assertIn(already_running_status, response.content)
 
@@ -3681,7 +3681,7 @@ class TestInstructorAPILevelsDataDump(SharedModuleStoreTestCase, LoginEnrollment
         url = reverse('get_student_forums_usage', kwargs={'course_id': unicode(self.course.id)})
 
         with patch('lms.djangoapps.instructor_task.api.submit_student_forums_usage_task'):
-            response = self.client.get(url, {})
+            response = self.client.post(url, {})
         success_status = "The student forums usage report is being generated."
         self.assertIn(success_status, response.content)
 
