@@ -309,11 +309,7 @@ class TestEmailQueries(ModuleStoreTestCase, LoginEnrollmentTestCase):
 
     def setUp(self):
         super(TestEmailQueries, self).setUp()
-        self.course = CourseFactory.create(
-            org="edX",
-            number="emailToy",
-            run="2015_Winter",
-        )
+        self.course = CourseFactory.create()
         self.course_key = self.course.id
         self.instructor = InstructorFactory(course_key=self.course_key)
         self.client.login(username=self.instructor.username, password='test')
@@ -3574,7 +3570,7 @@ class TestInstructorAPILevelsDataDump(SharedModuleStoreTestCase, LoginEnrollment
             """method to be used as a side_effect for LocalFSReportStore.delete_file"""
             pass
         url = reverse('delete_report_download', kwargs={'course_id': unicode(self.course.id)})
-        with patch('lms.djangoapps.instructor_task.models.LocalFSReportStore.delete_file', side_effect=noop()):
+        with patch('lms.djangoapps.instructor_task.models.DjangoStorageReportStore.delete_file', side_effect=noop()):
             response = self.client.post(url, {})
         self.assertEqual(response.status_code, 200)
 
