@@ -1285,8 +1285,8 @@ class TestReponsesReport(TestReportMixin, ModuleStoreTestCase):
     """
 
     def test_unicode(self):
-        course_key = CourseKey.from_string('edX/unicode_graded/2012_Fall')
-        self.course = get_course_by_id(course_key)
+        self.course = CourseFactory.create()
+        course_key = self.course.id
         self.problem_location = Location("edX", "unicode_graded", "2012_Fall", "problem", "H1P1")
 
         self.student = UserFactory(username=u'student\xec')
@@ -1344,7 +1344,7 @@ class TestInstructorOra2Report(TestReportMixin, InstructorTaskCourseTestCase):
             with patch('lms.djangoapps.instructor_task.tasks_helper.collect_anonymous_ora2_data') as mock_collect_data:
                 mock_collect_data.return_value = (test_header, test_rows)
 
-                with patch('lms.djangoapps.instructor_task.models.LocalFSReportStore.store_rows') as mock_store_rows:
+                with patch('lms.djangoapps.instructor_task.models.DjangoStorageReportStore.store_rows') as mock_store_rows:
 
                     timestamp_str = start_time.strftime('%Y-%m-%d-%H%M')
                     course_id_string = urllib.quote(self.course.id.to_deprecated_string().replace('/', '_'))
@@ -1394,7 +1394,7 @@ class TestInstructorOra2EmailReport(TestReportMixin, InstructorTaskCourseTestCas
             with patch('lms.djangoapps.instructor_task.tasks_helper.collect_email_ora2_data') as mock_collect_data:
                 mock_collect_data.return_value = (test_header, test_rows)
 
-                with patch('lms.djangoapps.instructor_task.models.LocalFSReportStore.store_rows') as mock_store_rows:
+                with patch('lms.djangoapps.instructor_task.models.DjangoStorageReportStore.store_rows') as mock_store_rows:
                     timestamp_str = start_time.strftime('%Y-%m-%d-%H%M')
                     course_id_string = urllib.quote(self.course.id.to_deprecated_string().replace('/', '_'))
                     filename = u'{}_ORA2_responses_including_email_{}.csv'.format(course_id_string, timestamp_str)
@@ -1439,7 +1439,7 @@ class TestInstructorCourseForumsReport(TestReportMixin, InstructorTaskCourseTest
             with patch('lms.djangoapps.instructor_task.tasks_helper.collect_course_forums_data') as mock_collect_data:
                 mock_collect_data.return_value = (test_header, test_rows)
 
-                with patch('lms.djangoapps.instructor_task.models.LocalFSReportStore.store_rows'):
+                with patch('lms.djangoapps.instructor_task.models.DjangoStorageReportStore.store_rows'):
                     return_val = push_course_forums_data_to_s3(None, None, self.course.id, None, 'generated')
                     self.assertEqual(return_val, UPDATE_STATUS_SUCCEEDED)
 
@@ -1480,7 +1480,7 @@ class TestInstructorStudentForumsReport(TestReportMixin, InstructorTaskCourseTes
             with patch('lms.djangoapps.instructor_task.tasks_helper.collect_student_forums_data') as mock_collect_data:
                 mock_collect_data.return_value = (test_header, test_rows)
 
-                with patch('lms.djangoapps.instructor_task.models.LocalFSReportStore.store_rows'):
+                with patch('lms.djangoapps.instructor_task.models.DjangoStorageReportStore.store_rows'):
                     return_val = push_student_forums_data_to_s3(None, None, self.course.id, None, 'generated')
                     self.assertEqual(return_val, UPDATE_STATUS_SUCCEEDED)
 
