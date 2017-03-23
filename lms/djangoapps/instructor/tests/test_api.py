@@ -146,6 +146,7 @@ INSTRUCTOR_GET_ENDPOINTS = set([
     'get_sale_order_records',
     'get_sale_records',
 
+    'get_all_students',
     'get_saved_queries',
     'get_temp_queries',
     'list_course_problems',
@@ -195,12 +196,16 @@ INSTRUCTOR_POST_ENDPOINTS = set([
     'update_forum_role_membership',
 
     'delete_report_download',
+    'delete_saved_query',
+    'delete_temp_query',
     'delete_temp_query_batch',
     'get_course_forums_usage',
     'get_ora2_responses',
     'get_single_query',
     'get_student_forums_usage',
     'get_student_responses',
+    'graph_course_forums_usage',
+    'save_group_name',
     'save_query',
 ])
 
