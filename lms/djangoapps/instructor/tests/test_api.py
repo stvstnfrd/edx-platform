@@ -859,6 +859,7 @@ class TestEndpointHttpMethods(SharedModuleStoreTestCase, LoginEnrollmentTestCase
         else:
             url = reverse(data, kwargs={'course_id': unicode(self.course.id)})
         response = self.client.get(url)
+
         self.assertEqual(
             response.status_code, 405,
             "Endpoint {} returned status code {} instead of a 405. It should not allow GET.".format(
