@@ -21,7 +21,6 @@ from instructor_analytics.basic import (
 )
 from instructor_analytics.basic import student_responses
 from opaque_keys.edx.keys import CourseKey
-from opaque_keys.edx.locations import Location
 from opaque_keys.edx.locator import UsageKey
 from openedx.core.djangoapps.course_groups.tests.helpers import CohortFactory
 from student.models import CourseEnrollment, CourseEnrollmentAllowed
@@ -612,16 +611,37 @@ class TestStudentResponsesAnalyticsBasic(ModuleStoreTestCase):
         self.assertEqual(datarows, [])
 
     def test_invalid_module_state(self):
-        self.problem_location = Location("edX", "graded", "2012_Fall", "problem", "H1P2")
+        section = ItemFactory.create(
+            parent_location=self.course.location,
+            category='chapter',
+            display_name=u'test section',
+        )
+        sub_section = ItemFactory.create(
+            parent_location=section.location,
+            category='sequential',
+            display_name=u'test subsection',
+        )
+        unit = ItemFactory.create(
+            parent_location=sub_section.location,
+            category="vertical",
+            metadata={'graded': True, 'format': 'Homework'},
+            display_name=u'test unit',
+        )
+        problem = ItemFactory.create(
+            parent_location=unit.location,
+            category='problem',
+            display_name=u'test problem',
+        )
         self.create_student()
         StudentModuleFactory.create(
             course_id=self.course.id,
-            module_state_key=self.problem_location,
+            module_state_key=problem.location,
             student=self.student,
             grade=0,
             state=u'{"student_answers":{"fake-problem":"No idea"}}}'
         )
-        datarows = list(student_responses(self.course))
+        course_with_children = modulestore().get_course(self.course.id, depth=4)
+        datarows = list(student_responses(course_with_children))
         #Invalid module state response will be skipped, so datarows should be empty
         self.assertEqual(len(datarows), 0)
 
@@ -703,14 +723,35 @@ class TestStudentResponsesAnalyticsBasic(ModuleStoreTestCase):
         self.assertEqual(datarows[3][-1], u'problem_id=content library response1')
 
     def test_problem_with_no_answer(self):
-        problem_location = Location('edX', 'graded', '2012_Fall', 'problem', 'H2P1')
+        section = ItemFactory.create(
+            parent_location=self.course.location,
+            category='chapter',
+            display_name=u'test section',
+        )
+        sub_section = ItemFactory.create(
+            parent_location=section.location,
+            category='sequential',
+            display_name=u'test subsection',
+        )
+        unit = ItemFactory.create(
+            parent_location=sub_section.location,
+            category="vertical",
+            metadata={'graded': True, 'format': 'Homework'},
+            display_name=u'test unit',
+        )
+        problem = ItemFactory.create(
+            parent_location=unit.location,
+            category='problem',
+            display_name=u'test problem',
+        )
         self.create_student()
         StudentModuleFactory.create(
             course_id=self.course.id,
-            module_state_key=problem_location,
+            module_state_key=problem.location,
             student=self.student,
             grade=0,
             state=u'{"answer": {"problem_id": "123"}}',
         )
-        datarows = list(student_responses(self.course))
+        course_with_children = modulestore().get_course(self.course.id, depth=4)
+        datarows = list(student_responses(course_with_children))
         self.assertEqual(datarows[0][-1], None)
