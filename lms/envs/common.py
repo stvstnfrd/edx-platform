@@ -2386,7 +2386,7 @@ REGISTRATION_EXTRA_FIELDS = {
     'terms_of_service': 'hidden',
     'city': 'hidden',
     'country': 'hidden',
-    'privacy_policy': 'required',
+    'privacy_policy': 'hidden',
 }
 
 # Optional setting to restrict registration / account creation to only emails
