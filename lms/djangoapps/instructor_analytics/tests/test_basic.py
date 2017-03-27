@@ -601,16 +601,7 @@ class TestStudentResponsesAnalyticsBasic(ModuleStoreTestCase):
         self.student = UserFactory()
         CourseEnrollment.enroll(self.student, self.course.id)
 
-    def test_empty_course(self):
-        self.create_student()
-        datarows = list(student_responses(self.course))
-        self.assertEqual(datarows, [])
-
-    def test_full_course_no_students(self):
-        datarows = list(student_responses(self.course))
-        self.assertEqual(datarows, [])
-
-    def test_invalid_module_state(self):
+    def create_course_structure(self):
         section = ItemFactory.create(
             parent_location=self.course.location,
             category='chapter',
@@ -632,6 +623,19 @@ class TestStudentResponsesAnalyticsBasic(ModuleStoreTestCase):
             category='problem',
             display_name=u'test problem',
         )
+        return section, sub_section, unit, problem
+
+    def test_empty_course(self):
+        self.create_student()
+        datarows = list(student_responses(self.course))
+        self.assertEqual(datarows, [])
+
+    def test_full_course_no_students(self):
+        datarows = list(student_responses(self.course))
+        self.assertEqual(datarows, [])
+
+    def test_invalid_module_state(self):
+        section, sub_section, unit, problem = self.create_course_structure()
         self.create_student()
         StudentModuleFactory.create(
             course_id=self.course.id,
@@ -646,27 +650,7 @@ class TestStudentResponsesAnalyticsBasic(ModuleStoreTestCase):
         self.assertEqual(len(datarows), 0)
 
     def test_problem_with_student_answer_and_answers(self):
-        section = ItemFactory.create(
-            parent_location=self.course.location,
-            category='chapter',
-            display_name=u'test section',
-        )
-        sub_section = ItemFactory.create(
-            parent_location=section.location,
-            category='sequential',
-            display_name=u'test subsection',
-        )
-        unit = ItemFactory.create(
-            parent_location=sub_section.location,
-            category="vertical",
-            metadata={'graded': True, 'format': 'Homework'},
-            display_name=u'test unit',
-        )
-        problem = ItemFactory.create(
-            parent_location=unit.location,
-            category='problem',
-            display_name=u'test problem',
-        )
+        section, sub_section, unit, problem = self.create_course_structure()
         submit_and_compare_valid_state = ItemFactory.create(
             parent_location=unit.location,
             category='submit-and-compare',
@@ -723,27 +707,7 @@ class TestStudentResponsesAnalyticsBasic(ModuleStoreTestCase):
         self.assertEqual(datarows[3][-1], u'problem_id=content library response1')
 
     def test_problem_with_no_answer(self):
-        section = ItemFactory.create(
-            parent_location=self.course.location,
-            category='chapter',
-            display_name=u'test section',
-        )
-        sub_section = ItemFactory.create(
-            parent_location=section.location,
-            category='sequential',
-            display_name=u'test subsection',
-        )
-        unit = ItemFactory.create(
-            parent_location=sub_section.location,
-            category="vertical",
-            metadata={'graded': True, 'format': 'Homework'},
-            display_name=u'test unit',
-        )
-        problem = ItemFactory.create(
-            parent_location=unit.location,
-            category='problem',
-            display_name=u'test problem',
-        )
+        section, sub_section, unit, problem = self.create_course_structure()
         self.create_student()
         StudentModuleFactory.create(
             course_id=self.course.id,
