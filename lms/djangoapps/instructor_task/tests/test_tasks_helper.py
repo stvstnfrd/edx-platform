@@ -32,19 +32,6 @@ from opaque_keys.edx.locations import Location
 from student.tests.factories import CourseEnrollmentFactory, UserFactory
 from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
 
-from lms.djangoapps.instructor_task.tasks_helper import (
-    cohort_students_and_upload,
-    upload_grades_csv,
-    upload_problem_grade_report,
-    upload_students_csv,
-    push_student_responses_to_s3,
-    push_ora2_responses_to_s3,
-    push_course_forums_data_to_s3,
-    push_student_forums_data_to_s3,
-    UPDATE_STATUS_FAILED,
-    UPDATE_STATUS_SUCCEEDED,
-)
-
 TEST_COURSE_ORG = 'edx'
 TEST_COURSE_NAME = 'test_course'
 TEST_COURSE_NUMBER = '1.23x'
@@ -80,6 +67,10 @@ from xmodule.partitions.partitions import Group, UserPartition
 from lms.djangoapps.instructor_task.models import ReportStore
 from survey.models import SurveyForm, SurveyAnswer
 from lms.djangoapps.instructor_task.tasks_helper import (
+    push_student_responses_to_s3,
+    push_ora2_responses_to_s3,
+    push_course_forums_data_to_s3,
+    push_student_forums_data_to_s3,
     cohort_students_and_upload,
     upload_problem_responses_csv,
     upload_grades_csv,
