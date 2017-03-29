@@ -182,6 +182,8 @@ class TestManagementUtils(unittest.TestCase):
         """
         ensures that the rename_user utility successfully renames a user
         """
+        old_username = self.sql_users[0].username
+
         # ensure that the starting sql username is different from the target username
         self.assertNotEqual(self.sql_users[0].username, TestManagementUtils.NEW_USERNAME)
 
@@ -193,8 +195,9 @@ class TestManagementUtils(unittest.TestCase):
 
         # perform the rename
         result = rename_user(self.sql_users[0].username, TestManagementUtils.NEW_USERNAME)
-
+        # ensure that the username was successfully changed
         self.assertTrue(result)
+
         # check that the sql username now matches the target username
         self.sql_users[0] = User.objects.get(id=self.sql_users[0].id)
         self.assertEqual(self.sql_users[0].username, TestManagementUtils.NEW_USERNAME)
@@ -206,10 +209,17 @@ class TestManagementUtils(unittest.TestCase):
         mongo_comment = self.db.contents.find_one({'_id': mongo_comment['_id']})
         self.assertEqual(mongo_comment['author_username'], TestManagementUtils.NEW_USERNAME)
 
+        # rename the user back to previous username
+        result = rename_user(TestManagementUtils.NEW_USERNAME, old_username)
+        # ensure that the username was successfully changed
+        self.assertTrue(result)
+
     def test_rename_not_matching(self):
         """
         ensure that the username for the second user does not change when renaming the first user
         """
+        old_username = self.sql_users[0].username
+
         # check that the username for user2 is initially different from the new username
         self.assertNotEqual(self.sql_users[1].username, TestManagementUtils.NEW_USERNAME)
         mongo_user2 = self.db.users.find_one({'username': self.sql_users[1].username})
@@ -231,6 +241,11 @@ class TestManagementUtils(unittest.TestCase):
         self.assertNotEqual(self.sql_users[1].username, TestManagementUtils.NEW_USERNAME)
         self.assertNotEqual(mongo_user2['username'], TestManagementUtils.NEW_USERNAME)
         self.assertNotEqual(mongo_comment2['author_username'], TestManagementUtils.NEW_USERNAME)
+        
+        # rename user1 back to previous username
+        result = rename_user(TestManagementUtils.NEW_USERNAME, old_username)
+        # ensure that the username was successfully changed
+        self.assertTrue(result)
 
     def tearDown(self):
         """
