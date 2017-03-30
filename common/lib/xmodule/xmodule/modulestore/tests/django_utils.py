@@ -26,6 +26,8 @@ from xmodule.modulestore.tests.factories import XMODULE_FACTORY_LOCK
 from openedx.core.djangoapps.bookmarks.signals import trigger_update_xblocks_cache_task
 from openedx.core.djangolib.testing.utils import CacheIsolationMixin, CacheIsolationTestCase
 
+from student.models import UserProfile
+
 
 class StoreConstructors(object):
     """Enumeration of store constructor types."""
@@ -434,6 +436,12 @@ class ModuleStoreTestCase(ModuleStoreIsolationMixin, TestCase):
         nonstaff_user.is_active = True
         nonstaff_user.is_staff = False
         nonstaff_user.save()
+
+        # create a UserProfile for user so user doesn't look like sneak_peek user
+        nonstaff_user_profile = UserProfile(user=nonstaff_user)
+        nonstaff_user_profile.name = uname
+        nonstaff_user_profile.save()
+
         return nonstaff_user, password
 
     def update_course(self, course, user_id):
