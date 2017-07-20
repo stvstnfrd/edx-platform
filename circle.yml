@@ -10,6 +10,7 @@ general:
 dependencies:
   override:
     - npm install
+    - gem install bundler
     - bundle install
 
     - pip install setuptools
