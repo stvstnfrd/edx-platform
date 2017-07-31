@@ -76,7 +76,6 @@ from collections import namedtuple
 from courseware.courses import get_course_about_section
 from courseware.courses import get_courses, sort_by_announcement, sort_by_start_date  # pylint: disable=import-error
 from courseware.access import has_access
-from courseware.models import CoursePreference
 
 from django_comment_common.models import Role
 
@@ -433,8 +432,6 @@ def signin_user(request):
     external_auth_response = external_auth_login(request)
     if external_auth_response is not None:
         return external_auth_response
-    if UserProfile.has_registered(request.user):
-        return redirect(reverse('dashboard'))
 
     # Determine the URL to redirect to following login:
     redirect_to = get_next_url_for_login_page(request)
@@ -770,40 +767,6 @@ def dashboard(request):
     }
 
     return render_to_response('dashboard.html', context)
-
-
-def _create_and_login_nonregistered_user(request):
-    new_student = UserProfile.create_nonregistered_user()
-    new_student.backend = settings.AUTHENTICATION_BACKENDS[0]
-    login(request, new_student)
-    request.session.set_expiry(604800)  # set session to very long to reduce number of nonreg users created
-
-
-@require_POST
-def setup_sneakpeek(request, course_id):
-    course_key = SlashSeparatedCourseKey.from_deprecated_string(course_id)
-
-    if not CoursePreference.course_allows_nonregistered_access(course_key):
-        return HttpResponseForbidden("Cannot access the course")
-
-    if not request.user.is_authenticated():
-        # if there's no user, create a nonregistered user
-        _create_and_login_nonregistered_user(request)
-    elif UserProfile.has_registered(request.user):
-        # registered users can't sneakpeek, so log them out and create a new nonregistered user
-        logout(request)
-        _create_and_login_nonregistered_user(request)
-        # fall-through case is a sneakpeek user that's already logged in
-
-    can_enroll, error_msg = _check_can_enroll_in_course(request.user,
-                                                        course_key,
-                                                        access_type='within_enrollment_period')
-    if not can_enroll:
-        log.error(error_msg)
-        return HttpResponseBadRequest(error_msg)
-
-    CourseEnrollment.enroll(request.user, course_key)
-    return HttpResponse("OK. Allowed sneakpeek")
 
 
 def _create_recent_enrollment_message(course_enrollments, course_modes):  # pylint: disable=invalid-name

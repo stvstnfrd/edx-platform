@@ -46,10 +46,6 @@ INSTALLED_APPS += (
     # Added here to allow translations
     'freetextresponse',
 )
-MIDDLEWARE_CLASSES += (
-    # Log out sneakpeek users
-    'sneakpeek.middleware.SneakPeekLogoutMiddleware',
-)
 SHIB_ONLY_SITE = False
 SHIB_REDIRECT_DOMAIN_WHITELIST = {}
 SPLIT_STUDIO_HOME = False

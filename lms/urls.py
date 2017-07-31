@@ -660,13 +660,6 @@ urlpatterns += (
         'courseware.views.get_analytics_answer_dist',
         name='get_analytics_answer_dist',
     ),
-    url(
-        r'^course_sneakpeek/{}/$'.format(
-            settings.COURSE_ID_PATTERN,
-        ),
-        'student.views.setup_sneakpeek',
-        name='course_sneakpeek',
-    ),
 )
 
 if settings.FEATURES["ENABLE_TEAMS"]:
