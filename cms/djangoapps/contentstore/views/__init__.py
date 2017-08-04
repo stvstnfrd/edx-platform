@@ -8,6 +8,7 @@ from .assets import *
 from .utility import *
 from .utilities.captions import *
 from .utilities.bulksettings import *
+from .utilities.bulkupdate import *
 from .component import *
 from .course import *
 from .entrance_exam import *
