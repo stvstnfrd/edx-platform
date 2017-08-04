@@ -1,0 +1,130 @@
+define([
+    'domReady', 'js/views/bulkupdate', 'jquery', 'gettext', 'jquery.cookie'
+], function(domReady, BulkUpdate, $, gettext) {
+
+    'use strict';
+
+    return function (updateUrl, statusUrl) {
+        var submitBtn = $('.view-bulkupdate .submit-button'),
+            defaults = [
+                gettext('There was an error during the submit process.') + '\n',
+                gettext('There was an error while validating the setting values you submitted.') + '\n',
+                gettext('There was an error while updating your problem settings in our database.') + '\n'
+            ],
+            SHOW_ANSWER_OPTIONS = [
+                'always',
+                'answered',
+                'attempted',
+                'closed',
+                'finished',
+                'past_due',
+                'correct_or_past_due',
+                'never'
+            ],
+            unloading = false,
+            previousUpdate = BulkUpdate.storedUpdate(),
+            $maxAttempts = $('#max-attempts'),
+            $showAnswer = $('#show-answer');
+
+        var onComplete = function () {
+            submitBtn.show();
+        }
+
+        $(window).on('beforeunload', function (event) { unloading = true; });
+
+        // Display the status of last update on page load
+        if (previousUpdate) {
+            if (previousUpdate.completed !== true) {
+                submitBtn.hide();
+            }
+            BulkUpdate.resume().then(onComplete);
+        }
+
+        var onSubmit = function(e) {
+            console.log("Pressed submit button");
+            if (validateData(e)) {
+                BulkUpdate.start(
+                    $maxAttempts.val(),
+                    $showAnswer.val(),
+                    statusUrl.replace(
+                        'fillerMaxAttempts/fillerShowAnswer',
+                        $maxAttempts.val() + '/' + $showAnswer.val()
+                    )
+                ).then(onComplete);
+
+                submitBtn.hide();
+
+                $.ajax({
+                    type: "POST",
+                    data: {
+                        maxAttempts: $maxAttempts.val(),
+                        showAnswer: $showAnswer.val()
+                    },
+                    url: updateUrl,
+                    error: function(xhr){
+                        var serverMsg, errMsg, stage;
+
+                        BulkUpdate.pollStatus();
+
+                        try{
+                            serverMsg = $.parseJSON(xhr.responseText) || {};
+                            errMsg = serverMsg.ErrMsg;
+                            if (serverMsg.hasOwnProperty('Stage')) {
+                                stage = Math.abs(serverMsg.Stage);
+                                BulkUpdate.cancel(defaults[stage] + errMsg, stage);
+                            }
+                        } catch (e) {
+                            errMsg = '';
+                        }
+
+                        // It could be that the user is simply refreshing the page
+                        // so we need to be sure this is an actual error from the server
+                        if (!unloading) {
+                            $(window).off('beforeunload.update');
+
+                            BulkUpdate.reset();
+                            onComplete();
+
+                            alert(gettext('Your bulk update has failed.') + '\n\n' + errMsg);
+                        }
+                        console.error('Error in making POST request', errMsg);
+                    },
+                    success: function(result, status, xhr){
+                        BulkUpdate.pollStatus();
+                        console.log('Successfully made POST request');
+                    },
+                    dataType: 'json'
+                });
+            }
+            return false;
+        };
+
+        var validateData = function(e) {
+            var maxAttempts = $maxAttempts.val();
+            var showAnswer = $showAnswer.val();
+
+            var maxAttemptsIsValid = maxAttempts >= 0;
+            var showAnswerIsValid = SHOW_ANSWER_OPTIONS.indexOf(showAnswer) >= 0;
+
+            if (!maxAttemptsIsValid) {
+                var msg = gettext('Not a valid value for MaxAttempts. Please enter a different value.')
+                $('.error-block').html(msg).show();
+                console.error(msg);
+            }
+            if (!showAnswerIsValid) {
+                var msg = gettext('Not a valid value for ShowAnswer. Please enter a different value.')
+                $('.error-block').html(msg).show();
+                console.error(msg);
+            }
+            return maxAttemptsIsValid && showAnswerIsValid;
+        };
+
+        domReady(function () {
+            submitBtn.bind('click', function (e) {
+                e.preventDefault();
+                onSubmit(e);
+            });
+            submitBtn.show();
+        });
+    };
+});
