@@ -18,6 +18,13 @@ class ExtraInfoAdmin(admin.ModelAdmin):
         'first_name',
     )
 
+    search_fields = (
+        'user__username',
+        'user__email',
+        'last_name',
+        'first_name',
+    )
+
     def get_email(self, obj):
         return obj.user.email
     get_email.short_description = 'Email address'
