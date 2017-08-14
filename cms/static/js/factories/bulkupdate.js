@@ -23,8 +23,10 @@ define([
             ],
             unloading = false,
             previousUpdate = BulkUpdate.storedUpdate(),
-            $maxAttempts = $('#max-attempts'),
-            $showAnswer = $('#show-answer');
+            $maxAttempts = $('#max-attempts .setting-input'),
+            $showAnswer = $('#show-answer .setting-input'),
+            $applyMaxAttempts = $('#max-attempts .apply-existing-checkbox'),
+            $applyShowAnswer = $('#show-answer .apply-existing-checkbox');
 
         var onComplete = function () {
             submitBtn.show();
@@ -40,15 +42,31 @@ define([
             BulkUpdate.resume().then(onComplete);
         }
 
+        var getSettingsData = function() {
+            var data = {};
+            if ($applyMaxAttempts.is(':checked')) {
+                data.maxAttempts = $maxAttempts.val();
+            } else {
+                data.maxAttempts = null;
+            }
+            if ($applyShowAnswer.is(':checked')) {
+                data.showAnswer = $showAnswer.val();
+            } else {
+                data.showAnswer = null;
+            }
+            return data;
+        };
+
         var onSubmit = function(e) {
             console.log("Pressed submit button");
-            if (validateData(e)) {
+            var data = getSettingsData();
+            if (validateData(data)) {
                 BulkUpdate.start(
-                    $maxAttempts.val(),
-                    $showAnswer.val(),
+                    data.maxAttempts,
+                    data.showAnswer,
                     statusUrl.replace(
                         'fillerMaxAttempts/fillerShowAnswer',
-                        $maxAttempts.val() + '/' + $showAnswer.val()
+                        data.maxAttempts + '/' + data.showAnswer
                     )
                 ).then(onComplete);
 
@@ -56,10 +74,7 @@ define([
 
                 $.ajax({
                     type: "POST",
-                    data: {
-                        maxAttempts: $maxAttempts.val(),
-                        showAnswer: $showAnswer.val()
-                    },
+                    data: data,
                     url: updateUrl,
                     error: function(xhr){
                         var serverMsg, errMsg, stage;
@@ -99,24 +114,24 @@ define([
             return false;
         };
 
-        var validateData = function(e) {
-            var maxAttempts = $maxAttempts.val();
-            var showAnswer = $showAnswer.val();
+        var validateData = function(data) {
+            if (data.maxAttempts != null || data.showAnswer != null) {
+                var maxAttemptsIsValid = data.maxAttempts == null || data.maxAttempts >= 0;
+                var showAnswerIsValid = data.showAnswer == null || SHOW_ANSWER_OPTIONS.indexOf(data.showAnswer) >= 0;
 
-            var maxAttemptsIsValid = maxAttempts >= 0;
-            var showAnswerIsValid = SHOW_ANSWER_OPTIONS.indexOf(showAnswer) >= 0;
-
-            if (!maxAttemptsIsValid) {
-                var msg = gettext('Not a valid value for MaxAttempts. Please enter a different value.')
-                $('.error-block').html(msg).show();
-                console.error(msg);
+                if (!maxAttemptsIsValid) {
+                    var msg = gettext('Not a valid value for MaxAttempts. Please enter a different value.')
+                    $('.error-block').html(msg).show();
+                    console.error(msg);
+                }
+                if (!showAnswerIsValid) {
+                    var msg = gettext('Not a valid value for ShowAnswer. Please enter a different value.')
+                    $('.error-block').html(msg).show();
+                    console.error(msg);
+                }
+                return maxAttemptsIsValid && showAnswerIsValid;
             }
-            if (!showAnswerIsValid) {
-                var msg = gettext('Not a valid value for ShowAnswer. Please enter a different value.')
-                $('.error-block').html(msg).show();
-                console.error(msg);
-            }
-            return maxAttemptsIsValid && showAnswerIsValid;
+            return false;
         };
 
         domReady(function () {
