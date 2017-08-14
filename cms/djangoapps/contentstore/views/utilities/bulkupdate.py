@@ -166,6 +166,7 @@ def utility_bulkupdate_handler(request, course_key_string):
 
     elif 'application/json' in request.META.get('HTTP_ACCEPT', 'application/json'):
         if request.method == 'POST':
+            modified_settings = {}
             max_attempts = request.POST.get('maxAttempts')
             show_answer = request.POST.get('showAnswer')
             session_status = request.session.setdefault("update_status", {})
@@ -186,46 +187,70 @@ def utility_bulkupdate_handler(request, course_key_string):
                     'show_answer': show_answer
                 }
             )
-            modified_settings = {
-                'max_attempts': int(max_attempts),
-                'showanswer': show_answer
-            }
+
             BulkUpdateUtil.save_request_status(request, session_status_string, 1)
 
-            if (max_attempts < 0 or show_answer not in SHOW_ANSWER_OPTIONS):
-                BulkUpdateUtil.save_request_status(request, session_status_string, -1)
-                return JsonResponse(
-                    {
-                        'ErrMsg': 'Invalid settings',
-                        'Stage': -1
-                    },
-                    status=400
-                )
-            else:
-                BulkUpdateUtil.save_request_status(request, session_status_string, 2)
+            if max_attempts.find('null') == -1:
                 try:
-                    BulkUpdateUtil.update_bulksettings_metadata(course, request.user, modified_settings)
-                    BulkUpdateUtil.save_request_status(request, session_status_string, 3)
-                except Exception as exception:   # pylint: disable=broad-except
-                    BulkUpdateUtil.save_request_status(request, session_status_string, -2)
-                    log.exception('Unable to update problem settings for course')
+                    max_attempts = int(max_attempts)
+                except:
+                    BulkUpdateUtil.save_request_status(request, session_status_string, -1)
                     return JsonResponse(
                         {
-                            'ErrMsg': str(exception),
-                            'Stage': -2
+                            'ErrMsg': 'Invalid settings',
+                            'Stage': -1
                         },
-                        status=500
+                        status=400
                     )
-                finally:
-                    # set failed stage number with negative sign in case of unsuccessful import
-                    if session_status[session_status_string] != 3:
-                        BulkUpdateUtil.save_request_status(request, session_status_string, -abs(session_status[session_status_string]))
+                if max_attempts < 0:
+                    BulkUpdateUtil.save_request_status(request, session_status_string, -1)
+                    return JsonResponse(
+                        {
+                            'ErrMsg': 'Invalid settings',
+                            'Stage': -1
+                        },
+                        status=400
+                    )
+                else:
+                    modified_settings['max_attempts'] = max_attempts
 
-                    # status == 3 represents that course has been updated successfully.
-                    if session_status[session_status_string] == 3:
-                        # Reload the course so we have the latest state
-                        course_key = CourseKey.from_string(course_key_string)
-                        course = get_course_and_check_access(course_key, request.user, depth=3)
+            if show_answer.find('null') == -1:
+                if show_answer not in SHOW_ANSWER_OPTIONS:
+                    BulkUpdateUtil.save_request_status(request, session_status_string, -1)
+                    return JsonResponse(
+                        {
+                            'ErrMsg': 'Invalid settings',
+                            'Stage': -1
+                        },
+                        status=400
+                    )
+                else:
+                    modified_settings['showanswer'] = show_answer
+
+            BulkUpdateUtil.save_request_status(request, session_status_string, 2)
+            try:
+                BulkUpdateUtil.update_bulksettings_metadata(course, request.user, modified_settings)
+                BulkUpdateUtil.save_request_status(request, session_status_string, 3)
+            except Exception as exception:   # pylint: disable=broad-except
+                BulkUpdateUtil.save_request_status(request, session_status_string, -2)
+                log.exception('Unable to update problem settings for course')
+                return JsonResponse(
+                    {
+                        'ErrMsg': str(exception),
+                        'Stage': -2
+                    },
+                    status=500
+                )
+            finally:
+                # set failed stage number with negative sign in case of unsuccessful import
+                if session_status[session_status_string] != 3:
+                    BulkUpdateUtil.save_request_status(request, session_status_string, -abs(session_status[session_status_string]))
+
+                # status == 3 represents that course has been updated successfully.
+                if session_status[session_status_string] == 3:
+                    # Reload the course so we have the latest state
+                    course_key = CourseKey.from_string(course_key_string)
+                    course = get_course_and_check_access(course_key, request.user, depth=3)
 
             return JsonResponse({'Status': 'OK'})
 

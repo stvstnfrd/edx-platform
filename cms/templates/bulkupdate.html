@@ -26,28 +26,35 @@
 
         <section class="course-utility" id="bulk-update">
             <form id="bulk-update-settings-input">
-                <h3 class = "section-header-title" title="Max Attempts Setting">Max Attempts Setting</h3>
-                <h3>
-                    Current default value for new problems from
-                    <a href="#">Advanced Settings</a>:
-                    <input class="input setting-input setting-input-number" type="number" id="max-attempts" value="${default_max_attempts}" min="0.0000" step="1"> <!--TODO load default value -->
-                </h3>
-                <h3 class = "section-header-title" title="Show Answer Setting">Show Answer Setting</h3>
-                <h3>
-                    Current default value for new problems from
-                    <a href="#">Advanced Settings</a>:
-                    <select class="input setting-input" id="show-answer">
-                        % for option in show_answer_options:
-                            % if option == default_show_answer:
-                                <option value="${option}" selected>${option}</option>
-                            % else:
-                                <option value="${option}">${option}</option>
-                            % endif
-                        % endfor
-                    </select>
-                </h3>
-                <input type="submit" value="${_('Update new value for all existing problems')}" class="submit-button" />
-<!--                <input type="submit" value="${_('Set default value for new problems')}" class="submit-button" />-->
+                <div id="max-attempts">
+                    <h3 class = "section-header-title" title="Max Attempts Setting">Max Attempts Setting</h3>
+                    <h3>
+                        Current default value for new problems from
+                        <a href="#">Advanced Settings</a>:
+                        <input class="input setting-input setting-input-number" type="number" value="${default_max_attempts}" min="0.0000" step="1"> <!--TODO load default value -->
+                    </h3>
+                    <input type="checkbox" class="apply-existing-checkbox" name="apply-existing" value="max-attempts" />
+                    <label>Apply to existing problems</label>
+                </div>
+                <div id="show-answer">
+                    <h3 class = "section-header-title" title="Show Answer Setting">Show Answer Setting</h3>
+                    <h3>
+                        Current default value for new problems from
+                        <a href="#">Advanced Settings</a>:
+                        <select class="input setting-input">
+                            % for option in show_answer_options:
+                                % if option == default_show_answer:
+                                    <option value="${option}" selected>${option}</option>
+                                % else:
+                                    <option value="${option}">${option}</option>
+                                % endif
+                            % endfor
+                        </select>
+                    </h3>
+                    <input type="checkbox" class="apply-existing-checkbox" name="apply-existing" value="show-answer" />
+                    <label>Apply to existing problems</label>
+                </div>
+                <input type="submit" value="${_('Update')}" class="submit-button" />
             </form>
         </section>
 
