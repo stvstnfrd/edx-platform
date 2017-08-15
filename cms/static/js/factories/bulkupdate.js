@@ -70,16 +70,18 @@ define([
                     )
                 ).then(onComplete);
 
+                BulkUpdate.pollStatus();
                 submitBtn.hide();
 
                 $.ajax({
                     type: "POST",
                     data: data,
                     url: updateUrl,
+                    complete: function() {
+                        onComplete();
+                    },
                     error: function(xhr){
                         var serverMsg, errMsg, stage;
-
-                        BulkUpdate.pollStatus();
 
                         try{
                             serverMsg = $.parseJSON(xhr.responseText) || {};
@@ -98,14 +100,12 @@ define([
                             $(window).off('beforeunload.update');
 
                             BulkUpdate.reset();
-                            onComplete();
 
                             alert(gettext('Your bulk update has failed.') + '\n\n' + errMsg);
                         }
                         console.error('Error in making POST request', errMsg);
                     },
-                    success: function(result, status, xhr){
-                        BulkUpdate.pollStatus();
+                    success: function(){
                         console.log('Successfully made POST request');
                     },
                     dataType: 'json'
