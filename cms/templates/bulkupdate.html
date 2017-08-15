@@ -27,30 +27,22 @@
         <section class="course-utility" id="bulk-update">
             <form id="bulk-update-settings-input">
                 <div id="max-attempts">
-                    <h3 class = "section-header-title" title="Max Attempts Setting">Max Attempts Setting</h3>
-                    <h3>
-                        Current default value for new problems from
-                        <a href="#">Advanced Settings</a>:
-                        <input class="input setting-input setting-input-number" type="number" value="${default_max_attempts}" min="0.0000" step="1"> <!--TODO load default value -->
-                    </h3>
+                    <h3 class = "section-header-title" title="Max Attempts Setting">Max Attempts</h3>
+                    <input class="input setting-input setting-input-number" type="number" value="${default_max_attempts}" min="0.0000" step="1">
                     <input type="checkbox" class="apply-existing-checkbox" name="apply-existing" value="max-attempts" />
                     <label>Apply to existing problems</label>
                 </div>
                 <div id="show-answer">
-                    <h3 class = "section-header-title" title="Show Answer Setting">Show Answer Setting</h3>
-                    <h3>
-                        Current default value for new problems from
-                        <a href="#">Advanced Settings</a>:
-                        <select class="input setting-input">
-                            % for option in show_answer_options:
-                                % if option == default_show_answer:
-                                    <option value="${option}" selected>${option}</option>
-                                % else:
-                                    <option value="${option}">${option}</option>
-                                % endif
-                            % endfor
-                        </select>
-                    </h3>
+                    <h3 class = "section-header-title" title="Show Answer Setting">Show Answer</h3>
+                    <select class="input setting-input">
+                        % for option in show_answer_options:
+                            % if option == default_show_answer:
+                                <option value="${option}" selected>${option}</option>
+                            % else:
+                                <option value="${option}">${option}</option>
+                            % endif
+                        % endfor
+                    </select>
                     <input type="checkbox" class="apply-existing-checkbox" name="apply-existing" value="show-answer" />
                     <label>Apply to existing problems</label>
                 </div>
