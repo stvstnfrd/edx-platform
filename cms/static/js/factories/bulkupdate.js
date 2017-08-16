@@ -30,7 +30,10 @@ define([
             previousUpdate = BulkUpdate.storedUpdate();
 
         var onComplete = function () {
-            $resetBtn.show();
+            // We poll the server for update status to display to user periodically
+            // We set a delay in showing reset button on completion to ensure the
+            // button appears after the newest update status has been shown
+            setTimeout(function() { $resetBtn.show(); }, 1800);
         };
 
         var onReset = function () {
