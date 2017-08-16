@@ -38,6 +38,14 @@ define(
         /********** Private functions *****************************************/
 
         /**
+         * Clears cookie containing the current update data
+         *
+         */
+        var clearUpdate = function () {
+            $.cookie(COOKIE_NAME, null, {path: window.location.pathname});
+        };
+
+        /**
          * Destroys any event listener BulkUpdate might have needed
          * during the process
          *
@@ -63,40 +71,15 @@ define(
         };
 
         /**
-         * Sets the BulkUpdate in the "error" status.
-         *
-         * Immediately stops any further polling from the server.
-         * Displays the error message at the list element that corresponds
-         * to the stage where the error occurred.
-         *
-         * @param {string} msg Error message to display.
-         * @param {int} [stage=current.stage] Stage of update process at which error occurred.
-         */
-        var error = function (msg, stage) {
-            current.stage = Math.abs(stage || current.stage); // Could be negative
-            current.state = STATE.ERROR;
-
-            destroyEventListeners();
-            clearTimeout(timeout.id);
-            updateFeedbackList(msg);
-
-            deferred.resolve();
-        };
-
-        /**
          * Initializes the event listeners
          *
          */
         var initEventListeners = function () {
             $(window).on('beforeunload.bulkupdate', function () {
                 if (current.stage <= STAGE.VALIDATING) {
-                    return gettext('Your bulk update request is being processed; navigating away will abort it.');
+                    return gettext('Your request is being processed; navigating away will abort it.');
                 }
             });
-        };
-
-        var clearUpdate = function () {
-            $.cookie(COOKIE_NAME, null, {path: window.location.pathname});
         };
 
         /**
@@ -110,19 +93,6 @@ define(
                 date: moment().valueOf(),
                 completed: completed || false
             }), {path: window.location.pathname});
-        };
-
-        /**
-         * Sets the BulkUpdate on the "success" status
-         *
-         */
-        var success = function () {
-            current.state = STATE.SUCCESS;
-
-            destroyEventListeners();
-            updateFeedbackList();
-
-            deferred.resolve();
         };
 
         /**
@@ -211,6 +181,40 @@ define(
             }
         };
 
+        /**
+         * Sets the BulkUpdate in the "error" status.
+         *
+         * Immediately stops any further polling from the server.
+         * Displays the error message at the list element that corresponds
+         * to the stage where the error occurred.
+         *
+         * @param {string} msg Error message to display.
+         * @param {int} [stage=current.stage] Stage of update process at which error occurred.
+         */
+        var error = function (msg, stage) {
+            current.stage = Math.abs(stage || current.stage); // Could be negative
+            current.state = STATE.ERROR;
+
+            destroyEventListeners();
+            clearTimeout(timeout.id);
+            updateFeedbackList(msg);
+
+            deferred.resolve();
+        };
+
+        /**
+         * Sets the BulkUpdate on the "success" status
+         *
+         */
+        var success = function () {
+            current.state = STATE.SUCCESS;
+
+            destroyEventListeners();
+            updateFeedbackList();
+
+            deferred.resolve();
+        };
+
         /********** Public functions ******************************************/
 
         var BulkUpdate = {
@@ -286,9 +290,9 @@ define(
                     current.stage = data.UpdateStatus;
                     if (current.stage < STAGE.SUBMITTING) {
                         current.state = STATE.ERROR;
-                    } else if (current.stage == STAGE.SUCCESS) {
+                    } else if (current.stage === STAGE.SUCCESS) {
                         current.state = STATE.SUCCESS;
-                    } else if (current.stage == STAGE.VALIDATING || current.stage == STAGE.UPDATING) {
+                    } else if (current.stage === STAGE.VALIDATING || current.stage === STAGE.UPDATING) {
                         current.state = STATE.IN_PROGRESS;
                     }
                     displayFeedbackList();
