@@ -3,27 +3,21 @@ Views related to bulk settings change operations on course problems.
 """
 
 import logging
-from datetime import datetime
 
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import ensure_csrf_cookie
-from django.views.decorators.http import require_http_methods, require_GET
+from django.views.decorators.http import require_GET
 
+# Imports from common / openedx
 from edxmako.shortcuts import render_to_response
-
-from contentstore.utils import reverse_course_url
-from contentstore.views.helpers import xblock_studio_url
-from opaque_keys.edx.keys import CourseKey
+from student.auth import has_course_author_access
 from util.json_request import JsonResponse
-from util.views import ensure_valid_course_key
-from xblock.fields import Scope
 from xmodule.modulestore.django import modulestore
 from xmodule.modulestore.inheritance import own_metadata
 
-from student.auth import has_course_author_access
-from ..course import get_course_and_check_access
+from opaque_keys.edx.keys import CourseKey  # ?
+from xblock.fields import Scope  # ?
 
 SHOW_ANSWER_OPTIONS = [
     'always',
@@ -41,6 +35,18 @@ class BulkUpdateUtil():
     """
     Utility class that hold functions for bulksettings operations
     """
+
+    @classmethod
+    def reverse_course_url(cls, handler, course_key_string, kwargs=None):
+        """
+        Creates the URL for handlers that use course_keys as URL parameters.
+        """
+        kwargs_for_reverse = {
+            'course_key_string': unicode(course_key_string)
+        }
+        if kwargs:
+            kwargs_for_reverse.update(kwargs)
+        return reverse('contentstore.views.' + handler, kwargs=kwargs_for_reverse)
 
     @classmethod
     def save_request_status(cls, request, key, status):
@@ -96,7 +102,13 @@ class BulkUpdateUtil():
                         reason = _("Invalid data")
                         if verr.message:
                             reason = _("Invalid data ({details})").format(details=verr.message)
-                        return JsonResponse({"error": reason}, 400)
+                        return JsonResponse(
+                            {
+                                'ErrMsg': reason,
+                                'Stage': -2
+                            },
+                            status=500
+                        )
 
                     field.write_to(xblock, value)
 
@@ -133,17 +145,20 @@ def utility_bulkupdate_handler(request, course_key_string):
     """
 
     course_key = CourseKey.from_string(course_key_string)
+    if not has_course_author_access(request.user, course_key):
+        raise PermissionDenied()
+
+    course = modulestore().get_course(course_key, 3)
 
     if 'text/html' in request.META.get('HTTP_ACCEPT', 'text/html'):
         if request.method == 'GET':
             max_attempts = 0
             show_answer = SHOW_ANSWER_OPTIONS[0]
-            course = get_course_and_check_access(course_key, request.user, depth=3)
-            update_url = reverse_course_url(
+            update_url = BulkUpdateUtil.reverse_course_url(
                 "utility_bulkupdate_handler",
                 course_key_string
             )
-            status_url = reverse_course_url(
+            status_url = BulkUpdateUtil.reverse_course_url(
                 "utility_bulkupdate_status_handler",
                 course_key_string,
                 kwargs={
@@ -163,71 +178,69 @@ def utility_bulkupdate_handler(request, course_key_string):
                     'show_answer_options': SHOW_ANSWER_OPTIONS
                 }
             )
+        else:
+            return HttpResponseNotFound()
 
     elif 'application/json' in request.META.get('HTTP_ACCEPT', 'application/json'):
         if request.method == 'POST':
-            modified_settings = {}
-            max_attempts = request.POST.get('maxAttempts')
-            show_answer = request.POST.get('showAnswer')
-            session_status = request.session.setdefault("update_status", {})
-            session_status_string = course_key_string + max_attempts + show_answer
-            BulkUpdateUtil.save_request_status(request, session_status_string, 0)
+            try:
+                modified_settings = {}
+                max_attempts = request.POST.get('maxAttempts')
+                show_answer = request.POST.get('showAnswer')
+                session_status = request.session.setdefault("update_status", {})
+                session_status_string = course_key_string + max_attempts + show_answer
+                BulkUpdateUtil.save_request_status(request, session_status_string, 0)
 
-            course = get_course_and_check_access(course_key, request.user, depth=3)
+                BulkUpdateUtil.save_request_status(request, session_status_string, 1)
 
-            update_url = reverse_course_url(
-                "utility_bulkupdate_handler",
-                course_key_string
-            )
-            status_url = reverse_course_url(
-                "utility_bulkupdate_status_handler",
-                course_key_string,
-                kwargs={
-                    'max_attempts': max_attempts,
-                    'show_answer': show_answer
-                }
-            )
+                if max_attempts.find('null') == -1:
+                    try:
+                        max_attempts = int(max_attempts)
+                    except:
+                        BulkUpdateUtil.save_request_status(request, session_status_string, -1)
+                        return JsonResponse(
+                            {
+                                'ErrMsg': 'Invalid settings',
+                                'Stage': -1
+                            },
+                            status=400
+                        )
+                    if max_attempts < 0:
+                        BulkUpdateUtil.save_request_status(request, session_status_string, -1)
+                        return JsonResponse(
+                            {
+                                'ErrMsg': 'Invalid settings',
+                                'Stage': -1
+                            },
+                            status=400
+                        )
+                    else:
+                        modified_settings['max_attempts'] = max_attempts
 
-            BulkUpdateUtil.save_request_status(request, session_status_string, 1)
+                if show_answer.find('null') == -1:
+                    if show_answer not in SHOW_ANSWER_OPTIONS:
+                        BulkUpdateUtil.save_request_status(request, session_status_string, -1)
+                        return JsonResponse(
+                            {
+                                'ErrMsg': 'Invalid settings',
+                                'Stage': -1
+                            },
+                            status=400
+                        )
+                    else:
+                        modified_settings['showanswer'] = show_answer
+                BulkUpdateUtil.save_request_status(request, session_status_string, 2)
+            except Exception as exception:   # pylint: disable=broad-except
+                BulkUpdateUtil.save_request_status(request, session_status_string, -1)
+                log.exception('Unable to update problem settings for course')
+                return JsonResponse(
+                    {
+                        'ErrMsg': str(exception),
+                        'Stage': -1
+                    },
+                    status=500
+                )
 
-            if max_attempts.find('null') == -1:
-                try:
-                    max_attempts = int(max_attempts)
-                except:
-                    BulkUpdateUtil.save_request_status(request, session_status_string, -1)
-                    return JsonResponse(
-                        {
-                            'ErrMsg': 'Invalid settings',
-                            'Stage': -1
-                        },
-                        status=400
-                    )
-                if max_attempts < 0:
-                    BulkUpdateUtil.save_request_status(request, session_status_string, -1)
-                    return JsonResponse(
-                        {
-                            'ErrMsg': 'Invalid settings',
-                            'Stage': -1
-                        },
-                        status=400
-                    )
-                else:
-                    modified_settings['max_attempts'] = max_attempts
-
-            if show_answer.find('null') == -1:
-                if show_answer not in SHOW_ANSWER_OPTIONS:
-                    BulkUpdateUtil.save_request_status(request, session_status_string, -1)
-                    return JsonResponse(
-                        {
-                            'ErrMsg': 'Invalid settings',
-                            'Stage': -1
-                        },
-                        status=400
-                    )
-                else:
-                    modified_settings['showanswer'] = show_answer
-
-            BulkUpdateUtil.save_request_status(request, session_status_string, 2)
             try:
                 BulkUpdateUtil.update_bulksettings_metadata(course, request.user, modified_settings)
                 BulkUpdateUtil.save_request_status(request, session_status_string, 3)
@@ -250,9 +263,11 @@ def utility_bulkupdate_handler(request, course_key_string):
                 if session_status[session_status_string] == 3:
                     # Reload the course so we have the latest state
                     course_key = CourseKey.from_string(course_key_string)
-                    course = get_course_and_check_access(course_key, request.user, depth=3)
+                    course = modulestore().get_course(course_key, 3)
 
             return JsonResponse({'Status': 'OK'})
+        else:
+            return HttpResponseNotFound()
 
 
 @require_GET
