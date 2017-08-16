@@ -55,6 +55,14 @@ define(
         };
 
         /**
+         * Makes BulkUpdate feedback status list hidden
+         *
+         */
+        var hideFeedbackList = function () {
+            $dom.wrapper.addClass('is-hidden');
+        };
+
+        /**
          * Sets the BulkUpdate in the "error" status.
          *
          * Immediately stops any further polling from the server.
@@ -253,6 +261,7 @@ define(
 
                 clearTimeout(timeout.id);
                 updateFeedbackList();
+                hideFeedbackList();
             },
 
             /**

@@ -5,7 +5,8 @@ define([
     'use strict';
 
     return function (updateUrl, statusUrl) {
-        var submitBtn = $('.view-bulkupdate .submit-button'),
+        var resetBtn = $('.view-bulkupdate .reset-button'),
+            submitBtn = $('.view-bulkupdate .submit-button'),
             defaults = [
                 gettext('There was an error during the submit process.') + '\n',
                 gettext('There was an error while validating the setting values you submitted.') + '\n',
@@ -29,8 +30,14 @@ define([
             $applyShowAnswer = $('#show-answer .apply-existing-checkbox');
 
         var onComplete = function () {
+            resetBtn.show();
+        };
+
+        var onReset = function () {
+            BulkUpdate.reset();
             submitBtn.show();
-        }
+            resetBtn.hide();
+        };
 
         $(window).on('beforeunload', function (event) { unloading = true; });
 
@@ -98,10 +105,6 @@ define([
                         // so we need to be sure this is an actual error from the server
                         if (!unloading) {
                             $(window).off('beforeunload.update');
-
-                            BulkUpdate.reset();
-
-                            alert(gettext('Your bulk update has failed.') + '\n\n' + errMsg);
                         }
                         console.error('Error in making POST request', errMsg);
                     },
@@ -135,6 +138,10 @@ define([
         };
 
         domReady(function () {
+            resetBtn.bind('click', function (e) {
+                e.preventDefault();
+                onReset();
+            });
             submitBtn.bind('click', function (e) {
                 e.preventDefault();
                 onSubmit(e);
