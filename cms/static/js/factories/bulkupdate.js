@@ -43,9 +43,18 @@ define([
 
         // Display the status of last update on page load
         if (previousUpdate) {
-            if (previousUpdate.completed !== true) {
-                submitBtn.hide();
+            var maxAttempts = previousUpdate.update.maxAttempts;
+            var showAnswer = previousUpdate.update.showAnswer;
+
+            if (maxAttempts) {
+                $maxAttempts.val(previousUpdate.update.maxAttempts);
+                $applyMaxAttempts.prop('checked', true);
             }
+            if (showAnswer) {
+                $showAnswer.val(previousUpdate.update.showAnswer);
+                $applyShowAnswer.prop('checked', true);
+            }
+
             BulkUpdate.resume().then(onComplete);
         }
 
@@ -146,7 +155,12 @@ define([
                 e.preventDefault();
                 onSubmit(e);
             });
-            submitBtn.show();
+
+            if (previousUpdate) {
+                resetBtn.show();
+            } else {
+                submitBtn.show();
+            }
         });
     };
 });

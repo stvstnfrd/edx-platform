@@ -95,6 +95,10 @@ define(
             });
         };
 
+        var clearUpdate = function () {
+            $.cookie(COOKIE_NAME, null, {path: window.location.pathname});
+        };
+
         /**
          * Stores in a cookie the current update data
          *
@@ -231,6 +235,7 @@ define(
              */
             pollStatus: function (stage) {
                 if (current.state !== STATE.IN_PROGRESS) {
+                    updateFeedbackList();
                     return;
                 }
 
@@ -238,6 +243,7 @@ define(
 
                 if (current.stage === STAGE.SUCCESS) {
                     success();
+                    storeUpdate(true);
                 } else if (current.stage < STAGE.SUBMITTING) { // Failed
                     error(gettext("Error submitting data values"));
                 } else { // In progress
@@ -260,6 +266,7 @@ define(
                 current.state = STATE.READY;
 
                 clearTimeout(timeout.id);
+                clearUpdate();
                 updateFeedbackList();
                 hideFeedbackList();
             },
@@ -277,6 +284,13 @@ define(
 
                 $.getJSON(update.statusUrl, function (data) {
                     current.stage = data.UpdateStatus;
+                    if (current.stage < STAGE.SUBMITTING) {
+                        current.state = STATE.ERROR;
+                    } else if (current.stage == STAGE.SUCCESS) {
+                        current.state = STATE.SUCCESS;
+                    } else if (current.stage == STAGE.VALIDATING || current.stage == STAGE.UPDATING) {
+                        current.state = STATE.IN_PROGRESS;
+                    }
                     displayFeedbackList();
                     this.pollStatus(current.stage);
                 }.bind(this));
