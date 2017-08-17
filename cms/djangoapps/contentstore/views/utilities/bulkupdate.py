@@ -7,6 +7,7 @@ import logging
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseNotFound
 from django.views.decorators.http import require_GET
 
 # Imports from common / openedx
@@ -189,8 +190,16 @@ def utility_bulkupdate_handler(request, course_key_string):
                 show_answer = request.POST.get('showAnswer')
                 session_status = request.session.setdefault("update_status", {})
                 session_status_string = course_key_string + max_attempts + show_answer
-                BulkUpdateUtil.save_request_status(request, session_status_string, 0)
+            except:
+                return JsonResponse(
+                    {
+                        'ErrMsg': 'Missing or invalid arguments',
+                        'Stage': -1
+                    },
+                    status=400
+                )
 
+            try:
                 BulkUpdateUtil.save_request_status(request, session_status_string, 1)
 
                 if max_attempts.find('null') == -1:
