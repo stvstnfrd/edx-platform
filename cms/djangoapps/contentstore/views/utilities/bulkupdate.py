@@ -4,6 +4,8 @@ Views related to bulk settings change operations on course problems.
 
 import logging
 
+from celery.task import task
+from celery.utils.log import get_task_logger
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
@@ -19,6 +21,8 @@ from xmodule.modulestore.inheritance import own_metadata
 
 from opaque_keys.edx.keys import CourseKey  # ?
 from xblock.fields import Scope  # ?
+
+LOGGER = get_task_logger(__name__)
 
 SHOW_ANSWER_OPTIONS = [
     'always',
@@ -128,6 +132,7 @@ class BulkUpdateUtil():
                 for unit in subsection.get_children():
                     for component in unit.get_children():
                         if component.location.category == 'problem':
+                            LOGGER.debug("Updating problem")
                             cls._update_settings_for_problem(user, component, modified_settings)
 
 
@@ -139,6 +144,7 @@ __all__ = [
 ]
 
 
+@task()
 def _do_update(request, course_key_string, course, session_status, session_status_string, user, modified_settings):
     try:
         BulkUpdateUtil.update_bulksettings_metadata(course, user, modified_settings)
@@ -268,7 +274,7 @@ def _utility_bulkupdate_post_handler(request, course_key_string, course):
             status=500
         )
 
-    _do_update(request, course_key_string, course, session_status, session_status_string, request.user, modified_settings)
+    _do_update.delay(request, course_key_string, course, session_status, session_status_string, request.user, modified_settings)
 
     return JsonResponse({'Status': 'OK'})
 
