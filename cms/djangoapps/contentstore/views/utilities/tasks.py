@@ -1,3 +1,5 @@
+import requests
+
 from celery.task import task
 from celery.utils.log import get_task_logger
 
@@ -19,88 +21,39 @@ class BulkUpdateUtil():
     """
 
     @classmethod
-    def reverse_course_url(cls, handler, course_key_string, kwargs=None):
-        """
-        Creates the URL for handlers that use course_keys as URL parameters.
-        """
-        kwargs_for_reverse = {
-            'course_key_string': unicode(course_key_string)
-        }
-        if kwargs:
-            kwargs_for_reverse.update(kwargs)
-        return reverse('contentstore.views.' + handler, kwargs=kwargs_for_reverse)
-
-    @classmethod
-    def save_request_status(cls, request, key, status):
-        """
-        Save update status for a course in request session
-        """
-        session_status = request.session.get('update_status')
-        if session_status is None:
-            session_status = request.session.setdefault("update_status", {})
-
-        session_status[key] = status
-        request.session.save()
-
-    @classmethod
-    def _update_with_callback(cls, xblock, user_id, old_metadata=None, old_content=None):
-        """
-        Updates the xblock in the modulestore.
-        But before doing so, it calls the xblock's editor_saved callback function.
-        """
-        if callable(getattr(xblock, "editor_saved", None)):
-            if old_metadata is None:
-                old_metadata = own_metadata(xblock)
-            if old_content is None:
-                old_content = xblock.get_explicitly_set_fields_by_scope(Scope.content)
-
-        # Update after the callback so any changes made in the callback will get persisted.
-        return modulestore().update_item(xblock, user_id)
-
-    @classmethod
-    def _update_settings_for_problem(cls, user_id, xblock, metadata=None):
-        """
-        Saves problem with new settings. Has special processing for publish and nullout and Nones in metadata.
-        nullout means to truly set the field to None whereas nones in metadata mean to unset them (so they revert
-        to default).
-        """
-
-        store = modulestore()
-        # Perform all xblock changes within a (single-versioned) transaction
-        with store.bulk_operations(xblock.location.course_key):
-
-            old_metadata = own_metadata(xblock)
-
-            # update existing metadata with submitted metadata (which can be partial)
-            if metadata is not None:
-                for metadata_key, value in metadata.items():
-                    field = xblock.fields[metadata_key]
-
-                    try:
-                        value = field.from_json(value)
-                    except ValueError as verr:
-                        LOGGER.error("Error in _update_settings_for_problem")
-
-                    field.write_to(xblock, value)
-
-            # update the xblock and call any xblock callbacks
-            xblock = cls._update_with_callback(xblock, user_id, old_metadata)
-
-    @classmethod
-    def update_bulksettings_metadata(cls, course, user_id, modified_settings):
+    def update_bulksettings_metadata(cls, problems_list, user_id, metadata):
         """
         Updates settings metadata for all sections, subsections, units, and problems.
         """
+        store = modulestore()
+        for problem in problems_list:
+            for metadata_key, value in metadata.items():
+                field = problem.fields[metadata_key]
 
-        print("Inside update_bulksettings_metadata")
-        for section in course.get_children():
-            for subsection in section.get_children():
-                for unit in subsection.get_children():
-                    for component in unit.get_children():
-                        if component.location.category == 'problem':
-                            cls._update_settings_for_problem(user_id, component, modified_settings)
+                try:
+                    value = field.from_json(value)
+                except ValueError as verr:
+                    LOGGER.error("Error in _update_settings_for_problem")
+
+                field.write_to(problem, value)
+
+            # update the xblock and call any xblock callbacks
+            modulestore().update_item(problem, user_id, is_publish_root=False)
 
 
+def get_course_problems(course_key):
+    """
+    Retrieve all XBlocks in the course for a particular category.
+
+    Returns only XBlocks that are published and haven't been deleted.
+    """
+    # Note: Some components may have been orphaned due to a bug in split 
+    # modulestore (PLAT-799). We may be returning orphaned components in this
+    # list to be updated as well
+    return modulestore().get_items(
+        course_key,
+        qualifiers={"category": 'problem'},
+    )
 
 @task()
 def _do_update(course_key_string, user_id, modified_settings):
@@ -108,8 +61,9 @@ def _do_update(course_key_string, user_id, modified_settings):
     course = modulestore().get_course(course_key, 3)
 
     try:
-        BulkUpdateUtil.update_bulksettings_metadata(course, user_id, modified_settings)
+        problems_list = get_course_problems(course_key)
+        BulkUpdateUtil.update_bulksettings_metadata(problems_list, user_id, modified_settings)
         course_key = CourseKey.from_string(course_key_string)
         course = modulestore().get_course(course_key, 3)
     except Exception as exception:   # pylint: disable=broad-except
-        LOGGER.error('Unable to update problem settings for course')
+        LOGGER.error(exception)

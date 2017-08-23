@@ -43,17 +43,41 @@ __all__ = [
 ]
 
 
+def reverse_course_url(handler, course_key_string, kwargs=None):
+    """
+    Creates the URL for handlers that use course_keys as URL parameters.
+    """
+    kwargs_for_reverse = {
+        'course_key_string': unicode(course_key_string)
+    }
+    if kwargs:
+        kwargs_for_reverse.update(kwargs)
+    return reverse('contentstore.views.' + handler, kwargs=kwargs_for_reverse)
+
+
+def save_request_status(request, key, status):
+    """
+    Save update status for a course in request session
+    """
+    session_status = request.session.get('update_status')
+    if session_status is None:
+        session_status = request.session.setdefault("update_status", {})
+
+    session_status[key] = status
+    request.session.save()
+
+
 def _utility_bulkupdate_get_handler(request, course_key_string, course):
     """
     Internal bulkupdate handler for GET operation
     """
     max_attempts = 0
     show_answer = SHOW_ANSWER_OPTIONS[0]
-    update_url = BulkUpdateUtil.reverse_course_url(
+    update_url = reverse_course_url(
         "utility_bulkupdate_handler",
         course_key_string
     )
-    status_url = BulkUpdateUtil.reverse_course_url(
+    status_url = reverse_course_url(
         "utility_bulkupdate_status_handler",
         course_key_string,
         kwargs={
@@ -95,13 +119,13 @@ def _utility_bulkupdate_post_handler(request, course_key_string, course):
         )
 
     try:
-        BulkUpdateUtil.save_request_status(request, session_status_string, 1)
+        save_request_status(request, session_status_string, 1)
 
         if max_attempts.find('null') == -1:
             try:
                 max_attempts = int(max_attempts)
             except:
-                BulkUpdateUtil.save_request_status(request, session_status_string, -1)
+                save_request_status(request, session_status_string, -1)
                 return JsonResponse(
                     {
                         'ErrMsg': 'Invalid settings',
@@ -110,7 +134,7 @@ def _utility_bulkupdate_post_handler(request, course_key_string, course):
                     status=400
                 )
             if max_attempts < 0:
-                BulkUpdateUtil.save_request_status(request, session_status_string, -1)
+                save_request_status(request, session_status_string, -1)
                 return JsonResponse(
                     {
                         'ErrMsg': 'Invalid settings',
@@ -123,7 +147,7 @@ def _utility_bulkupdate_post_handler(request, course_key_string, course):
 
         if show_answer.find('null') == -1:
             if show_answer not in SHOW_ANSWER_OPTIONS:
-                BulkUpdateUtil.save_request_status(request, session_status_string, -1)
+                save_request_status(request, session_status_string, -1)
                 return JsonResponse(
                     {
                         'ErrMsg': 'Invalid settings',
@@ -133,9 +157,9 @@ def _utility_bulkupdate_post_handler(request, course_key_string, course):
                 )
             else:
                 modified_settings['showanswer'] = show_answer
-        BulkUpdateUtil.save_request_status(request, session_status_string, 2)
+        save_request_status(request, session_status_string, 2)
     except Exception as exception:   # pylint: disable=broad-except
-        BulkUpdateUtil.save_request_status(request, session_status_string, -1)
+        save_request_status(request, session_status_string, -1)
         log.exception('Unable to update problem settings for course')
         return JsonResponse(
             {
