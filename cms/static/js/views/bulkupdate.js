@@ -245,7 +245,7 @@ define(
 
                 current.stage = stage || STAGE.SUBMITTING;
 
-                if (current.stage === STAGE.SUCCESS) {
+                if (current.stage > STAGE.VALIDATING) {
                     success();
                     storeUpdate(true);
                 } else if (current.stage < STAGE.SUBMITTING) { // Failed
