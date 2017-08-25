@@ -4,18 +4,20 @@ define([
 
     'use strict';
 
-    return function (updateUrl, statusUrl) {
-        var $applyMaxAttempts = $('#max-attempts .apply-existing-checkbox'),
-            $applyShowAnswer = $('#show-answer .apply-existing-checkbox'),
+    return function (updateUrl, statusUrl, defaultMaxAttempts, defaultShowAnswer) {
+        var $applyMaxAttempts = $('#max-attempts .apply-checkbox'),
+            $applyShowAnswer = $('#show-answer .apply-checkbox'),
             $maxAttempts = $('#max-attempts .setting-input'),
             $showAnswer = $('#show-answer .setting-input'),
             $resetBtn = $('.view-bulkupdate .reset-button'),
             $submitBtn = $('.view-bulkupdate .submit-button'),
             DEFAULT_ERROR_MESSAGES = [
-                gettext('There was an error during the submit process.') + '\n',
+                gettext('There was an error while sending your request.') + '\n',
                 gettext('There was an error while validating the setting values you submitted.') + '\n',
                 gettext('There was an error while updating your problem settings in our database.') + '\n'
             ],
+            unloading = false,
+            previousUpdate = BulkUpdate.storedUpdate(),
             SHOW_ANSWER_OPTIONS = [
                 'always',
                 'answered',
@@ -25,21 +27,42 @@ define([
                 'past_due',
                 'correct_or_past_due',
                 'never'
-            ],
-            unloading = false,
-            previousUpdate = BulkUpdate.storedUpdate();
+            ];
 
         var onComplete = function () {
-            // We poll the server for update status to display to user periodically
-            // We set a delay in showing reset button on completion to ensure the
-            // button appears after the newest update status has been shown
-            setTimeout(function() { $resetBtn.show(); }, 1800);
+            $resetBtn.prop('disabled', false);
+        };
+
+        var onError = function(xhr) {
+            var serverMsg, errMsg, stage;
+
+            try{
+                serverMsg = $.parseJSON(xhr.responseText) || {};
+                errMsg = serverMsg.ErrMsg;
+                if (serverMsg.hasOwnProperty('Stage')) {
+                    stage = Math.abs(serverMsg.Stage);
+                    BulkUpdate.cancel(DEFAULT_ERROR_MESSAGES[stage] + errMsg, stage);
+                }
+            } catch (e) {
+                errMsg = '';
+            }
+
+            // It could be that the user is simply refreshing the page
+            // so we need to be sure this is an actual error from the server
+            if (!unloading) {
+                $(window).off('beforeunload.update');
+            }
+            console.error('Error in making POST request', errMsg);
         };
 
         var onReset = function () {
             BulkUpdate.reset();
-            $submitBtn.show();
-            $resetBtn.hide();
+            $submitBtn.prop('disabled', false);
+            $resetBtn.prop('disabled', true);
+            $applyMaxAttempts.prop('checked', false);
+            $applyShowAnswer.prop('checked', false);
+            $maxAttempts.val(defaultMaxAttempts);
+            $showAnswer.val(defaultShowAnswer);
         };
 
         $(window).on('beforeunload', function () { unloading = true; });
@@ -78,24 +101,30 @@ define([
         };
 
         var validateData = function(data) {
-            if (data.maxAttempts !== null || data.showAnswer !== null) {
-                var msg;
-                var maxAttemptsIsValid = data.maxAttempts === null || data.maxAttempts >= 0;
-                var showAnswerIsValid = data.showAnswer === null || SHOW_ANSWER_OPTIONS.indexOf(data.showAnswer) >= 0;
+            var msg,
+                maxAttempts = data.maxAttempts,
+                showAnswer = data.showAnswer;
 
-                if (!maxAttemptsIsValid) {
+            if (!maxAttempts && !showAnswer) {
+                return false;
+            }
+            if (maxAttempts) {
+                if (maxAttempts < 0) {
                     msg = gettext('Not a valid value for MaxAttempts. Please enter a different value.');
                     $('.error-block').html(msg).show();
                     console.error(msg);
+                    return false;
                 }
-                if (!showAnswerIsValid) {
+            }
+            if (showAnswer) {
+                if (SHOW_ANSWER_OPTIONS.indexOf(showAnswer) < 0) {
                     msg = gettext('Not a valid value for ShowAnswer. Please enter a different value.');
                     $('.error-block').html(msg).show();
                     console.error(msg);
+                    return false;
                 }
-                return maxAttemptsIsValid && showAnswerIsValid;
             }
-            return false;
+            return true;
         };
 
         var onSubmit = function() {
@@ -111,7 +140,7 @@ define([
                 );
 
                 BulkUpdate.pollStatus();
-                $submitBtn.hide();
+                $submitBtn.prop('disabled', true);
 
                 $.ajax({
                     type: "POST",
@@ -121,25 +150,7 @@ define([
                         onComplete();
                     },
                     error: function(xhr){
-                        var serverMsg, errMsg, stage;
-
-                        try{
-                            serverMsg = $.parseJSON(xhr.responseText) || {};
-                            errMsg = serverMsg.ErrMsg;
-                            if (serverMsg.hasOwnProperty('Stage')) {
-                                stage = Math.abs(serverMsg.Stage);
-                                BulkUpdate.cancel(DEFAULT_ERROR_MESSAGES[stage] + errMsg, stage);
-                            }
-                        } catch (e) {
-                            errMsg = '';
-                        }
-
-                        // It could be that the user is simply refreshing the page
-                        // so we need to be sure this is an actual error from the server
-                        if (!unloading) {
-                            $(window).off('beforeunload.update');
-                        }
-                        console.error('Error in making POST request', errMsg);
+                        onError(xhr);
                     },
                     success: function(){
                         console.log('Successfully made POST request');
@@ -163,9 +174,11 @@ define([
             });
 
             if (previousUpdate) {
-                $resetBtn.show();
+                $resetBtn.prop('disabled', false);
+                $submitBtn.prop('disabled', true);
             } else {
-                $submitBtn.show();
+                $resetBtn.prop('disabled', true);
+                $submitBtn.prop('disabled', false);
             }
         });
     };

@@ -14,8 +14,7 @@ define(
         var STAGE = {
             'SUBMITTING': 0,
             'VALIDATING': 1,
-            'UPDATING' : 2,
-            'SUCCESS'  : 3
+            'UPDATING' : 2
         };
 
         var STATE = {
@@ -220,7 +219,7 @@ define(
         var BulkUpdate = {
 
             /**
-             * Cancels the update and sets the Object to the error state
+             * Cancels the update and sets to the error state
              *
              * @param {string} msg Error message to display.
              * @param {int} stage Stage of update process at which error occurred.
@@ -245,14 +244,13 @@ define(
 
                 current.stage = stage || STAGE.SUBMITTING;
 
-                if (current.stage > STAGE.VALIDATING) {
+                if (current.stage > STAGE.VALIDATING) { // Updating or done
                     success();
                     storeUpdate(true);
                 } else if (current.stage < STAGE.SUBMITTING) { // Failed
                     error(gettext("Error submitting data values"));
                 } else { // In progress
                     updateFeedbackList();
-
                     $.getJSON(update.statusUrl, function (data) {
                         timeout.id = setTimeout(function () {
                             this.pollStatus(data.UpdateStatus);
@@ -283,16 +281,15 @@ define(
              */
             resume: function () {
                 deferred = $.Deferred();
-                console.log("Resume update", this.storedUpdate());
                 update = this.storedUpdate().update;
 
                 $.getJSON(update.statusUrl, function (data) {
                     current.stage = data.UpdateStatus;
                     if (current.stage < STAGE.SUBMITTING) {
                         current.state = STATE.ERROR;
-                    } else if (current.stage === STAGE.SUCCESS) {
+                    } else if (current.stage === STAGE.UPDATING) {
                         current.state = STATE.SUCCESS;
-                    } else if (current.stage === STAGE.VALIDATING || current.stage === STAGE.UPDATING) {
+                    } else if (current.stage === STAGE.VALIDATING) {
                         current.state = STATE.IN_PROGRESS;
                     }
                     displayFeedbackList();

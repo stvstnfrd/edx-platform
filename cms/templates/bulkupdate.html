@@ -1,6 +1,5 @@
 <%inherit file="base.html" />
 <%!
-  from django.core.urlresolvers import reverse
   from django.utils.translation import ugettext as _
   from openedx.core.djangolib.js_utils import js_escaped_string
 %>
@@ -15,7 +14,7 @@
   <header class="mast has-actions has-subtitle">
     <h1 class="page-header">
       <small class="subtitle">${_("Tools / Course Utilities")}</small>
-      <span class="sr">&gt; </span>${_("Update Problem Settings")}
+      <span class="sr">&gt; </span>${_("Bulk Update Problem Settings")}
     </h1>
   </header>
 </div>
@@ -27,12 +26,12 @@
         <section class="course-utility" id="bulk-update">
             <form id="bulk-update-settings-input">
                 <div id="max-attempts">
+                    <input type="checkbox" class="apply-checkbox" name="apply-checkbox" value="max-attempts" />
                     <h3 class = "section-header-title" title="Max Attempts Setting">Max Attempts</h3>
                     <input class="input setting-input setting-input-number" type="number" value="${default_max_attempts}" min="0.0000" step="1">
-                    <input type="checkbox" class="apply-existing-checkbox" name="apply-existing" value="max-attempts" />
-                    <label>Apply to existing problems</label>
                 </div>
                 <div id="show-answer">
+                    <input type="checkbox" class="apply-checkbox" name="apply-checkbox" value="show-answer" />
                     <h3 class = "section-header-title" title="Show Answer Setting">Show Answer</h3>
                     <select class="input setting-input">
                         % for option in show_answer_options:
@@ -43,18 +42,16 @@
                             % endif
                         % endfor
                     </select>
-                    <input type="checkbox" class="apply-existing-checkbox" name="apply-existing" value="show-answer" />
-                    <label>Apply to existing problems</label>
                 </div>
-                <input type="submit" value="${_('Update')}" class="submit-button is-hidden" />
-                <input type="button" value="${_('Reset')}" class="reset-button is-hidden" />
+                <input type="submit" value="${_('Apply checked settings')}" class="submit-button" />
+                <input type="button" value="${_('Clear display')}" class="reset-button" disabled />
             </form>
         </section>
 
         <p class="error-block"></p>
 
         <div class="wrapper wrapper-status is-hidden">
-          <h3 class="title">${_("Problem Setting Update Status")}</h3>
+          <h3 class="title">${_("Bulk Update Status")}</h3>
 
           <ol class="status-progress list-progress">
             <li class="item-progresspoint item-progresspoint-submit is-complete">
@@ -64,8 +61,8 @@
               </span>
 
               <div class="status-detail">
-                <h3 class="title">${_("Submitting")}</h3>
-                <p class="copy">${_("Submitting your new settings")}</p>
+                <h3 class="title">${_("Applying")}</h3>
+                <p class="copy">${_("Applying your new settings")}</p>
               </div>
             </li>
 
@@ -88,25 +85,9 @@
               </span>
 
               <div class="status-detail">
-                <h3 class="title">${_("Updating Problem Settings")}</h3>
+                <h3 class="title">${_("Updating")}</h3>
                 <p class="copy">
-                    ${_("Updating your new settings for all problems in this course. This process might take longer with larger courses.")}
-                </p>
-              </div>
-            </li>
-
-            <li class="item-progresspoint item-progresspoint-success has-actions is-not-started">
-              <span class="deco status-visual">
-                <i class="icon fa fa-square-o"></i>
-              </span>
-
-              <div class="status-detail">
-                <h3 class="title">
-                  ${_("Success")}
-                  <span class="item-progresspoint-success-date"></span>
-                </h3>
-                <p class="copy">
-                    ${_("Your problem settings have now been updated for this course")}
+                    ${_("Updating your problems in this course. This process might take longer with larger courses.")}
                 </p>
               </div>
             </li>
@@ -120,7 +101,7 @@
       <div class="bit">
         <h3 class="title title-3">${_("What is update problem settings?")}</h3>
         <p>
-          ${_("The update problem settings page provides a way to update the Max Attempts and Show Answer settings for all existing problems of the current course with a single click.")}
+          ${_("The bulk update page provides a way to update the Max Attempts and Show Answer settings for all existing problems of the current course and additionally set as default settings for all future problems of the current course.")}
         </p>
       </div>
     </aside>
@@ -135,7 +116,10 @@
   require(["js/factories/bulkupdate"], function(BulkUpdateFactory) {
       BulkUpdateFactory(
           "${bulkupdate_update_url | n, js_escaped_string}",
-          "${bulkupdate_status_url | n, js_escaped_string}"
+          "${bulkupdate_status_url | n, js_escaped_string}",
+          "${default_max_attempts | n, js_escaped_string}",
+          "${default_max_attempts | n, js_escaped_string}",
+          "${default_show_answer | n, js_escaped_string}"
       );
   });
 </%block>
