@@ -14,7 +14,7 @@
   <header class="mast has-actions has-subtitle">
     <h1 class="page-header">
       <small class="subtitle">${_("Tools / Course Utilities")}</small>
-      <span class="sr">&gt; </span>${_("Bulk Update Problem Settings")}
+      <span class="sr">&gt; </span>${_("Bulk Update")}
     </h1>
   </header>
 </div>
@@ -22,87 +22,84 @@
 <div class="wrapper-content wrapper">
   <section class="content">
     <article class="content-primary" role="main">
+      <section class="course-utility" id="bulk-update">
+        <form id="bulk-update-settings-input">
+          <header class="section-header">Problem Settings</header>
+          <p><b>Note: </b>Any changes applied here will also modify the defaults for future problems in Advanced Settings.</p>
+          <div id="max-attempts" class="setting-input-block">
+            <input type="checkbox" class="apply-checkbox" name="apply-checkbox" value="max-attempts" />
+            <h3 class = "setting-input-label" title="Max Attempts Setting">Max Attempts</h3>
+            <input class="input setting-input setting-input-number" type="number" value="${default_max_attempts}" min="0.0000" step="1">
+          </div>
+          <div id="show-answer" class="setting-input-block">
+            <input type="checkbox" class="apply-checkbox" name="apply-checkbox" value="show-answer" />
+            <h3 class = "setting-input-label" title="Show Answer Setting">Show Answer</h3>
+            <select class="input setting-input">
+              % for option in show_answer_options:
+                % if option == default_show_answer:
+                  <option value="${option}" selected>${option}</option>
+                % else:
+                  <option value="${option}">${option}</option>
+                % endif
+              % endfor
+            </select>
+          </div>
+          <input type="submit" value="${_('Apply checked settings')}" class="submit-button" />
+          <input type="button" value="${_('Clear display')}" class="reset-button" disabled />
+        </form>
+      </section>
 
-        <section class="course-utility" id="bulk-update">
-            <p>Note: Any changes applied here will also modify the defaults for future problems in advanced settings.</p>
-            <form id="bulk-update-settings-input">
-                <div id="max-attempts">
-                    <input type="checkbox" class="apply-checkbox" name="apply-checkbox" value="max-attempts" />
-                    <h3 class = "section-header-title" title="Max Attempts Setting">Max Attempts</h3>
-                    <input class="input setting-input setting-input-number" type="number" value="${default_max_attempts}" min="0.0000" step="1">
-                </div>
-                <div id="show-answer">
-                    <input type="checkbox" class="apply-checkbox" name="apply-checkbox" value="show-answer" />
-                    <h3 class = "section-header-title" title="Show Answer Setting">Show Answer</h3>
-                    <select class="input setting-input">
-                        % for option in show_answer_options:
-                            % if option == default_show_answer:
-                                <option value="${option}" selected>${option}</option>
-                            % else:
-                                <option value="${option}">${option}</option>
-                            % endif
-                        % endfor
-                    </select>
-                </div>
-                <input type="submit" value="${_('Apply checked settings')}" class="submit-button" />
-                <input type="button" value="${_('Clear display')}" class="reset-button" disabled />
-            </form>
-        </section>
+      <p class="error-block"></p>
 
-        <p class="error-block"></p>
+      <div class="wrapper wrapper-status is-hidden">
+        <h3 class="title">${_("Bulk Update Status")}</h3>
 
-        <div class="wrapper wrapper-status is-hidden">
-          <h3 class="title">${_("Bulk Update Status")}</h3>
+        <ol class="status-progress list-progress">
+          <li class="item-progresspoint item-progresspoint-submit is-complete">
+            <span class="deco status-visual">
+              <i class="icon fa fa-cog"></i>
+              <i class="icon fa fa-warning"></i>
+            </span>
+            <div class="status-detail">
+              <h3 class="title">${_("Applying")}</h3>
+              <p class="copy">${_("Applying your new settings")}</p>
+            </div>
+          </li>
 
-          <ol class="status-progress list-progress">
-            <li class="item-progresspoint item-progresspoint-submit is-complete">
-              <span class="deco status-visual">
-                <i class="icon fa fa-cog"></i>
-                <i class="icon fa fa-warning"></i>
-              </span>
+          <li class="item-progresspoint item-progresspoint-validate is-not-started">
+            <span class="deco status-visual">
+              <i class="icon fa fa-cog"></i>
+              <i class="icon fa fa-warning"></i>
+            </span>
+            <div class="status-detail">
+              <h3 class="title">${_("Validating")}</h3>
+              <p class="copy">${_("Validating your new settings")}</p>
+            </div>
+          </li>
 
-              <div class="status-detail">
-                <h3 class="title">${_("Applying")}</h3>
-                <p class="copy">${_("Applying your new settings")}</p>
-              </div>
-            </li>
+          <li class="item-progresspoint item-progresspoint-update is-not-started">
+            <span class="deco status-visual">
+              <i class="icon fa fa-cog"></i>
+              <i class="icon fa fa-warning"></i>
+            </span>
+            <div class="status-detail">
+              <h3 class="title">${_("Updating")}</h3>
+              <p class="copy">
+                  ${_("Default settings for future problems has been updated.")}
+                  ${_("Applying update to all problems. This process might take longer with larger courses.")}
+              </p>
+            </div>
+          </li>
 
-            <li class="item-progresspoint item-progresspoint-validate is-not-started">
-              <span class="deco status-visual">
-                <i class="icon fa fa-cog"></i>
-                <i class="icon fa fa-warning"></i>
-              </span>
-
-              <div class="status-detail">
-                <h3 class="title">${_("Validating")}</h3>
-                <p class="copy">${_("Validating your new settings")}</p>
-              </div>
-            </li>
-
-            <li class="item-progresspoint item-progresspoint-update is-not-started">
-              <span class="deco status-visual">
-                <i class="icon fa fa-cog"></i>
-                <i class="icon fa fa-warning"></i>
-              </span>
-
-              <div class="status-detail">
-                <h3 class="title">${_("Updating")}</h3>
-                <p class="copy">
-                    ${_("Updating your problems in this course. This process might take longer with larger courses.")}
-                </p>
-              </div>
-            </li>
-
-          </ol>
-        </div>
-
+        </ol>
+      </div>
     </article>
 
     <aside class="content-supplementary" role="complimentary">
       <div class="bit">
-        <h3 class="title title-3">${_("What is update problem settings?")}</h3>
+        <h3 class="title title-3">${_("What is bulk update?")}</h3>
         <p>
-          ${_("The bulk update page provides a way to update the Max Attempts and Show Answer settings for all existing problems of the current course and additionally set as default settings for all future problems of the current course.")}
+          ${_("The bulk update page provides a way to update the Max Attempts and Show Answer settings for all existing problems of the current course. This operation also sets the default settings for all future problems of the current course. You can alter this default by going to Advanced Settings.")}
         </p>
       </div>
     </aside>
