@@ -64,6 +64,30 @@ def _save_request_status(request, key, status):
     request.session.save()
 
 
+def _update_advanced_settings(request, course_key_string, session_status_string, modified_settings):
+    """
+    Internal method used to save to advanced settings
+    """
+    course_key = CourseKey.from_string(course_key_string)
+    course = modulestore().get_course(course_key, 3)
+    try:
+        with modulestore().bulk_operations(course_key):
+            for key, value in modified_settings.iteritems():
+                setattr(course, key, value)
+
+            modulestore().update_item(course, request.user.id)
+
+    except:
+        _save_request_status(request, session_status_string, 2)
+        return JsonResponse(
+            {
+                'ErrMsg': 'Unable to update advanced settings',
+                'Stage': -2
+            },
+            status=500
+        )
+
+
 def _utility_bulkupdate_get_handler(request, course_key_string):
     """
     Internal bulkupdate handler for GET operation
@@ -158,7 +182,7 @@ def _utility_bulkupdate_post_handler(request, course_key_string):
                 status=400
             )
     _save_request_status(request, session_status_string, 2)
-
+    _update_advanced_settings(request, course_key_string, session_status_string, modified_settings)
     bulk_update_problem_settings.delay(course_key_string, request.user.id, modified_settings)
 
     return JsonResponse({'Status': 'OK'})
@@ -198,7 +222,7 @@ def utility_bulkupdate_status_handler(request, course_key_string, max_attempts=N
         -X : Update unsuccessful due to some error with X as stage [0-3]
         0 : No status info found (update done or submit still in progress)
         1 : Validating.
-        2 : Updating mongo via celery task
+        2 : Updating mongo
 
     """
     course_key = CourseKey.from_string(course_key_string)
