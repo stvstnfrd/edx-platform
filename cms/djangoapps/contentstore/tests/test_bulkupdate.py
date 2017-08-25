@@ -22,6 +22,7 @@ SHOW_ANSWER_OPTIONS = [
     'never'
 ]
 
+
 @ddt.ddt
 class BulkUpdateTest(CourseTestCase):
     """
