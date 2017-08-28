@@ -290,7 +290,8 @@ define(
                         current.state = STATE.ERROR;
                     } else if (current.stage === STAGE.UPDATING_PROBLEMS) {
                         current.state = STATE.SUCCESS;
-                    } else if (current.stage === STAGE.VALIDATING || current.stage === STAGE.UPDATING_ADVANCED_SETTINGS) {
+                    } else if (current.stage === STAGE.VALIDATING ||
+                               current.stage === STAGE.UPDATING_ADVANCED_SETTINGS) {
                         current.state = STATE.IN_PROGRESS;
                     }
                     displayFeedbackList();
