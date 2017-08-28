@@ -14,6 +14,7 @@ define([
             DEFAULT_ERROR_MESSAGES = [
                 gettext('There was an error while sending your request.') + '\n',
                 gettext('There was an error while validating the setting values you submitted.') + '\n',
+                gettext('There was an error while updating your advanced settings.') + '\n',
                 gettext('There was an error while updating your problem settings in our database.') + '\n'
             ],
             unloading = false,

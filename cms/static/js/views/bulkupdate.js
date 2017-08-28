@@ -14,7 +14,8 @@ define(
         var STAGE = {
             'SUBMITTING': 0,
             'VALIDATING': 1,
-            'UPDATING' : 2
+            'UPDATING_ADVANCED_SETTINGS' : 2,
+            'UPDATING_PROBLEMS' : 3
         };
 
         var STATE = {
@@ -244,7 +245,7 @@ define(
 
                 current.stage = stage || STAGE.SUBMITTING;
 
-                if (current.stage > STAGE.VALIDATING) { // Updating or done
+                if (current.stage > STAGE.UPDATING_ADVANCED_SETTINGS) { // Updating or done
                     success();
                     storeUpdate(true);
                 } else if (current.stage < STAGE.SUBMITTING) { // Failed
@@ -287,9 +288,9 @@ define(
                     current.stage = data.UpdateStatus;
                     if (current.stage < STAGE.SUBMITTING) {
                         current.state = STATE.ERROR;
-                    } else if (current.stage === STAGE.UPDATING) {
+                    } else if (current.stage === STAGE.UPDATING_PROBLEMS) {
                         current.state = STATE.SUCCESS;
-                    } else if (current.stage === STAGE.VALIDATING) {
+                    } else if (current.stage === STAGE.VALIDATING || current.stage === STAGE.UPDATING_ADVANCED_SETTINGS) {
                         current.state = STATE.IN_PROGRESS;
                     }
                     displayFeedbackList();

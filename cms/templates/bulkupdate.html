@@ -25,7 +25,7 @@
       <section class="course-utility" id="bulk-update">
         <form id="bulk-update-settings-input">
           <header class="section-header">Problem Settings</header>
-          <p><b>Note: </b>Any changes applied here will also modify the defaults for future problems in Advanced Settings.</p>
+          <p><b>Note: </b>Any changes applied here will also modify the defaults for future problems in Advanced Settings. Published problems will automatically be republished. Unpublished problems will remain as drafts.</p>
           <div id="max-attempts" class="setting-input-block">
             <input type="checkbox" class="apply-checkbox" name="apply-checkbox" value="max-attempts" />
             <h3 class = "setting-input-label" title="Max Attempts Setting">Max Attempts</h3>
@@ -77,16 +77,26 @@
             </div>
           </li>
 
-          <li class="item-progresspoint item-progresspoint-update is-not-started">
+          <li class="item-progresspoint item-progresspoint-update-advanced-settings is-not-started">
             <span class="deco status-visual">
               <i class="icon fa fa-cog"></i>
               <i class="icon fa fa-warning"></i>
             </span>
             <div class="status-detail">
-              <h3 class="title">${_("Updating")}</h3>
+              <h3 class="title">${_("Updating Advanced Settings")}</h3>
+              <p class="copy">${_("Setting as default for future problems in Advanced Settings")}</p>
+            </div>
+          </li>
+
+          <li class="item-progresspoint item-progresspoint-update-problems is-not-started">
+            <span class="deco status-visual">
+              <i class="icon fa fa-cog"></i>
+              <i class="icon fa fa-warning"></i>
+            </span>
+            <div class="status-detail">
+              <h3 class="title">${_("Updating and Republishing Problems")}</h3>
               <p class="copy">
-                  ${_("Default settings for future problems has been updated.")}
-                  ${_("Applying update to all problems. This process might take longer with larger courses.")}
+                  ${_("Applying update to all problems. Republishing published problems. This process might take longer with larger courses.")}
               </p>
             </div>
           </li>
