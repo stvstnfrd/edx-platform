@@ -8,14 +8,6 @@ from xmodule.modulestore.inheritance import own_metadata
 from opaque_keys.edx.keys import CourseKey
 from xblock.fields import Scope
 
-from pympler import muppy, summary
-
-
-def _debug_print_objects_summary():
-    all_objects = muppy.get_objects()
-    sum1 = summary.summarize(all_objects)
-    summary.print_(sum1)
-
 
 def _get_course_problems(course_key):
     """
