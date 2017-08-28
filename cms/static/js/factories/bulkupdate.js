@@ -165,13 +165,20 @@ define([
         domReady(function () {
             loadPreviousUpdate();
 
-            $resetBtn.bind('click', function (e) {
+            $resetBtn.click(function (e) {
                 e.preventDefault();
                 onReset();
             });
-            $submitBtn.bind('click', function (e) {
+            $submitBtn.click(function (e) {
                 e.preventDefault();
                 onSubmit(e);
+            });
+
+            $maxAttempts.change(function() {
+                $applyMaxAttempts.prop('checked', true);
+            });
+            $showAnswer.change(function() {
+                $applyShowAnswer.prop('checked', true);
             });
 
             if (previousUpdate) {
