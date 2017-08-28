@@ -1,7 +1,10 @@
 from celery.task import task
+from django.conf import settings
 from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
+from smtplib import SMTPException
 
+from edxmako.shortcuts import render_to_string
 from xmodule.modulestore.django import modulestore
 from xmodule.modulestore.inheritance import own_metadata
 
@@ -20,6 +23,34 @@ def _get_course_problems(course_key):
         course_key,
         qualifiers={"category": 'problem'},
     )
+
+
+def _send_email_on_completion(course, user_username, user_email, modified_settings, success):
+    """
+    Send email to user on completion of celery task completion
+    """
+    context = {
+        'user_username': user_username,
+        'course_name': course.display_name,
+        'modified_settings': modified_settings,
+        'success': success
+    }
+
+    from_email = settings.DEFAULT_FROM_EMAIL
+    subject = render_to_string('emails/utilities_bulk_update_done_subject.txt', context)
+    subject = ''.join(subject.splitlines())
+    message = render_to_string('emails/utilities_bulk_update_done_message.txt', context)
+
+    try:
+        send_mail(
+            subject,
+            message,
+            from_email,
+            [user_email],
+            fail_silently=False
+        )
+    except SMTPException:
+        print("Failure sending e-mail for bulk update completion to %s", user_email)
 
 
 class BulkUpdateUtil():
@@ -52,7 +83,7 @@ class BulkUpdateUtil():
 
 
 @task()
-def bulk_update_problem_settings(course_key_string, user_id, modified_settings):
+def bulk_update_problem_settings(course_key_string, user_id, user_username, user_email, modified_settings):
     course_key = CourseKey.from_string(course_key_string)
     course = modulestore().get_course(course_key, 3)
 
@@ -60,5 +91,7 @@ def bulk_update_problem_settings(course_key_string, user_id, modified_settings):
         BulkUpdateUtil.update_metadata(course_key, user_id, modified_settings)
         course_key = CourseKey.from_string(course_key_string)
         course = modulestore().get_course(course_key, 3)
+        _send_email_on_completion(course, user_username, user_email, modified_settings, True)
     except Exception as exception:
         print(exception)
+        _send_email_on_completion(course, user_username, user_email, modified_settings, False)

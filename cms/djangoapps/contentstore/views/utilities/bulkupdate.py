@@ -3,7 +3,6 @@ Views related to bulk settings change operations on course problems.
 """
 
 from django.core.exceptions import PermissionDenied
-from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseNotFound
@@ -126,6 +125,7 @@ def _utility_bulkupdate_post_handler(request, course_key_string):
     Internal bulkupdate handler for POST operation
     """
     modified_settings = {}
+    user = request.user
 
     # Retrieve settings from request
     try:
@@ -184,7 +184,7 @@ def _utility_bulkupdate_post_handler(request, course_key_string):
     _save_request_status(request, session_status_string, 2)
     _update_advanced_settings(request, course_key_string, session_status_string, modified_settings)
     _save_request_status(request, session_status_string, 3)
-    bulk_update_problem_settings.delay(course_key_string, request.user.id, modified_settings)
+    bulk_update_problem_settings.delay(course_key_string, user.id, user.username, user.email, modified_settings)
 
     return JsonResponse({'Status': 'OK'})
 
