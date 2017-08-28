@@ -91,6 +91,10 @@ def _utility_bulkupdate_get_handler(request, course_key_string):
     """
     Internal bulkupdate handler for GET operation
     """
+    course_outline_url = _reverse_course_url(
+        "course_handler",
+        course_key_string
+    )
     update_url = _reverse_course_url(
         "utility_bulkupdate_handler",
         course_key_string
@@ -111,6 +115,7 @@ def _utility_bulkupdate_get_handler(request, course_key_string):
         'bulkupdate.html',
         {
             'context_course': course,
+            'course_outline_url': course_outline_url,
             'bulkupdate_update_url': update_url,
             'bulkupdate_status_url': status_url,
             'default_max_attempts': DEFAULT_MAX_ATTEMPTS,
