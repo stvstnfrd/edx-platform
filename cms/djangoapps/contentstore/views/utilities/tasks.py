@@ -55,6 +55,9 @@ class BulkUpdateUtil():
 
                 modulestore().update_item(problem, user_id)
 
+                if modulestore().has_published_version(problem):
+                    modulestore().publish(problem.location, user_id)
+
 
 @task()
 def bulk_update_problem_settings(course_key_string, user_id, modified_settings):
