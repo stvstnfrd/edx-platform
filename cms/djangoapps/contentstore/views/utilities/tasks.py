@@ -1,3 +1,5 @@
+import logging
+
 from celery.task import task
 from django.conf import settings
 from django.core.mail import send_mail
@@ -12,13 +14,16 @@ from opaque_keys.edx.keys import CourseKey
 from xblock.fields import Scope
 
 
+log = logging.getLogger(__name__)
+
 def _get_course_problems(course_key):
     """
     Retrieve all problems in the course
+
+    Note: Some components may have been orphaned due to a bug in split
+    modulestore (PLAT-799). We may be returning orphaned components in this
+    list to be updated as well
     """
-    # Note: Some components may have been orphaned due to a bug in split
-    # modulestore (PLAT-799). We may be returning orphaned components in this
-    # list to be updated as well
     return modulestore().get_items(
         course_key,
         qualifiers={"category": 'problem'},
@@ -30,10 +35,10 @@ def _send_email_on_completion(course, user_username, user_email, modified_settin
     Send email to user on completion of celery task completion
     """
     context = {
-        'user_username': user_username,
+        'username': user_username,
         'course_name': course.display_name,
         'modified_settings': modified_settings,
-        'success': success
+        'success': success,
     }
 
     from_email = settings.DEFAULT_FROM_EMAIL
@@ -47,51 +52,41 @@ def _send_email_on_completion(course, user_username, user_email, modified_settin
             message,
             from_email,
             [user_email],
-            fail_silently=False
+            fail_silently=False,
         )
     except SMTPException:
-        print("Failure sending e-mail for bulk update completion to %s", user_email)
+        log.exception("Failure sending e-mail for bulk update completion to %s", user_email)
 
 
-class BulkUpdateUtil():
+def _update_metadata(course_key, user_id, metadata):
     """
-    Utility class that hold functions for bulksettings operations
+    Updates metadata settings for all problems.
     """
-
-    @classmethod
-    def update_metadata(cls, course_key, user_id, metadata):
-        """
-        Updates metadata settings for all problems.
-        """
-
-        problems = _get_course_problems(course_key)
-
-        with modulestore().bulk_operations(course_key):
-            for problem in problems:
-                for metadata_key, value in metadata.items():
-                    field = problem.fields[metadata_key]
-                    try:
-                        value = field.from_json(value)
-                    except Exception as exception:
-                        print(exception)
-                    field.write_to(problem, value)
-
-                modulestore().update_item(problem, user_id)
-
-                if modulestore().has_published_version(problem):
-                    modulestore().publish(problem.location, user_id)
+    store = modulestore()
+    problems = _get_course_problems(course_key)
+    with store.bulk_operations(course_key):
+        for problem in problems:
+            for metadata_key, value in metadata.items():
+                field = problem.fields[metadata_key]
+                try:
+                    value = field.from_json(value)
+                except Exception as exception:
+                    log.exception(exception)
+                field.write_to(problem, value)
+            store.update_item(problem, user_id)
+            if store.has_published_version(problem):
+                store.publish(problem.location, user_id)
 
 
 @task()
 def bulk_update_problem_settings(course_key_string, user_id, user_username, user_email, modified_settings):
+    store = modulestore()
     course_key = CourseKey.from_string(course_key_string)
-    course = modulestore().get_course(course_key, 3)
-
+    course = store.get_course(course_key, 3)
     try:
-        BulkUpdateUtil.update_metadata(course_key, user_id, modified_settings)
-        course_key = CourseKey.from_string(course_key_string)
-        course = modulestore().get_course(course_key, 3)
-        _send_email_on_completion(course, user_username, user_email, modified_settings, True)
+        _update_metadata(course_key, user_id, modified_settings)
+        success = True
     except Exception as exception:
-        print(exception)
-        _send_email_on_completion(course, user_username, user_email, modified_settings, False)
+        log.exception(exception)
+        success = False
+    _send_email_on_completion(course, user_username, user_email, modified_settings, success)

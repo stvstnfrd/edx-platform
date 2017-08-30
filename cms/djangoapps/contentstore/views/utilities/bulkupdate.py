@@ -15,7 +15,7 @@ from xmodule.modulestore.django import modulestore
 
 from opaque_keys.edx.keys import CourseKey
 
-from contentstore.views.utilities.tasks import bulk_update_problem_settings
+from .tasks import bulk_update_problem_settings
 
 SHOW_ANSWER_OPTIONS = [
     'always',
@@ -25,7 +25,7 @@ SHOW_ANSWER_OPTIONS = [
     'finished',
     'past_due',
     'correct_or_past_due',
-    'never'
+    'never',
 ]
 DEFAULT_MAX_ATTEMPTS = 0
 DEFAULT_SHOW_ANSWER = SHOW_ANSWER_OPTIONS[0]
@@ -35,6 +35,18 @@ __all__ = [
     'utility_bulkupdate_handler',
     'utility_bulkupdate_status_handler',
 ]
+
+
+def _get_session_status_string(course_key_string, max_attempts, show_answer):
+    """
+    Internal method used to generate a string representing the session,
+    to use when getting and setting the session status
+    """
+    return 'course_key_string={}&max_attempts={}&show_answer={}'.format(
+        course_key_string,
+        max_attempts,
+        show_answer,
+    )
 
 
 def _reverse_course_url(handler, course_key_string, kwargs=None):
@@ -75,7 +87,6 @@ def _update_advanced_settings(request, course_key_string, session_status_string,
                 setattr(course, key, value)
 
             modulestore().update_item(course, request.user.id)
-
     except:
         _save_request_status(request, session_status_string, 2)
         return JsonResponse(
@@ -83,7 +94,7 @@ def _update_advanced_settings(request, course_key_string, session_status_string,
                 'ErrMsg': 'Unable to update advanced settings',
                 'Stage': -2
             },
-            status=500
+            status=500,
         )
 
 
@@ -120,7 +131,7 @@ def _utility_bulkupdate_get_handler(request, course_key_string):
             'bulkupdate_status_url': status_url,
             'default_max_attempts': DEFAULT_MAX_ATTEMPTS,
             'default_show_answer': DEFAULT_SHOW_ANSWER,
-            'show_answer_options': SHOW_ANSWER_OPTIONS
+            'show_answer_options': SHOW_ANSWER_OPTIONS,
         }
     )
 
@@ -137,30 +148,30 @@ def _utility_bulkupdate_post_handler(request, course_key_string):
         max_attempts = request.POST.get('maxAttempts')
         show_answer = request.POST.get('showAnswer')
         session_status = request.session.setdefault("update_status", {})
-        session_status_string = course_key_string + max_attempts + show_answer
+        session_status_string = _get_session_status_string(course_key_string, max_attempts, show_answer)
     except:
         return JsonResponse(
             {
                 'ErrMsg': 'Missing or invalid arguments',
                 'Stage': -1
             },
-            status=400
+            status=400,
         )
 
     # Validate settings
     _save_request_status(request, session_status_string, 1)
 
-    if max_attempts.find('null') == -1:
+    if max_attempts != 'null':
         try:
             max_attempts = int(max_attempts)
-        except:
+        except ValueError:
             _save_request_status(request, session_status_string, -1)
             return JsonResponse(
                 {
                     'ErrMsg': 'Given value for max attempts is not an integer',
                     'Stage': -1
                 },
-                status=400
+                status=400,
             )
         if max_attempts < 0:
             _save_request_status(request, session_status_string, -1)
@@ -169,12 +180,12 @@ def _utility_bulkupdate_post_handler(request, course_key_string):
                     'ErrMsg': 'Given value for max attempts is negative',
                     'Stage': -1
                 },
-                status=400
+                status=400,
             )
         else:
             modified_settings['max_attempts'] = max_attempts
 
-    if show_answer.find('null') == -1:
+    if show_answer != 'null':
         if show_answer in SHOW_ANSWER_OPTIONS:
             modified_settings['showanswer'] = show_answer
         else:
@@ -184,7 +195,7 @@ def _utility_bulkupdate_post_handler(request, course_key_string):
                     'ErrMsg': 'Given value for show answer is not an available option',
                     'Stage': -1
                 },
-                status=400
+                status=400,
             )
     _save_request_status(request, session_status_string, 2)
     _update_advanced_settings(request, course_key_string, session_status_string, modified_settings)
@@ -197,8 +208,9 @@ def _utility_bulkupdate_post_handler(request, course_key_string):
 @login_required
 def utility_bulkupdate_handler(request, course_key_string):
     """
-    Handler for bulk update requests in the utilities tool. Currently
-    updates maxAttempts and showAnswer settings for all problems in a
+    Handle bulk update requests in the utilities tool
+
+    Currently updates max_attempts and showanswer for all problems in a
     given course and sets as settings for future problems in advanced
     settings
     """
@@ -211,7 +223,6 @@ def utility_bulkupdate_handler(request, course_key_string):
             return _utility_bulkupdate_get_handler(request, course_key_string)
         else:
             return HttpResponseNotFound()
-
     elif 'application/json' in request.META.get('HTTP_ACCEPT', 'application/json'):
         if request.method == 'POST':
             return _utility_bulkupdate_post_handler(request, course_key_string)
@@ -238,7 +249,8 @@ def utility_bulkupdate_status_handler(request, course_key_string, max_attempts=N
 
     try:
         session_status = request.session["update_status"]
-        status = session_status[course_key_string + max_attempts + show_answer]
+        session_status_string = _get_session_status_string(course_key_string, max_attempts, show_answer)
+        status = session_status[session_status_string]
     except KeyError:
         status = 0
 
