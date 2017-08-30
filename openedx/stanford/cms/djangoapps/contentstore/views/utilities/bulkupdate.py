@@ -161,7 +161,7 @@ def _utility_bulkupdate_post_handler(request, course_key_string):
     # Validate settings
     _save_request_status(request, session_status_string, 1)
 
-    if max_attempts != 'null':
+    if max_attempts and max_attempts != 'null':
         try:
             max_attempts = int(max_attempts)
         except ValueError:
@@ -185,7 +185,7 @@ def _utility_bulkupdate_post_handler(request, course_key_string):
         else:
             modified_settings['max_attempts'] = max_attempts
 
-    if show_answer != 'null':
+    if show_answer and show_answer != 'null':
         if show_answer in SHOW_ANSWER_OPTIONS:
             modified_settings['showanswer'] = show_answer
         else:
