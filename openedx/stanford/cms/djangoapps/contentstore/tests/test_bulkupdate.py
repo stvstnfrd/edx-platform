@@ -3,24 +3,15 @@ Unit tests for bulk update problem settings utility
 """
 
 import ddt
-import mock
 
 from xmodule.modulestore.tests.factories import CourseFactory
+
+from opaque_keys.edx.keys import CourseKey
 
 from cms.djangoapps.contentstore.tests.utils import CourseTestCase
 from contentstore.utils import reverse_course_url
 
-
-SHOW_ANSWER_OPTIONS = [
-    'always',
-    'answered',
-    'attempted',
-    'closed',
-    'finished',
-    'past_due',
-    'correct_or_past_due',
-    'never'
-]
+from contentstore.views.utilities.bulkupdate import utility_bulkupdate_handler, SHOW_ANSWER_OPTIONS
 
 
 @ddt.ddt
@@ -33,76 +24,72 @@ class BulkUpdateTest(CourseTestCase):
         Creates the test course
         """
         super(BulkUpdateTest, self).setUp()
-        self.course = CourseFactory.create(org='edX', number='test1', display_name='BulkUpdate Course')
+        self.course = CourseFactory.create()
         self.bulkupdate_url = reverse_course_url('utility_bulkupdate_handler', self.course.id)
+
+    def check_modified_advanced_settings(self, settings):
+        """
+        Helper for test cases to check advanced advanced settings have been modified
+        """
+        if settings['maxAttempts'] != 'null':
+            self.assertEquals(getattr(self.course, 'max_attempts'), settings['maxAttempts'])
+        if settings['showAnswer'] != 'null':
+            self.assertEquals(getattr(self.course, 'showanswer'), settings['showAnswer'])
 
     def test_get_bulkupdate_html(self):
         """
         Tests getting the HTML template and URLs for the bulkupdate page
         """
         response = self.client.get(self.bulkupdate_url, HTTP_ACCEPT='text/html')
-        self.assertContains(response, "Bulk Update")
-        self.assertContains(response, self.bulkupdate_url)
-        self.assertContains(response, '/course/edX/test1/BulkUpdate_Course')
-        self.assertContains(response, '/utility/bulkupdate/edX/test1/BulkUpdate_Course')
-        self.assertContains(response, '/utility/bulkupdate_status/edX/test1/BulkUpdate_Course')
+        self.assertContains(response, '/course/'.format(self.course.id))
+        self.assertContains(response, '/utility/bulkupdate/'.format(self.course.id))
+        self.assertContains(response, '/utility/bulkupdate_status/'.format(self.course.id))
         # Verify dynamic content populates HTML correctly
         self.assertContains(response, '<input class="input setting-input setting-input-number" type="number" value="0" min="0.0000" step="1">')
         self.assertContains(response, '<option value="always" selected>always</option>')
+        for option in SHOW_ANSWER_OPTIONS[1:]:
+            self.assertContains(response, '<option value="{}">{}</option>'.format(option, option))
 
     def test_bulkupdate_put_unsupported(self):
         """
         Put operation is not supported.
         """
-        update_url = reverse_course_url('utility_bulkupdate_handler', self.course.id)
-        response = self.client.put(update_url)
+        response = self.client.put(self.bulkupdate_url)
         self.assertEqual(response.status_code, 404)
 
     def test_bulkupdate_delete_unsupported(self):
         """
         Delete operation is not supported.
         """
-        update_url = reverse_course_url('utility_bulkupdate_handler', self.course.id)
-        response = self.client.delete(update_url)
+        response = self.client.delete(self.bulkupdate_url)
         self.assertEqual(response.status_code, 404)
 
     @ddt.data(
-        {'maxAttempts': 0, 'showAnswer': SHOW_ANSWER_OPTIONS[0]},
-        {'maxAttempts': 1, 'showAnswer': SHOW_ANSWER_OPTIONS[1]}
-    )
-    def test_post_bulkupdate_two_correct_arguments(self, settings):
-        """
-        Tests POST operation works given two correct arguments
-        """
-        update_url = reverse_course_url('utility_bulkupdate_handler', self.course.id)
-        response = self.client.post(update_url, settings, HTTP_ACCEPT='application/json')
-        self.assertEqual(response.status_code, 200)
-
-    @ddt.data(
         {'maxAttempts': 0, 'showAnswer': 'null'},
-        {'maxAttempts': 'null', 'showAnswer': SHOW_ANSWER_OPTIONS[0]}
+        {'maxAttempts': 'null', 'showAnswer': SHOW_ANSWER_OPTIONS[0]},
+        {'maxAttempts': 0, 'showAnswer': SHOW_ANSWER_OPTIONS[0]},
+        {'maxAttempts': 1, 'showAnswer': SHOW_ANSWER_OPTIONS[1]},
     )
-    def test_post_bulkupdate_one_correct_argument(self, settings):
+    def test_post_bulkupdate_correct_arguments(self, settings):
         """
-        Tests POST operations works given one correct argument
+        Tests POST operation returns 200
         """
-        update_url = reverse_course_url('utility_bulkupdate_handler', self.course.id)
-        response = self.client.post(update_url, settings, HTTP_ACCEPT='application/json')
+        response = self.client.post(self.bulkupdate_url, settings, HTTP_ACCEPT='application/json')
         self.assertEqual(response.status_code, 200)
 
     @ddt.data(
         {'maxAttempts': -1},
         {'maxAttempts': -1, 'showAnswer': 'null'},
+        {'maxAttempts': 'not_a_number', 'showAnswer': 'null'},
         {'showAnswer': 'invalid_show_answer_option'},
         {'maxAttempts': 'null', 'showAnswer': 'invalid_show_answer_option'},
         {'maxAttempts': -1, 'showAnswer': SHOW_ANSWER_OPTIONS[0]},
         {'maxAttempts': 0, 'showAnswer': 'invalid_show_answer_option'},
-        {'maxAttempts': -1, 'showAnswer': 'invalid_show_answer_option'}
+        {'maxAttempts': -1, 'showAnswer': 'invalid_show_answer_option'},
     )
     def test_post_bulkupdate_incorrect_arguments(self, settings):
         """
         Tests POST operation returns 'invalid setting' 400 code on incorrect arguments
         """
-        update_url = reverse_course_url('utility_bulkupdate_handler', self.course.id)
-        response = self.client.post(update_url, settings, HTTP_ACCEPT='application/json')
+        response = self.client.post(self.bulkupdate_url, settings, HTTP_ACCEPT='application/json')
         self.assertEqual(response.status_code, 400)
