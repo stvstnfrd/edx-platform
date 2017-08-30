@@ -1,6 +1,5 @@
-import logging
-
 from celery.task import task
+from celery.utils.log import get_task_logger
 from django.conf import settings
 from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
@@ -14,7 +13,7 @@ from opaque_keys.edx.keys import CourseKey
 from xblock.fields import Scope
 
 
-log = logging.getLogger(__name__)
+LOGGER = get_task_logger(__name__)
 
 def _get_course_problems(course_key):
     """
@@ -55,7 +54,7 @@ def _send_email_on_completion(course, user_username, user_email, modified_settin
             fail_silently=False,
         )
     except SMTPException:
-        log.exception("Failure sending e-mail for bulk update completion to %s", user_email)
+        LOGGER.error("Failure sending e-mail for bulk update completion to %s", user_email)
 
 
 def _update_metadata(course_key, user_id, metadata):
@@ -71,7 +70,7 @@ def _update_metadata(course_key, user_id, metadata):
                 try:
                     value = field.from_json(value)
                 except Exception as exception:
-                    log.exception(exception)
+                    LOGGER.error(exception)
                 field.write_to(problem, value)
             store.update_item(problem, user_id)
             if store.has_published_version(problem):
@@ -87,6 +86,6 @@ def bulk_update_problem_settings(course_key_string, user_id, user_username, user
         _update_metadata(course_key, user_id, modified_settings)
         success = True
     except Exception as exception:
-        log.exception(exception)
+        LOGGER.error(exception)
         success = False
     _send_email_on_completion(course, user_username, user_email, modified_settings, success)
