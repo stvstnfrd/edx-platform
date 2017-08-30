@@ -11,7 +11,7 @@ from opaque_keys.edx.keys import CourseKey
 from cms.djangoapps.contentstore.tests.utils import CourseTestCase
 from contentstore.utils import reverse_course_url
 
-from contentstore.views.utilities.bulkupdate import utility_bulkupdate_handler, SHOW_ANSWER_OPTIONS
+from ..views.utilities.bulkupdate import utility_bulkupdate_handler, SHOW_ANSWER_OPTIONS
 
 
 @ddt.ddt
