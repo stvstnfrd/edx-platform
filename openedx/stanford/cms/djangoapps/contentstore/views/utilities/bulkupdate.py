@@ -18,10 +18,10 @@ from cms.djangoapps.contentstore.utils import reverse_course_url
 
 from .tasks import bulk_update_problem_settings
 
-SHOW_ANSWER_OPTIONS = []
-for value in CapaFields.__dict__['showanswer'].values:
-    SHOW_ANSWER_OPTIONS.append(value['value'])
-
+SHOW_ANSWER_OPTIONS = [
+    value['value']
+    for value in CapaFields.__dict__['showanswer'].values
+]
 DEFAULT_MAX_ATTEMPTS = 0
 DEFAULT_SHOW_ANSWER = SHOW_ANSWER_OPTIONS[0]
 
@@ -73,7 +73,7 @@ def _utility_bulkupdate_post_handler(request, course_key_string):
     try:
         max_attempts = request.POST.get('maxAttempts')
         showanswer = request.POST.get('showAnswer')
-    except KeyError as exception:
+    except KeyError:
         return JsonResponse(
             {
                 'ErrMsg': 'Request is missing some or all settings as parameters'
