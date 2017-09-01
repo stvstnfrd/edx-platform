@@ -12,12 +12,8 @@ from xmodule.modulestore.tests.factories import CourseFactory
 from cms.djangoapps.contentstore.tests.utils import CourseTestCase
 from contentstore.utils import reverse_course_url
 
+from ..views.utilities.bulkupdate import SHOW_ANSWER_OPTIONS
 from ..views.utilities.tasks import bulk_update_problem_settings
-
-
-SHOW_ANSWER_OPTIONS = []
-for value in CapaFields.__dict__['showanswer'].values:
-    SHOW_ANSWER_OPTIONS.append(value['value'])
 
 
 @ddt.ddt
