@@ -125,11 +125,9 @@ class BulkUpdateTest(CourseTestCase):
         store = modulestore()
         course = store.get_course(self.course.id, 3)
         if settings['maxAttempts']:
-            # TODO fix pylint: literal-used-as-attribute
-            self.assertEquals(getattr(course, 'max_attempts'), settings['maxAttempts'])
+            self.assertEquals(course.max_attempts, settings['maxAttempts'])
         if settings['showAnswer']:
-            # TODO fix pylint: literal-used-as-attribute
-            self.assertEquals(getattr(course, 'showanswer'), settings['showAnswer'])
+            self.assertEquals(course.showanswer, settings['showAnswer'])
 
     @ddt.data(
         {'maxAttempts': 0, 'showAnswer': ''},
@@ -157,11 +155,9 @@ class BulkUpdateTest(CourseTestCase):
         )
         for problem in problems:
             if settings['maxAttempts']:
-                # TODO fix pylint: literal-used-as-attribute
-                self.assertEquals(getattr(problem, 'max_attempts'), settings['maxAttempts'])
+                self.assertEquals(problem.max_attempts, settings['maxAttempts'])
             if settings['showAnswer']:
-                # TODO fix pylint: literal-used-as-attribute
-                self.assertEquals(getattr(problem, 'showanswer'), settings['showAnswer'])
+                self.assertEquals(problem.showanswer, settings['showAnswer'])
         postupdate_published_problems_count = self.count_published_problems()
         self.assertEqual(preupdate_published_problems_count, postupdate_published_problems_count)
 
