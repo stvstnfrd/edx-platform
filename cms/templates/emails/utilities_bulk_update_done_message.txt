@@ -6,9 +6,10 @@ ${_("Your bulk update on the {course_name} course has successfully completed. Pr
 
 ${_("The following settings were modified:")}
 
-% for key, value in modified_settings.iteritems():
+  % for key, value in modified_settings.iteritems():
   ${_("{key}: {value}").format(key=key, value=value)}
-% endfor
+  % endfor
+
 % else:
 ${_("Your bulk update on the {course_name} course has failed. Problems in your course may be partially updated. Please contact our team for help.").format(course_name=course_name)}
 % endif

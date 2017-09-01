@@ -39,8 +39,8 @@ COURSE_UTILITIES = [
             {
                 'short_description': 'Bulk update problem settings',
                 'long_description': (
-                    'This utility will allow you to update the max_attempts and show_answer '
-                    'settings for all existing problems.'
+                    'This utility will allow you to bulk update settings for all existing problems '
+                    'and set them as the default for future problems in Advanced Settings.'
                 ),
                 'action_url': 'utility_bulkupdate_handler',
                 'action_text': 'Update Problem Settings',
