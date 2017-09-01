@@ -1,18 +1,18 @@
 """
 Unit tests for bulk update problem settings utility
-
-TODO Write unit tests for bulk_update_problem_settings from utilities.tasks
 """
 
 import ddt
+import mock
 
 from xmodule.capa_base import CapaFields
+from xmodule.modulestore.django import modulestore
 from xmodule.modulestore.tests.factories import CourseFactory
 
 from cms.djangoapps.contentstore.tests.utils import CourseTestCase
 from contentstore.utils import reverse_course_url
 
-from ..views.utilities.bulkupdate import SHOW_ANSWER_OPTIONS
+from ..views.utilities.tasks import bulk_update_problem_settings
 
 
 SHOW_ANSWER_OPTIONS = []
@@ -92,3 +92,56 @@ class BulkUpdateTest(CourseTestCase):
         """
         response = self.client.post(self.bulkupdate_url, settings, HTTP_ACCEPT='application/json')
         self.assertEqual(response.status_code, 400)
+
+    @ddt.data(
+        {'maxAttempts': 0, 'showAnswer': ''},
+        {'maxAttempts': '', 'showAnswer': SHOW_ANSWER_OPTIONS[0]},
+        {'maxAttempts': 0, 'showAnswer': SHOW_ANSWER_OPTIONS[0]},
+        {'maxAttempts': 1, 'showAnswer': SHOW_ANSWER_OPTIONS[1]},
+    )
+    @mock.patch(
+        'openedx.stanford.cms.djangoapps.contentstore.views.utilities.bulkupdate.bulk_update_problem_settings.delay',
+        side_effect=bulk_update_problem_settings
+    )
+    def test_bulkupdate_advanced_settings_modified(self, settings, bulk_update_non_celery_task):  #pylint: disable=unused-argument
+        """
+        Tests course is updated
+        """
+        response = self.client.post(self.bulkupdate_url, settings, HTTP_ACCEPT='application/json')
+        self.assertEqual(response.status_code, 200)
+
+        store = modulestore()
+        course = store.get_course(self.course.id, 3)
+        if settings['maxAttempts']:
+            self.assertEquals(getattr(course, 'max_attempts'), settings['maxAttempts'])  # TODO fix pylint: literal-used-as-attribute
+        if settings['showAnswer']:
+            self.assertEquals(getattr(course, 'showanswer'), settings['showAnswer'])  # TODO fix pylint: literal-used-as-attribute
+
+    @ddt.data(
+        {'maxAttempts': 0, 'showAnswer': ''},
+        {'maxAttempts': '', 'showAnswer': SHOW_ANSWER_OPTIONS[0]},
+        {'maxAttempts': 0, 'showAnswer': SHOW_ANSWER_OPTIONS[0]},
+        {'maxAttempts': 1, 'showAnswer': SHOW_ANSWER_OPTIONS[1]},
+    )
+    @mock.patch(
+        'openedx.stanford.cms.djangoapps.contentstore.views.utilities.bulkupdate.bulk_update_problem_settings.delay',
+        side_effect=bulk_update_problem_settings
+    )
+    def test_bulkupdate_problem_settings_modified(self, settings, bulk_update_non_celery_task):  #pylint: disable=unused-argument
+        """
+        Tests course is updated
+        """
+        response = self.client.post(self.bulkupdate_url, settings, HTTP_ACCEPT='application/json')
+        self.assertEqual(response.status_code, 200)
+
+        store = modulestore()
+
+        problems = store.get_items(
+            self.course.id,
+            qualifiers={"category": 'problem'},
+        )
+        for problem in problems:
+            if settings['maxAttempts']:
+                self.assertEquals(getattr(problem, 'max_attempts'), settings['maxAttempts'])  # TODO fix pylint: literal-used-as-attribute
+            if settings['showAnswer']:
+                self.assertEquals(getattr(problem, 'showanswer'), settings['showAnswer'])  # TODO fix pylint: literal-used-as-attribute
