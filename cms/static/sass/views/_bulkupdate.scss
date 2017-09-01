@@ -15,7 +15,6 @@
     @extend .ui-col-narrow;
   }
 
-  // UI: import form
   #bulk-update-settings-input {
     @extend %ui-window;
     padding: $baseline ($baseline*1.5) ($baseline*1.5) ($baseline*1.5);
@@ -41,36 +40,30 @@
       margin-bottom: $baseline;
     }
 
-    .submit-button,
-    .reset-button {
+    .submit-button {
       @extend %btn-primary-blue;
       @extend %t-action3;
       font-weight: 600;
     }
   }
 
-  // ====================
-
-  // UI: update progress
-  .wrapper-status {
+  .server-message-wrapper {
     @include transition(opacity $tmg-f2 ease-in-out 0);
-    opacity: 1.0;
+    width: flex-grid(9, 9);
 
-    // STATE: hidden
-    &.is-hidden {
-      opacity: 0.0;
-      display: none;
-    }
+    .server-message {
+      &.is-hidden {
+        opacity: 0.0;
+        display: none;
+      }
 
-    > .title {
-      @extend %t-title4;
-      margin-bottom: $baseline;
-      border-bottom: 1px solid $gray-l3;
-      padding-bottom: ($baseline/2);
-    }
-    // elem - progress list
-    .list-progress {
-      width: flex-grid(9, 9);
+      &.success-server-message {
+        color: $green;
+      }
+
+      &.error-server-message {
+        color: $error-red;
+      }
 
       .status-visual {
         position: relative;
@@ -90,142 +83,6 @@
         float: left;
         width: flex-grid(8,9);
         margin-left: ($baseline*3);
-
-        .title {
-          @extend %t-title5;
-          @extend %t-strong;
-        }
-
-        .copy {
-          @extend %t-copy-base;
-          color: $gray-l2;
-        }
-      }
-
-      .item-progresspoint {
-        @include clearfix();
-        @include transition(opacity $tmg-f1 ease-in-out 0);
-        margin-bottom: $baseline;
-        border-bottom: 1px solid $gray-l4;
-        padding-bottom: $baseline;
-
-        &:last-child {
-          margin-bottom: 0;
-          border-bottom: none;
-          padding-bottom: 0;
-        }
-
-        // CASE: has actions
-        &.has-actions {
-
-          .list-actions {
-            display: none;
-
-            .action-primary {
-              @extend %btn-primary-blue;
-            }
-          }
-        }
-
-        // TYPE: success
-        &.item-progresspoint-success {
-
-          .item-progresspoint-success-date {
-            @include margin-left($baseline/4);
-            display: none;
-          }
-
-          &.is-complete {
-
-            .item-progresspoint-success-date {
-              display: inline;
-            }
-          }
-        }
-
-
-        // STATE: not started
-        &.is-not-started {
-          opacity: 0.5;
-
-          .fa-warning {
-            visibility: hidden;
-            opacity: 0.0;
-          }
-
-          .fa-cog {
-            visibility: visible;
-            opacity: 1.0;
-          }
-
-          .fa-check {
-            opacity: 0.3;
-          }
-        }
-
-        // STATE: started
-        &.is-started {
-
-          .fa-warning  {
-            visibility: hidden;
-            opacity: 0.0;
-          }
-
-          .fa-cog {
-            @include animation(fa-spin 2s infinite linear);
-
-            visibility: visible;
-            opacity: 1.0;
-          }
-        }
-
-        // STATE: completed
-        &.is-complete {
-
-          .fa-cog {
-            visibility: visible;
-            opacity: 1.0;
-          }
-
-          .fa-warning {
-            visibility: hidden;
-            opacity: 0.0;
-          }
-
-          .icon {
-            color: $green;
-          }
-
-          .status-detail .title {
-            color: $green;
-          }
-
-          .list-actions {
-            display: block;
-          }
-        }
-
-        // STATE: error
-        &.has-error {
-
-          .fa-cog {
-            visibility: hidden;
-            opacity: 0.0;
-          }
-
-          .fa-warning {
-            visibility: visible;
-            opacity: 1.0;
-          }
-
-          .icon {
-            color: $red;
-          }
-
-          .status-detail .title, .status-detail .copy {
-            color: $red;
-          }
-        }
       }
     }
   }

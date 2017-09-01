@@ -1,40 +1,29 @@
-from celery.task import task
-from celery.utils.log import get_task_logger
+"""
+Internal methods and celery task related to bulk update operations on course problems
+"""
+
+import logging
+
+from celery import task
 from django.conf import settings
 from django.core.mail import send_mail
-from django.core.urlresolvers import reverse
 from smtplib import SMTPException
 
 from edxmako.shortcuts import render_to_string
 from xmodule.modulestore.django import modulestore
-from xmodule.modulestore.inheritance import own_metadata
 
 from opaque_keys.edx.keys import CourseKey
-from xblock.fields import Scope
 
 
-LOGGER = get_task_logger(__name__)
+log = logging.getLogger('edx.celery.task')
 
-def _get_course_problems(course_key):
+
+def _send_email_on_completion(course, user_fields, modified_settings, success):
     """
-    Retrieve all problems in the course
-
-    Note: Some components may have been orphaned due to a bug in split
-    modulestore (PLAT-799). We may be returning orphaned components in this
-    list to be updated as well
-    """
-    return modulestore().get_items(
-        course_key,
-        qualifiers={"category": 'problem'},
-    )
-
-
-def _send_email_on_completion(course, user_username, user_email, modified_settings, success):
-    """
-    Send email to user on completion of celery task completion
+    Send email to user on completion of task, either success or failure
     """
     context = {
-        'username': user_username,
+        'username': user_fields['username'],
         'course_name': course.display_name,
         'modified_settings': modified_settings,
         'success': success,
@@ -50,42 +39,65 @@ def _send_email_on_completion(course, user_username, user_email, modified_settin
             subject,
             message,
             from_email,
-            [user_email],
+            [user_fields['email']],
             fail_silently=False,
         )
     except SMTPException:
-        LOGGER.error("Failure sending e-mail for bulk update completion to %s", user_email)
+        log.error("Failure sending e-mail for bulk update completion to %s", user_fields['email'])
 
 
-def _update_metadata(course_key, user_id, metadata):
+def _update_metadata(course_key, user_fields, metadata):
     """
-    Updates metadata settings for all problems.
+    Update settings for all existing problems of a given course
     """
     store = modulestore()
-    problems = _get_course_problems(course_key)
+    problems = store.get_items(
+        course_key,
+        qualifiers={"category": 'problem'},
+    )
     with store.bulk_operations(course_key):
         for problem in problems:
             for metadata_key, value in metadata.items():
                 field = problem.fields[metadata_key]
                 try:
                     value = field.from_json(value)
-                except Exception as exception:
-                    LOGGER.error(exception)
-                field.write_to(problem, value)
-            store.update_item(problem, user_id)
+                    field.write_to(problem, value)
+                except Exception as exception:  # pylint: disable=broad-except
+                    log.error(exception)
+            store.update_item(problem, user_fields['id'])
             if store.has_published_version(problem):
-                store.publish(problem.location, user_id)
+                store.publish(problem.location, user_fields['id'])
+
+
+def _update_advanced_settings(course_key, user_fields, modified_settings):
+    """
+    Update the advanced settings for a given course
+    """
+    store = modulestore()
+    course = store.get_course(course_key, 3)
+    try:
+        with store.bulk_operations(course_key):
+            for key, value in modified_settings.iteritems():
+                setattr(course, key, value)
+            store.update_item(course, user_fields['id'])
+    except Exception as exception:  # pylint: disable=broad-except
+        log.error(exception)
 
 
 @task()
-def bulk_update_problem_settings(course_key_string, user_id, user_username, user_email, modified_settings):
+def bulk_update_problem_settings(course_key_string, user_fields, modified_settings):
+    """
+    Update all problem settings and advanced settings, can be called as celery task:
+    bulk_update_problem_settings.delay(course_key_string, user_fields, modified_settings)
+    """
     store = modulestore()
     course_key = CourseKey.from_string(course_key_string)
-    course = store.get_course(course_key, 3)
     try:
-        _update_metadata(course_key, user_id, modified_settings)
+        _update_metadata(course_key, user_fields, modified_settings)
+        _update_advanced_settings(course_key, user_fields, modified_settings)
         success = True
-    except Exception as exception:
-        LOGGER.error(exception)
+    except Exception as exception:  # pylint: disable=broad-except
+        log.error(exception)
         success = False
-    _send_email_on_completion(course, user_username, user_email, modified_settings, success)
+    course = store.get_course(course_key, 3)
+    _send_email_on_completion(course, user_fields, modified_settings, success)

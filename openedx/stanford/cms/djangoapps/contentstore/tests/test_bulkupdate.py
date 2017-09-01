@@ -1,17 +1,23 @@
 """
 Unit tests for bulk update problem settings utility
+
+TODO Write unit tests for bulk_update_problem_settings from utilities.tasks
 """
 
 import ddt
 
+from xmodule.capa_base import CapaFields
 from xmodule.modulestore.tests.factories import CourseFactory
-
-from opaque_keys.edx.keys import CourseKey
 
 from cms.djangoapps.contentstore.tests.utils import CourseTestCase
 from contentstore.utils import reverse_course_url
 
-from ..views.utilities.bulkupdate import utility_bulkupdate_handler, SHOW_ANSWER_OPTIONS
+from ..views.utilities.bulkupdate import SHOW_ANSWER_OPTIONS
+
+
+SHOW_ANSWER_OPTIONS = []
+for value in CapaFields.__dict__['showanswer'].values:
+    SHOW_ANSWER_OPTIONS.append(value['value'])
 
 
 @ddt.ddt
@@ -27,25 +33,18 @@ class BulkUpdateTest(CourseTestCase):
         self.course = CourseFactory.create()
         self.bulkupdate_url = reverse_course_url('utility_bulkupdate_handler', self.course.id)
 
-    def check_modified_advanced_settings(self, settings):
-        """
-        Helper for test cases to check advanced advanced settings have been modified
-        """
-        if settings['maxAttempts'] != 'null':
-            self.assertEquals(getattr(self.course, 'max_attempts'), settings['maxAttempts'])
-        if settings['showAnswer'] != 'null':
-            self.assertEquals(getattr(self.course, 'showanswer'), settings['showAnswer'])
-
     def test_get_bulkupdate_html(self):
         """
         Tests getting the HTML template and URLs for the bulkupdate page
         """
         response = self.client.get(self.bulkupdate_url, HTTP_ACCEPT='text/html')
-        self.assertContains(response, '/course/'.format(self.course.id))
-        self.assertContains(response, '/utility/bulkupdate/'.format(self.course.id))
-        self.assertContains(response, '/utility/bulkupdate_status/'.format(self.course.id))
+        self.assertContains(response, '/course/{}'.format(self.course.id))
+        self.assertContains(response, '/utility/bulkupdate/{}'.format(self.course.id))
         # Verify dynamic content populates HTML correctly
-        self.assertContains(response, '<input class="input setting-input setting-input-number" type="number" value="0" min="0.0000" step="1">')
+        self.assertContains(
+            response,
+            '<input class="input setting-input setting-input-number" type="number" value="0" min="0.0000" step="1">'
+        )
         self.assertContains(response, '<option value="always" selected>always</option>')
         for option in SHOW_ANSWER_OPTIONS[1:]:
             self.assertContains(response, '<option value="{}">{}</option>'.format(option, option))
@@ -65,8 +64,8 @@ class BulkUpdateTest(CourseTestCase):
         self.assertEqual(response.status_code, 404)
 
     @ddt.data(
-        {'maxAttempts': 0, 'showAnswer': 'null'},
-        {'maxAttempts': 'null', 'showAnswer': SHOW_ANSWER_OPTIONS[0]},
+        {'maxAttempts': 0, 'showAnswer': ''},
+        {'maxAttempts': '', 'showAnswer': SHOW_ANSWER_OPTIONS[0]},
         {'maxAttempts': 0, 'showAnswer': SHOW_ANSWER_OPTIONS[0]},
         {'maxAttempts': 1, 'showAnswer': SHOW_ANSWER_OPTIONS[1]},
     )
@@ -79,10 +78,10 @@ class BulkUpdateTest(CourseTestCase):
 
     @ddt.data(
         {'maxAttempts': -1},
-        {'maxAttempts': -1, 'showAnswer': 'null'},
-        {'maxAttempts': 'not_a_number', 'showAnswer': 'null'},
+        {'maxAttempts': -1, 'showAnswer': ''},
+        {'maxAttempts': 'not_a_number', 'showAnswer': ''},
         {'showAnswer': 'invalid_show_answer_option'},
-        {'maxAttempts': 'null', 'showAnswer': 'invalid_show_answer_option'},
+        {'maxAttempts': '', 'showAnswer': 'invalid_show_answer_option'},
         {'maxAttempts': -1, 'showAnswer': SHOW_ANSWER_OPTIONS[0]},
         {'maxAttempts': 0, 'showAnswer': 'invalid_show_answer_option'},
         {'maxAttempts': -1, 'showAnswer': 'invalid_show_answer_option'},

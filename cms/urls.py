@@ -87,7 +87,6 @@ urlpatterns += patterns(
     url(r'^utility/captions/{}$'.format(settings.COURSE_KEY_PATTERN), 'utility_captions_handler'),
     url(r'^utility/bulksettings/{}$'.format(settings.COURSE_KEY_PATTERN), 'utility_bulksettings_handler'),
     url(r'^utility/bulkupdate/{}$'.format(settings.COURSE_KEY_PATTERN), 'utility_bulkupdate_handler'),
-    url(r'^utility/bulkupdate_status/{}/(?P<max_attempts>.+)/(?P<show_answer>.+)$'.format(settings.COURSE_KEY_PATTERN), 'utility_bulkupdate_status_handler'),
     url(r'^home/?$', 'course_listing', name='home'),
     url(
         r'^course/{}/search_reindex?$'.format(settings.COURSE_KEY_PATTERN),
