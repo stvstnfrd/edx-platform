@@ -35,7 +35,6 @@ FEATURES.update({
     'ENABLE_PROGRESS_SUMMARY': True,
     'ENABLE_SUPERUSER_LOGIN_AS': False,
     'SHOW_ABOUT_LINK': True,
-    'USE_CME_REGISTRATION': False,
     # Sends the user's deanonymized email address to xqueue with code responses
     # DO NOT SET if you don't want the anonymous user id to be linked
     #   with user.email in xqueue (Stanford does)
