@@ -7,19 +7,10 @@ from datetime import datetime
 from StringIO import StringIO
 
 import ddt
-<<<<<<< HEAD
-import json
-from xmodule.modulestore import ModuleStoreEnum
-from xmodule.modulestore.django import modulestore
-from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
-from xmodule.modulestore.tests.factories import CourseFactory, ItemFactory
-from xblock_config.models import StudioConfig
-=======
 from django.test.client import RequestFactory
 from lxml import etree
 from opaque_keys.edx.asides import AsideUsageKeyV1, AsideUsageKeyV2
 from pytz import UTC
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 from xblock.fields import ScopeIds
 from xblock.runtime import DictKeyValueStore, KvsFieldData
 from xblock.test.tools import TestRuntime
