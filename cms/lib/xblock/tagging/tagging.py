@@ -49,17 +49,10 @@ class StructuredTagsAside(XBlockAside):
             for tag in self.get_available_tags():
                 tag_available_values = tag.get_values()
                 tag_current_values = self.saved_tags.get(tag.name, [])
-<<<<<<< HEAD
 
                 if isinstance(tag_current_values, basestring):
                     tag_current_values = [tag_current_values]
 
-=======
-
-                if isinstance(tag_current_values, basestring):
-                    tag_current_values = [tag_current_values]
-
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
                 tag_values_not_exists = [cur_val for cur_val in tag_current_values
                                          if cur_val not in tag_available_values]
 
