@@ -9,24 +9,13 @@ import os
 import StringIO
 import subprocess
 
-<<<<<<< HEAD
-from pymongo.errors import PyMongoError
-
-=======
 import mongoengine
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 from django.conf import settings
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
-<<<<<<< HEAD
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.core.management import call_command
-from django.db import transaction
-=======
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 from django.db import IntegrityError
 from django.http import Http404, HttpResponse
 from django.utils import timezone
@@ -42,18 +31,6 @@ from path import Path as path
 import sys
 
 import dashboard.git_import as git_import
-<<<<<<< HEAD
-from django_comment_client.management_utils import rename_user as rename_user_util
-from dashboard.git_import import GitImportError
-from dashboard.models import CourseImportLog
-from lms.djangoapps.instructor_task.models import InstructorTask
-from openedx.core.djangoapps.external_auth.models import ExternalAuthMap
-from openedx.core.djangoapps.external_auth.views import generate_password
-from student.models import CourseEnrollment, UserProfile, Registration
-from student.roles import CourseStaffRole, CourseInstructorRole
-import track.views
-from util.json_request import JsonResponse
-=======
 import track.views
 from courseware.courses import get_course_by_id
 from dashboard.git_import import GitImportError
@@ -63,9 +40,10 @@ from openedx.core.djangoapps.external_auth.models import ExternalAuthMap
 from openedx.core.djangoapps.external_auth.views import generate_password
 from student.models import CourseEnrollment, Registration, UserProfile
 from student.roles import CourseInstructorRole, CourseStaffRole
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 from xmodule.modulestore.django import modulestore
 
+from lms.djangoapps.instructor_task.models import InstructorTask
+from django_comment_client.management_utils import rename_user as rename_user_util
 from django.core.management import call_command
 from django.db import transaction
 from pymongo.errors import PyMongoError
