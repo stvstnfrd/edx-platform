@@ -10,36 +10,19 @@ from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_GET
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.asides import AsideUsageKeyV1, AsideUsageKeyV2
-<<<<<<< HEAD
-from xmodule.modulestore.exceptions import ItemNotFoundError
-from edxmako.shortcuts import render_to_response
-
-from xmodule.modulestore.django import modulestore
-
-=======
 from opaque_keys.edx.keys import UsageKey
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 from xblock.core import XBlock
 from xblock.django.request import django_to_webob_request, webob_to_django_response
 from xblock.exceptions import NoSuchHandlerError
 from xblock.plugin import PluginMissingError
 from xblock.runtime import Mixologist
 
-<<<<<<< HEAD
-from contentstore.utils import get_lms_link_for_item, get_xblock_aside_instance
-from contentstore.views.helpers import get_parent_xblock, is_unit, xblock_type_display_name
-from contentstore.views.item import create_xblock_info, add_container_page_publishing_info, StudioEditModuleRuntime
-
-from opaque_keys.edx.keys import UsageKey
-
-from util.keyword_substitution import get_keywords_supported
-=======
 from contentstore.utils import get_lms_link_for_item, get_xblock_aside_instance, reverse_course_url
 from contentstore.views.helpers import get_parent_xblock, is_unit, xblock_type_display_name
 from contentstore.views.item import StudioEditModuleRuntime, add_container_page_publishing_info, create_xblock_info
 from edxmako.shortcuts import render_to_response
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 from student.auth import has_course_author_access
+from util.keyword_substitution import get_keywords_supported
 from xblock_django.api import authorable_xblocks, disabled_xblocks
 from xblock_django.models import XBlockStudioConfigurationFlag
 from xmodule.modulestore.django import modulestore
