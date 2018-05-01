@@ -5,6 +5,7 @@ URLs for the Enrollment API
 from django.conf import settings
 from django.conf.urls import patterns, url
 
+<<<<<<< HEAD
 from .views import (
     EnrollmentView,
     EnrollmentListView,
@@ -12,6 +13,9 @@ from .views import (
 )
 from .views import EnrollmentCourseRosterView
 
+=======
+from .views import EnrollmentCourseDetailView, EnrollmentListView, EnrollmentView
+>>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 
 urlpatterns = patterns(
     'enrollment.views',

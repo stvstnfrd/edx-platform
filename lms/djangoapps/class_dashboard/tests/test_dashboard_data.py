@@ -11,6 +11,7 @@ from mock import patch
 from nose.plugins.attrib import attr
 
 from capa.tests.response_xml_factory import StringResponseXMLFactory
+<<<<<<< HEAD
 from courseware.tests.factories import StudentModuleFactory
 from courseware.tests.factories import StaffFactory, InstructorFactory
 from student.tests.factories import UserFactory, CourseEnrollmentFactory, AdminFactory
@@ -28,6 +29,25 @@ from class_dashboard.dashboard_data import (
 from class_dashboard.views import has_instructor_access_for_class
 from student.models import CourseEnrollment
 from courseware.models import StudentModule
+=======
+from class_dashboard.dashboard_data import (
+    get_array_section_has_problem,
+    get_d3_problem_grade_distrib,
+    get_d3_section_grade_distrib,
+    get_d3_sequential_open_distrib,
+    get_problem_grade_distribution,
+    get_problem_set_grade_distrib,
+    get_section_display_name,
+    get_sequential_open_distrib,
+    get_students_opened_subsection,
+    get_students_problem_grades
+)
+from class_dashboard.views import has_instructor_access_for_class
+from courseware.tests.factories import StudentModuleFactory
+from student.tests.factories import AdminFactory, CourseEnrollmentFactory, UserFactory
+from xmodule.modulestore.tests.django_utils import SharedModuleStoreTestCase
+from xmodule.modulestore.tests.factories import CourseFactory, ItemFactory
+>>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 
 USER_COUNT = 11
 

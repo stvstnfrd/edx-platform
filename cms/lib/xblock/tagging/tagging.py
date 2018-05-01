@@ -3,16 +3,17 @@
 Structured Tagging based on XBlockAsides
 """
 
-from xblock.core import XBlockAside, XBlock
-from xblock.fragment import Fragment
-from xblock.fields import Scope, Dict
-from xmodule.x_module import AUTHOR_VIEW
-from xmodule.capa_module import CapaModule
-from edxmako.shortcuts import render_to_string
 from django.conf import settings
 from webob import Response
-from .models import TagCategories
+from xblock.core import XBlock, XBlockAside
+from xblock.fields import Dict, Scope
+from xblock.fragment import Fragment
 
+from edxmako.shortcuts import render_to_string
+from xmodule.capa_module import CapaModule
+from xmodule.x_module import AUTHOR_VIEW
+
+from .models import TagCategories
 
 _ = lambda text: text
 
@@ -48,10 +49,17 @@ class StructuredTagsAside(XBlockAside):
             for tag in self.get_available_tags():
                 tag_available_values = tag.get_values()
                 tag_current_values = self.saved_tags.get(tag.name, [])
+<<<<<<< HEAD
 
                 if isinstance(tag_current_values, basestring):
                     tag_current_values = [tag_current_values]
 
+=======
+
+                if isinstance(tag_current_values, basestring):
+                    tag_current_values = [tag_current_values]
+
+>>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
                 tag_values_not_exists = [cur_val for cur_val in tag_current_values
                                          if cur_val not in tag_available_values]
 

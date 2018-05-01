@@ -2,28 +2,39 @@
 Tests for the Studio Tagging XBlockAside
 """
 
+import json
+from datetime import datetime
+from StringIO import StringIO
+
 import ddt
+<<<<<<< HEAD
 import json
 from xmodule.modulestore import ModuleStoreEnum
 from xmodule.modulestore.django import modulestore
 from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
 from xmodule.modulestore.tests.factories import CourseFactory, ItemFactory
 from xblock_config.models import StudioConfig
+=======
+from django.test.client import RequestFactory
+from lxml import etree
+from opaque_keys.edx.asides import AsideUsageKeyV1, AsideUsageKeyV2
+from pytz import UTC
+>>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 from xblock.fields import ScopeIds
 from xblock.runtime import DictKeyValueStore, KvsFieldData
 from xblock.test.tools import TestRuntime
+
 from cms.lib.xblock.tagging import StructuredTagsAside
-from cms.lib.xblock.tagging.models import TagCategories, TagAvailableValues
-from contentstore.views.preview import get_preview_fragment
-from contentstore.utils import reverse_usage_url
+from cms.lib.xblock.tagging.models import TagAvailableValues, TagCategories
 from contentstore.tests.utils import AjaxEnabledTestClient
-from django.test.client import RequestFactory
+from contentstore.utils import reverse_usage_url
+from contentstore.views.preview import get_preview_fragment
 from student.tests.factories import UserFactory
-from opaque_keys.edx.asides import AsideUsageKeyV1, AsideUsageKeyV2
-from datetime import datetime
-from pytz import UTC
-from lxml import etree
-from StringIO import StringIO
+from xblock_config.models import StudioConfig
+from xmodule.modulestore import ModuleStoreEnum
+from xmodule.modulestore.django import modulestore
+from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
+from xmodule.modulestore.tests.factories import CourseFactory, ItemFactory
 
 
 @ddt.ddt

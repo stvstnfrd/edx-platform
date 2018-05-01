@@ -11,10 +11,19 @@ In two separate processes on devstack:
     ./manage.py lms celery worker --settings=devstack_with_worker
 """
 
+import os
+
 # We intentionally define lots of variables that aren't used, and
 # want to import all variables from base settings files
 # pylint: disable=wildcard-import, unused-wildcard-import
+<<<<<<< HEAD
 from openedx.stanford.lms.envs.devstack import *
+=======
+if 'BOK_CHOY_HOSTNAME' in os.environ:
+    from lms.envs.devstack_docker import *
+else:
+    from lms.envs.devstack import *
+>>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 
 # Require a separate celery worker
 CELERY_ALWAYS_EAGER = False

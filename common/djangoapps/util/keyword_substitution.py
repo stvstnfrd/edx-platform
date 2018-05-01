@@ -29,7 +29,11 @@ Usage:
 from collections import namedtuple
 
 from django.contrib.auth.models import User
+<<<<<<< HEAD
 from django.utils.translation import ugettext as _
+=======
+
+>>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 from student.models import anonymous_id_for_user
 
 Keyword = namedtuple('Keyword', 'func desc')

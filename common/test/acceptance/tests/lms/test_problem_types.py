@@ -6,8 +6,9 @@ See also lettuce tests in lms/djangoapps/courseware/features/problems.feature
 import ddt
 import random
 import textwrap
-
 from abc import ABCMeta, abstractmethod
+
+import ddt
 from nose import SkipTest
 from nose.plugins.attrib import attr
 from selenium.webdriver import ActionChains
@@ -25,13 +26,11 @@ from capa.tests.response_xml_factory import (
     NumericalResponseXMLFactory,
     OptionResponseXMLFactory,
     StringResponseXMLFactory,
-    SymbolicResponseXMLFactory,
+    SymbolicResponseXMLFactory
 )
-
 from common.test.acceptance.fixtures.course import XBlockFixtureDesc
 from common.test.acceptance.pages.lms.problem import ProblemPage
-from common.test.acceptance.tests.helpers import select_option_by_text
-from common.test.acceptance.tests.helpers import EventsTestMixin
+from common.test.acceptance.tests.helpers import EventsTestMixin, select_option_by_text
 from common.test.acceptance.tests.lms.test_lms_problems import ProblemsTest
 
 
@@ -285,7 +284,7 @@ class ProblemTypeTestMixin(ProblemTypeA11yTestMixin):
         And I should see the problem title is focused
         """
         self.problem_page.click_show()
-        self.problem_page.wait_for_focus_on_problem_meta()
+        self.problem_page.wait_for_show_answer_notification()
 
     @attr(shard=7)
     def test_save_reaction(self):
@@ -530,6 +529,7 @@ class AnnotationProblemTypeTest(AnnotationProblemTypeBase, ProblemTypeTestMixin)
 
 
 class AnnotationProblemTypeNeverShowCorrectnessTest(AnnotationProblemTypeBase, ProblemNeverShowCorrectnessMixin):
+<<<<<<< HEAD
     """
     Ensure that correctness can be withheld for Annotation Problem Type problems.
     """
@@ -538,6 +538,16 @@ class AnnotationProblemTypeNeverShowCorrectnessTest(AnnotationProblemTypeBase, P
 
 class CheckboxProblemTypeBase(ProblemTypeTestBase):
     """
+=======
+    """
+    Ensure that correctness can be withheld for Annotation Problem Type problems.
+    """
+    pass
+
+
+class CheckboxProblemTypeBase(ProblemTypeTestBase):
+    """
+>>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
     ProblemTypeTestBase specialization Checkbox Problem Type
     """
     problem_name = 'CHECKBOX TEST PROBLEM'
@@ -587,7 +597,7 @@ class CheckboxProblemTypeTest(CheckboxProblemTypeBase, ProblemTypeTestMixin):
         self.problem_page.click_show()
         self.assertTrue(self.problem_page.is_solution_tag_present())
         self.assertTrue(self.problem_page.is_correct_choice_highlighted(correct_choices=[1, 3]))
-        self.problem_page.wait_for_focus_on_problem_meta()
+        self.problem_page.wait_for_show_answer_notification()
 
 
 class CheckboxProblemTypeNeverShowCorrectnessTest(CheckboxProblemTypeBase, ProblemNeverShowCorrectnessMixin):
@@ -596,6 +606,15 @@ class CheckboxProblemTypeNeverShowCorrectnessTest(CheckboxProblemTypeBase, Probl
     """
     pass
 
+<<<<<<< HEAD
+class CheckboxProblemTypeNeverShowCorrectnessTest(CheckboxProblemTypeBase, ProblemNeverShowCorrectnessMixin):
+    """
+    Ensure that correctness can be withheld for Checkbox Problem Type problems.
+    """
+    pass
+
+=======
+>>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 
 class MultipleChoiceProblemTypeBase(ProblemTypeTestBase):
     """
@@ -631,6 +650,7 @@ class MultipleChoiceProblemTypeBase(ProblemTypeTestBase):
 
 
 class MultipleChoiceProblemTypeTest(MultipleChoiceProblemTypeBase, ProblemTypeTestMixin):
+<<<<<<< HEAD
     """
     Standard tests for the Multiple Choice Problem Type
     """
@@ -667,6 +687,44 @@ class MultipleChoiceProblemTypeTest(MultipleChoiceProblemTypeBase, ProblemTypeTe
 class MultipleChoiceProblemTypeNeverShowCorrectnessTest(MultipleChoiceProblemTypeBase,
                                                         ProblemNeverShowCorrectnessMixin):
     """
+=======
+    """
+    Standard tests for the Multiple Choice Problem Type
+    """
+    @attr(shard=7)
+    def test_can_show_answer(self):
+        """
+        Scenario: Verifies that show answer button is working as expected.
+
+        Given that I am on courseware page
+        And I can see a CAPA problem with show answer button
+        When I click "Show Answer" button
+        The correct answer is displayed with a single correctness indicator.
+        """
+        # Click the correct answer, but don't submit yet. No correctness shows.
+        self.answer_problem('correct')
+        self.assertFalse(self.problem_page.is_correct_choice_highlighted(correct_choices=[3]))
+
+        # After submit, the answer should be marked as correct.
+        self.problem_page.click_submit()
+        self.assertTrue(self.problem_page.is_correct_choice_highlighted(correct_choices=[3]))
+
+        # Switch to an incorrect answer. This will hide the correctness indicator.
+        self.answer_problem('incorrect')
+        self.assertFalse(self.problem_page.is_correct_choice_highlighted(correct_choices=[3]))
+
+        # Now click Show Answer. A single correctness indicator should be shown.
+        self.problem_page.click_show()
+        self.assertTrue(self.problem_page.is_correct_choice_highlighted(correct_choices=[3]))
+
+        # Finally, make sure that clicking Show Answer moved focus to the correct place.
+        self.problem_page.wait_for_show_answer_notification()
+
+
+class MultipleChoiceProblemTypeNeverShowCorrectnessTest(MultipleChoiceProblemTypeBase,
+                                                        ProblemNeverShowCorrectnessMixin):
+    """
+>>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
     Ensure that correctness can be withheld for Multiple Choice Problem Type problems.
     """
     pass
@@ -714,6 +772,7 @@ class RadioProblemTypeTest(RadioProblemTypeBase, ProblemTypeTestMixin):
 
 
 class RadioProblemTypeNeverShowCorrectnessTest(RadioProblemTypeBase, ProblemNeverShowCorrectnessMixin):
+<<<<<<< HEAD
     """
     Ensure that correctness can be withheld for Radio Problem Type problems.
     """
@@ -722,6 +781,16 @@ class RadioProblemTypeNeverShowCorrectnessTest(RadioProblemTypeBase, ProblemNeve
 
 class DropDownProblemTypeBase(ProblemTypeTestBase):
     """
+=======
+    """
+    Ensure that correctness can be withheld for Radio Problem Type problems.
+    """
+    pass
+
+
+class DropDownProblemTypeBase(ProblemTypeTestBase):
+    """
+>>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
     ProblemTypeTestBase specialization for Drop Down Problem Type
     """
     problem_name = 'DROP DOWN TEST PROBLEM'
@@ -750,6 +819,7 @@ class DropDownProblemTypeBase(ProblemTypeTestBase):
 class DropDownProblemTypeTest(DropDownProblemTypeBase, ProblemTypeTestMixin):
     """
     Standard tests for the Multiple Radio Problem Type
+<<<<<<< HEAD
     """
     pass
 
@@ -763,6 +833,21 @@ class DropDownProblemTypeNeverShowCorrectnessTest(DropDownProblemTypeBase, Probl
 
 class StringProblemTypeBase(ProblemTypeTestBase):
     """
+=======
+    """
+    pass
+
+
+class DropDownProblemTypeNeverShowCorrectnessTest(DropDownProblemTypeBase, ProblemNeverShowCorrectnessMixin):
+    """
+    Ensure that correctness can be withheld for Drop Down Problem Type problems.
+    """
+    pass
+
+
+class StringProblemTypeBase(ProblemTypeTestBase):
+    """
+>>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
     ProblemTypeTestBase specialization for String Problem Type
     """
     problem_name = 'STRING TEST PROBLEM'
@@ -794,6 +879,7 @@ class StringProblemTypeBase(ProblemTypeTestBase):
 
 
 class StringProblemTypeTest(StringProblemTypeBase, ProblemTypeTestMixin):
+<<<<<<< HEAD
     """
     Standard tests for the String Problem Type
     """
@@ -809,6 +895,23 @@ class StringProblemTypeNeverShowCorrectnessTest(StringProblemTypeBase, ProblemNe
 
 class NumericalProblemTypeBase(ProblemTypeTestBase):
     """
+=======
+    """
+    Standard tests for the String Problem Type
+    """
+    pass
+
+
+class StringProblemTypeNeverShowCorrectnessTest(StringProblemTypeBase, ProblemNeverShowCorrectnessMixin):
+    """
+    Ensure that correctness can be withheld for String Problem Type problems.
+    """
+    pass
+
+
+class NumericalProblemTypeBase(ProblemTypeTestBase):
+    """
+>>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
     ProblemTypeTestBase specialization for Numerical Problem Type
     """
     problem_name = 'NUMERICAL TEST PROBLEM'
@@ -1179,6 +1282,7 @@ class RadioTextProblemTypeBase(ChoiceTextProblemTypeTestBase):
 class RadioTextProblemTypeTest(RadioTextProblemTypeBase, ProblemTypeTestMixin):
     """
     Standard tests for the Radio Text Problem Type
+<<<<<<< HEAD
     """
     pass
 
@@ -1192,6 +1296,21 @@ class RadioTextProblemTypeNeverShowCorrectnessTest(RadioTextProblemTypeBase, Pro
 
 class CheckboxTextProblemTypeBase(ChoiceTextProblemTypeTestBase):
     """
+=======
+    """
+    pass
+
+
+class RadioTextProblemTypeNeverShowCorrectnessTest(RadioTextProblemTypeBase, ProblemNeverShowCorrectnessMixin):
+    """
+    Ensure that correctness can be withheld for Radio + Text Problem Type problems.
+    """
+    pass
+
+
+class CheckboxTextProblemTypeBase(ChoiceTextProblemTypeTestBase):
+    """
+>>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
     ProblemTypeTestBase specialization for Checkbox Text Problem Type
     """
     problem_name = 'CHECKBOX TEXT TEST PROBLEM'

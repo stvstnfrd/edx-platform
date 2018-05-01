@@ -5,6 +5,7 @@
     <div class="modal-window <%- viewSpecificClasses %> modal-<%- size %> modal-type-<%- type %>" tabindex="-1" aria-labelledby="modal-window-title">
         <div class="<%- name %>-modal">
             <div class="modal-header">
+<<<<<<< HEAD
                 <h2 id="modal-window-title" class="title modal-window-title"><%- title %></h2>
                 <ul class="editor-modes action-list action-modes">
                 <% if (type == 'html') { %>
@@ -13,6 +14,20 @@
                     </span>
                 <% } %>
                 </ul>
+=======
+                <h2 id="modal-window-title" class="title modal-window-title">
+                    <%- title %>
+                    <% if (modalSRTitle) { %>
+                        <span class="sr modal-sr-title">
+                            <%- modalSRTitle %>
+                        </span>
+                    <% } %>
+                </h2>
+                <% if (showEditorModeButtons) { %>
+                    <ul class="editor-modes action-list action-modes">
+                    </ul>
+                <% } %>
+>>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
             </div>
             <div class="modal-content">
             </div>

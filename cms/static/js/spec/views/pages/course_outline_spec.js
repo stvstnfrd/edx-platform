@@ -866,6 +866,7 @@ define(['jquery', 'edx-ui-toolkit/js/utils/spec-helpers/ajax-helpers', 'common/j
                     selectBasicSettings();
                     expect($('.modal-section .settings-tab-button[data-tab="basic"]')).toHaveClass('active');
                     expect($('.modal-section .settings-tab-button[data-tab="visibility"]')).not.toHaveClass('active');
+<<<<<<< HEAD
                     expect($('.modal-section .settings-tab-button[data-tab="advanced"]')).not.toHaveClass('active');
                 });
 
@@ -878,6 +879,20 @@ define(['jquery', 'edx-ui-toolkit/js/utils/spec-helpers/ajax-helpers', 'common/j
                     expect($('.modal-section .settings-tab-button[data-tab="advanced"]')).not.toHaveClass('active');
                 });
 
+=======
+                    expect($('.modal-section .settings-tab-button[data-tab="advanced"]')).not.toHaveClass('active');
+                });
+
+                it('subsection can show visibility settings', function() {
+                    createCourseOutlinePage(this, mockCourseJSON, false);
+                    outlinePage.$('.outline-subsection .configure-button').click();
+                    selectVisibilitySettings();
+                    expect($('.modal-section .settings-tab-button[data-tab="basic"]')).not.toHaveClass('active');
+                    expect($('.modal-section .settings-tab-button[data-tab="visibility"]')).toHaveClass('active');
+                    expect($('.modal-section .settings-tab-button[data-tab="advanced"]')).not.toHaveClass('active');
+                });
+
+>>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
                 it('subsection can show advanced settings', function() {
                     createCourseOutlinePage(this, mockCourseJSON, false);
                     outlinePage.$('.outline-subsection .configure-button').click();
@@ -1565,6 +1580,19 @@ define(['jquery', 'edx-ui-toolkit/js/utils/spec-helpers/ajax-helpers', 'common/j
 
             // Note: most tests for units can be found in Bok Choy
             describe('Unit', function() {
+                var getUnitStatus = function(options) {
+                    mockCourseJSON = createMockCourseJSON({}, [
+                        createMockSectionJSON({}, [
+                            createMockSubsectionJSON({}, [
+                                createMockVerticalJSON(options)
+                            ])
+                        ])
+                    ]);
+                    createCourseOutlinePage(this, mockCourseJSON);
+                    expandItemsAndVerifyState('subsection');
+                    return getItemsOfType('unit').find('.unit-status .status-message');
+                };
+
                 it('can be deleted', function() {
                     var promptSpy = EditHelpers.createPromptSpy();
                     createCourseOutlinePage(this, mockCourseJSON);
@@ -1584,6 +1612,27 @@ define(['jquery', 'edx-ui-toolkit/js/utils/spec-helpers/ajax-helpers', 'common/j
                     expandItemsAndVerifyState('subsection');
                     unitAnchor = getItemsOfType('unit').find('.unit-title a');
                     expect(unitAnchor.attr('href')).toBe('/container/mock-unit');
+                });
+
+                it('shows partition group information', function() {
+                    var messages = getUnitStatus({has_partition_group_components: true});
+                    expect(messages.length).toBe(1);
+                    expect(messages).toContainText(
+                        'Access to some content in this unit is restricted to specific groups of learners'
+                    );
+                });
+
+                it('does not show partition group information if visible to all', function() {
+                    var messages = getUnitStatus({});
+                    expect(messages.length).toBe(0);
+                });
+
+                it('does not show partition group information if staff locked', function() {
+                    var messages = getUnitStatus(
+                        {has_partition_group_components: true, staff_only_message: true}
+                    );
+                    expect(messages.length).toBe(1);
+                    expect(messages).toContainText('Contains staff only content');
                 });
 
                 verifyTypePublishable('unit', function(options) {

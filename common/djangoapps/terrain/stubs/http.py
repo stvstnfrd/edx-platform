@@ -2,16 +2,22 @@
 Stub implementation of an HTTP service.
 """
 
+<<<<<<< HEAD
 from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
 from SocketServer import ThreadingMixIn
+=======
+import json
+import threading
+>>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 import urllib
 import urlparse
-import threading
-import json
+from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 from functools import wraps
+from logging import getLogger
+from SocketServer import ThreadingMixIn
+
 from lazy import lazy
 
-from logging import getLogger
 LOGGER = getLogger(__name__)
 
 

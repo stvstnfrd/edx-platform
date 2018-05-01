@@ -6,7 +6,11 @@
 
 # Packaging pre-requisites.
 pyparsing==2.0.7
+<<<<<<< HEAD
 setuptools==34.0.2
+=======
+setuptools==37.0.0
+>>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 pip==9.0.1
 
 # Numpy and scipy can't be installed in the same pip run.
@@ -15,3 +19,8 @@ numpy==1.6.2
 
 # Needed for meliae
 Cython==0.21.2
+
+
+# Ginkgo only!
+Django==1.8.18
+git+https://github.com/edx/nltk.git@2.0.6#egg=nltk==2.0.6
