@@ -45,17 +45,10 @@ class TestCohortHelp(ContainerBase, CohortTestMixin):
         """
         self.cohort_management.add_cohort('cohort_name')
 
-<<<<<<< HEAD
-        href = 'http://edx.readthedocs.org/projects/open-edx-building-and-running-a-course/en/' \
-               'open-release-ficus.master/' \
-               'course_features/cohorts/cohort_config.html#assign-learners-to-cohorts-manually'
-
-=======
         href = url_for_help(
             'course_author',
             '/course_features/cohorts/cohort_config.html#assign-learners-to-cohorts-manually',
         )
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
         self.verify_help_link(href)
 
     def test_automatic_cohort_help(self):
@@ -73,17 +66,10 @@ class TestCohortHelp(ContainerBase, CohortTestMixin):
 
         self.cohort_management.add_cohort('cohort_name', assignment_type='random')
 
-<<<<<<< HEAD
-        href = 'http://edx.readthedocs.org/projects/open-edx-building-and-running-a-course/en/' \
-               'open-release-ficus.master/' \
-               'course_features/cohorts/cohorts_overview.html#all-automated-assignment'
-
-=======
         href = url_for_help(
             'course_author',
             '/course_features/cohorts/cohorts_overview.html#all-automated-assignment',
         )
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
         self.verify_help_link(href)
 
 
@@ -105,11 +91,6 @@ class InstructorDashboardHelp(BaseInstructorDashboardTest):
         When I click "Help"
         Then I see help about the instructor dashboard in a new tab
         """
-<<<<<<< HEAD
-        href = 'http://edx.readthedocs.io/projects/open-edx-learner-guide/en/' \
-               'open-release-ficus.master/SFD_instructor_dash_help.html'
-=======
         href = url_for_help('course_author', '/CA_instructor_dash_help.html')
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
         self.instructor_dashboard_page.click_help()
         assert_opened_help_link_is_correct(self, href)
