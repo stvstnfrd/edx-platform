@@ -7,21 +7,9 @@ from django.core.exceptions import NON_FIELD_ERRORS, ImproperlyConfigured, Permi
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseForbidden
 from django.utils.decorators import method_decorator
-<<<<<<< HEAD
-from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect, csrf_exempt
-from django.views.decorators.debug import sensitive_post_parameters
-from opaque_keys.edx import locator
-from rest_framework import authentication
-from rest_framework import filters
-from rest_framework import generics
-from rest_framework import status
-from rest_framework import viewsets
-from rest_framework.views import APIView
-from rest_framework.exceptions import ParseError
-=======
 from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import csrf_exempt, csrf_protect, ensure_csrf_cookie
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
+from django.views.decorators.debug import sensitive_post_parameters
 from django_countries import countries
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx import locator
@@ -33,18 +21,13 @@ from rest_framework.views import APIView
 import third_party_auth
 from django_comment_common.models import Role
 from edxmako.shortcuts import marketing_link
-<<<<<<< HEAD
-from student.forms import get_registration_extension_form
-from student.views import create_account_with_params, AccountValidationError
-from student.cookies import set_logged_in_cookies
-=======
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from openedx.core.lib.api.authentication import SessionAuthenticationAllowInactiveUser
 from openedx.core.lib.api.permissions import ApiKeyHeaderPermission
 from student.cookies import set_logged_in_cookies
 from student.forms import get_registration_extension_form
 from student.views import create_account_with_params
+from student.views import AccountValidationError
 from util.json_request import JsonResponse
 
 from .accounts import (
