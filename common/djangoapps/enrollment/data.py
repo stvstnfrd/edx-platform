@@ -25,10 +25,7 @@ from student.models import (
     EnrollmentClosedError,
     NonExistentCourseError
 )
-<<<<<<< HEAD
 from student.models import CourseAccessRole
-=======
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 
 log = logging.getLogger(__name__)
 NON_STUDENT_ROLES = ['instructor', 'staff']
