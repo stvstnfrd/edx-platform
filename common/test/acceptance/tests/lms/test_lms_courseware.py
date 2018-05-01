@@ -432,9 +432,6 @@ class CoursewareMultipleVerticalsTestBase(UniqueCourseTest, EventsTestMixin):
         AutoAuthPage(self.browser, username=self.USERNAME, email=self.EMAIL,
                      course_id=self.course_id, staff=False).visit()
 
-<<<<<<< HEAD
-    @flaky  # TODO: fix this, see TNL-5762
-=======
 
 @attr(shard=9)
 class CoursewareMultipleVerticalsTest(CoursewareMultipleVerticalsTestBase):
@@ -443,7 +440,6 @@ class CoursewareMultipleVerticalsTest(CoursewareMultipleVerticalsTestBase):
     """
 
     @flaky  # PLAT-1198; should be fixed, but verify that failures stop before removing
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
     def test_navigation_buttons(self):
         self.courseware_page.visit()
 
@@ -903,14 +899,8 @@ class SubsectionHiddenAfterDueDateTest(UniqueCourseTest):
         self.studio_course_outline.visit()
         self.studio_course_outline.open_subsection_settings_dialog()
 
-<<<<<<< HEAD
-        self.course_outline.select_advanced_tab('hide_after_due_date')
-        self.course_outline.make_subsection_hidden_after_due_date()
-        self.course_outline.select_visibility_tab()
-=======
         self.studio_course_outline.select_visibility_tab()
         self.studio_course_outline.make_subsection_hidden_after_due_date()
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 
         self.logout_page.visit()
         auto_auth(self.browser, self.USERNAME, self.EMAIL, False, self.course_id)
