@@ -3,11 +3,8 @@
 import copy
 import logging
 from optparse import make_option
-<<<<<<< HEAD
-from django.conf import settings
-=======
 
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand, CommandError
 from opaque_keys import InvalidKeyError
