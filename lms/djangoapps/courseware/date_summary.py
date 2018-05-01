@@ -6,15 +6,10 @@ course-run-specific date which will be displayed to the user.
 from datetime import datetime
 
 from babel.dates import format_timedelta
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
-<<<<<<< HEAD
-from django.utils.translation import ugettext_lazy
-from django.utils.translation import to_locale, get_language
-from django.conf import settings
-=======
 from django.utils.translation import get_language, to_locale, ugettext_lazy
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 from lazy import lazy
 from pytz import timezone, utc
 
