@@ -21,16 +21,13 @@ from certificates.models import (
     GeneratedCertificate,
     certificate_status_for_student
 )
-<<<<<<< HEAD
 
 if 'openedx.stanford.djangoapps.register_cme' in settings.INSTALLED_APPS:
     from openedx.stanford.djangoapps.register_cme.models import ExtraInfo
 
-=======
 from util.bad_request_rate_limiter import BadRequestRateLimiter
 from util.json_request import JsonResponse, JsonResponseBadRequest
 from xmodule.modulestore.django import modulestore
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 
 log = logging.getLogger(__name__)
 
