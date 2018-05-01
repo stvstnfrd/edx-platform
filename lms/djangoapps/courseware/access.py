@@ -48,11 +48,8 @@ from student.roles import (
     OrgStaffRole,
     SupportStaffRole
 )
-<<<<<<< HEAD
 from student.models import UserProfile
-=======
 from util import milestones_helpers as milestones_helpers
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 from util.milestones_helpers import (
     any_unfulfilled_milestones,
     get_pre_requisite_courses_not_completed,
@@ -576,15 +573,11 @@ def _has_access_descriptor(user, action, descriptor, course_key=None):
         students to see modules.  If not, views should check the course, so we
         don't have to hit the enrollments table on every module load.
         """
-<<<<<<< HEAD
-        # Stanford Sneak Peek permissions
         if user.is_authenticated():
             if not UserProfile.has_registered(user):
                 if not _can_load_descriptor_nonregistered(descriptor):
                     return ACCESS_DENIED
-        # / Stanford Sneak Peek permissions
 
-=======
         # If the user (or the role the user is currently masquerading as) does not have
         # access to this content, then deny access. The problem with calling _has_staff_access_to_descriptor
         # before this method is that _has_staff_access_to_descriptor short-circuits and returns True
@@ -593,7 +586,6 @@ def _has_access_descriptor(user, action, descriptor, course_key=None):
             return ACCESS_DENIED
 
         # If the user has staff access, they can load the module and checks below are not needed.
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
         if _has_staff_access_to_descriptor(user, descriptor, course_key):
             return ACCESS_GRANTED
 
