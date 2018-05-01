@@ -56,14 +56,9 @@ from openedx.features.course_experience import COURSE_OUTLINE_PAGE_FLAG
 from openedx.features.enterprise_support.tests.mixins.enterprise import EnterpriseTestConsentRequired
 from pytz import UTC
 from student.models import CourseEnrollment
-<<<<<<< HEAD
-from student.tests.factories import AdminFactory, UserFactory, CourseEnrollmentFactory
 from student.tests.factories import NonRegisteredUserFactory
-from util.tests.test_date_utils import fake_ugettext, fake_pgettext
-=======
 from student.tests.factories import AdminFactory, CourseEnrollmentFactory, UserFactory
 from util.tests.test_date_utils import fake_pgettext, fake_ugettext
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 from util.url import reload_django_url_config
 from util.views import ensure_valid_course_key
 from xblock.core import XBlock
