@@ -72,13 +72,10 @@
 
                     this.platformName = options.platform_name;
                     this.supportURL = options.support_link;
-<<<<<<< HEAD
                     this.privacyPolicyUrl = options.privacy_policy_url;
-=======
                     this.passwordResetSupportUrl = options.password_reset_support_link;
                     this.createAccountOption = options.account_creation_allowed;
                     this.hideAuthWarnings = options.hide_auth_warnings || false;
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 
                 // The login view listens for 'sync' events from the reset model
                     this.resetModel = new PasswordResetModel({}, {
@@ -173,13 +170,9 @@
                             fields: data.fields,
                             model: model,
                             thirdPartyAuth: this.thirdPartyAuth,
-<<<<<<< HEAD
                             privacyPolicyUrl: this.privacyPolicyUrl,
-                            platformName: this.platformName
-=======
                             platformName: this.platformName,
                             hideAuthWarnings: this.hideAuthWarnings
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
                         });
 
                     // Listen for 'auth-complete' event so we can enroll/redirect the user appropriately.
