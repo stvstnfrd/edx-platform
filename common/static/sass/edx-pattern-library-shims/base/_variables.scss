@@ -127,21 +127,11 @@ $font-sizes: (
 
 // +Colors - UXPL new pattern library colors
 // ====================
-<<<<<<< HEAD
-$uxpl-blue-base: rgba(0, 116, 180, 1); // wcag2a compliant
-$uxpl-blue-base: $link-color;
-$uxpl-blue-hover-active: darken($uxpl-blue-base, 7%); // wcag2a compliant
-
-$uxpl-green-base: rgba(0, 129, 0, 1); // wcag2a compliant
-$uxpl-green-base: $link-color;
-$uxpl-green-hover-active: lighten($uxpl-green-base, 7%); // wcag2a compliant
-=======
 $uxpl-blue-base: rgba(0, 116, 180, 1) !default; // wcag2a compliant
 $uxpl-blue-hover-active: darken($uxpl-blue-base, 7%) !default; // wcag2a compliant
 
 $uxpl-green-base: rgba(0, 129, 0, 1) !default; // wcag2a compliant
 $uxpl-green-hover-active: lighten($uxpl-green-base, 7%) !default; // wcag2a compliant
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 
 $uxpl-gray-dark: rgb(17, 17, 17) !default;
 $uxpl-gray-base: rgb(65, 65, 65) !default;
@@ -240,3 +230,7 @@ $btn-small-padding-horizontal: spacing-horizontal(small);
   }
 }
 
+$dark-green: #4F7573;
+$link-color: $dark-green;
+$uxpl-blue-base: $link-color;
+$uxpl-green-base: $link-color;
