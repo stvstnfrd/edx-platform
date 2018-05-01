@@ -3,10 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import migrations, models
 
-<<<<<<< HEAD
-=======
 
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 # We used to have a uniqueness constraint on auth_user.email:
 # https://github.com/edx/edx-platform/commit/c52727b0e0fb241d8211900975d3b69fe5a1bd57
 #
