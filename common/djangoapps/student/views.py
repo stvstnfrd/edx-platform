@@ -41,42 +41,6 @@ from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import CourseKey
 from opaque_keys.edx.locations import SlashSeparatedCourseKey
 from opaque_keys.edx.locator import CourseLocator
-<<<<<<< HEAD
-from xmodule.modulestore.exceptions import ItemNotFoundError
-
-from collections import namedtuple
-
-from courseware.courses import get_course_about_section
-from courseware.courses import get_courses, sort_by_announcement, sort_by_start_date  # pylint: disable=import-error
-from courseware.access import has_access
-from courseware.models import CoursePreference
-
-from django_comment_common.models import Role
-
-from openedx.core.djangoapps.external_auth.models import ExternalAuthMap
-import openedx.core.djangoapps.external_auth.views
-from openedx.core.djangoapps.external_auth.login_and_register import (
-    login as external_auth_login,
-    register as external_auth_register
-)
-
-from bulk_email.models import Optout
-
-import track.views
-
-import dogstats_wrapper as dog_stats_api
-
-from util.date_utils import get_default_time_display
-from util.db import outer_atomic
-from util.json_request import JsonResponse
-from util.bad_request_rate_limiter import BadRequestRateLimiter
-from util.keyword_substitution import substitute_keywords_with_data
-from util.milestones_helpers import (
-    get_pre_requisite_courses_not_completed,
-)
-
-from util.password_policy_validators import validate_password_strength
-=======
 from provider.oauth2.models import Client
 from pytz import UTC
 from ratelimitbackend.exceptions import RateLimitException
@@ -87,7 +51,6 @@ from social_django import utils as social_utils
 
 import dogstats_wrapper as dog_stats_api
 import openedx.core.djangoapps.external_auth.views
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 import third_party_auth
 import track.views
 from bulk_email.models import BulkEmailFlag, Optout  # pylint: disable=import-error
@@ -100,6 +63,7 @@ from certificates.models import (  # pylint: disable=import-error
 from course_modes.models import CourseMode
 from courseware.access import has_access
 from courseware.courses import get_courses, sort_by_announcement, sort_by_start_date  # pylint: disable=import-error
+from courseware.models import CoursePreference
 from django_comment_common.models import assign_role
 from edxmako.shortcuts import render_to_response, render_to_string
 from eventtracking import tracker
@@ -121,12 +85,6 @@ from openedx.core.djangoapps.programs.utils import ProgramProgressMeter
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from openedx.core.djangoapps.theming import helpers as theming_helpers
 from openedx.core.djangoapps.user_api.preferences import api as preferences_api
-<<<<<<< HEAD
-from openedx.core.djangoapps.catalog.utils import get_programs_data
-
-from openedx.stanford.common.djangoapps.student.views import notify_enrollment_by_email
-
-=======
 from openedx.core.djangolib.markup import HTML
 from openedx.features.course_experience import course_home_url_name
 from openedx.features.enterprise_support.api import get_dashboard_consent_notification
@@ -172,7 +130,9 @@ from util.json_request import JsonResponse
 from util.milestones_helpers import get_pre_requisite_courses_not_completed
 from util.password_policy_validators import validate_password_strength
 from xmodule.modulestore.django import modulestore
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
+from xmodule.modulestore.exceptions import ItemNotFoundError
+
+from openedx.stanford.common.djangoapps.student.views import notify_enrollment_by_email
 
 log = logging.getLogger("edx.student")
 AUDIT_LOG = logging.getLogger("audit")
@@ -941,7 +901,6 @@ def dashboard(request):
     return response
 
 
-<<<<<<< HEAD
 def _create_and_login_nonregistered_user(request):
     new_student = UserProfile.create_nonregistered_user()
     new_student.backend = settings.AUTHENTICATION_BACKENDS[0]
@@ -974,7 +933,8 @@ def setup_sneakpeek(request, course_id):
 
     CourseEnrollment.enroll(request.user, course_key)
     return HttpResponse("OK. Allowed sneakpeek")
-=======
+
+
 def get_verification_error_reasons_for_display(verification_error_codes):
     verification_errors = []
     verification_error_map = {
@@ -994,7 +954,6 @@ def get_verification_error_reasons_for_display(verification_error_codes):
             verification_errors.append(error_text)
 
     return verification_errors
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 
 
 def _create_recent_enrollment_message(course_enrollments, course_modes):  # pylint: disable=invalid-name
@@ -1370,7 +1329,6 @@ def change_enrollment(request, check_access=True):
         return HttpResponseBadRequest(_("Enrollment action is invalid"))
 
 
-<<<<<<< HEAD
 def _check_can_enroll_in_course(user, course_key, access_type="enroll"):
     """
     Refactored check for user being able to enroll in course
@@ -1387,7 +1345,8 @@ def _check_can_enroll_in_course(user, course_key, access_type="enroll"):
         return False, _("Enrollment is closed")
 
     return True, ""
-=======
+
+
 def _generate_not_activated_message(user):
     """
     Generates the message displayed on the sign-in screen when a learner attempts to access the
@@ -1419,7 +1378,6 @@ def _generate_not_activated_message(user):
     )
 
     return not_activated_message
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 
 
 # Need different levels of logging
