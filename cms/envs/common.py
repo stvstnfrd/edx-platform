@@ -95,8 +95,6 @@ from lms.envs.common import (
     # File upload defaults
     FILE_UPLOAD_STORAGE_BUCKET_NAME,
     FILE_UPLOAD_STORAGE_PREFIX,
-<<<<<<< HEAD
-=======
 
     COURSE_ENROLLMENT_MODES,
 
@@ -109,7 +107,6 @@ from lms.envs.common import (
     CONTACT_EMAIL,
 
     DISABLE_ACCOUNT_ACTIVATION_REQUIREMENT_SWITCH,
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 )
 from path import Path as path
 from warnings import simplefilter
@@ -1028,10 +1025,6 @@ INSTALLED_APPS = (
     # management of user-triggered async tasks (course import/export, etc.)
     'user_tasks',
 
-<<<<<<< HEAD
-    # Unusual migrations
-    'database_fixups',
-=======
     # CMS specific user task handling
     'cms_user_tasks.apps.CmsUserTasksConfig',
 
@@ -1044,7 +1037,6 @@ INSTALLED_APPS = (
 
     # Waffle related utilities
     'openedx.core.djangoapps.waffle_utils',
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 )
 
 
