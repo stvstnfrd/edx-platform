@@ -338,11 +338,7 @@ class CoursewareIndex(View):
             'init': '',
             'fragment': Fragment(),
             'staff_access': self.is_staff,
-<<<<<<< HEAD
-            'studio_url': get_studio_url(self.course, 'course'),
             'analytics_url': getattr(settings, 'ANALYTICS_DATA_URL'),
-=======
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
             'masquerade': self.masquerade,
             'supports_preview_menu': True,
             'studio_url': get_studio_url(self.course, 'course'),
