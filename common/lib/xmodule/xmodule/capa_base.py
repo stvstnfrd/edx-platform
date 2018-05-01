@@ -129,19 +129,11 @@ class CapaFields(object):
         help=_("Defines when to show whether a learner's answer to the problem is correct. "
                "Configured on the subsection."),
         scope=Scope.settings,
-<<<<<<< HEAD
-        default=SHOW_CORRECTNESS.ALWAYS,
-        values=[
-            {"display_name": _("Always"), "value": SHOW_CORRECTNESS.ALWAYS},
-            {"display_name": _("Never"), "value": SHOW_CORRECTNESS.NEVER},
-            {"display_name": _("Past Due"), "value": SHOW_CORRECTNESS.PAST_DUE},
-=======
         default=ShowCorrectness.ALWAYS,
         values=[
             {"display_name": _("Always"), "value": ShowCorrectness.ALWAYS},
             {"display_name": _("Never"), "value": ShowCorrectness.NEVER},
             {"display_name": _("Past Due"), "value": ShowCorrectness.PAST_DUE},
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
         ],
     )
     showanswer = String(
@@ -976,25 +968,11 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
 
         Limits access to the correct/incorrect flags, messages, and problem score.
         """
-<<<<<<< HEAD
-        if self.show_correctness == SHOW_CORRECTNESS.NEVER:
-            return False
-        elif self.runtime.user_is_staff:
-            # This is after the 'never' check because admins can see correctness
-            # unless the problem explicitly prevents it
-            return True
-        elif self.show_correctness == SHOW_CORRECTNESS.PAST_DUE:
-            return self.is_past_due()
-
-        # else: self.show_correctness == SHOW_CORRECTNESS.ALWAYS
-        return True
-=======
         return ShowCorrectness.correctness_available(
             show_correctness=self.show_correctness,
             due_date=self.close_date,
             has_staff_access=self.runtime.user_is_staff,
         )
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 
     def update_score(self, data):
         """
