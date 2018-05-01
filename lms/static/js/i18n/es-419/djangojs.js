@@ -1058,11 +1058,8 @@
     "Please print this page for your records; it serves as your receipt. You will also receive an email with the same information.": "Por favor imprima esta p\u00e1gina para sus registros; la misma es v\u00e1lida como su recibo. Tambi\u00e9n recibir\u00e1 un correo electr\u00f3nico con la esta informaci\u00f3n.", 
     "Please provide a description of the link destination.": "Por favor, proveer una descripci\u00f3n de la destinaci\u00f3n del v\u00ednculo.", 
     "Please provide a valid URL.": "Por favor, provea un URL v\u00e1lido.", 
-<<<<<<< HEAD
     "Please read our %(link_start)sPrivacy Policy%(link_end)s for more information regarding the processing, transmission and use of data collected through the Stanford Online website and Stanford's Lagunita platform.": "S\u00edrvase leer nuestra %(link_start)sPol\u00edtica de privacidad%(link_end)s si desea m\u00e1s informaci\u00f3n con respecto a las tareas de procesamiento, transmisi\u00f3n y uso de los datos reunidos a trav\u00e9s del sitio web Stanford Online y la plataforma Lagunita de Stanford.", 
     "Please select a Course Run": "Por favor seleccione una versi\u00f3n del curso.", 
-=======
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
     "Please select a PDF file to upload.": "Por favor seleccione un archivo PDF para subir.", 
     "Please select a course date": "Por favor seleccione una fecha para el curso.", 
     "Please select a file in .srt format.": "Por favor seleccione un archivo en formato .srt", 
@@ -1217,11 +1214,7 @@
     "Select a time allotment for the exam. If it is over 24 hours, type in the amount of time. You can grant individual learners extra time to complete the exam through the Instructor Dashboard.": "Seleccione un tiempo disponible para el examen. Si es mayor a 24 horas, escriba la cantidad de tiempo. Puede otorgar a estudiantes individuales un tiempo extra para completar el examen a trav\u00e9s del panel de control de instructor.", 
     "Select all": "Selecionar todo", 
     "Select the course-wide discussion topics that you want to divide by cohort.": "Seleccione los temas de discusi\u00f3n de todo el curso que desea dividir por cohorte.", 
-<<<<<<< HEAD
-    "Select the time zone for displaying course dates. If you do not specify a time zone, course dates, including assignment deadlines, will be displayed in your browser's local time zone.": "Selecciona la zona horaria para exponer las fechas del curso. Si no especificas una zona horaria, las fechas del curso, incluidas las fechas l\u00edmites de tareas, ser\u00e1n expuestas en la zona horaria local de tu navegador.", 
-=======
     "Select the time zone for displaying course dates. If you do not specify a time zone, course dates, including assignment deadlines, will be displayed in your browser's local time zone.": "Seleccionar la zona horaria para exponer las fechas del curso. Si no especifica una zona horaria, las fechas del curso, incluidas las fechas l\u00edmites de tareas, ser\u00e1n expuestas en la zona horaria local de su navegador.", 
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
     "Selected tab": "Opci\u00f3n seleccionada", 
     "Send notification to mobile apps": "Enviar notificaciones a las aplicaciones m\u00f3viles", 
     "Send push notification to mobile apps": "Enviar notificaciones PUSH a las aplicaciones m\u00f3viles", 
