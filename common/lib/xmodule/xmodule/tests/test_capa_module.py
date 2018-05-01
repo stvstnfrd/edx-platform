@@ -458,7 +458,6 @@ class CapaModuleTest(unittest.TestCase):
                                             graceperiod=self.two_day_delta_str)
         self.assertTrue(still_in_grace.answer_available())
 
-<<<<<<< HEAD
     def test_showanswer_answered(self):
         """
         Tests that with showanswer="answered" should show answer after the problem is correctly answered.
@@ -484,8 +483,6 @@ class CapaModuleTest(unittest.TestCase):
         )
         self.assertTrue(answer_correct.answer_available())
 
-=======
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
     @ddt.data('', 'other-value')
     def test_show_correctness_other(self, show_correctness):
         """
