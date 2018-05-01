@@ -225,9 +225,6 @@ BADGING_BACKEND = 'lms.djangoapps.badges.backends.tests.dummy_backend.DummyBacke
 ECOMMERCE_API_URL = 'http://localhost:8043/api/v2/'
 
 LMS_ROOT_URL = "http://localhost:8000"
-<<<<<<< HEAD
-DOC_LINK_BASE_URL = 'http://edx.readthedocs.io/projects/open-edx-learner-guide'
-=======
 if RELEASE_LINE == "master":
     # On master, acceptance tests use edX books, not the default Open edX books.
     HELP_TOKENS_BOOKS = {
@@ -236,7 +233,6 @@ if RELEASE_LINE == "master":
     }
 
 WAFFLE_OVERRIDE = True
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 
 #####################################################################
 # Lastly, see if the developer has any local overrides.
