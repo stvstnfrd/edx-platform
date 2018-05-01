@@ -10,19 +10,16 @@ from pkg_resources import resource_string
 import dogstats_wrapper as dog_stats_api
 from capa import responsetypes
 from xmodule.exceptions import NotFoundError, ProcessingError
-<<<<<<< HEAD
-from xmodule.exceptions import TimeExpiredError
-
-from openedx.stanford.common.djangoapps.timed_problem.models import TimedCapaFields
-from openedx.stanford.common.djangoapps.timed_problem.models import TimedCapaMixin
-=======
 from xmodule.raw_module import RawDescriptor
 from xmodule.util.misc import escape_html_characters
 from xmodule.x_module import DEPRECATION_VSCOMPAT_EVENT, XModule, module_attr
 
 from .capa_base import CapaFields, CapaMixin, ComplexEncoder
 from .progress import Progress
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
+
+from openedx.stanford.common.djangoapps.timed_problem.models import TimedCapaFields
+from openedx.stanford.common.djangoapps.timed_problem.models import TimedCapaMixin
+from xmodule.exceptions import TimeExpiredError
 
 log = logging.getLogger("edx.courseware")
 
