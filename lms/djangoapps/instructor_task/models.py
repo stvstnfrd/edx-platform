@@ -24,12 +24,9 @@ from django.core.files.base import ContentFile
 from django.db import models, transaction
 
 from openedx.core.djangoapps.xmodule_django.models import CourseKeyField
-<<<<<<< HEAD
-from openedx.stanford.lms.djangoapps.instructor_task.models import DeleteFileMixin
-
-=======
 from openedx.core.storage import get_storage
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
+
+from openedx.stanford.lms.djangoapps.instructor_task.models import DeleteFileMixin
 
 # define custom states used by InstructorTask
 QUEUING = 'QUEUING'
