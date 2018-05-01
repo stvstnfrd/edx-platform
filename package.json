@@ -9,17 +9,12 @@
     "backbone.paginator": "~2.0.3",
     "coffee-loader": "^0.7.3",
     "coffee-script": "1.6.1",
-<<<<<<< HEAD
-    "edx-pattern-library": "git://github.com/Stanford-Online/ux-pattern-library.git#master",
-    "edx-ui-toolkit": "1.5.1",
-=======
     "edx-bootstrap": "~0.1.6",
-    "edx-pattern-library": "0.18.1",
+    "edx_pattern_library": "git://github.com/Stanford-Online/ux-pattern-library.git#master",
     "edx-ui-toolkit": "1.5.2",
     "exports-loader": "^0.6.4",
     "hls.js": "0.7.2",
     "imports-loader": "^0.7.1",
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
     "jquery": "~2.2.0",
     "jquery-migrate": "^1.4.1",
     "jquery.scrollto": "~2.1.2",
@@ -57,11 +52,7 @@
     "pa11y": "4.0.1",
     "pa11y-reporter-json-oldnode": "1.0.0",
     "plato": "1.2.2",
-<<<<<<< HEAD
-    "sinon": "1.17.3 || >1.17.4 <2.0.0",
-=======
     "sinon": "2.3.5",
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
     "squirejs": "^0.1.0"
   }
 }
