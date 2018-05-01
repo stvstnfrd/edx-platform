@@ -142,7 +142,6 @@ def get_enrollment(user_id, course_id):
     return _data_api().get_course_enrollment(user_id, course_id)
 
 
-<<<<<<< HEAD
 def get_roster(course_id):
     """
     Retrieve a list of users enrolled in a course
@@ -150,10 +149,7 @@ def get_roster(course_id):
     return _data_api().get_roster(course_id)
 
 
-def add_enrollment(user_id, course_id, mode=None, is_active=True):
-=======
 def add_enrollment(user_id, course_id, mode=None, is_active=True, enrollment_attributes=None):
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
     """Enrolls a user in a course.
 
     Enrolls a user in a course. If the mode is not specified, this will default to `CourseMode.DEFAULT_MODE_SLUG`.
