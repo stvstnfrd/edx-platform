@@ -22,12 +22,9 @@ class DiscussionTab(TabFragmentViewMixin, EnrolledTab):
     fragment_view_name = 'discussion.views.DiscussionBoardFragmentView'
     is_hideable = settings.FEATURES.get('ALLOW_HIDING_DISCUSSION_TAB', False)
     is_default = False
-<<<<<<< HEAD
     is_visible_to_sneak_peek = False
-=======
     body_class = 'discussion'
     online_help_token = 'discussions'
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 
     @classmethod
     def is_enabled(cls, course, user=None):
