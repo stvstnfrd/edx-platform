@@ -49,12 +49,6 @@
 
     <%= context.fields %>
 
-<<<<<<< HEAD
     <div id="register-extra"></div>
-
-    <button type="submit" class="action action-primary action-update js-register register-button"><%- gettext("Create your account") %></button>
-    <p class="note">* <%- gettext("Required field") %></p>
-=======
     <button type="submit" class="action action-primary action-update js-register register-button"><%- gettext("Create account") %></button>
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 </form>
