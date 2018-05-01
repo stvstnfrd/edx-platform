@@ -773,7 +773,6 @@ class PasswordResetViewTest(UserAPITestCase):
 
 
 @ddt.ddt
-<<<<<<< HEAD
 @skipUnless(settings.ROOT_URLCONF == 'lms.urls', 'Test only valid in lms')
 class RegistrationViewValidationErrorTest(ThirdPartyAuthTestMixin, ApiTestCase):
     """
@@ -910,12 +909,8 @@ class RegistrationViewValidationErrorTest(ThirdPartyAuthTestMixin, ApiTestCase):
 
 
 @ddt.ddt
-@skipUnless(settings.ROOT_URLCONF == 'lms.urls', 'Test only valid in lms')
-class RegistrationViewTest(ThirdPartyAuthTestMixin, ApiTestCase):
-=======
 @skip_unless_lms
 class RegistrationViewTest(ThirdPartyAuthTestMixin, UserAPITestCase):
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
     """Tests for the registration end-points of the User API. """
 
     maxDiff = None
@@ -1273,11 +1268,6 @@ class RegistrationViewTest(ThirdPartyAuthTestMixin, UserAPITestCase):
     def test_register_form_year_of_birth(self):
         this_year = datetime.datetime.now(UTC).year
         year_options = (
-<<<<<<< HEAD
-            [{"value": "", "name": "--", "default": True}] + [
-                {"value": unicode(year), "name": unicode(year)}
-                for year in range(this_year - 13, this_year - 100, -1)
-=======
             [
                 {
                     "value": "",
@@ -1290,8 +1280,7 @@ class RegistrationViewTest(ThirdPartyAuthTestMixin, UserAPITestCase):
                     "name": unicode(year),
                     "default": False
                 }
-                for year in range(this_year, this_year - 120, -1)
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
+                for year in range(this_year - 13, this_year - 120, -1)
             ]
         )
         self._assert_reg_field(
