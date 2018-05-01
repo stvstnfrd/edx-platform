@@ -33,10 +33,6 @@ class GradesEventIntegrationTest(ProblemSubmissionTestMixin, SharedModuleStoreTe
         """
         Sets up the course anew.
         """
-<<<<<<< HEAD
-        cls.store = modulestore()
-=======
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
         with cls.store.default_store(ModuleStoreEnum.Type.split):
             cls.course = CourseFactory.create()
             cls.chapter = ItemFactory.create(
