@@ -28,13 +28,10 @@ from django_comment_client.tests.utils import (
     topic_name_to_id
 )
 from django_comment_client.utils import strip_none
-<<<<<<< HEAD
 from student.models import UserProfile
-=======
 from django_comment_common.models import CourseDiscussionSettings, ForumsConfig
 from django_comment_common.utils import ThreadContext
 from lms.djangoapps.courseware.exceptions import CourseAccessRedirect
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 from lms.djangoapps.discussion import views
 from lms.djangoapps.discussion.views import course_discussions_settings_handler
 from lms.djangoapps.teams.tests.factories import CourseTeamFactory
