@@ -3,25 +3,15 @@ This module is essentially a broker to xmodule/tabs.py -- it was originally intr
 perform some LMS-specific tab display gymnastics for the Entrance Exams feature
 """
 from courseware.access import has_access
-<<<<<<< HEAD
-from courseware.entrance_exams import user_must_complete_entrance_exam
-from student.models import UserProfile
-=======
 from courseware.entrance_exams import user_can_skip_entrance_exam
 from django.conf import settings
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_noop
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 from openedx.core.lib.course_tabs import CourseTabPluginManager
 from openedx.features.course_experience import UNIFIED_COURSE_TAB_FLAG, default_course_url_name
 from student.models import CourseEnrollment
-<<<<<<< HEAD
-from student.roles import CourseStaffRole
-from xmodule.tabs import CourseTab, CourseTabList, key_checker
-from xmodule.tabs import StaticTab
-=======
+from student.models import UserProfile
 from xmodule.tabs import CourseTab, CourseTabList, course_reverse_func_from_name_func, key_checker
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 
 
 class EnrolledTab(CourseTab):
@@ -45,9 +35,7 @@ class CoursewareTab(EnrolledTab):
     view_name = 'courseware'
     is_movable = False
     is_default = False
-<<<<<<< HEAD
     is_visible_to_sneak_peek = True
-=======
     supports_preview_menu = True
 
     @property
@@ -58,7 +46,6 @@ class CoursewareTab(EnrolledTab):
         """
         reverse_name_func = lambda course: default_course_url_name(course.id)
         return course_reverse_func_from_name_func(reverse_name_func)
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 
 
 class CourseInfoTab(CourseTab):
