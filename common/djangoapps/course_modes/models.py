@@ -131,14 +131,10 @@ class CourseMode(models.Model):
         settings.COURSE_MODE_DEFAULTS['sku'],
         settings.COURSE_MODE_DEFAULTS['bulk_sku'],
     )
-<<<<<<< HEAD
-    DEFAULT_MODE_SLUG = settings.COURSE_MODE_DEFAULTS["slug"]
-=======
     DEFAULT_MODE_SLUG = settings.COURSE_MODE_DEFAULTS['slug']
 
     # Modes utilized for audit/free enrollments
     AUDIT_MODES = [AUDIT, HONOR]
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 
     # Modes that allow a student to pursue a verified certificate
     VERIFIED_MODES = [VERIFIED, PROFESSIONAL]
