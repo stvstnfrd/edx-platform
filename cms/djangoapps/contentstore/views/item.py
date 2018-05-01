@@ -1155,9 +1155,6 @@ def create_xblock_info(xblock, data=None, metadata=None, include_ancestor_info=F
     else:
         user_partitions = get_user_partition_info(xblock, course=course)
         xblock_info.update({
-<<<<<<< HEAD
-            "hide_after_due": xblock.hide_after_due,
-=======
             'edited_on': get_default_time_display(xblock.subtree_edited_on) if xblock.subtree_edited_on else None,
             'published': published,
             'published_on': published_on,
@@ -1177,7 +1174,6 @@ def create_xblock_info(xblock, data=None, metadata=None, include_ancestor_info=F
             'explanatory_message': explanatory_message,
             'group_access': xblock.group_access,
             'user_partitions': user_partitions,
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
             'show_correctness': xblock.show_correctness,
         })
 
