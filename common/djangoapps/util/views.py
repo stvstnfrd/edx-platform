@@ -14,11 +14,6 @@ from django.http import Http404, HttpResponse, HttpResponseForbidden, HttpRespon
 from django.views.decorators.csrf import requires_csrf_token
 from django.views.defaults import server_error
 from opaque_keys import InvalidKeyError
-<<<<<<< HEAD
-
-from student.models import UserProfile
-=======
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 from opaque_keys.edx.keys import CourseKey, UsageKey
 
 import calc
@@ -28,6 +23,7 @@ from edxmako.shortcuts import render_to_response, render_to_string
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from openedx.features.enterprise_support import api as enterprise_api
 from student.models import CourseEnrollment
+from student.models import UserProfile
 from student.roles import GlobalStaff
 
 log = logging.getLogger(__name__)
