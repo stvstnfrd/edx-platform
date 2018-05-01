@@ -966,8 +966,6 @@ function(VideoPlayer, HLS) {
                 state.videoPlayer.isPlaying.and.returnValue(false);
                 VideoPlayer.prototype.setPlaybackRate.call(state, '1.0');
                 expect(state.videoPlayer.player.setPlaybackRate).toHaveBeenCalledWith('1.0');
-<<<<<<< HEAD
-=======
             });
         });
 
@@ -1053,7 +1051,6 @@ function(VideoPlayer, HLS) {
                 }).then(function() {
                     expect($(playButtonOverlaySelector)).not.toHaveClass('is-hidden');
                 }).always(done);
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
             });
         });
     });
