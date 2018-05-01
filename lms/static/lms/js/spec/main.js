@@ -737,11 +737,8 @@
         'js/spec/edxnotes/views/visibility_decorator_spec.js',
         'js/spec/financial-assistance/financial_assistance_form_view_spec.js',
         'js/spec/groups/views/cohorts_spec.js',
-<<<<<<< HEAD
         'js/spec/inline_analytics_spec.js',
-=======
         'js/spec/groups/views/discussions_spec.js',
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
         'js/spec/instructor_dashboard/certificates_bulk_exception_spec.js',
         'js/spec/instructor_dashboard/certificates_exception_spec.js',
         'js/spec/instructor_dashboard/certificates_invalidation_spec.js',
