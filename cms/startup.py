@@ -11,11 +11,6 @@ from openedx.core.djangoapps.monkey_patch import django_db_models_options
 from openedx.core.djangoapps.theming.core import enable_theming
 from openedx.core.djangoapps.theming.helpers import is_comprehensive_theming_enabled
 from openedx.core.lib.django_startup import autostartup
-<<<<<<< HEAD
-import django
-from openedx.core.djangoapps.monkey_patch import django_db_models_options
-=======
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 from openedx.core.lib.xblock_utils import xblock_local_resource_url
 from openedx.core.release import doc_version
 from startup_configurations.validate_config import validate_cms_config
