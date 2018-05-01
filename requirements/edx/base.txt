@@ -96,12 +96,8 @@ python-memcached==1.48
 django-memcached-hashring==0.1.2
 python-openid==2.2.5
 python-dateutil==2.1
-<<<<<<< HEAD
-python-social-auth==0.2.21
-=======
 social-auth-app-django==1.2.0
 social-auth-core==1.4.0
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 pytz==2016.7
 pysrt==0.4.7
 PyYAML==3.12
