@@ -315,32 +315,8 @@ from openedx.core.djangolib.markup import HTML, Text
 
       % if libraries_enabled:
       <ul id="course-index-tabs">
-<<<<<<< HEAD
-        <li class="courses-tab active">
-          % if split_studio_home:
-            <a href="/home">${_("Courses")}</a>
-          % else:
-            <a>${_("Courses")}</a>
-          % endif
-        </li>
-
-        % if libraries_enabled:
-          <li class="libraries-tab">
-            % if split_studio_home:
-              <a href="/home_library">${_("Libraries")}</a>
-            % else:
-              <a>${_("Libraries")}</a>
-            % endif
-          </li>
-        % endif
-
-        % if is_programs_enabled:
-          <li class="programs-tab"><a>${_("Programs")}</a></li>
-        % endif
-=======
         <li class="courses-tab active"><a>${_("Courses")}</a></li>
         <li class="libraries-tab"><a>${_("Libraries")}</a></li>
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
       </ul>
       % endif
 
