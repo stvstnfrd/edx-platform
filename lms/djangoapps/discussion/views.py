@@ -241,20 +241,10 @@ def forum_form_discussion(request, course_key):
     """
     Renders the main Discussion page, potentially filtered by a search query
     """
-<<<<<<< HEAD
-    nr_transaction = newrelic.agent.current_transaction()
-
     course = get_course_with_access(request.user, 'load_forum', course_key, check_if_enrolled=True)
-    course_settings = make_course_settings(course, request.user)
-
-    user = cc.User.from_django_user(request.user)
-    user_info = user.to_dict()
-=======
-    course = get_course_with_access(request.user, 'load', course_key, check_if_enrolled=True)
     if request.is_ajax():
         user = cc.User.from_django_user(request.user)
         user_info = user.to_dict()
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 
         try:
             unsafethreads, query_params = get_threads(request, course, user_info)  # This might process a search query
@@ -295,31 +285,7 @@ def single_thread(request, course_key, discussion_id, thread_id):
 
     Depending on the HTTP headers, we'll adjust our response accordingly.
     """
-<<<<<<< HEAD
-    nr_transaction = newrelic.agent.current_transaction()
-
     course = get_course_with_access(request.user, 'load_forum', course_key, check_if_enrolled=True)
-    course_settings = make_course_settings(course, request.user)
-    cc_user = cc.User.from_django_user(request.user)
-    user_info = cc_user.to_dict()
-    is_moderator = has_permission(request.user, "see_all_cohorts", course_key)
-    is_staff = has_permission(request.user, 'openclose_thread', course.id)
-
-    try:
-        thread = cc.Thread.find(thread_id).retrieve(
-            with_responses=request.is_ajax(),
-            recursive=request.is_ajax(),
-            user_id=request.user.id,
-            response_skip=request.GET.get("resp_skip"),
-            response_limit=request.GET.get("resp_limit")
-        )
-    except cc.utils.CommentClientRequestError as error:
-        if error.status_code == 404:
-            raise Http404
-        raise
-=======
-    course = get_course_with_access(request.user, 'load', course_key, check_if_enrolled=True)
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 
     if request.is_ajax():
         cc_user = cc.User.from_django_user(request.user)
@@ -399,7 +365,7 @@ def _create_base_discussion_view_context(request, course_key):
     user = request.user
     cc_user = cc.User.from_django_user(user)
     user_info = cc_user.to_dict()
-    course = get_course_with_access(user, 'load', course_key, check_if_enrolled=True)
+    course = get_course_with_access(user, 'load_forum', course_key, check_if_enrolled=True)
     course_settings = make_course_settings(course, user)
     return {
         'csrf': csrf(request)['csrf_token'],
@@ -494,13 +460,7 @@ def user_profile(request, course_key, user_id):
     on a post author's username).
     """
     user = cc.User.from_django_user(request.user)
-<<<<<<< HEAD
-    user_info = user.to_dict()
     course = get_course_with_access(request.user, 'load_forum', course_key, check_if_enrolled=True)
-    course_settings = make_course_settings(course, request.user)
-=======
-    course = get_course_with_access(request.user, 'load', course_key, check_if_enrolled=True)
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 
     try:
         # If user is not enrolled in the course, do not proceed.
@@ -576,14 +536,7 @@ def followed_threads(request, course_key, user_id):
     """
     Ajax-only endpoint retrieving the threads followed by a specific user.
     """
-<<<<<<< HEAD
-
-    nr_transaction = newrelic.agent.current_transaction()
-
     course = get_course_with_access(request.user, 'load_forum', course_key, check_if_enrolled=True)
-=======
-    course = get_course_with_access(request.user, 'load', course_key, check_if_enrolled=True)
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
     try:
         profiled_user = cc.User(id=user_id, course_id=course_key)
 
