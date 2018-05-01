@@ -2,13 +2,8 @@
 Stub implementation of an HTTP service.
 """
 
-<<<<<<< HEAD
-from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
-from SocketServer import ThreadingMixIn
-=======
 import json
 import threading
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 import urllib
 import urlparse
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
