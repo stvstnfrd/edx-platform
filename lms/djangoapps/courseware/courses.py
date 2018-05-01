@@ -12,21 +12,11 @@ from django.core.urlresolvers import reverse
 from django.http import Http404
 from fs.errors import ResourceNotFoundError
 from opaque_keys.edx.keys import UsageKey
+from opaque_keys.edx.locations import SlashSeparatedCourseKey
 from path import Path as path
 
-<<<<<<< HEAD
-from edxmako.shortcuts import render_to_string
-from xmodule.modulestore.django import modulestore
-from xmodule.modulestore.exceptions import ItemNotFoundError
-from static_replace import replace_static_urls
-from xmodule.x_module import STUDENT_VIEW
-
-from util.date_utils import get_default_time_display
-from util.keyword_substitution import substitute_keywords_with_data
-
-=======
 import branding
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
+from branding_stanford.models import TileConfiguration
 from courseware.access import has_access
 from courseware.date_summary import (
     CourseEndDate,
@@ -39,17 +29,7 @@ from courseware.model_data import FieldDataCache
 from courseware.module_render import get_module, get_module_for_descriptor
 from edxmako.shortcuts import render_to_string
 from lms.djangoapps.courseware.courseware_access_exception import CoursewareAccessException
-<<<<<<< HEAD
-from student.models import CourseEnrollment
-import branding
-from branding_stanford.models import TileConfiguration
-from student.models import CourseEnrollment
-
-from opaque_keys.edx.keys import UsageKey
-from opaque_keys.edx.locations import SlashSeparatedCourseKey
-=======
 from lms.djangoapps.courseware.exceptions import CourseAccessRedirect
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from static_replace import replace_static_urls
@@ -315,8 +295,7 @@ def get_course_info_section(request, user, course, section_key):
     html = ''
     if info_module is not None:
         try:
-<<<<<<< HEAD
-            html = info_module.render(STUDENT_VIEW).content
+            html = info_module.render(STUDENT_VIEW).content.strip()
             context = {
                 'username': request.user.username,
                 'user_id': request.user.id,
@@ -327,9 +306,6 @@ def get_course_info_section(request, user, course, section_key):
                 'course_end_date': get_default_time_display(course.end),
             }
             html = substitute_keywords_with_data(html, context)
-=======
-            html = info_module.render(STUDENT_VIEW).content.strip()
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
         except Exception:  # pylint: disable=broad-except
             html = render_to_string('courseware/error-message.html', None)
             log.exception(
