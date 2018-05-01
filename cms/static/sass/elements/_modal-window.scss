@@ -593,17 +593,9 @@
 
     .list-fields {
       .field-message {
-<<<<<<< HEAD
-        @extend %t-copy-sub2;
-        color: $gray-d1;
-      }
-      label {
-        @extend %t-title7;
-=======
         @extend %t-copy-sub1;
         color: $gray-d1;
         margin-bottom: ($baseline/4);
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
       }
       label {
         @extend %t-title6;
@@ -617,12 +609,8 @@
         margin-bottom: ($baseline/4);
 
         label {
-<<<<<<< HEAD
-          @extend %t-strong;
-=======
           @include font-size(16);
           font-weight: font-weight(semi-bold);
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
           @include transition(color $tmg-f3 ease-in-out 0s);
           margin-bottom: ($baseline/4);
 
