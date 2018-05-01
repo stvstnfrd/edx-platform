@@ -41,6 +41,8 @@ from pytz import utc
 from rest_framework import status
 from web_fragments.fragment import Fragment
 
+from analyticsclient.client import Client
+from analyticsclient.exceptions import NotFoundError, InvalidRequestError, TimeoutError
 import shoppingcart
 import survey.utils
 import survey.views
@@ -78,6 +80,7 @@ from eventtracking import tracker
 from lms.djangoapps.ccx.custom_exception import CCXLocatorValidationException
 from lms.djangoapps.ccx.utils import prep_course_for_grading
 from lms.djangoapps.courseware.exceptions import CourseAccessRedirect, Redirect
+from lms.djangoapps.ccx.custom_exception import CCXLocatorValidationException
 from lms.djangoapps.grades.new.course_grade_factory import CourseGradeFactory
 from lms.djangoapps.instructor.enrollment import uses_shib
 from lms.djangoapps.instructor.views.api import require_global_staff
@@ -89,17 +92,14 @@ from openedx.core.djangoapps.credit.api import (
     is_credit_course,
     is_user_eligible_for_credit
 )
-<<<<<<< HEAD
 
 from student.models import UserProfile
 
-=======
 from openedx.core.djangoapps.models.course_details import CourseDetails
 from openedx.core.djangoapps.monitoring_utils import set_custom_metrics_for_course_key
 from openedx.core.djangoapps.plugin_api.views import EdxFragmentView
 from openedx.core.djangoapps.programs.utils import ProgramMarketingDataExtender
 from openedx.core.djangoapps.self_paced.models import SelfPacedConfiguration
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from openedx.features.course_experience import UNIFIED_COURSE_TAB_FLAG, course_home_url_name
 from openedx.features.course_experience.views.course_dates import CourseDatesFragmentView
@@ -108,6 +108,7 @@ from shoppingcart.utils import is_shopping_cart_enabled
 from student.models import CourseEnrollment, UserTestGroup
 from survey.utils import must_answer_survey
 from util.cache import cache, cache_if_anonymous
+from util.date_utils import get_time_display
 from util.date_utils import strftime_localized
 from util.db import outer_atomic
 from util.milestones_helpers import get_prerequisite_courses_display
@@ -116,19 +117,15 @@ from xmodule.modulestore.django import modulestore
 from xmodule.modulestore.exceptions import ItemNotFoundError, NoPathToItem
 from xmodule.tabs import CourseTabList
 from xmodule.x_module import STUDENT_VIEW
-<<<<<<< HEAD
 from util.date_utils import get_time_display
 
 from analyticsclient.client import Client
 from analyticsclient.exceptions import NotFoundError, InvalidRequestError, TimeoutError
 from lms.djangoapps.ccx.custom_exception import CCXLocatorValidationException
-from ..entrance_exams import user_must_complete_entrance_exam
 from ..module_render import get_module_for_descriptor, get_module, get_module_by_usage_id
-=======
 
 from ..entrance_exams import user_can_skip_entrance_exam
 from ..module_render import get_module, get_module_by_usage_id, get_module_for_descriptor
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 
 log = logging.getLogger("edx.courseware")
 
@@ -335,14 +332,12 @@ def course_info(request, course_id):
         if settings.FEATURES.get('ENABLE_MKTG_SITE'):
             url_to_enroll = marketing_link('COURSES')
 
-<<<<<<< HEAD
         sneakpeek_allowed = is_sneakpeek_allowed(request.user, course, course_key)
         if sneakpeek_allowed:
             registered = registered_for_course(course, request.user)
             regularly_registered = is_regularly_registered(registered, request.user)
         else:
             regularly_registered = None
-=======
         # Construct the dates fragment
         dates_fragment = None
 
@@ -357,7 +352,6 @@ def course_info(request, course_id):
 
         # Decide whether or not to show the reviews link in the course tools bar
         show_reviews_link = CourseReviewsModuleFragmentView.is_configured()
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 
         context = {
             'request': request,
@@ -373,16 +367,13 @@ def course_info(request, course_id):
             'user_is_enrolled': user_is_enrolled,
             'dates_fragment': dates_fragment,
             'url_to_enroll': url_to_enroll,
-<<<<<<< HEAD
             'sneakpeek_allowed': sneakpeek_allowed,
             'regularly_registered': regularly_registered,
-=======
             'show_reviews_link': show_reviews_link,
             # TODO: (Experimental Code). See https://openedx.atlassian.net/wiki/display/RET/2.+In-course+Verification+Prompts
             'upgrade_link': check_and_get_upgrade_link(request, user, course.id),
             'upgrade_price': get_cosmetic_verified_display_price(course),
             # ENDTODO
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
         }
 
         # Get the URL of the user's last position in order to display the 'where you were last' message
@@ -816,12 +807,7 @@ def course_about(request, course_id):
         # - Student is already registered for course
         # - Course is already full
         # - Student cannot enroll in course
-<<<<<<< HEAD
-        # active_reg_button = not(registered or is_course_full or not can_enroll)
         active_reg_button = not(regularly_registered or is_course_full or not can_enroll)
-=======
-        active_reg_button = not (registered or is_course_full or not can_enroll)
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 
         is_shib_course = uses_shib(course)
 
@@ -969,15 +955,9 @@ def _progress(request, course_key, student_id):
     # student instead of request.user in the rest of the function.
 
     course_grade = CourseGradeFactory().create(student, course)
-<<<<<<< HEAD
-
     courseware_summary = []
     if settings.FEATURES['ENABLE_PROGRESS_SUMMARY']:
         courseware_summary = course_grade.chapter_grades
-
-=======
-    courseware_summary = course_grade.chapter_grades.values()
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
     grade_summary = course_grade.summary
 
     studio_url = get_studio_url(course, 'settings/grading')
@@ -1946,7 +1926,6 @@ def financial_assistance_form(request):
     })
 
 
-<<<<<<< HEAD
 def is_sneakpeek_allowed(user, course, course_key):
     """
     Helper method for sneakpeek.
@@ -1967,7 +1946,8 @@ def is_regularly_registered(registered, user):
     """
     return (registered and
             UserProfile.has_registered(user))
-=======
+
+
 def get_financial_aid_courses(user):
     """ Retrieve the courses eligible for financial assistance. """
     financial_aid_courses = []
@@ -2006,4 +1986,3 @@ def check_access_to_course(request, course):
     # Redirect if the user must answer a survey before entering the course.
     if must_answer_survey(course, request.user):
         raise CourseAccessRedirect(reverse('course_survey', args=[unicode(course.id)]))
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
