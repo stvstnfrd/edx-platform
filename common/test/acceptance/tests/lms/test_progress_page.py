@@ -3,11 +3,6 @@
 End-to-end tests for the LMS that utilize the
 progress page.
 """
-<<<<<<< HEAD
-import ddt
-
-=======
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 from contextlib import contextmanager
 
 import ddt
