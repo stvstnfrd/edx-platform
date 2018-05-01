@@ -17,15 +17,10 @@ from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_http_methods
 from django_countries import countries
-<<<<<<< HEAD
-from edxmako.shortcuts import render_to_response
-from edxmako.shortcuts import marketing_link
-import pytz
-=======
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 
 import third_party_auth
 from commerce.models import CommerceConfiguration
+from edxmako.shortcuts import marketing_link
 from edxmako.shortcuts import render_to_response, render_to_string
 from lms.djangoapps.commerce.utils import EcommerceService
 from openedx.core.djangoapps.commerce.utils import ecommerce_api_client
@@ -149,14 +144,11 @@ def login_and_registration_form(request, initial_mode="login"):
             'third_party_auth_hint': third_party_auth_hint or '',
             'platform_name': configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME),
             'support_link': configuration_helpers.get_value('SUPPORT_SITE_LINK', settings.SUPPORT_SITE_LINK),
-<<<<<<< HEAD
             'privacy_policy_url': marketing_link('PRIVACY'),
-=======
             'password_reset_support_link': configuration_helpers.get_value(
                 'PASSWORD_RESET_SUPPORT_LINK', settings.PASSWORD_RESET_SUPPORT_LINK
             ) or settings.SUPPORT_SITE_LINK,
             'account_activation_messages': account_activation_messages,
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 
             # Include form descriptions retrieved from the user API.
             # We could have the JS client make these requests directly,
