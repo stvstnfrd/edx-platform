@@ -37,11 +37,8 @@
                     this.errorMessage = data.thirdPartyAuth.errorMessage || '';
                     this.platformName = data.platformName;
                     this.autoSubmit = data.thirdPartyAuth.autoSubmitRegForm;
-<<<<<<< HEAD
                     this.privacyPolicyUrl = data.privacyPolicyUrl;
-=======
                     this.hideAuthWarnings = data.hideAuthWarnings;
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 
                     this.listenTo(this.model, 'sync', this.saveSuccess);
                 },
