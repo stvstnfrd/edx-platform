@@ -461,36 +461,6 @@ describe 'Problem', ->
         @problem.show()
         expect(@problem.el.find('.show').attr('disabled')).toEqual('disabled')
 
-<<<<<<< HEAD
-      it 'sends a SR message when answer is present', ->
-
-        spyOn($, 'postWithPrefix').and.callFake (url, callback) ->
-          callback answers:
-            '1_1': 'answers'
-        @problem.show()
-
-        expect(window.SR.readText).toHaveBeenCalledWith 'Answers to this problem are now shown. Navigate through the problem to review it with answers inline.'
-
-      describe 'multiple choice question', ->
-        beforeEach ->
-          @problem.el.prepend '''
-            <label for="input_1_1_1"><input type="checkbox" name="input_1_1" id="input_1_1_1" value="1"> One</label>
-            <label for="input_1_1_2"><input type="checkbox" name="input_1_1" id="input_1_1_2" value="2"> Two</label>
-            <label for="input_1_1_3"><input type="checkbox" name="input_1_1" id="input_1_1_3" value="3"> Three</label>
-            <label for="input_1_2_1"><input type="radio" name="input_1_2" id="input_1_2_1" value="1"> Other</label>
-          '''
-
-        it 'set the correct_answer attribute on the choice', ->
-          spyOn($, 'postWithPrefix').and.callFake (url, callback) ->
-            callback answers: '1_1': [2, 3]
-          @problem.show()
-          expect($('label[for="input_1_1_1"]')).not.toHaveAttr 'correct_answer', 'true'
-          expect($('label[for="input_1_1_2"]')).toHaveAttr 'correct_answer', 'true'
-          expect($('label[for="input_1_1_3"]')).toHaveAttr 'correct_answer', 'true'
-          expect($('label[for="input_1_2_1"]')).not.toHaveAttr 'correct_answer', 'true'
-
-=======
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
       describe 'radio text question', ->
         radio_text_xml='''
 <section class="problem">
