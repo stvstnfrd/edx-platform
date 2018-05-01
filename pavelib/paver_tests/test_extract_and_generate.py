@@ -15,14 +15,6 @@ from mock import patch
 from polib import pofile
 from pytz import UTC
 
-<<<<<<< HEAD
-from i18n import config
-from i18n import dummy
-from i18n import extract
-from i18n import generate
-
-=======
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 
 class TestGenerate(TestCase):
     """
