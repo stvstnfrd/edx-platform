@@ -15,10 +15,6 @@ define(['jquery', 'backbone', 'underscore', 'gettext', 'js/views/baseview',
     'use strict';
     var CourseOutlineXBlockModal, SettingsXBlockModal, PublishXBlockModal, AbstractEditor, BaseDateEditor,
         ReleaseDateEditor, DueDateEditor, GradingEditor, PublishEditor, AbstractVisibilityEditor, StaffLockEditor,
-<<<<<<< HEAD
-        VerificationAccessEditor,
-=======
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
         ContentVisibilityEditor, TimedExaminationPreferenceEditor, AccessEditor, ShowCorrectnessEditor;
 
     CourseOutlineXBlockModal = BaseModal.extend({
@@ -727,57 +723,6 @@ define(['jquery', 'backbone', 'underscore', 'gettext', 'js/views/baseview',
     ShowCorrectnessEditor = AbstractEditor.extend({
         templateName: 'show-correctness-editor',
         className: 'edit-show-correctness',
-<<<<<<< HEAD
-
-        afterRender: function() {
-            AbstractEditor.prototype.afterRender.call(this);
-            this.setValue(this.model.get('show_correctness') || 'always');
-        },
-
-        setValue: function(value) {
-            this.$('input[name=show-correctness][value=' + value + ']').prop('checked', true);
-        },
-
-        currentValue: function() {
-            return this.$('input[name=show-correctness]:checked').val();
-        },
-
-        hasChanges: function() {
-            return this.model.get('show_correctness') !== this.currentValue();
-        },
-
-        getRequestData: function() {
-            if (this.hasChanges()) {
-                return {
-                    publish: 'republish',
-                    metadata: {
-                        show_correctness: this.currentValue()
-                    }
-                };
-            } else {
-                return {};
-            }
-        },
-        getContext: function() {
-            return $.extend(
-                {},
-                AbstractEditor.prototype.getContext.call(this),
-                {
-                    self_paced: course.get('self_paced') === true
-                }
-            );
-        }
-    });
-
-    VerificationAccessEditor = AbstractEditor.extend({
-        templateName: 'verification-access-editor',
-        className: 'edit-verification-access',
-
-        // This constant MUST match the group ID
-        // defined by VerificationPartitionScheme on the backend!
-        ALLOW_GROUP_ID: 1,
-=======
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 
         afterRender: function() {
             AbstractEditor.prototype.afterRender.call(this);
