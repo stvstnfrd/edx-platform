@@ -9,8 +9,4 @@
 # resolution of this dependency during compilation. So we need to install
 # python-saml only after lxml has been successfully installed. 
 
-<<<<<<< HEAD
 python-saml==2.4.0
-=======
-python-saml==2.2.1
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
