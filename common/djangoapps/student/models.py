@@ -964,21 +964,6 @@ class CourseEnrollmentManager(models.Manager):
 
         return is_course_full
 
-<<<<<<< HEAD
-    def users_enrolled_in(self, course_id):
-        """Return a queryset of User for every user enrolled in the course."""
-        course_users = User.objects.filter(
-            courseenrollment__course_id=course_id,
-            courseenrollment__is_active=True,
-        )
-        anonymous_user_ids = [
-            user.id
-            for user in course_users
-            if not UserProfile.has_registered(user)
-        ]
-        enrolled_course_users = course_users.exclude(id__in=anonymous_user_ids)
-        return enrolled_course_users
-=======
     def users_enrolled_in(self, course_id, include_inactive=False):
         """
         Return a queryset of User for every user enrolled in the course.  If
@@ -991,7 +976,6 @@ class CourseEnrollmentManager(models.Manager):
         if not include_inactive:
             filter_kwargs['courseenrollment__is_active'] = True
         return User.objects.filter(**filter_kwargs)
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 
     def enrollment_counts(self, course_id):
         """
