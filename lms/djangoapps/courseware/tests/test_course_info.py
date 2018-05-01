@@ -385,14 +385,7 @@ class SelfPacedCourseInfoTestCase(LoginEnrollmentTestCase, SharedModuleStoreTest
         self.assertEqual(resp.status_code, 200)
 
     def test_num_queries_instructor_paced(self):
-<<<<<<< HEAD
-        self.fetch_course_info_with_queries(self.instructor_paced_course, 22, 4)
-
-    def test_num_queries_self_paced(self):
-        self.fetch_course_info_with_queries(self.self_paced_course, 22, 4)
-=======
         self.fetch_course_info_with_queries(self.instructor_paced_course, 26, 4)
 
     def test_num_queries_self_paced(self):
         self.fetch_course_info_with_queries(self.self_paced_course, 26, 4)
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
