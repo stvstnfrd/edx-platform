@@ -8,13 +8,6 @@ https://${ site }/activate/${ key }
 % else:
 http://${ site }/activate/${ key }
 % endif
-<<<<<<< HEAD
-${_("If you didn't create an account, you don't need to do anything; you "
-      "won't receive any more email from us. If you need assistance, please "
-      "do not reply to this email message. Check the help section of the "
-      "{platform_name} website.").format(platform_name=configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME))}
-  ${settings.ZENDESK_URL}
-=======
 
 ${_("Enjoy learning with {platform_name}.").format(platform_name=platform_name)}
 
@@ -28,4 +21,3 @@ ${_("This email message was automatically sent by {lms_url} because someone atte
 "account on {platform_name} using this email address.").format(
   lms_url=lms_url, platform_name=platform_name
 )}
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
