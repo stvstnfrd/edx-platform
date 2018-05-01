@@ -222,7 +222,7 @@ class CourseGradeReport(object):
         Returns a list of all applicable column headers for this grade report.
         """
         return (
-            ["Student ID", "Email", "Username", "Grade"] +
+            ["Student ID", "Email", "Username", "Full Name", "Grade"] +
             self._grades_header(context) +
             (['Cohort Name'] if context.cohorts_enabled else []) +
             [u'Experiment Group ({})'.format(partition.name) for partition in context.course_experiments] +
@@ -539,7 +539,8 @@ class ProblemResponses(object):
         problem_location = task_input.get('problem_location')
         student_data = list_problem_responses(course_id, problem_location)
         features = ['username', 'state']
-        header, rows = format_dictlist(student_data, features)
+        from openedx.stanford.lms.djangoapps.instructor.views.tools import parse_student_data
+        header, rows = parse_student_data(student_data)
 
         task_progress.attempted = task_progress.succeeded = len(rows)
         task_progress.skipped = task_progress.total - task_progress.attempted
