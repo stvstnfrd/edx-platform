@@ -25,12 +25,8 @@ from openedx.core.lib.log_utils import audit_log
 from student.models import CourseEnrollment, RegistrationCookieConfiguration
 from util.json_request import JsonResponse
 
-<<<<<<< HEAD
 from openedx.stanford.common.djangoapps.student.views import notify_enrollment_by_email
 
-
-=======
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 log = logging.getLogger(__name__)
 SAILTHRU_CAMPAIGN_COOKIE = 'sailthru_bid'
 
