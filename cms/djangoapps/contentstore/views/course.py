@@ -5,6 +5,7 @@ import copy
 import json
 import logging
 import random
+from smtplib import SMTPException
 import string  # pylint: disable=deprecated-module
 
 import django.utils
@@ -18,21 +19,13 @@ from django.http import Http404, HttpResponse, HttpResponseBadRequest, HttpRespo
 from django.shortcuts import redirect
 from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import ensure_csrf_cookie
-<<<<<<< HEAD
-from smtplib import SMTPException
-
-from opaque_keys import InvalidKeyError
-from opaque_keys.edx.keys import CourseKey
-from opaque_keys.edx.locations import Location
-from opaque_keys.edx.locations import SlashSeparatedCourseKey
-=======
 from django.views.decorators.http import require_GET, require_http_methods
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import CourseKey
 from opaque_keys.edx.locations import Location
+from opaque_keys.edx.locations import SlashSeparatedCourseKey
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.djangoapps.waffle_utils import WaffleSwitchNamespace
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 
 from contentstore.course_group_config import (
     COHORT_SCHEME,
@@ -486,16 +479,8 @@ def course_listing(request):
     """
     List all courses available to the logged in user
     """
-<<<<<<< HEAD
-    courses, in_process_course_actions = get_courses_accessible_to_user(request)
-    if not settings.SPLIT_STUDIO_HOME and LIBRARIES_ENABLED:
-        libraries = _accessible_libraries_list(request.user)
-    else:
-        libraries = []
-=======
     optimization_enabled = GlobalStaff().has_user(request.user) and \
         WaffleSwitchNamespace(name=WAFFLE_NAMESPACE).is_enabled(u'enable_global_staff_optimization')
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 
     if optimization_enabled:
         org = request.GET.get('org', '')
@@ -544,24 +529,6 @@ def course_listing(request):
     courses_iter = _remove_in_process_courses(courses_iter, in_process_course_actions)
     in_process_course_actions = [format_in_process_course_view(uca) for uca in in_process_course_actions]
 
-<<<<<<< HEAD
-    return render_to_response('index.html', {
-        'courses': courses,
-        'split_studio_home': settings.SPLIT_STUDIO_HOME,
-        'in_process_course_actions': in_process_course_actions,
-        'libraries_enabled': LIBRARIES_ENABLED,
-        'libraries': [format_library_for_view(lib) for lib in libraries],
-        'show_new_library_button': LIBRARIES_ENABLED and request.user.is_active,
-        'user': request.user,
-        'request_course_creator_url': reverse('contentstore.views.request_course_creator'),
-        'course_creator_status': _get_course_creator_status(request.user),
-        'rerun_creator_status': GlobalStaff().has_user(request.user),
-        'allow_unicode_course_id': settings.FEATURES.get('ALLOW_UNICODE_COURSE_ID', False),
-        'allow_course_reruns': settings.FEATURES.get('ALLOW_COURSE_RERUNS', True),
-        'is_programs_enabled': programs_config.is_studio_tab_enabled and request.user.is_staff,
-        'programs': programs,
-        'program_authoring_url': reverse('programs'),
-=======
     return render_to_response(u'index.html', {
         u'courses': list(courses_iter),
         u'in_process_course_actions': in_process_course_actions,
@@ -575,7 +542,6 @@ def course_listing(request):
         u'allow_unicode_course_id': settings.FEATURES.get(u'ALLOW_UNICODE_COURSE_ID', False),
         u'allow_course_reruns': settings.FEATURES.get(u'ALLOW_COURSE_RERUNS', True),
         u'optimization_enabled': optimization_enabled
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
     })
 
 
