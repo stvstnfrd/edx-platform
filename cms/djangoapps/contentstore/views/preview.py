@@ -38,25 +38,8 @@ from xmodule.exceptions import NotFoundError, ProcessingError
 from xmodule.modulestore.django import ModuleI18nService, modulestore
 from xmodule.partitions.partitions_service import PartitionService
 from xmodule.services import SettingsService
-<<<<<<< HEAD
-from xmodule.modulestore.django import modulestore, ModuleI18nService
-from xmodule.mixin import wrap_with_license
-from opaque_keys.edx.keys import UsageKey
-from xmodule.x_module import ModuleSystem
-from xblock.runtime import KvsFieldData
-from xblock.django.request import webob_to_django_response, django_to_webob_request
-from xblock.exceptions import NoSuchHandlerError
-from xblock.fragment import Fragment
-from xblock_django.user_service import DjangoXBlockUserService
-
-from lms.djangoapps.lms_xblock.field_data import LmsFieldData
-from cms.lib.xblock.field_data import CmsFieldData
-
-from util.sandboxing import can_execute_unsafe_code, get_python_lib_zip
-=======
 from xmodule.studio_editable import has_author_view
 from xmodule.x_module import AUTHOR_VIEW, PREVIEW_VIEWS, STUDENT_VIEW, ModuleSystem
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 
 from .helpers import render_from_lms
 from .session_kv_store import SessionKeyValueStore
