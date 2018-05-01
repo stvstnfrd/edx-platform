@@ -15,16 +15,11 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 from rest_framework.views import APIView
-<<<<<<< HEAD
 from rest_framework_oauth.authentication import OAuth2Authentication
-from opaque_keys.edx.keys import CourseKey
-from openedx.core.djangoapps.embargo import api as embargo_api
-=======
 
 from course_modes.models import CourseMode
 from enrollment import api
 from enrollment.errors import CourseEnrollmentError, CourseEnrollmentExistsError, CourseModeNotFoundError
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 from openedx.core.djangoapps.cors_csrf.authentication import SessionAuthenticationCrossDomainCsrf
 from openedx.core.djangoapps.cors_csrf.decorators import ensure_csrf_cookie_cross_domain
 from openedx.core.djangoapps.embargo import api as embargo_api
