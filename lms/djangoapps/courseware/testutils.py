@@ -148,15 +148,9 @@ class RenderXBlockTestMixin(object):
         return response
 
     @ddt.data(
-<<<<<<< HEAD
-        ('vertical_block', ModuleStoreEnum.Type.mongo, 12),
-        ('vertical_block', ModuleStoreEnum.Type.split, 6),
-        ('html_block', ModuleStoreEnum.Type.mongo, 13),
-=======
         ('vertical_block', ModuleStoreEnum.Type.mongo, 10),
         ('vertical_block', ModuleStoreEnum.Type.split, 6),
         ('html_block', ModuleStoreEnum.Type.mongo, 11),
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
         ('html_block', ModuleStoreEnum.Type.split, 6),
     )
     @ddt.unpack
