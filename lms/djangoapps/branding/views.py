@@ -13,19 +13,13 @@ from django.utils.translation.trans_real import get_supported_language_variant
 from django.views.decorators.cache import cache_control
 from django.views.decorators.csrf import ensure_csrf_cookie
 
-<<<<<<< HEAD
-from edxmako.shortcuts import render_to_response
-import student.views
-from student.models import CourseEnrollment
-from student.models import UserProfile
-=======
 import branding.api as branding_api
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 import courseware.views.views
 import student.views
 from edxmako.shortcuts import marketing_link, render_to_response
 from openedx.core.djangoapps.lang_pref.api import released_languages
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+from student.models import UserProfile
 from util.cache import cache_if_anonymous
 from util.json_request import JsonResponse
 
