@@ -2218,10 +2218,6 @@ INSTALLED_APPS = (
     # additional release utilities to ease automation
     'release_util',
 
-<<<<<<< HEAD
-    # Unusual migrations
-    'database_fixups',
-=======
     # Customized celery tasks, including persisting failed tasks so they can
     # be retried
     'celery_utils',
@@ -2242,7 +2238,6 @@ INSTALLED_APPS = (
     'openedx.features.enterprise_support',
 
     'experiments',
->>>>>>> f9fa460a74446b533b356e754848af6f56c141a1
 )
 
 ######################### CSRF #########################################
