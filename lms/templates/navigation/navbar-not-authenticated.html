@@ -12,11 +12,6 @@ from django.utils.translation import ugettext as _
 <ol class="left list-inline nav-global">
   <%block name="navigation_global_links">
     % if static.get_value('ENABLE_MKTG_SITE', settings.FEATURES.get('ENABLE_MKTG_SITE', False)):
-      % if settings.FEATURES.get('SHOW_ABOUT_LINK'):
-        <li class="item nav-global-00">
-          <a href="${marketing_link("ABOUT")}">${_("About")}</a>
-        </li>
-      % endif
       <li class="item nav-global-01">
         <a href="${marketing_link('HOW_IT_WORKS')}">${_("How it Works")}</a>
       </li>
