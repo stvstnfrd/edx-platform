@@ -199,6 +199,9 @@ class Command(BaseCommand):
             outfile = tempfile.NamedTemporaryFile(suffix='.csv', delete=False)
             outfile_name = outfile.name
 
+        sys.stdout.write("Fetching enrolled students for {course}...".format(course=course_id))
+        certificates, profiles, registrations, unpaid_registrations = self.query_database_for(course_id)
+
         if include_grades:
             user_id = profiles[0]['user__id']
             user = User.objects.get(id=user_id)
@@ -208,10 +211,6 @@ class Command(BaseCommand):
 
         csvwriter = csv.DictWriter(outfile, fieldnames=csv_fieldnames, delimiter='\t', quoting=csv.QUOTE_ALL)
         csvwriter.writeheader()
-
-        sys.stdout.write("Fetching enrolled students for {course}...".format(course=course_id))
-
-        certificates, profiles, registrations, unpaid_registrations = self.query_database_for(course_id)
 
         registration_table = self.build_user_table(registrations)
         unpaid_registration_table = self.build_user_table(unpaid_registrations)
