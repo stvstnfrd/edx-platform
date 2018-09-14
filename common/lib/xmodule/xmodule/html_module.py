@@ -461,13 +461,42 @@ class CourseInfoModule(CourseInfoFields, HtmlModuleMixin):
         # but for now the XModule mixin requires that this method be defined.
         # pylint: disable=no-member
         if self.data != "":
+            import pdb; pdb.set_trace()
+            course = self.descriptor.runtime.modulestore.get_course(self.course_id)
+            user = self.system.get_real_user(self.system.anonymous_student_id)
+            context = {
+                'username': user.username if user else '',
+                'user_id': user.id if user else None,
+                'name': user.profile.name if user else '',
+                'course_title': course.display_name,
+                'course_id': self.course_id,
+                'course_start_date': get_default_time_display(course.start),
+                'course_end_date': get_default_time_display(course.end),
+            }
             if self.system.anonymous_student_id:
-                return self.data.replace("%%USER_ID%%", self.system.anonymous_student_id)
-            return self.data
+                context['user_id'] = self.system.anonymous_student_id
+            data = self.system.substitute_keywords(self.data, context)
+            return data
         else:
             # This should no longer be called on production now that we are using a separate updates page
             # and using a fragment HTML file - it will be called in tests until those are removed.
             course_updates = self.order_updates(self.items)
+            import pdb; pdb.set_trace()
+            course = self.descriptor.runtime.modulestore.get_course(self.course_id)
+            user = self.system.get_real_user(self.system.anonymous_student_id)
+            context = {
+                'username': user.username if user else '',
+                'user_id': user.id if user else None,
+                'name': user.profile.name if user else '',
+                'course_title': course.display_name,
+                'course_id': self.course_id,
+                'course_start_date': get_default_time_display(course.start),
+                'course_end_date': get_default_time_display(course.end),
+            }
+            course_updates = [
+                self.system.substitute_keywords(course_update, context)
+                for course_update in course_updates
+            ]
             context = {
                 'visible_updates': course_updates[:3],
                 'hidden_updates': course_updates[3:],
