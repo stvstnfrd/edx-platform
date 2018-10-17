@@ -1,77 +1,19 @@
 """
-Module for code that should run during LMS startup
+Module for code that should run during LMS startup (deprecated)
 """
-
-import logging
 
 import django
 from django.conf import settings
 
 # Force settings to run so that the python path is modified
-
 settings.INSTALLED_APPS  # pylint: disable=pointless-statement
-
-from openedx.core.lib.django_startup import autostartup
-from openedx.core.release import doc_version
-import analytics
-
-from openedx.core.djangoapps.monkey_patch import django_db_models_options
-
-import xmodule.x_module
-import lms_xblock.runtime
-
-from startup_configurations.validate_config import validate_lms_config
-from openedx.core.djangoapps.theming.core import enable_theming
-from openedx.core.djangoapps.theming.helpers import is_comprehensive_theming_enabled
-
-from microsite_configuration import microsite
-
-log = logging.getLogger(__name__)
 
 
 def run():
     """
     Executed during django startup
-    """
-    django_db_models_options.patch()
 
-    # To override the settings before executing the autostartup() for python-social-auth
-    if settings.FEATURES.get('ENABLE_THIRD_PARTY_AUTH', False):
-        enable_third_party_auth()
-
-    # Comprehensive theming needs to be set up before django startup,
-    # because modifying django template paths after startup has no effect.
-    if is_comprehensive_theming_enabled():
-        enable_theming()
-
-    # We currently use 2 template rendering engines, mako and django_templates,
-    # and one of them (django templates), requires the directories be added
-    # before the django.setup().
-    microsite.enable_microsites_pre_startup(log)
-
-    django.setup()
-
-    autostartup()
-
-    add_mimetypes()
-
-    # Mako requires the directories to be added after the django setup.
-    microsite.enable_microsites(log)
-
-    # Initialize Segment analytics module by setting the write_key.
-    if settings.LMS_SEGMENT_KEY:
-        analytics.write_key = settings.LMS_SEGMENT_KEY
-
-    # register any dependency injections that we need to support in edx_proctoring
-    # right now edx_proctoring is dependent on the openedx.core.djangoapps.credit
-    if settings.FEATURES.get('ENABLE_SPECIAL_EXAMS'):
-        # Import these here to avoid circular dependencies of the form:
-        # edx-platform app --> DRF --> django translation --> edx-platform app
-        from edx_proctoring.runtime import set_runtime_service
-        from lms.djangoapps.instructor.services import InstructorService
-        from openedx.core.djangoapps.credit.services import CreditService
-        set_runtime_service('credit', CreditService())
-
+<<<<<<< HEAD
         # register InstructorService (for deleting student attempts and user staff access roles)
         set_runtime_service('instructor', InstructorService())
 
@@ -113,16 +55,9 @@ def enable_microsites():
     """
     Calls the enable_microsites function in the microsite backend.
     Here for backwards compatibility
+=======
+    NOTE: DO **NOT** add additional code to this method or this file! The Platform Team
+          is moving all startup code to more standard locations using Django best practices.
+>>>>>>> 7ad437b52cb5b2d65ab1b65e6147bcced05c42e4
     """
-    microsite.enable_microsites(log)
-
-
-def enable_third_party_auth():
-    """
-    Enable the use of third_party_auth, which allows users to sign in to edX
-    using other identity providers. For configuration details, see
-    common/djangoapps/third_party_auth/settings.py.
-    """
-
-    from third_party_auth import settings as auth_settings
-    auth_settings.apply_settings(settings)
+    django.setup()

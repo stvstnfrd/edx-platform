@@ -1,5 +1,9 @@
 """
+<<<<<<< HEAD
 A Django command that dumps the structure of a course as a JSON object or CSV list.
+=======
+Dump the structure of a course as a JSON object.
+>>>>>>> 7ad437b52cb5b2d65ab1b65e6147bcced05c42e4
 
 The resulting JSON object has one entry for each module in the course:
 
@@ -17,16 +21,18 @@ The resulting JSON object has one entry for each module in the course:
 """
 
 import json
+<<<<<<< HEAD
 import csv
 import StringIO
 from optparse import make_option
+=======
+>>>>>>> 7ad437b52cb5b2d65ab1b65e6147bcced05c42e4
 from textwrap import dedent
 
 from django.core.management.base import BaseCommand, CommandError
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import CourseKey
 from xblock.fields import Scope
-
 from xblock_discussion import DiscussionXBlock
 from xmodule.modulestore.django import modulestore
 from xmodule.modulestore.inheritance import compute_inherited_metadata, own_metadata
@@ -36,12 +42,8 @@ INHERITED_FILTER_LIST = ['children', 'xml_attributes']
 
 
 class Command(BaseCommand):
-    """
-    Write out to stdout a structural and metadata information for a
-    course as a JSON object
-    """
-    args = "<course_id>"
     help = dedent(__doc__).strip()
+<<<<<<< HEAD
     option_list = BaseCommand.option_list + (
         make_option('--modulestore',
                     action='store',
@@ -66,10 +68,23 @@ class Command(BaseCommand):
                     default=False,
                     help='Whether to include default values of inherited metadata'),
     )
+=======
+
+    def add_arguments(self, parser):
+        parser.add_argument('course_id',
+                            help='specifies the course to dump')
+        parser.add_argument('--modulestore',
+                            default='default',
+                            help='name of the modulestore')
+        parser.add_argument('--inherited',
+                            action='store_true',
+                            help='include inherited metadata'),
+        parser.add_argument('--inherited_defaults',
+                            action='store_true',
+                            help='include default values of inherited metadata'),
+>>>>>>> 7ad437b52cb5b2d65ab1b65e6147bcced05c42e4
 
     def handle(self, *args, **options):
-        if len(args) != 1:
-            raise CommandError("course_id not specified")
 
         # Get the modulestore
 
@@ -78,7 +93,7 @@ class Command(BaseCommand):
         # Get the course data
 
         try:
-            course_key = CourseKey.from_string(args[0])
+            course_key = CourseKey.from_string(options['course_id'])
         except InvalidKeyError:
             raise CommandError("Invalid course_id")
 
@@ -123,7 +138,7 @@ def dump_module(module, destination=None, inherited=False, defaults=False):
     filtered_metadata = {k: v for k, v in items.iteritems() if k not in FILTER_LIST}
 
     destination[unicode(module.location)] = {
-        'category': module.location.category,
+        'category': module.location.block_type,
         'children': [unicode(child) for child in getattr(module, 'children', [])],
         'metadata': filtered_metadata,
     }

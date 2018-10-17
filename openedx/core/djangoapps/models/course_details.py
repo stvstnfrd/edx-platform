@@ -5,16 +5,12 @@ import re
 import logging
 
 from django.conf import settings
-from django.dispatch import Signal
 
 from xmodule.fields import Date
 from xmodule.modulestore.exceptions import ItemNotFoundError
-from openedx.core.djangoapps.self_paced.models import SelfPacedConfiguration
 from openedx.core.lib.courses import course_image_url
 from xmodule.modulestore.django import modulestore
 from edxmako.shortcuts import render_to_string
-
-COURSE_PACING_CHANGE = Signal(providing_args=["course_key", "course_self_paced"])
 
 
 # This list represents the attribute keys for a course's 'about' info.
@@ -33,10 +29,13 @@ ABOUT_ATTRIBUTES = [
     'entrance_exam_id',
     'entrance_exam_minimum_score_pct',
     'about_sidebar_html',
+<<<<<<< HEAD
     'pre_enrollment_email_subject',
     'post_enrollment_email_subject',
     'pre_enrollment_email',
     'post_enrollment_email',
+=======
+>>>>>>> 7ad437b52cb5b2d65ab1b65e6147bcced05c42e4
 ]
 
 
@@ -62,11 +61,15 @@ class CourseDetails(object):
         self.description = ""
         self.short_description = ""
         self.overview = ""  # html to render as the overview
+<<<<<<< HEAD
         self.about_sidebar_html = ''
         self.pre_enrollment_email = render_to_string('emails/default_pre_enrollment_message.txt', {})
         self.post_enrollment_email = render_to_string('emails/default_post_enrollment_message.txt', {})
         self.pre_enrollment_email_subject = "Thanks for Enrolling in {}".format(self.course_id)
         self.post_enrollment_email_subject = "Thanks for Enrolling in {}".format(self.course_id)
+=======
+        self.about_sidebar_html = ""
+>>>>>>> 7ad437b52cb5b2d65ab1b65e6147bcced05c42e4
         self.intro_video = None  # a video pointer
         self.effort = None  # hours/week
         self.license = "all-rights-reserved"  # default course license is all rights reserved
@@ -120,6 +123,7 @@ class CourseDetails(object):
         course_details = cls(course_key.org, course_key.course, course_key.run)
         course_details.start_date = course_descriptor.start
         course_details.end_date = course_descriptor.end
+        course_details.certificate_available_date = course_descriptor.certificate_available_date
         course_details.enrollment_start = course_descriptor.enrollment_start
         course_details.enrollment_end = course_descriptor.enrollment_end
         course_details.enable_enrollment_email = course_descriptor.enable_enrollment_email
@@ -204,7 +208,6 @@ class CourseDetails(object):
         descriptor = module_store.get_course(course_key)
 
         dirty = False
-        is_pacing_changed = False
 
         # In the descriptor's setter, the date is converted to JSON
         # using Date's to_json method. Calling to_json on something that
@@ -253,6 +256,15 @@ class CourseDetails(object):
             dirty = True
             descriptor.enrollment_end = converted
 
+        if 'certificate_available_date' in jsondict:
+            converted = date.from_json(jsondict['certificate_available_date'])
+        else:
+            converted = None
+
+        if converted != descriptor.certificate_available_date:
+            dirty = True
+            descriptor.certificate_available_date = converted
+
         if 'course_image_name' in jsondict and jsondict['course_image_name'] != descriptor.course_image:
             descriptor.course_image = jsondict['course_image_name']
             dirty = True
@@ -287,20 +299,14 @@ class CourseDetails(object):
             descriptor.language = jsondict['language']
             dirty = True
 
-        if (SelfPacedConfiguration.current().enabled
-                and descriptor.can_toggle_course_pacing
+        if (descriptor.can_toggle_course_pacing
                 and 'self_paced' in jsondict
                 and jsondict['self_paced'] != descriptor.self_paced):
             descriptor.self_paced = jsondict['self_paced']
             dirty = True
-            is_pacing_changed = True
 
         if dirty:
             module_store.update_item(descriptor, user.id)
-
-        # fires a signal indicating that the course pacing has changed
-        if is_pacing_changed:
-            COURSE_PACING_CHANGE.send(sender=None, course_key=course_key, course_self_paced=descriptor.self_paced)
 
         # NOTE: below auto writes to the db w/o verifying that any of
         # the fields actually changed to make faster, could compare

@@ -1,7 +1,8 @@
 """ API v0 views. """
 import logging
 
-import requests
+from courseware import courses
+from django.urls import reverse
 from edx_rest_api_client import exceptions
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import CourseKey
@@ -9,21 +10,20 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.status import HTTP_406_NOT_ACCEPTABLE, HTTP_409_CONFLICT
 from rest_framework.views import APIView
+from six import text_type
 
-from commerce.constants import Messages
-from commerce.exceptions import InvalidResponseError
-from commerce.http import DetailResponse, InternalRequestErrorResponse
 from course_modes.models import CourseMode
-from courseware import courses
 from enrollment.api import add_enrollment
 from enrollment.views import EnrollmentCrossDomainSessionAuth
+from entitlements.models import CourseEntitlement
 from openedx.core.djangoapps.commerce.utils import ecommerce_api_client
 from openedx.core.djangoapps.embargo import api as embargo_api
 from openedx.core.djangoapps.user_api.preferences.api import update_email_opt_in
 from openedx.core.lib.api.authentication import OAuth2AuthenticationAllowInactiveUser
-from openedx.core.lib.log_utils import audit_log
-from student.models import CourseEnrollment, RegistrationCookieConfiguration
+from student.models import CourseEnrollment
 from util.json_request import JsonResponse
+from ...constants import Messages
+from ...http import DetailResponse
 
 from openedx.stanford.common.djangoapps.student.views import notify_enrollment_by_email
 
@@ -58,7 +58,7 @@ class BasketsView(APIView):
             courses.get_course(course_key)
         except (InvalidKeyError, ValueError)as ex:
             log.exception(u'Unable to locate course matching %s.', course_id)
-            return False, None, ex.message
+            return False, None, text_type(ex)
 
         return True, course_key, None
 
@@ -84,7 +84,7 @@ class BasketsView(APIView):
 
     def post(self, request, *args, **kwargs):
         """
-        Attempt to create the basket and enroll the user.
+        Attempt to enroll the user.
         """
         user = request.user
         valid, course_key, error = self._is_data_valid(request)
@@ -116,25 +116,35 @@ class BasketsView(APIView):
         honor_mode = CourseMode.mode_for_course(course_key, CourseMode.HONOR)
         audit_mode = CourseMode.mode_for_course(course_key, CourseMode.AUDIT)
 
+        # Check to see if the User has an entitlement and enroll them if they have one for this course
+        if CourseEntitlement.check_for_existing_entitlement_and_enroll(user=user, course_run_key=course_key):
+            return JsonResponse(
+                {
+                    'redirect_destination': reverse('courseware', args=[unicode(course_id)]),
+                },
+            )
+
         # Accept either honor or audit as an enrollment mode to
         # maintain backwards compatibility with existing courses
         default_enrollment_mode = audit_mode or honor_mode
-
-        if not default_enrollment_mode:
-            msg = Messages.NO_DEFAULT_ENROLLMENT_MODE.format(course_id=course_id)
-            return DetailResponse(msg, status=HTTP_406_NOT_ACCEPTABLE)
-        elif default_enrollment_mode and not default_enrollment_mode.sku:
-            # If there are no course modes with SKUs, enroll the user without contacting the external API.
-            msg = Messages.NO_SKU_ENROLLED.format(
-                enrollment_mode=default_enrollment_mode.slug,
-                course_id=course_id,
-                username=user.username
+        if default_enrollment_mode:
+            msg = Messages.ENROLL_DIRECTLY.format(
+                username=user.username,
+                course_id=course_id
             )
+            if not default_enrollment_mode.sku:
+                # If there are no course modes with SKUs, return a different message.
+                msg = Messages.NO_SKU_ENROLLED.format(
+                    enrollment_mode=default_enrollment_mode.slug,
+                    course_id=course_id,
+                    username=user.username
+                )
             log.info(msg)
             self._enroll(course_key, user, default_enrollment_mode.slug)
             notify_enrollment_by_email(courses.get_course(course_key), user, request)
             self._handle_marketing_opt_in(request, course_key, user)
             return DetailResponse(msg)
+<<<<<<< HEAD
 
         # Setup the API
 
@@ -206,6 +216,11 @@ class BasketsView(APIView):
                     requests.utils.add_dict_to_cookiejar(server_session.cookies, server_cookie)
                 else:
                     server_session.cookies = requests.utils.cookiejar_from_dict(server_cookie)
+=======
+        else:
+            msg = Messages.NO_DEFAULT_ENROLLMENT_MODE.format(course_id=course_id)
+            return DetailResponse(msg, status=HTTP_406_NOT_ACCEPTABLE)
+>>>>>>> 7ad437b52cb5b2d65ab1b65e6147bcced05c42e4
 
 
 class BasketOrderView(APIView):

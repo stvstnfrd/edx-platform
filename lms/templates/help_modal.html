@@ -6,7 +6,7 @@ from datetime import datetime
 import pytz
 from django.conf import settings
 from django.utils.translation import ugettext as _
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from openedx.core.djangolib.js_utils import js_escaped_string
 from openedx.core.djangolib.markup import HTML, Text
 from xmodule.tabs import CourseTabList
@@ -15,14 +15,14 @@ from student.models import UserProfile
 
 % if settings.FEATURES.get('ENABLE_FEEDBACK_SUBMISSION', False):
 
-<div class="help-tab">
+<div class="help-tab hidden-mobile">
   <a href="#help-modal" rel="leanModal" role="button">${_("Support")}</a>
 </div>
 
 <div id="help-modal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" tabindex="-1" aria-labelledby="support-platform-name">
   <div class="inner-wrapper">
     ## TODO: find a way to refactor this
-    <button class="close-modal" tabindex="0">
+    <button class="btn-link close-modal" tabindex="0">
       <span class="icon fa fa-remove" aria-hidden="true"></span>
       <span class="sr">
         ## Translators: this is a control to allow users to exit out of this modal interface (a menu or piece of UI that takes the full focus of the screen)
@@ -69,11 +69,17 @@ from student.models import UserProfile
           </p>
 
         <div class="help-buttons">
+<<<<<<< HEAD
           <li>
               <a class="help-modal-button" href="${marketing_link('FAQ')}" target="_blank">
                   ${_('Access the Help Center')}
               </a>
           </li>
+=======
+            <button type="button" class="btn btn-outline-primary" id="feedback_link_problem">${_('Report a problem')}</button>
+            <button type="button" class="btn btn-outline-primary" id="feedback_link_suggestion">${_('Make a suggestion')}</button>
+            <button type="button" class="btn btn-outline-primary" id="feedback_link_question">${_('Ask a question')}</button>
+>>>>>>> 7ad437b52cb5b2d65ab1b65e6147bcced05c42e4
         </div>
         <hr>
 
@@ -102,7 +108,11 @@ from student.models import UserProfile
           <div class="feedback-form-error" aria-live="polite">
               <div id="feedback_error" class="modal-form-error" tabindex="-1"></div>
           </div>
+<<<<<<< HEAD
     % if not (user.is_authenticated() and UserProfile.has_registered(user)):
+=======
+    % if not user.is_authenticated:
+>>>>>>> 7ad437b52cb5b2d65ab1b65e6147bcced05c42e4
           <label data-field="name" for="feedback_form_name">${_('Name')}*</label>
           <input name="name" type="text" id="feedback_form_name" required>
           <label data-field="email" for="feedback_form_email">${_('E-mail')}*</label>
@@ -250,7 +260,7 @@ $(document).ready(function() {
             return option;
         };
 
-    % if user.is_authenticated():
+    % if user.is_authenticated:
         userAuthenticated = true;
     % endif
 

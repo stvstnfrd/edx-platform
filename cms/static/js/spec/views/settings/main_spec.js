@@ -21,7 +21,11 @@ define([
                 end_date: '2014-11-05T20:00:00Z',
                 enrollment_start: '2014-10-00T00:00:00Z',
                 enrollment_end: '2014-11-05T00:00:00Z',
+<<<<<<< HEAD
                 enable_enrollment_email: false,
+=======
+                certificate_available_date: '2014-11-05T20:00:00Z',
+>>>>>>> 7ad437b52cb5b2d65ab1b65e6147bcced05c42e4
                 org: '',
                 course_id: '',
                 run: '',
@@ -47,8 +51,9 @@ define([
                 language: '',
                 learning_info: [''],
                 instructor_info: {
-                    'instructors': [{'name': '', 'title': '', 'organization': '', 'image': '', 'bio': ''}]
-                }
+                    instructors: [{name: '', title: '', organization: '', image: '', bio: ''}]
+                },
+                self_paced: false
             },
 
             mockSettingsPage = readFixtures('mock/mock-settings-page.underscore'),
@@ -68,7 +73,7 @@ define([
 
             this.model = new CourseDetailsModel($.extend(true, {}, modelData, {
                 instructor_info: {
-                    'instructors': [{'name': '', 'title': '', 'organization': '', 'image': '', 'bio': ''}]
+                    instructors: [{name: '', title: '', organization: '', image: '', bio: ''}]
                 }}), {parse: true});
             this.model.urlRoot = urlRoot;
             this.view = new MainView({
@@ -325,13 +330,13 @@ define([
                 expectedJson = $.extend(true, {}, modelData, {
                     instructor_info: {
                         instructors:
-                            [{
-                                'name': 'test_name',
-                                'title': 'test_title',
-                                'organization': 'test_org',
-                                'image': 'test_image',
-                                'bio': 'test_bio'
-                            }]
+                        [{
+                            name: 'test_name',
+                            title: 'test_title',
+                            organization: 'test_org',
+                            image: 'test_image',
+                            bio: 'test_bio'
+                        }]
                     }
                 });
 
@@ -347,6 +352,18 @@ define([
                 requests, 'POST', urlRoot, expectedJson
             );
             AjaxHelpers.respondWithJson(requests, expectedJson);
+        });
+        it('should disallow save with a certificate available date before end date', function() {
+            this.model.showCertificateAvailableDate = true;
+            $('#course-end-date').val('01/01/2030').trigger('change');
+            expect(this.view.$('.message-error')).toExist();
+        });
+        it('should allow save with a certificate available date before end date for self-paced course', function() {
+            this.model.showCertificateAvailableDate = false;
+            this.model.set('self_paced', true);
+            $('#course-end-date').val('01/01/2030').trigger('change');
+            expect(this.view.$('.message-error')).not.toExist();
+            this.model.set('self_paced', false);
         });
     });
 });

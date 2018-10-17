@@ -2,7 +2,7 @@
 <%inherit file="base.html" />
 <%def name="online_help_token()"><% return "files" %></%def>
 <%!
-  from django.core.urlresolvers import reverse
+  from django.urls import reverse
   from django.utils.translation import ugettext as _
   from openedx.core.djangolib.markup import HTML, Text
   from openedx.core.djangolib.js_utils import js_escaped_string, dump_js_escaped_json
@@ -13,45 +13,25 @@
 <%namespace name='static' file='static_content.html'/>
 
 <%block name="header_extras">
-% for template_name in ["asset"]:
-<script type="text/template" id="${template_name}-tpl">
-    <%static:include path="js/${template_name}.underscore" />
-</script>
-% endfor
-</%block>
-
-<%block name="requirejs">
-    require(["js/factories/asset_index"], function (AssetIndexFactory) {
-        AssetIndexFactory({
-          assetCallbackUrl: "${asset_callback_url|n, js_escaped_string}",
-          uploadChunkSizeInMBs: ${chunk_size_in_mbs|n, dump_js_escaped_json},
-          maxFileSizeInMBs: ${max_file_size_in_mbs|n, dump_js_escaped_json},
-          maxFileSizeRedirectUrl: "${max_file_size_redirect_url|n, js_escaped_string}"
-        });
-    });
+    % if not settings.STUDIO_FRONTEND_CONTAINER_URL:
+        <link rel="stylesheet" type="text/css" href="${static.url('common/css/vendor/common.min.css')}" />
+        <link rel="stylesheet" type="text/css" href="${static.url('common/css/vendor/assets.min.css')}" />
+    % endif
 </%block>
 
 <%block name="content">
 
 <div class="wrapper-mast wrapper">
     <header class="mast has-actions has-subtitle">
-        <h1 class="page-header">
+        <h2 class="page-header">
             <small class="subtitle">${_("Content")}</small>
-            <span class="sr">&gt; </span>${_("Files & Uploads")}
-        </h1>
-
-        <nav class="nav-actions" aria-label="${_('Page Actions')}">
-            <h3 class="sr">${_("Page Actions")}</h3>
-            <ul>
-                <li class="nav-item">
-                    <a href="#" class="button upload-button new-button"><span class="icon fa fa-plus" aria-hidden="true"></span> ${_("Upload New File")}</a>
-                </li>
-            </ul>
-        </nav>
+            <span class="sr">- </span>${_("Files & Uploads")}
+        </h2>
     </header>
 </div>
 
 <div class="wrapper-content wrapper">
+<<<<<<< HEAD
     <section class="content">
         <article class="content-primary" role="main">
             % if settings.FEATURES.get('CONTENT_VISIBILITY_NOTICE',''):
@@ -128,26 +108,31 @@
             <a href="#" class="choose-file-button">${_("Choose File")}</a>
             <input type="file" class="file-input" name="file" multiple>
         </form>
+=======
+    <div class="content">
+        <%static:optional_include_mako file="asset_index_content_header.html" />
+        <%static:studiofrontend entry="assets">
+            {
+                "lang": "${language_code | n, js_escaped_string}",
+                "course": {
+                    "id": "${context_course.id | n, js_escaped_string}",
+                    "name": "${context_course.display_name_with_default | n, js_escaped_string}",
+                    "url_name": "${context_course.location.name | n, js_escaped_string}",
+                    "org": "${context_course.location.org | n, js_escaped_string}",
+                    "num": "${context_course.location.course | n, js_escaped_string}",
+                    "display_course_number": "${context_course.display_coursenumber | n, js_escaped_string}",
+                    "revision": "${context_course.location.revision | n, js_escaped_string}"
+                },
+                "help_tokens": {
+                    "files": "${get_online_help_info(online_help_token())['doc_url'] | n, js_escaped_string}"
+                },
+                "upload_settings": {
+                    "max_file_size_in_mbs": ${max_file_size_in_mbs|n, dump_js_escaped_json}
+                }
+            }
+        </%static:studiofrontend>
+>>>>>>> 7ad437b52cb5b2d65ab1b65e6147bcced05c42e4
     </div>
 </div>
 
-
-</%block>
-
-<%block name="view_alerts">
-<!-- alert: save confirmed with close -->
-<div class="wrapper wrapper-alert wrapper-alert-confirmation" role="status">
-    <div class="alert confirmation">
-        <span class="icon fa fa-check" aria-hidden="true"></span>
-
-        <div class="copy">
-            <h2 class="title title-3">${_('Your file has been deleted.')}</h2>
-        </div>
-
-        <a href="" rel="view" class="action action-alert-close">
-            <span class="icon fa fa-times-circle" aria-hidden="true"></span>
-            <span class="label">${_('close alert')}</span>
-        </a>
-    </div>
-</div>
 </%block>

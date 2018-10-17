@@ -55,17 +55,26 @@ source_file = conf/locale/en/LC_MESSAGES/wiki.po
 source_lang = en
 type = PO
 
+<<<<<<< HEAD
 [open-edx-releases.release-ginkgo]
+=======
+[open-edx-releases.release-hawthorn]
+>>>>>>> 7ad437b52cb5b2d65ab1b65e6147bcced05c42e4
 file_filter = conf/locale/<lang>/LC_MESSAGES/django.po
 source_file = conf/locale/en/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
+<<<<<<< HEAD
 [open-edx-releases.release-ginkgo-js]
+=======
+[open-edx-releases.release-hawthorn-js]
+>>>>>>> 7ad437b52cb5b2d65ab1b65e6147bcced05c42e4
 file_filter = conf/locale/<lang>/LC_MESSAGES/djangojs.po
 source_file = conf/locale/en/LC_MESSAGES/djangojs.po
 source_lang = en
 type = PO
+<<<<<<< HEAD
 
 [stanford-openedx.django]
 file_filter = conf/locale/<lang>/LC_MESSAGES/stanford_django.po
@@ -114,3 +123,5 @@ file_filter = conf/locale/<lang>/LC_MESSAGES/copyright.po
 source_file = conf/locale/en/LC_MESSAGES/copyright.po
 source_lang = en
 type = PO
+=======
+>>>>>>> 7ad437b52cb5b2d65ab1b65e6147bcced05c42e4

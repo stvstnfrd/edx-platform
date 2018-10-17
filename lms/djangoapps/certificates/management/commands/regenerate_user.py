@@ -1,19 +1,17 @@
 """Django management command to force certificate regeneration for one user"""
-
 import copy
 import logging
-from optparse import make_option
 
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.core.management.base import BaseCommand, CommandError
-from opaque_keys import InvalidKeyError
+from django.core.management.base import BaseCommand
 from opaque_keys.edx.keys import CourseKey
-from opaque_keys.edx.locations import SlashSeparatedCourseKey
+from six import text_type
 
 from badges.utils import badges_enabled
 from badges.events.course_complete import get_completion_badge
-from certificates.api import regenerate_user_certificates
+from badges.utils import badges_enabled
+from lms.djangoapps.certificates.api import regenerate_user_certificates
 from xmodule.modulestore.django import modulestore
 
 if 'openedx.stanford.djangoapps.register_cme' in settings.INSTALLED_APPS:
@@ -30,6 +28,7 @@ class Command(BaseCommand):
 
     help = """Put a request on the queue to recreate the certificate for a particular user in a particular course."""
 
+<<<<<<< HEAD
     option_list = BaseCommand.option_list + (
         make_option('-n', '--noop',
                     action='store_true',
@@ -71,6 +70,38 @@ class Command(BaseCommand):
             help='Professional designation to pass to certificate generator',
         ),
     )
+=======
+    def add_arguments(self, parser):
+        parser.add_argument('-n', '--noop',
+                            action='store_true',
+                            dest='noop',
+                            help="Don't grade or add certificate requests to the queue")
+        parser.add_argument('--insecure',
+                            action='store_true',
+                            dest='insecure',
+                            help="Don't use https for the callback url to the LMS, useful in http test environments")
+        parser.add_argument('-c', '--course',
+                            metavar='COURSE_ID',
+                            dest='course',
+                            required=True,
+                            help='The course id (e.g., mit/6-002x/circuits-and-electronics) for which the student '
+                                 'named in <username> should be graded')
+        parser.add_argument('-u', '--user',
+                            metavar='USERNAME',
+                            dest='username',
+                            required=True,
+                            help='The username or email address for whom grading and certification should be requested')
+        parser.add_argument('-G', '--grade',
+                            metavar='GRADE',
+                            dest='grade_value',
+                            default=None,
+                            help='The grade string, such as "Distinction", which is passed to the certificate agent')
+        parser.add_argument('-T', '--template',
+                            metavar='TEMPLATE',
+                            dest='template_file',
+                            default=None,
+                            help='The template file used to render this certificate, like "QMSE01-distinction.pdf"')
+>>>>>>> 7ad437b52cb5b2d65ab1b65e6147bcced05c42e4
 
     def handle(self, *args, **options):
 
@@ -83,31 +114,14 @@ class Command(BaseCommand):
                 u"Starting to create tasks to regenerate certificates "
                 u"with arguments %s and options %s"
             ),
-            unicode(args),
-            unicode(cleaned_options)
+            text_type(args),
+            text_type(cleaned_options)
         )
 
-        if options['course']:
-            # try to parse out the course from the serialized form
-            try:
-                course_id = CourseKey.from_string(options['course'])
-            except InvalidKeyError:
-                LOGGER.warning(
-                    (
-                        u"Course id %s could not be parsed as a CourseKey; "
-                        u"falling back to SlashSeparatedCourseKey.from_deprecated_string()"
-                    ),
-                    options['course']
-                )
-                course_id = SlashSeparatedCourseKey.from_deprecated_string(options['course'])
-        else:
-            raise CommandError("You must specify a course")
-
+        # try to parse out the course from the serialized form
+        course_id = CourseKey.from_string(options['course'])
         user = options['username']
-        if not (course_id and user):
-            raise CommandError('both course id and student username are required')
 
-        student = None
         if '@' in user:
             student = User.objects.get(email=user, courseenrollment__course_id=course_id)
         else:
@@ -154,7 +168,7 @@ class Command(BaseCommand):
                     u"The new certificate status is '%s'."
                 ),
                 student.id,
-                unicode(course_id),
+                text_type(course_id),
                 ret
             )
 
@@ -166,7 +180,7 @@ class Command(BaseCommand):
                     u"because the noop flag is set."
                 ),
                 student.id,
-                unicode(course_id)
+                text_type(course_id)
             )
 
         LOGGER.info(
@@ -175,5 +189,5 @@ class Command(BaseCommand):
                 u"user %s and course '%s'."
             ),
             student.id,
-            unicode(course_id)
+            text_type(course_id)
         )

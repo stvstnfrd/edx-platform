@@ -1,12 +1,17 @@
 <%page args="id_opened_prefix, id_grade_prefix, id_attempt_prefix, id_tooltip_prefix, course_id, allSubsectionTooltipArr, allProblemTooltipArr, enrollment, **kwargs"/>
 <%!
   import json
-  from django.core.urlresolvers import reverse
+  from django.urls import reverse
+  from six import text_type
 %>
 
 $(function () {
 
+<<<<<<< HEAD
   d3.json("${reverse('all_sequential_open_distrib', kwargs=dict(course_id=course_id.to_deprecated_string(), enrollment=enrollment))}", function(error, json) {
+=======
+  d3.json("${reverse('all_sequential_open_distrib', kwargs=dict(course_id=text_type(course_id)))}", function(error, json) {
+>>>>>>> 7ad437b52cb5b2d65ab1b65e6147bcced05c42e4
     var section, paramOpened, barGraphOpened, error;
     var i, curr_id;
     var errorMessage = gettext('Unable to retrieve data, please try again later.');
@@ -53,7 +58,11 @@ $(function () {
     }
   });
 
+<<<<<<< HEAD
   d3.json("${reverse('all_problem_grade_distribution', kwargs=dict(course_id=course_id.to_deprecated_string(), enrollment=enrollment))}", function(error, json) {
+=======
+  d3.json("${reverse('all_problem_grade_distribution', kwargs=dict(course_id=text_type(course_id)))}", function(error, json) {
+>>>>>>> 7ad437b52cb5b2d65ab1b65e6147bcced05c42e4
     var section, paramGrade, barGraphGrade, error;
     var i, curr_id;
     var errorMessage = gettext('Unable to retrieve data, please try again later.');

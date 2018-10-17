@@ -14,7 +14,6 @@ from .utils.envs import Env
 from .utils.timer import timed
 
 PREREQS_STATE_DIR = os.getenv('PREREQ_CACHE_DIR', Env.REPO_ROOT / '.prereqs_cache')
-NPM_REGISTRY = "https://registry.npmjs.org/"
 NO_PREREQ_MESSAGE = "NO_PREREQ_INSTALL is set, not installing prereqs"
 NO_PYTHON_UNINSTALL_MESSAGE = 'NO_PYTHON_UNINSTALL is set. No attempts will be made to uninstall old Python libs.'
 COVERAGE_REQ_FILE = 'requirements/edx/coverage.txt'
@@ -22,6 +21,7 @@ COVERAGE_REQ_FILE = 'requirements/edx/coverage.txt'
 # If you make any changes to this list you also need to make
 # a corresponding change to circle.yml, which is how the python
 # prerequisites are installed for builds on circleci.com
+<<<<<<< HEAD
 PYTHON_REQ_FILES = [
     'requirements/edx/pre.txt',
     'requirements/edx/github.txt',
@@ -31,6 +31,12 @@ PYTHON_REQ_FILES = [
     'requirements/edx/paver.txt',
     'requirements/edx/post.txt',
 ]
+=======
+if 'TOXENV' in os.environ:
+    PYTHON_REQ_FILES = ['requirements/edx/testing.txt']
+else:
+    PYTHON_REQ_FILES = ['requirements/edx/development.txt']
+>>>>>>> 7ad437b52cb5b2d65ab1b65e6147bcced05c42e4
 
 # Developers can have private requirements, for local copies of github repos,
 # or favorite debugging tools, etc.
@@ -132,9 +138,6 @@ def node_prereqs_installation():
     Configures npm and installs Node prerequisites
     """
     cb_error_text = "Subprocess return code: 1"
-    sh("test `npm config get registry` = \"{reg}\" || "
-       "(echo setting registry; npm config set registry"
-       " {reg})".format(reg=NPM_REGISTRY))
 
     # Error handling around a race condition that produces "cb() never called" error. This
     # evinces itself as `cb_error_text` and it ought to disappear when we upgrade
@@ -314,7 +317,8 @@ def install_prereqs():
         print NO_PREREQ_MESSAGE
         return
 
-    install_node_prereqs()
+    if not str2bool(os.environ.get('SKIP_NPM_INSTALL', 'False')):
+        install_node_prereqs()
     install_python_prereqs()
     log_installed_python_prereqs()
 

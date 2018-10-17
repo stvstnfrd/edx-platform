@@ -11,7 +11,12 @@ from the same directory.
 """
 
 # Start with the common settings
+<<<<<<< HEAD
 from openedx.stanford.lms.envs.common import *  # pylint: disable=wildcard-import, unused-wildcard-import
+=======
+from .common import *  # pylint: disable=wildcard-import, unused-wildcard-import
+from openedx.core.lib.derived import derive_settings
+>>>>>>> 7ad437b52cb5b2d65ab1b65e6147bcced05c42e4
 
 # Use an in-memory database since this settings file is only used for updating assets
 DATABASES = {
@@ -59,3 +64,7 @@ WEBPACK_LOADER['DEFAULT']['STATS_FILE'] = STATIC_ROOT / "webpack-stats.json"
 # 1. Uglify is by far the slowest part of the build process
 # 2. Having full source code makes debugging tests easier for developers
 os.environ['REQUIRE_BUILD_PROFILE_OPTIMIZE'] = 'none'
+
+########################## Derive Any Derived Settings  #######################
+
+derive_settings(__name__)

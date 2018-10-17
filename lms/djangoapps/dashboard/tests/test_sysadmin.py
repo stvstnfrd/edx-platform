@@ -11,6 +11,7 @@ from uuid import uuid4
 
 import mongoengine
 from django.conf import settings
+<<<<<<< HEAD
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.test.client import Client
@@ -20,6 +21,15 @@ from mock import patch
 from nose.plugins.attrib import attr
 from opaque_keys.edx.locations import SlashSeparatedCourseKey
 from pymongo.errors import PyMongoError
+=======
+from django.urls import reverse
+from django.test.client import Client
+from django.test.utils import override_settings
+from pytz import UTC
+from nose.plugins.attrib import attr
+from opaque_keys.edx.keys import CourseKey
+from six import text_type
+>>>>>>> 7ad437b52cb5b2d65ab1b65e6147bcced05c42e4
 
 from dashboard.git_import import GitImportErrorNoDir
 from dashboard.models import CourseImportLog
@@ -50,7 +60,7 @@ class SysadminBaseTestCase(SharedModuleStoreTestCase):
 
     TEST_REPO = 'https://github.com/mitocw/edx4edx_lite.git'
     TEST_BRANCH = 'testing_do_not_delete'
-    TEST_BRANCH_COURSE = SlashSeparatedCourseKey('MITx', 'edx4edx_branch', 'edx4edx')
+    TEST_BRANCH_COURSE = CourseKey.from_string('MITx/edx4edx_branch/edx4edx')
 
     def setUp(self):
         """Setup test case by adding primary user."""
@@ -88,13 +98,13 @@ class SysadminBaseTestCase(SharedModuleStoreTestCase):
             course = def_ms.courses.get(course_path, None)
         except AttributeError:
             # Using mongo store
-            course = def_ms.get_course(SlashSeparatedCourseKey('MITx', 'edx4edx', 'edx4edx'))
+            course = def_ms.get_course(CourseKey.from_string('MITx/edx4edx/edx4edx'))
 
         # Delete git loaded course
         response = self.client.post(
             reverse('sysadmin_courses'),
             {
-                'course_id': course.id.to_deprecated_string(),
+                'course_id': text_type(course.id),
                 'action': 'del_course',
             }
         )
@@ -340,7 +350,7 @@ class TestSysAdminMongoCourseImport(SysadminBaseTestCase):
 
         # Create git loaded course
         response = self._add_edx4edx()
-        self.assertIn(GitImportErrorNoDir(settings.GIT_REPO_DIR).message,
+        self.assertIn(text_type(GitImportErrorNoDir(settings.GIT_REPO_DIR)),
                       response.content.decode('UTF-8'))
 
     def test_mongo_course_add_delete(self):
@@ -356,11 +366,11 @@ class TestSysAdminMongoCourseImport(SysadminBaseTestCase):
         self.assertNotEqual('xml', def_ms.get_modulestore_type(None))
 
         self._add_edx4edx()
-        course = def_ms.get_course(SlashSeparatedCourseKey('MITx', 'edx4edx', 'edx4edx'))
+        course = def_ms.get_course(CourseKey.from_string('MITx/edx4edx/edx4edx'))
         self.assertIsNotNone(course)
 
         self._rm_edx4edx()
-        course = def_ms.get_course(SlashSeparatedCourseKey('MITx', 'edx4edx', 'edx4edx'))
+        course = def_ms.get_course(CourseKey.from_string('MITx/edx4edx/edx4edx'))
         self.assertIsNone(course)
 
     def test_course_info(self):
@@ -489,7 +499,7 @@ class TestSysAdminMongoCourseImport(SysadminBaseTestCase):
 
         for _ in xrange(15):
             CourseImportLog(
-                course_id=SlashSeparatedCourseKey("test", "test", "test"),
+                course_id=CourseKey.from_string("test/test/test"),
                 location="location",
                 import_log="import_log",
                 git_log="git_log",
@@ -535,7 +545,7 @@ class TestSysAdminMongoCourseImport(SysadminBaseTestCase):
 
         # Add user as staff in course team
         def_ms = modulestore()
-        course = def_ms.get_course(SlashSeparatedCourseKey('MITx', 'edx4edx', 'edx4edx'))
+        course = def_ms.get_course(CourseKey.from_string('MITx/edx4edx/edx4edx'))
         CourseStaffRole(course.id).add_users(self.user)
 
         self.assertTrue(CourseStaffRole(course.id).has_user(self.user))

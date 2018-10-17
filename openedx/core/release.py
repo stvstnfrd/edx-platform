@@ -5,7 +5,11 @@ Information about the release line of this Open edX code.
 # The release line: an Open edX release name ("ficus"), or "master".
 # This should always be "master" on the master branch, and will be changed
 # manually when we start release-line branches, like open-release/ficus.master.
+<<<<<<< HEAD
 RELEASE_LINE = "ginkgo"
+=======
+RELEASE_LINE = "hawthorn"
+>>>>>>> 7ad437b52cb5b2d65ab1b65e6147bcced05c42e4
 
 
 def doc_version():

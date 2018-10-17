@@ -14,19 +14,26 @@ from contracts import contract
 
 from django.conf import settings
 from django.contrib.staticfiles.storage import staticfiles_storage
-from django.core.urlresolvers import reverse
-from django.utils.timezone import UTC
+from django.urls import reverse
+from pytz import UTC
 from django.utils.html import escape
 from django.contrib.auth.models import User
 from edxmako.shortcuts import render_to_string
+from six import text_type
+from web_fragments.fragment import Fragment
 from xblock.core import XBlock
 from xblock.exceptions import InvalidScopeError
+<<<<<<< HEAD
 from xblock.fragment import Fragment
+=======
+>>>>>>> 7ad437b52cb5b2d65ab1b65e6147bcced05c42e4
 from xblock.scorable import ScorableXBlockMixin
 
 from xmodule.seq_module import SequenceModule
 from xmodule.vertical_block import VerticalBlock
 from xmodule.x_module import shim_xmodule_js, XModuleDescriptor, XModule, PREVIEW_VIEWS, STUDIO_VIEW
+
+import webpack_loader.utils
 
 log = logging.getLogger(__name__)
 
@@ -37,7 +44,7 @@ def wrap_fragment(fragment, new_content):
     as its content, and all of the resources from fragment
     """
     wrapper_frag = Fragment(content=new_content)
-    wrapper_frag.add_frag_resources(fragment)
+    wrapper_frag.add_fragment_resources(fragment)
     return wrapper_frag
 
 
@@ -91,6 +98,9 @@ def wrap_xblock(
     data = {}
     data.update(extra_data)
 
+    if context:
+        data.update(context.get('wrap_xblock_data', {}))
+
     css_classes = [
         'xblock',
         'xblock-{}'.format(markupsafe.escape(view)),
@@ -140,6 +150,11 @@ def wrap_xblock(
         template_context['js_init_parameters'] = json.dumps(frag.json_init_args).replace("/", r"\/")
     else:
         template_context['js_init_parameters'] = ""
+
+    if isinstance(block, (XModule, XModuleDescriptor)):
+        # Add the webpackified asset tags
+        for tag in webpack_loader.utils.get_as_tags(class_name):
+            frag.add_resource(tag, mimetype='text/html', placement='head')
 
     return wrap_fragment(frag, render_to_string('xblock_wrapper.html', template_context))
 
@@ -223,7 +238,7 @@ def replace_jump_to_id_urls(course_id, jump_to_id_base_url, block, view, frag, c
         redirect. e.g. /courses/<org>/<course>/<run>/jump_to_id. NOTE the <id> will be appended to
         the end of this URL at re-write time
 
-    output: a new :class:`~xblock.fragment.Fragment` that modifies `frag` with
+    output: a new :class:`~web_fragments.fragment.Fragment` that modifies `frag` with
         content that has been update with /jump_to_id links replaced
     """
     return wrap_fragment(frag, static_replace.replace_jump_to_id_urls(frag.content, course_id, jump_to_id_base_url))
@@ -270,7 +285,7 @@ def grade_histogram(module_id):
         WHERE courseware_studentmodule.module_id=%s
         GROUP BY courseware_studentmodule.grade"""
     # Passing module_id this way prevents sql-injection.
-    cursor.execute(query, [module_id.to_deprecated_string()])
+    cursor.execute(query, [text_type(module_id)])
 
     grades = list(cursor.fetchall())
     grades.sort(key=lambda x: x[0])  # Add ORDER BY to sql query?
@@ -287,8 +302,8 @@ def sanitize_html_id(html_id):
     return sanitized_html_id
 
 
-@contract(user=User, has_instructor_access=bool, block=XBlock, view=basestring, frag=Fragment, context="dict|None")
-def add_staff_markup(user, has_instructor_access, disable_staff_debug_info, block, view, frag, context):  # pylint: disable=unused-argument
+@contract(user=User, block=XBlock, view=basestring, frag=Fragment, context="dict|None")
+def add_staff_markup(user, disable_staff_debug_info, block, view, frag, context):  # pylint: disable=unused-argument
     """
     Updates the supplied module with a new get_html function that wraps
     the output of the old get_html function with additional information
@@ -305,7 +320,7 @@ def add_staff_markup(user, has_instructor_access, disable_staff_debug_info, bloc
 
         if is_studio_course:
             # build edit link to unit in CMS. Can't use reverse here as lms doesn't load cms's urls.py
-            edit_link = "//" + settings.CMS_BASE + '/container/' + unicode(block.location)
+            edit_link = "//" + settings.CMS_BASE + '/container/' + text_type(block.location)
 
             # return edit link in rendered HTML for display
             return wrap_fragment(
@@ -350,7 +365,7 @@ def add_staff_markup(user, has_instructor_access, disable_staff_debug_info, bloc
     # Useful to indicate to staff if problem has been released or not.
     # TODO (ichuang): use _has_access_descriptor.can_load in lms.courseware.access,
     # instead of now>mstart comparison here.
-    now = datetime.datetime.now(UTC())
+    now = datetime.datetime.now(UTC)
     is_released = "unknown"
     mstart = block.start
 
@@ -382,7 +397,6 @@ def add_staff_markup(user, has_instructor_access, disable_staff_debug_info, bloc
         'render_histogram': render_histogram,
         'block_content': frag.content,
         'is_released': is_released,
-        'has_instructor_access': has_instructor_access,
         'can_reset_attempts': 'attempts' in block.fields,
         'can_rescore_problem': hasattr(block, 'rescore'),
         'can_override_problem_score': isinstance(block, ScorableXBlockMixin),
@@ -464,7 +478,7 @@ def xblock_local_resource_url(block, uri):
     xblock_class = getattr(block.__class__, 'unmixed_class', block.__class__)
     if settings.PIPELINE_ENABLED or not settings.REQUIRE_DEBUG:
         return staticfiles_storage.url('xblock/resources/{package_name}/{path}'.format(
-            package_name=xblock_class.__module__,
+            package_name=xblock_resource_pkg(xblock_class),
             path=uri
         ))
     else:
@@ -472,3 +486,30 @@ def xblock_local_resource_url(block, uri):
             'block_type': block.scope_ids.block_type,
             'uri': uri,
         })
+
+
+def xblock_resource_pkg(block):
+    """
+    Return the module name needed to find an XBlock's shared static assets.
+
+    This method will return the full module name that is one level higher than
+    the one the block is in. For instance, problem_builder.answer.AnswerBlock
+    has a __module__ value of 'problem_builder.answer'. This method will return
+    'problem_builder' instead. However, for edx-ora2's
+    openassessment.xblock.openassessmentblock.OpenAssessmentBlock, the value
+    returned is 'openassessment.xblock'.
+
+    XModules are special cased because they're local to this repo and they
+    actually don't share their resource files when compiled out as part of the
+    XBlock asset pipeline. This only covers XBlocks and XModules using the
+    XBlock-style of asset specification. If they use the XModule bundling part
+    of the asset pipeline (xmodule_assets), their assets are compiled through an
+    entirely separate mechanism and put into lms-modules.js/css.
+    """
+    # XModules are a special case because they map to different dirs for
+    # sub-modules.
+    module_name = block.__module__
+    if module_name.startswith('xmodule.'):
+        return module_name
+
+    return module_name.rsplit('.', 1)[0]
