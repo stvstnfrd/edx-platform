@@ -30,6 +30,7 @@ Longer TODO:
 # pylint: disable=invalid-name
 
 import imp
+from glob import glob
 import sys
 import os
 
@@ -630,6 +631,17 @@ TEMPLATES = [
         }
     },
 ]
+STANFORD_ROOT = REPO_ROOT / 'openedx/stanford'
+TEMPLATES[0]['DIRS'] += glob(STANFORD_ROOT / 'djangoapps/*/templates')
+TEMPLATES[0]['DIRS'] += glob(STANFORD_ROOT / 'common/djangoapps/*/templates')
+TEMPLATES[0]['DIRS'] += glob(STANFORD_ROOT / 'lms/djangoapps/*/templates')
+TEMPLATES[0]['OPTIONS']['context_processors'] += [
+    # Include TEMPLATE_VISIBLE_SETTINGS in templates
+    'settings_context_processor.context_processors.settings',
+]
+MAKO_TEMPLATE_DIRS_BASE += glob(STANFORD_ROOT / 'djangoapps/*/templates')
+MAKO_TEMPLATE_DIRS_BASE += glob(STANFORD_ROOT / 'common/djangoapps/*/templates')
+MAKO_TEMPLATE_DIRS_BASE += glob(STANFORD_ROOT / 'cms/djangoapps/*/templates')
 derived_collection_entry('TEMPLATES', 1, 'DIRS')
 DEFAULT_TEMPLATE_ENGINE = TEMPLATES[0]
 DEFAULT_TEMPLATE_ENGINE_DIRS = DEFAULT_TEMPLATE_ENGINE['DIRS'][:]

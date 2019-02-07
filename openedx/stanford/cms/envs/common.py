@@ -54,9 +54,9 @@ INSTALLED_APPS += (
     'inline_dropdown',
     'xblockmufi',
 )
-MAKO_TEMPLATES['main'] += glob(STANFORD_ROOT / 'djangoapps/*/templates')
-MAKO_TEMPLATES['main'] += glob(STANFORD_ROOT / 'common/djangoapps/*/templates')
-MAKO_TEMPLATES['main'] += glob(STANFORD_ROOT / 'cms/djangoapps/*/templates')
+MAKO_TEMPLATE_DIRS_BASE += glob(STANFORD_ROOT / 'djangoapps/*/templates')
+MAKO_TEMPLATE_DIRS_BASE += glob(STANFORD_ROOT / 'common/djangoapps/*/templates')
+MAKO_TEMPLATE_DIRS_BASE += glob(STANFORD_ROOT / 'cms/djangoapps/*/templates')
 MIDDLEWARE_CLASSES += (
     'openedx.stanford.djangoapps.sneakpeek.middleware.SneakPeekLogoutMiddleware',
 )
@@ -65,7 +65,4 @@ SHIB_REDIRECT_DOMAIN_WHITELIST = {}
 STATICFILES_DIRS += glob(STANFORD_ROOT / 'djangoapps/*/static')
 STATICFILES_DIRS += glob(STANFORD_ROOT / 'common/djangoapps/*/static')
 STATICFILES_DIRS += glob(STANFORD_ROOT / 'cms/djangoapps/*/static')
-TEMPLATES[0]['DIRS'] += glob(STANFORD_ROOT / 'djangoapps/*/templates')
-TEMPLATES[0]['DIRS'] += glob(STANFORD_ROOT / 'common/djangoapps/*/templates')
-TEMPLATES[0]['DIRS'] += glob(STANFORD_ROOT / 'cms/djangoapps/*/templates')
 XBLOCKS_ALWAYS_IN_STUDIO = []
