@@ -23,6 +23,7 @@ ddt                       # Run a test case multiple times with different input;
 edx-i18n-tools>=0.4.5     # Commands for developers and translators to extract, compile and validate translations
 edx-lint                  # pylint extensions for Open edX repositories
 factory_boy==2.8.1        # Library for creating test fixtures, used in many tests
+flaky==3.5.3
 freezegun                 # Allows tests to mock the output of assorted datetime module functions
 httpretty                 # Library for mocking HTTP requests, used in many tests
 isort                     # For checking and fixing the order of imports
@@ -33,7 +34,7 @@ pycodestyle               # Checker for compliance with the Python style guide (
 polib                     # Library for manipulating gettext translation files, used to test paver i18n commands
 pyquery                   # jQuery-like API for retrieving fragments of HTML and XML files in tests
 pysqlite                  # DB-API 2.0 interface for SQLite 3.x (used as the relational database for most tests)
-pytest                    # Testing framework
+pytest<4.2.0              # Testing framework
 pytest-attrib             # Select tests based on attributes
 pytest-cov                # pytest plugin for measuring code coverage
 pytest-django==3.1.2      # Django support for pytest
@@ -46,7 +47,7 @@ splinter                  # Browser driver used by lettuce
 testfixtures              # Provides a LogCapture utility used by several tests
 tox                       # virtualenv management for tests
 tox-battery               # Makes tox aware of requirements file changes
-transifex-client          # Command-line interface for the Transifex localization service
+transifex-client==0.13.4  # Command-line interface for the Transifex localization service
 
 # Deprecated acceptance testing framework
 -e git+https://github.com/edx/lettuce.git@7a04591c78ac56dac3eb3e91ca94b15cce844133#egg=lettuce==0.2.23+edx.1
