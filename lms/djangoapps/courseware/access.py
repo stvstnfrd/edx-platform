@@ -344,13 +344,13 @@ def _has_access_course(user, action, courselike):
         """
         Just a time boundary check, handles if start or stop were set to None
         """
-        now = datetime.now(UTC())
+        now = datetime.now(UTC)
         start = courselike.enrollment_start
         if start is not None:
-            start = start.replace(tzinfo=pytz.UTC)
+            start = start.replace(tzinfo=UTC)
         end = courselike.enrollment_end
         if end is not None:
-            end = end.replace(tzinfo=pytz.UTC)
+            end = end.replace(tzinfo=UTC)
 
         return (start is None or now > start) and (end is None or now < end)
 

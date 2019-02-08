@@ -12,7 +12,6 @@ import sys
 import traceback
 
 from django.conf import settings
-from django.utils.timezone import UTC
 # We don't want to force a dependency on datadog, so make the import conditional
 try:
     import dogstats_wrapper as dog_stats_api
@@ -727,7 +726,7 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
         should_enable_submit_button = self.should_enable_submit_button()
 
         # For timed problems
-        now = datetime.datetime.now(UTC())
+        now = datetime.datetime.now(utc)
         problem_has_finished = False
         total_seconds_left = -1
         end_time_to_display = now + datetime.timedelta(minutes=self.minutes_allowed)

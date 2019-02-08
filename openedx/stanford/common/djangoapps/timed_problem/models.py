@@ -1,6 +1,6 @@
 import datetime
 
-from django.utils.timezone import UTC
+from pytz import utc
 
 from xblock.fields import Integer
 from xblock.fields import Scope
@@ -66,7 +66,7 @@ class TimedCapaMixin(TimedCapaFields):
         """
         Sets the time when the student started the module.
         """
-        self.time_started = datetime.datetime.now(UTC())
+        self.time_started = datetime.datetime.now(utc)
 
     def start_problem(self, _data=None):
         """
@@ -88,7 +88,7 @@ class TimedCapaMixin(TimedCapaFields):
         """
         if not self.is_timed_problem() or not self.time_started:
             return False
-        now = datetime.datetime.now(UTC())
+        now = datetime.datetime.now(utc)
         time_limit_end = self.time_started + datetime.timedelta(minutes=(self.minutes_allowed))
         return now > time_limit_end
 
