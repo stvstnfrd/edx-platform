@@ -26,7 +26,7 @@ from xmodule.video_module.transcripts_utils import (
 )
 from xmodule.video_module import manage_video_subtitles_save
 
-from ..transcripts_ajax import get_transcripts_presence
+# from ..transcripts_ajax import get_transcripts_presence
 from ..course import get_course_and_check_access
 
 
