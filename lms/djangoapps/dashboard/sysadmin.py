@@ -403,6 +403,8 @@ class Courses(SysadminDashboardView):
             info = [output_json['commit'],
                     output_json['date'],
                     output_json['author'], ]
+        except OSError:
+            log.warn("Ran out of memory fetching git data: %s", cdir)
         except (ValueError, subprocess.CalledProcessError):
             pass
 
