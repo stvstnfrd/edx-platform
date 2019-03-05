@@ -8,45 +8,8 @@ from django.utils.translation import ugettext as _
 
 <%block name="headextra">
   <%static:css group='style-course'/>
+  <link rel="stylesheet" href="${static.url('css/lms-sysadmin.css')}" type="text/css" media="all" />
 </%block>
-
-<style type="text/css">
-a.active-section {
-	color: #551A8B;
-}
-.sysadmin-dashboard-content h2 a {
-	margin-right: 1.2em;
-}
-table.stat_table {
-	font-family: verdana,arial,sans-serif;
-	font-size:11px;
-	color:#333333;
-	border-width: 1px;
-	border-color: #666666;
-	border-collapse: collapse;
-}
-table.stat_table th {
-	border-width: 1px;
-	padding: 8px;
-	border-style: solid;
-	border-color: #666666;
-	background-color: #dedede;
-}
-table.stat_table td {
-	border-width: 1px;
-	padding: 8px;
-	border-style: solid;
-	border-color: #666666;
-	background-color: #ffffff;
-}
-
-a.selectedmode { background-color: yellow; }
-
-textarea {
-  height: 200px;
-}
-</style>
-
 <section class="container">
 <div class="sysadmin-dashboard-wrapper">
 
