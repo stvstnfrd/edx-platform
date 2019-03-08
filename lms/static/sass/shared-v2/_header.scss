@@ -140,7 +140,7 @@
                         @include border-radius(0, 4px, 4px, 0);
                         @include border-left(none);
                         padding: ($baseline/2) ($baseline/2);
-                        color: $base-font-color;
+                        color: $body-color;
                         text-decoration: none;
                         text-transform: uppercase;
                         text-shadow: 0 1px rgba(255,255,255, 0.6);
