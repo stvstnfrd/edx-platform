@@ -1312,7 +1312,7 @@ MIDDLEWARE_CLASSES = [
     # Inserts Enterprise content.
     'openedx.features.enterprise_support.middleware.EnterpriseMiddleware',
 
-    'edx_rest_framework_extensions.middleware.EnsureJWTAuthSettingsMiddleware',
+    'edx_rest_framework_extensions.auth.jwt.middleware.EnsureJWTAuthSettingsMiddleware',
 
     # This must be last
     'openedx.core.djangoapps.site_configuration.middleware.SessionCookieDomainOverrideMiddleware',
@@ -3209,7 +3209,7 @@ JWT_AUTH = {
 
     'JWT_PAYLOAD_GET_USERNAME_HANDLER': lambda d: d.get('username'),
     'JWT_LEEWAY': 1,
-    'JWT_DECODE_HANDLER': 'edx_rest_framework_extensions.utils.jwt_decode_handler',
+    'JWT_DECODE_HANDLER': 'edx_rest_framework_extensions.auth.jwt.decoder.jwt_decode_handler',
 
     # Number of seconds before JWT tokens expire
     'JWT_EXPIRATION': 30,

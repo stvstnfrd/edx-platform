@@ -5,7 +5,7 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
 from edx_rest_framework_extensions import permissions
-from edx_rest_framework_extensions.authentication import JwtAuthentication
+from edx_rest_framework_extensions.auth.jwt.authentication import JwtAuthentication
 from lms.djangoapps.certificates.api import get_certificate_for_user
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import CourseKey
