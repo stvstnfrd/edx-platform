@@ -19,6 +19,9 @@ class ExtraInfo(models.Model):
     """
     This model contains extra fields that will be saved when a user registers.
     """
+    class Meta(object):
+        app_label = "register_cme"
+
     user = models.OneToOneField(
         USER_MODEL,
     )
