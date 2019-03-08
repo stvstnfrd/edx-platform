@@ -1225,6 +1225,8 @@ def password_reset_confirm_wrapper(request, uidb36=None, token=None):
         if updated_user.password != old_password_hash:
             entry = PasswordHistory()
             entry.create(updated_user)
+            updated_user.backend = 'django.contrib.auth.backends.ModelBackend'
+            django_login(request, updated_user)
 
     else:
         response = password_reset_confirm(

@@ -3,13 +3,13 @@ Tests for deeplink middleware for sneakpeek
 """
 from datetime import datetime, timedelta
 from ddt import ddt, data
+from importlib import import_module
 
 from django.conf import settings
 from django.test import Client
 from django.test.client import RequestFactory
 from django.test.utils import override_settings
 from django.contrib.auth.models import AnonymousUser
-from django.utils.importlib import import_module
 from xmodule.modulestore.tests.django_utils import TEST_DATA_SPLIT_MODULESTORE
 from student.models import CourseEnrollment, UserProfile
 from courseware.models import CoursePreference

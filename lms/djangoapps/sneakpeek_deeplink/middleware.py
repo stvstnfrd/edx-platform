@@ -10,7 +10,7 @@ from django.http import Http404
 from student.models import CourseEnrollment
 from util.request import course_id_from_url
 from courseware.models import CoursePreference
-from student.views import _create_and_login_nonregistered_user, _check_can_enroll_in_course
+from openedx.stanford.djangoapps.sneakpeek.views import _create_and_login_nonregistered_user, _check_can_enroll_in_course
 from xmodule.modulestore.django import modulestore
 
 DISALLOW_SNEAKPEEK_URL_NAMES = (

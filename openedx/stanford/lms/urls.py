@@ -3,7 +3,7 @@ from django.conf.urls import include
 from django.conf.urls import url
 
 import courseware.views.views
-import student.views
+import openedx.stanford.djangoapps.sneakpeek.views
 
 
 urlpatterns = [
@@ -11,7 +11,7 @@ urlpatterns = [
         r'^course_sneakpeek/{}/$'.format(
             settings.COURSE_ID_PATTERN,
         ),
-        student.views.setup_sneakpeek,
+        openedx.stanford.djangoapps.sneakpeek.views.setup_sneakpeek,
         name='course_sneakpeek',
     ),
     url(
