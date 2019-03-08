@@ -12,6 +12,7 @@ class Migration(migrations.Migration):
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('courseware', '0001_initial'),
+        ('courseware', '0002_add_coursepreference'),
     ]
 
     operations = [
