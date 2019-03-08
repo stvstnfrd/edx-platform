@@ -312,14 +312,9 @@ def get_course_tab_list(request, course):
     Retrieves the course tab list from xmodule.tabs and manipulates the set as necessary
     """
     user = request.user
-    is_user_enrolled = user.is_authenticated() and CourseEnrollment.is_enrolled(user, course.id)
     xmodule_tab_list = CourseTabList.iterate_displayable(
         course,
         user=user,
-        settings=settings,
-        is_user_authenticated=user.is_authenticated(),
-        is_user_staff=has_access(user, 'staff', course, course.id),
-        is_user_enrolled=is_user_enrolled,
         is_user_sneakpeek=not UserProfile.has_registered(user),
     )
 
