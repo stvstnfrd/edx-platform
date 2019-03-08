@@ -16,8 +16,8 @@ from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import CourseKey
 from opaque_keys.edx.locations import SlashSeparatedCourseKey
 
-from certificates.models import CertificateStatuses
-from certificates.models import GeneratedCertificate
+from lms.djangoapps.certificates.models import CertificateStatuses
+from lms.djangoapps.certificates.models import GeneratedCertificate
 
 LOGGER = logging.getLogger(__name__)
 
@@ -33,24 +33,30 @@ class Command(BaseCommand):
     Update the status of a single user certificate for a given user in a given course
     """
     help = __doc__
-    option_list = BaseCommand.option_list + (
-        make_option(
-            '-c', '--course-id',
+
+    def add_arguments(self, parser):
+        parser.add_argument(
+            '-c',
+            '--course-id',
             default=False,
-            help='The course id (e.g. mit/6-002x/circuits-and-electronics or course-v1:edX+DemoX+Demo_Course)'
-                 ' of the course in which the certificate of the student should be updated',
+            help=(
+                'The course id (e.g. mit/6-002x/circuits-and-electronics '
+                'or course-v1:edX+DemoX+Demo_Course)' ' of the course in '
+                'which the certificate of the student should be updated',
+            ),
         ),
-        make_option(
-            '-u', '--username-or-email',
+        parser.add_argument(
+            '-u',
+            '--username-or-email',
             default=False,
             help='The username or email address for whom grading and certificate status should be updated',
         ),
-        make_option(
-            '-s', '--status',
+        parser.add_argument(
+            '-s',
+            '--status',
             default=CertificateStatuses.unavailable,
             help='The status to set to the corresponding certificate',
-        ),
-    )
+        )
 
     def handle(self, *args, **options):
         if options['course_id']:
