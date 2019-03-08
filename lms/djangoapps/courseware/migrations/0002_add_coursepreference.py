@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
-from openedx.core.djangoapps import xmodule_django
+from opaque_keys.edx.django.models import UsageKeyField
 
 
 class Migration(migrations.Migration):
@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             name='CoursePreference',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('course_id', xmodule_django.models.CourseKeyField(max_length=255, db_index=True)),
+                ('course_id', UsageKeyField(max_length=255, db_index=True)),
                 ('pref_key', models.CharField(max_length=255)),
                 ('pref_value', models.CharField(max_length=255, null=True)),
             ],

@@ -7,7 +7,7 @@ stored in this model.
 from django.db import models
 
 from config_models.models import ConfigurationModel
-from openedx.core.djangoapps.xmodule_django.models import CourseKeyField
+from opaque_keys.edx.django.models import UsageKeyField
 
 
 class TileConfiguration(ConfigurationModel):
@@ -15,7 +15,7 @@ class TileConfiguration(ConfigurationModel):
         Stores a list of tiles presented on the front page.
     """
     site = models.CharField(max_length=32, default='default', blank=False)
-    course_id = CourseKeyField(max_length=255, db_index=True)
+    course_id = UsageKeyField(max_length=255, db_index=True)
 
     class Meta(ConfigurationModel.Meta):
         app_label = 'branding_stanford'
