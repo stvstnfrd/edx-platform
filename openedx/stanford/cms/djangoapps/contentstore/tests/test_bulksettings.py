@@ -2,8 +2,8 @@
 Tests for the bulk settings page
 """
 import unittest
-from contentstore.tests.utils import CourseTestCase
-from contentstore.views.utilities.bulksettings import BulkSettingsUtil
+from cms.djangoapps.contentstore.tests.utils import CourseTestCase
+from cms.djangoapps.contentstore.views.utilities.bulksettings import BulkSettingsUtil
 
 from xmodule.modulestore.tests.factories import ItemFactory, CourseFactory
 
