@@ -16,14 +16,10 @@ from xmodule.x_module import DEPRECATION_VSCOMPAT_EVENT, XModule, module_attr
 
 from .capa_base import CapaFields, CapaMixin, ComplexEncoder
 
-from openedx.stanford.common.djangoapps.timed_problem.models import TimedCapaFields
-from openedx.stanford.common.djangoapps.timed_problem.models import TimedCapaMixin
-from xmodule.exceptions import TimeExpiredError
-
 log = logging.getLogger("edx.courseware")
 
 
-class CapaModule(TimedCapaMixin, CapaMixin, XModule):
+class CapaModule(CapaMixin, XModule):
     """
     An XModule implementing LonCapa format problems, implemented by way of
     capa.capa_problem.LoncapaProblem
@@ -69,7 +65,6 @@ class CapaModule(TimedCapaMixin, CapaMixin, XModule):
             'problem_reset': self.reset_problem,
             'problem_save': self.save_problem,
             'problem_show': self.get_answer,
-            'problem_start': self.start_problem,
             'score_update': self.update_score,
             'input_ajax': self.handle_input_ajax,
             'ungraded_response': self.handle_ungraded_response
@@ -85,10 +80,6 @@ class CapaModule(TimedCapaMixin, CapaMixin, XModule):
         not_found_error_message = _(
             "The state of this problem has changed since you loaded this page. "
             "Please refresh your page."
-        )
-
-        time_expired_error_message = _(
-            "This problem's time has expired. Please refresh your page."
         )
 
         if dispatch not in handlers:
@@ -109,10 +100,6 @@ class CapaModule(TimedCapaMixin, CapaMixin, XModule):
             )
             _, _, traceback_obj = sys.exc_info()  # pylint: disable=redefined-outer-name
             raise ProcessingError(not_found_error_message), None, traceback_obj
-
-        except TimeExpiredError:
-            dummy1, dummy2, traceback_obj = sys.exc_info()
-            raise ProcessingError(time_expired_error_message), traceback_obj
 
         except Exception:
             log.exception(
@@ -152,7 +139,7 @@ class CapaModule(TimedCapaMixin, CapaMixin, XModule):
         return self.display_name
 
 
-class CapaDescriptor(TimedCapaFields, CapaFields, RawDescriptor):
+class CapaDescriptor(CapaFields, RawDescriptor):
     """
     Module implementing problems in the LON-CAPA format,
     as implemented by capa.capa_problem

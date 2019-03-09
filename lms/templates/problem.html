@@ -1,11 +1,8 @@
-<%! from django.conf import settings %>
 <%page expression_filter="h"/>
 <%!
 from django.utils.translation import ungettext, ugettext as _
-from openedx.core.djangolib.markup import HTML, Text
+from openedx.core.djangolib.markup import HTML
 %>
-
-<%! from xmodule.util.date_utils import get_time_display %>
 
 <%namespace name='static' file='static_content.html'/>
 <h3 class="hd hd-3 problem-header" id="${ short_id }-problem-title" aria-describedby="${ id }-problem-progress" tabindex="-1">
@@ -13,39 +10,6 @@ from openedx.core.djangolib.markup import HTML, Text
 </h3>
 
 <div class="problem-progress" id="${ id }-problem-progress"></div>
-
-% if problem_is_timed:
-  % if not problem_has_finished:
-    <div class="time_limit">
-      <p>
-        ${_("At {start_time}, you started this exam.").format(
-            start_time=get_time_display(start_time, coerce_tz=settings.TIME_ZONE))}
-        <br />
-        <b>
-        ${_("By {end_time}, you must manually click the '{submit_button}' button below!").format(
-            end_time=get_time_display(end_time_to_display, coerce_tz=settings.TIME_ZONE),
-            submit_button=submit_button,
-        )}
-        </b>
-      </p>
-    </div>
-    <div class="problem-timer" data-start="${ start_time }" data-end="${ end_time_to_display }"
-        data-total-seconds-left="${ total_seconds_left }"
-        data-seconds-before-warning="${ seconds_before_warning }">
-            ${Text(_('You have {minutes_left} minutes left to complete these questions.')).format(
-                minutes_left=HTML('<span class="minutes-left"></span>'),
-            )}
-    </div>
-  % elif exceeded_time_limit:
-    <div class="time_limit">
-        <p style="color: red">
-          <b>
-            ${_("You have exceeded the time limit for this problem.")}
-          </b>
-        </p>
-    </div>
-  % endif
-% endif
 
 <div class="problem">
   ${ HTML(problem['html']) }
@@ -67,7 +31,7 @@ from openedx.core.djangolib.markup import HTML, Text
           <span class="submit-label">${ submit_button }</span>
       </button>
       <div class="submission-feedback" id="submission_feedback_${short_id}">
-        % if attempts_allowed and not problem_is_timed:
+        % if attempts_allowed:
           ${ungettext("You have used {num_used} of {num_total} attempt", "You have used {num_used} of {num_total} attempts", attempts_allowed).format(num_used=attempts_used, num_total=attempts_allowed)}
         % endif
         <span class="sr">${_("Some problems have options such as save, reset, hints, or show answer. These options follow the Submit button.")}</span>
@@ -92,11 +56,6 @@ from openedx.core.djangolib.markup import HTML, Text
       <span class="problem-action-button-wrapper">
           <button type="button" class="reset problem-action-btn btn-default btn-small" data-value="${_('Reset')}"><span class="icon fa fa-refresh" aria-hidden="true"></span><span aria-hidden="true">${_('Reset')}</span><span class="sr">${_("Reset your answer")}</span></button>
       </span>
-      % if exceeded_time_limit:
-      <p class="exceeded-time-limit-message">
-        ${_("Deadline has passed, you can no longer submit.")}
-      </p>
-      % endif
       % endif
       % if answer_available:
       <span class="problem-action-button-wrapper">

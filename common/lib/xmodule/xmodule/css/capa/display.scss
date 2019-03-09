@@ -147,30 +147,6 @@ div.problem-progress {
   font-size: em(14);
 }
 
-div.problem-timer {
-  display: none;
-  background: $white;
-  border: 1px solid #dedede;
-  color: $green;
-  font-size: 14px;
-  font-weight: bold;
-  margin-top: 14px;
-  margin-bottom: 14px;
-  padding: 7px 21px;
-
-  &.danger {
-    color: $red;
-    .minutes-left {
-        color: $red;
-    }
-  }
-
-  .minutes-left {
-    color: $green;
-    font-weight: bold;
-  }
-}
-
 // +Problem - Base
 // ====================
 div.problem {
@@ -196,10 +172,6 @@ div.problem {
     + p {
       margin-top: $baseline;
     }
-  }
-
-  .exceeded-time-limit-message {
-    color: $gray;
   }
 
   .question-description {

@@ -28,15 +28,12 @@ from capa.util import convert_files_to_filenames, get_inner_html_from_xpath
 from xblock.fields import Boolean, Dict, Float, Integer, Scope, String, XMLString
 from xblock.scorable import ScorableXBlockMixin, Score
 from xmodule.capa_base_constants import RANDOMIZATION, SHOWANSWER
-from xmodule.capa_base_constants import SHOW_CORRECTNESS
 from xmodule.exceptions import NotFoundError
 from xmodule.graders import ShowCorrectness
 from .fields import Date, Timedelta, ScoreField
 from .progress import Progress
 
 from openedx.core.djangolib.markup import HTML, Text
-
-from xmodule.exceptions import TimeExpiredError
 
 log = logging.getLogger("edx.courseware")
 
@@ -113,12 +110,8 @@ class CapaFields(object):
     )
     max_attempts = Integer(
         display_name=_("Maximum Attempts"),
-        help=_(
-            'Defines the number of times a student can try to answer this problem. '
-            'If the value is not set, infinite attempts are allowed. '
-            'NOTE: If a problem is timed, we only allow a single attempt, and ignore '
-            'the value in this field.'
-        ),
+        help=_("Defines the number of times a student can try to answer this problem. "
+               "If the value is not set, infinite attempts are allowed."),
         values={"min": 0}, scope=Scope.settings
     )
     due = Date(help=_("Date that this problem is due by"), scope=Scope.settings)
@@ -480,13 +473,12 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
         Return True/False to indicate whether to enable the "Submit" button.
         """
         submitted_without_reset = (self.is_submitted() and self.rerandomize == RANDOMIZATION.ALWAYS)
-        submitted_timed_question = (self.is_submitted() and self.is_timed_problem())
 
         # If the problem is closed (past due / too many attempts)
         # then we disable the "submit" button
         # Also, disable the "submit" button if we're waiting
         # for the user to reset a randomized problem
-        if self.closed() or submitted_without_reset or submitted_timed_question:
+        if self.closed() or submitted_without_reset:
             return False
         else:
             return True
@@ -525,7 +517,6 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
         else:
             is_survey_question = (self.max_attempts == 0)
             needs_reset = self.is_submitted() and self.rerandomize == RANDOMIZATION.ALWAYS
-            submitted_timed_question = self.is_submitted() and self.is_timed_problem()
 
             # If the student has unlimited attempts, and their answers
             # are not randomized, then we do not need a save button
@@ -546,9 +537,7 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
             # then do NOT show the save button
             # If we're waiting for the user to reset a randomized problem
             # then do NOT show the save button
-            # If the question is timed, enforce that we can only attempt
-            # once. Thus, do NOT show the save button
-            elif (self.closed() and not is_survey_question) or needs_reset or submitted_timed_question:
+            elif (self.closed() and not is_survey_question) or needs_reset:
                 return False
             else:
                 return True
@@ -644,11 +633,7 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
 
     def get_demand_hint(self, hint_index):
         """
-        Return html for the problem.
-        For timed problems, returns an interstitial view if
-        the problem has not yet been started.
-
-        Also returns demand hints.
+        Return html for the problem, including demand hints.
 
         hint_index (int): (None is the default) if not None, this is the index of the next demand
             hint to show.
@@ -725,23 +710,6 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
         submit_button_submitting = self.submit_button_submitting_name()
         should_enable_submit_button = self.should_enable_submit_button()
 
-        # For timed problems
-        now = datetime.datetime.now(utc)
-        problem_has_finished = False
-        total_seconds_left = -1
-        end_time_to_display = now + datetime.timedelta(minutes=self.minutes_allowed)
-
-        if self.is_timed_problem() and self.time_started:
-            end_time_to_display = self.time_started + datetime.timedelta(minutes=self.minutes_allowed)
-            problem_has_finished = end_time_to_display >= now
-            time_left = end_time_to_display - now
-            total_seconds_left = (time_left).total_seconds()
-
-        # because we use self.due and not self.close_date below, this is not the actual end_time, but the
-        # end_time we want to display to the user
-        if self.due and end_time_to_display:
-            end_time_to_display = min(self.due, end_time_to_display)
-
         content = {
             'name': self.display_name_with_default,
             'html': smart_text(html),
@@ -780,12 +748,8 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
             'has_saved_answers': self.has_saved_answers,
             'save_message': save_message,
         }
-        context.update(self.get_timed_context(total_seconds_left, end_time_to_display))
 
-        if self.is_timed_problem() and not self.time_started:
-            html = self.runtime.render_template('problem_interstitial.html', context)
-        else:
-            html = self.runtime.render_template('problem.html', context)
+        html = self.runtime.render_template('problem.html', context)
 
         if encapsulate:
             html = u'<div id="problem_{id}" class="problem" data-url="{ajax_url}">'.format(
@@ -904,8 +868,6 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
         if self.max_attempts is not None and self.attempts >= self.max_attempts:
             return True
         if self.is_past_due():
-            return True
-        if self.exceeded_time_limit():
             return True
 
         return False
@@ -1212,7 +1174,7 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
         answers_without_files = convert_files_to_filenames(answers)
         event_info['answers'] = answers_without_files
 
-        metric_name = u'capa.problem_check.{}'.format
+        metric_name = u'capa.check_problem.{}'.format
         # Can override current time
         current_time = datetime.datetime.now(utc)
         if override_time is not False:
@@ -1226,8 +1188,6 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
             self.track_function_unmask('problem_check_fail', event_info)
             if dog_stats_api:
                 dog_stats_api.increment(metric_name('checks'), tags=[u'result:failed', u'failure:closed'])
-            if self.exceeded_time_limit():
-                raise TimeExpiredError(_("Time has expired"))
             raise NotFoundError(_("Problem is closed."))
 
         # Problem submitted. Student should reset before checking again

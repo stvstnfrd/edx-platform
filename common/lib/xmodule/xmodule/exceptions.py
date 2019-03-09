@@ -51,7 +51,3 @@ class HeartbeatFailure(Exception):
         """
         self.service = service
         super(HeartbeatFailure, self).__init__(msg)
-
-
-class TimeExpiredError(Exception):
-    pass
