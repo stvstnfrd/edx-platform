@@ -1,7 +1,6 @@
 """
 Single page performance tests for Studio.
 """
-from bok_choy.web_app_test import with_cache
 from nose.plugins.attrib import attr
 
 from common.test.acceptance.pages.common.auto_auth import AutoAuthPage
@@ -65,12 +64,10 @@ class StudioJusticePerformanceTest(StudioPagePerformanceTest):
     course_num = 'ER22x'
     course_run = '2013_Spring'
 
-    @with_cache
     def test_visit_outline(self):
         """Record visiting the Justice course outline page"""
         self.record_visit_outline()
 
-    @with_cache
     def test_visit_unit(self):
         """Record visiting a Justice unit page"""
         self.record_visit_unit(
@@ -88,12 +85,10 @@ class StudioPub101PerformanceTest(StudioPagePerformanceTest):
     course_num = 'PUB101'
     course_run = 'PUB101'
 
-    @with_cache
     def test_visit_outline(self):
         """Record visiting the PUB101 course outline page"""
         self.record_visit_outline()
 
-    @with_cache
     def test_visit_unit(self):
         """Record visiting the PUB101 unit page"""
         self.record_visit_unit('Released', 'Released', 'Released')
