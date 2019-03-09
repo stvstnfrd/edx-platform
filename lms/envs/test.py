@@ -593,6 +593,7 @@ VIDEO_TRANSCRIPTS_SETTINGS = dict(
     ),
     DIRECTORY_PREFIX='video-transcripts/',
 )
+ANALYTICS_DATA_URL = ''
 
 ####################### Plugin Settings ##########################
 

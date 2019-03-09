@@ -4,6 +4,7 @@ import sys
 
 STANFORD_ROOT = REPO_ROOT / 'openedx/stanford'
 
+ANALYTICS_DATA_URL = None
 # Email to give anonymous users.  Should be a black-hole email address, but not cause errors when email is sent there
 # This is actually just a base email.  We'll make it 'noreply+<username>@example.com' to ensure uniqueness
 ANONYMOUS_USER_EMAIL = 'noreply@example.com'
