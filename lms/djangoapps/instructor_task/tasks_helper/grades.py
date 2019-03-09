@@ -29,6 +29,7 @@ from lms.djangoapps.verify_student.services import IDVerificationService
 from openedx.core.djangoapps.content.block_structure.api import get_course_in_cache
 from openedx.core.djangoapps.course_groups.cohorts import bulk_cache_cohorts, get_cohort, is_course_cohorted
 from openedx.core.djangoapps.user_api.course_tag.api import BulkCourseTags
+from openedx.stanford.lms.djangoapps.instructor.views.tools import parse_student_data
 from student.models import CourseEnrollment
 from student.roles import BulkRoleCache
 from xmodule.modulestore.django import modulestore
