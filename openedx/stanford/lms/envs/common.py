@@ -123,6 +123,9 @@ SHIB_REDIRECT_DOMAIN_WHITELIST = {
 STATICFILES_DIRS += glob(STANFORD_ROOT / 'djangoapps/*/static')
 STATICFILES_DIRS += glob(STANFORD_ROOT / 'common/djangoapps/*/static')
 STATICFILES_DIRS += glob(STANFORD_ROOT / 'lms/djangoapps/*/static')
+STATICFILES_DIRS += [
+    NODE_MODULES_ROOT / 'edx-pattern-library/pattern-library',
+]
 STUDENT_FORUMS_DOWNLOAD_ROUTING_KEY = HIGH_MEM_QUEUE
 STUDENT_RESPONSES_DOWNLOAD = {
     'STORAGE_TYPE': 'localfs',
