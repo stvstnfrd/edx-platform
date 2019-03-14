@@ -8,6 +8,7 @@
 
 <%namespace name='static' file='static_content.html'/>
 
+<script src="${static.url('js/factories/bulkupdate.js')}"></script>
 
 <%block name="content">
   <div class="wrapper-mast wrapper">
@@ -27,12 +28,12 @@
             <header class="section-header">Problem Settings</header>
               <p>
                 <strong>Warning: </strong>
-                Any changes applied here will also modify the defaults for future problems in 
+                Any changes applied here will also modify the defaults for future problems in
                 <a href="${advanced_settings_url}">Advanced Settings</a>.
               </p>
               <p>
                 <strong>Warning: </strong>
-                Public problems will automatically be republished. Please verify any drafts for public problems are ready to be published in 
+                Public problems will automatically be republished. Please verify any drafts for public problems are ready to be published in
                 <a href="${course_outline_url}">Course Outline</a>.
               </p>
             <div id="max-attempts" class="setting-input-block">
