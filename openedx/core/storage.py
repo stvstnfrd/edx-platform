@@ -2,6 +2,7 @@
 Django storage backends for Open edX.
 """
 from django.contrib.staticfiles.storage import StaticFilesStorage
+from django.core.exceptions import SuspiciousFileOperation
 from django.core.files.storage import get_storage_class
 from django.utils.lru_cache import lru_cache
 from pipeline.storage import NonPackagingMixin, PipelineCachedStorage
@@ -18,6 +19,8 @@ class PipelineForgivingStorage(PipelineCachedStorage):
     def hashed_name(self, name, content=None, **kwargs):
         try:
             out = super(PipelineForgivingStorage, self).hashed_name(name, content, **kwargs)
+        except SuspiciousFileOperation:
+            out = ''
         except ValueError:
             # This means that a file could not be found, and normally this would
             # cause a fatal error, which seems rather excessive given that
