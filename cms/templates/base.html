@@ -74,6 +74,7 @@ from openedx.core.release import RELEASE_LINE
 
     <%include file="widgets/segment-io.html" />
 
+    <%static:optional_include_mako file="head-extra.html" is_theming_enabled="True" />
     <%block name="header_extras"></%block>
   </head>
 
