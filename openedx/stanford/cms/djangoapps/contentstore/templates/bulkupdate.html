@@ -8,8 +8,6 @@
 
 <%namespace name='static' file='static_content.html'/>
 
-<script src="${static.url('js/factories/bulkupdate.js')}"></script>
-
 <%block name="content">
   <div class="wrapper-mast wrapper">
     <header class="mast has-actions has-subtitle">
@@ -94,6 +92,8 @@
     </section>
   </div>
 </%block>
+
+<script src="${static.url('js/factories/bulkupdate.js')}"></script>
 
 <%block name="requirejs">
   require(["js/factories/bulkupdate"], function(BulkUpdateFactory) {
