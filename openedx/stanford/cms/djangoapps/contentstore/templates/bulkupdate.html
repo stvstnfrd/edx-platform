@@ -4,7 +4,7 @@
   from openedx.core.djangolib.js_utils import js_escaped_string
 %>
 <%block name="title">Utilities - Bulk Update</%block>
-<%block name="bodyclass">is-signedin course view-bulkupdate</%block>
+<%block name="bodyclass">is-signedin course view-bulkupdate view-settings</%block>
 
 <%namespace name='static' file='static_content.html'/>
 
@@ -23,8 +23,8 @@
   <div class="wrapper-content wrapper">
     <section class="content">
       <article class="content-primary" role="main">
-        <section class="course-utility" id="bulk-update">
-          <form id="bulk-update-settings-input">
+        <section class="course-utility group-settings basic" id="bulk-update">
+          <form id="bulk-update-settings-input" class="list-input">
             <header class="section-header">Problem Settings</header>
               <p>
                 <strong>Warning: </strong>
@@ -36,7 +36,7 @@
                 Public problems will automatically be republished. Please verify any drafts for public problems are ready to be published in
                 <a href="${course_outline_url}">Course Outline</a>.
               </p>
-            <div id="max-attempts" class="setting-input-block">
+            <div id="max-attempts" class="setting-input-block field-group">
               <input type="checkbox" class="apply-checkbox" name="apply-checkbox" value="max-attempts" />
               <h3 class="setting-input-label" title="Max Attempts Setting">Max Attempts</h3>
               <input class="input setting-input setting-input-number" type="number" value="${default_max_attempts}" min="0.0000" step="1">
@@ -54,7 +54,9 @@
                 % endfor
               </select>
             </div>
-            <input type="submit" value="${_('Apply checked settings')}" class="submit-button" />
+            <div class="list-actions">
+              <input type="submit" value="${_('Apply checked settings')}" class="submit-button action action-primary"/>
+            </div>
           </form>
         </section>
 
