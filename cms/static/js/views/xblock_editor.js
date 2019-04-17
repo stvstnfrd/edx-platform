@@ -112,7 +112,7 @@ define(['jquery', 'underscore', 'gettext', 'js/views/baseview', 'js/views/xblock
                 // ... else if this is an XModule then call its save method
                 } else if (xblock.save) {
                     data = xblock.save();
-                    if (metadataEditor) {
+                    if (data && metadataEditor) {
                         data.metadata = _.extend(data.metadata || {}, this.getChangedMetadata());
                     }
                 // ... else log an error
