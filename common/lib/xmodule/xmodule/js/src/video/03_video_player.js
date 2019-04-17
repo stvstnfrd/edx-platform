@@ -389,7 +389,7 @@ function(HTML5Video, HTML5HLSVideo, Resizer, HLS, _, Time) {
         this.videoPlayer.currentTime = time || this.videoPlayer.player.getCurrentTime();
 
         if (isFinite(this.videoPlayer.currentTime)) {
-            this.videoPlayer.updatePlayTime(this.videoPlayer.currentTime, this.videoPlayer.endTime);
+            this.videoPlayer.updatePlayTime(this.videoPlayer.currentTime);
 
             // We need to pause the video if current time is smaller (or equal)
             // than end-time. Also, we must make sure that this is only done
@@ -483,7 +483,7 @@ function(HTML5Video, HTML5HLSVideo, Resizer, HLS, _, Time) {
             }
         }
 
-        this.videoPlayer.updatePlayTime(time, duration);
+        this.videoPlayer.updatePlayTime(time, true);
 
         // the timer is stopped above; restart it.
         if (this.videoPlayer.isPlaying()) {
@@ -522,7 +522,7 @@ function(HTML5Video, HTML5HLSVideo, Resizer, HLS, _, Time) {
         // Sometimes `onEnded` events fires when `currentTime` not equal
         // `duration`. In this case, slider doesn't reach the end point of
         // timeline.
-        this.videoPlayer.updatePlayTime(time, time);
+        this.videoPlayer.updatePlayTime(time);
 
         // Emit 'pause_video' event when a video ends if Player is of Youtube
         if (this.isYoutubeType()) {
@@ -728,10 +728,10 @@ function(HTML5Video, HTML5HLSVideo, Resizer, HLS, _, Time) {
             videoPlayer.startTime /= Number(this.speed);
         }
 
-        videoPlayer.endTime = this.config.endTime || duration;
+        videoPlayer.endTime = this.config.endTime;
         if (
             videoPlayer.endTime <= videoPlayer.startTime ||
-            videoPlayer.endTime > duration
+            videoPlayer.endTime >= duration
         ) {
             videoPlayer.endTime = null;
         } else if (this.isFlashMode()) {
@@ -783,8 +783,9 @@ function(HTML5Video, HTML5HLSVideo, Resizer, HLS, _, Time) {
         return time;
     }
 
-    function updatePlayTime(time, endTime) {
+    function updatePlayTime(time, skip_seek) {
         var videoPlayer = this.videoPlayer,
+            endTime = this.videoPlayer.duration(),
             youTubeId;
 
         if (this.config.endTime) {

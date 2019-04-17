@@ -411,7 +411,7 @@ function(VideoPlayer, HLS, _) {
                         jQuery.Event('slide'), {value: 30}
                     );
                     expect(state.videoPlayer.currentTime).toBe(30);
-                    expect(state.videoPlayer.updatePlayTime).toHaveBeenCalledWith(30, 120);
+                    expect(state.videoPlayer.updatePlayTime).toHaveBeenCalledWith(30, true);
                 });
             });
 
@@ -511,7 +511,7 @@ function(VideoPlayer, HLS, _) {
 
                     it('trigger updatePlayTime event', function() {
                         expect(state.videoPlayer.updatePlayTime)
-                        .toHaveBeenCalledWith(60, undefined);
+                        .toHaveBeenCalledWith(60);
                     });
                 });
         });
@@ -582,7 +582,7 @@ function(VideoPlayer, HLS, _) {
                     return false;
                 }).then(function() {
                     state.videoPlayer.goToStartTime = false;
-                    state.videoPlayer.updatePlayTime(60, duration);
+                    state.videoPlayer.updatePlayTime(60);
 
                     expect($('.vidtime')).toHaveHtml('1:00 / 1:00');
                 }).always(done);
@@ -609,7 +609,7 @@ function(VideoPlayer, HLS, _) {
                     return duration > 0;
                 }, 1000).then(function() {
                     state.videoPlayer.goToStartTime = false;
-                    state.videoPlayer.updatePlayTime(60, duration);
+                    state.videoPlayer.updatePlayTime(60);
 
                     expect(state.videoProgressSlider.updatePlayTime)
                         .toHaveBeenCalledWith({

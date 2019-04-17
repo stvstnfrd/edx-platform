@@ -755,11 +755,7 @@ function(VideoPlayer, i18n, moment, _) {
         try {
             return moment.duration(this.metadata[this.youtubeId()].duration, moment.ISO_8601).asSeconds();
         } catch (err) {
-            try{
-                return _.result(this.metadata[this.youtubeId('1.0')], 'duration');
-            } catch (err) {
-                return  0;
-            } 
+            return _.result(this.metadata[this.youtubeId('1.0')], 'duration') || 0;
         }
     }
 
