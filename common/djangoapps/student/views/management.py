@@ -354,7 +354,7 @@ def change_enrollment(request, check_access=True):
     user = request.user
 
     # Ensure the user is authenticated
-    if not user.is_authenticated:
+    if not UserProfile.has_registered(request.user):
         return HttpResponseForbidden()
 
     # Ensure we received a course_id
@@ -1022,7 +1022,7 @@ def activate_account(request, key):
             # Success message for logged in users.
             message = _('{html_start}Success{html_end} You have activated your account.')
 
-            if not request.user.is_authenticated:
+            if not UserProfile.has_registered(request.user):
                 # Success message for logged out users
                 message = _(
                     '{html_start}Success! You have activated your account.{html_end}'
@@ -1056,7 +1056,7 @@ def activate_account_studio(request, key):
             {'csrf': csrf(request)['csrf_token']}
         )
     else:
-        user_logged_in = request.user.is_authenticated
+        user_logged_in = UserProfile.has_registered(request.user)
         already_active = True
         if not registration.user.is_active:
             if waffle().is_enabled(PREVENT_AUTH_USER_WRITES):
