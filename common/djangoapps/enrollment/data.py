@@ -28,7 +28,6 @@ from student.models import (
     NonExistentCourseError
 )
 
-
 log = logging.getLogger(__name__)
 
 

@@ -3,7 +3,6 @@ Bok choy acceptance and a11y tests for problem types in the LMS
 
 See also lettuce tests in lms/djangoapps/courseware/features/problems.feature
 """
-import ddt
 import random
 import textwrap
 from abc import ABCMeta, abstractmethod
