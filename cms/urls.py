@@ -83,7 +83,6 @@ urlpatterns += patterns(
         r'^course_info_update/{}/(?P<provided_id>\d+)?$'.format(settings.COURSE_KEY_PATTERN),
         'course_info_update_handler'
     ),
-    url(r'^utility/bulkupdate/{}$'.format(settings.COURSE_KEY_PATTERN), 'utility_bulkupdate_handler'),
     url(r'^home/?$', 'course_listing', name='home'),
     url(
         r'^course/{}/search_reindex?$'.format(settings.COURSE_KEY_PATTERN),

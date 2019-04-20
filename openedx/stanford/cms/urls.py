@@ -20,6 +20,13 @@ urlpatterns = [
         r'^utility/bulksettings/{}$'.format(settings.COURSE_KEY_PATTERN),
         'contentstore.views.utility_bulksettings_handler',
     ),
+    url(
+        r'^utility/bulkupdate/{}$'.format(
+            settings.COURSE_KEY_PATTERN,
+        ),
+        'openedx.stanford.cms.djangoapps.contentstore.views.utilities.bulkupdate.utility_bulkupdate_handler',
+        name='utility_bulkupdate_handler',
+    ),
 ]
 if settings.SHIB_ONLY_SITE:
     urlpatterns += [

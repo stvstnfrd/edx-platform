@@ -4,6 +4,7 @@ Views related to bulk update operations on course problems
 
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
 from django.http import HttpResponseNotFound
 
 from edxmako.shortcuts import render_to_response
@@ -43,9 +44,11 @@ def _utility_bulkupdate_get_handler(course_key_string):
         "course_handler",
         course_key_string
     )
-    bulkupdate_url = reverse_course_url(
-        "utility_bulkupdate_handler",
-        course_key_string
+    bulkupdate_url = reverse(
+        'utility_bulkupdate_handler',
+        kwargs={
+            'course_key_string': course_key_string,
+        },
     )
 
     course_key = CourseKey.from_string(course_key_string)
