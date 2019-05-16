@@ -164,7 +164,7 @@
             }
           }
 
-          span.register, span.add-to-cart, span.sneakpeek {
+          span.register, span.add-to-cart {
             background: $button-archive-color;
             border: 1px solid darken($button-archive-color, 50%);
 
@@ -181,9 +181,6 @@
             @include transition(none);
 
             width: flex-grid(5, 8);
-          }
-          span.sneakpeek {
-            margin-right: 0;
           }
 
           #register_error {
