@@ -1,22 +1,26 @@
 .course-info {
-    .container {
-        header.course-profile {
-            .intro-inner-wrapper {
-                .intro {
-                    .main-cta {
-                        span.sneakpeek {
-                            width: 49%;
-                            box-sizing: border-box;
-                            margin: 0 0 0 2%;
-                            padding: 15px 0 14px 0;
-                            float: left;
-                            background: $button-archive-color;
-                            border: 1px solid darken($button-archive-color, 50%);
-                            border-radius: 5px;
-                            text-align: center;
-                            letter-spacing: 1px;
-                            color: darken($button-archive-color, 50%);
-                        }
+    header.course-profile {
+        .intro-inner-wrapper {
+            .intro {
+                .main-cta {
+                    span.sneakpeek {
+                        background: $button-archive-color;
+                        border: 1px solid darken($button-archive-color, 50%);
+                        border-radius: 5px;
+
+                        @include box-sizing(border-box);
+
+                        color: darken($button-archive-color, 50%);
+                        display: block;
+                        letter-spacing: 1px;
+                        padding: 15px 20px;
+                        text-align: center;
+
+                        @include float(left);
+                        @include margin(0, 0, 0, 2%);
+                        @include transition(none);
+
+                        width: flex-grid(4, 8);
                     }
                 }
             }
