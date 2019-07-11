@@ -31,7 +31,7 @@ jobs:
     - run:
         command: |
           if ! [[ -d ~/.cache/apt/archives ]]; then
-            sudo apt install -y --download-only libssl-dev libffi-dev python-pip
+            sudo apt install -y --download-only libssl-dev libffi-dev python-pip python2.7-dev
             while read package; do
               sudo apt install -y --download-only "${package}" || true
             done <requirements/system/ubuntu/apt-packages.txt
