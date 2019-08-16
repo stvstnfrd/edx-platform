@@ -1,16 +1,21 @@
 define(
     [
+        'backbone',
         'js/views/baseview', 'underscore', 'js/models/metadata', 'js/views/abstract_editor',
         'js/models/uploads', 'js/views/uploads',
         'js/models/license', 'js/views/license',
+        'js/views/video/transcripts/utils',
         'js/views/video/transcripts/metadata_videolist',
         'js/views/video/translations_editor'
     ],
-function(BaseView, _, MetadataModel, AbstractEditor, FileUpload, UploadDialog,
-         LicenseModel, LicenseView, VideoList, VideoTranslations) {
+function(Backbone, BaseView, _, MetadataModel, AbstractEditor, FileUpload, UploadDialog,
+         LicenseModel, LicenseView, TranscriptUtils, VideoList, VideoTranslations) {
+    'use strict';
     var Metadata = {};
 
     Metadata.Editor = BaseView.extend({
+        // Store rendered view references
+        views: {},
 
         // Model is CMS.Models.MetadataCollection,
         initialize: function() {
@@ -31,9 +36,9 @@ function(BaseView, _, MetadataModel, AbstractEditor, FileUpload, UploadDialog,
                             model: model
                         },
                         conversions = {
-                            'Select': 'Option',
-                            'Float': 'Number',
-                            'Integer': 'Number'
+                            Select: 'Option',
+                            Float: 'Number',
+                            Integer: 'Number'
                         },
                         type = model.getType();
                         var options = model.get("options");
@@ -47,10 +52,10 @@ function(BaseView, _, MetadataModel, AbstractEditor, FileUpload, UploadDialog,
                     }
 
                     if (_.isFunction(Metadata[type])) {
-                        new Metadata[type](data);
+                        self.views[data.model.getFieldName()] = new Metadata[type](data);
                     } else {
                         // Everything else is treated as GENERIC_TYPE, which uses String editor.
-                        new Metadata.String(data);
+                        self.views[data.model.getFieldName()] = new Metadata.String(data);
                     }
                 });
         },
@@ -82,7 +87,7 @@ function(BaseView, _, MetadataModel, AbstractEditor, FileUpload, UploadDialog,
                     if (model.get('field_name') === 'display_name') {
                         var displayNameValue = model.get('value');
                         // It is possible that there is no display name value set. In that case, return empty string.
-                        displayName = displayNameValue ? displayNameValue : '';
+                        displayName = displayNameValue || '';
                     }
                 }
             );
@@ -125,6 +130,40 @@ function(BaseView, _, MetadataModel, AbstractEditor, FileUpload, UploadDialog,
         }
     });
 
+    Metadata.VideoID = Metadata.String.extend({
+        // Delay between check_transcript requests
+        requestDelay: 300,
+
+        initialize: function() {
+            Metadata.String.prototype.initialize.apply(this, arguments);
+
+            this.$el.on(
+                'input',
+                'input',
+                _.debounce(_.bind(this.inputChange, this), this.requestDelay)
+            );
+        },
+
+        render: function() {
+            Metadata.String.prototype.render.apply(this, arguments);
+            TranscriptUtils.Storage.set('edx_video_id', this.getValueFromEditor());
+        },
+
+        clear: function() {
+            this.model.setValue('');
+            this.inputChange();
+        },
+
+        getData: function() {
+            return [{mode: 'edx_video_id', type: 'edx_video_id', video: this.getValueFromEditor()}];
+        },
+
+        inputChange: function() {
+            TranscriptUtils.Storage.set('edx_video_id', this.getValueFromEditor());
+            Backbone.trigger('transcripts:basicTabFieldChanged');
+        }
+    });
+
     Metadata.Number = AbstractEditor.extend({
 
         events: {
@@ -156,8 +195,7 @@ function(BaseView, _, MetadataModel, AbstractEditor, FileUpload, UploadDialog,
                 if (options.hasOwnProperty(step)) {
                     // Parse step and convert to String. Polyfill doesn't like float values like ".1" (expects "0.1").
                     stepValue = numToString(Number(options[step]));
-                }
-                else if (this.isIntegerField()) {
+                } else if (this.isIntegerField()) {
                     stepValue = '1';
                 }
                 if (stepValue !== undefined) {
@@ -277,9 +315,8 @@ function(BaseView, _, MetadataModel, AbstractEditor, FileUpload, UploadDialog,
             _.each(this.model.getOptions(), function(modelValue) {
                 if (modelValue === selectedText) {
                     selectedValue = modelValue;
-                }
-                else if (modelValue['display_name'] === selectedText) {
-                    selectedValue = modelValue['value'];
+                } else if (modelValue.display_name === selectedText) {
+                    selectedValue = modelValue.value;
                 }
             });
             return selectedValue;
@@ -289,8 +326,8 @@ function(BaseView, _, MetadataModel, AbstractEditor, FileUpload, UploadDialog,
             // Value here is the json value as used by the field. The choice may instead be showing display names.
             // Find the display name matching the value passed in.
             _.each(this.model.getOptions(), function(modelValue) {
-                if (modelValue['value'] === value) {
-                    value = modelValue['display_name'];
+                if (modelValue.value === value) {
+                    value = modelValue.display_name;
                 }
             });
             this.$el.find('#' + this.uniqueId + ' option').filter(function() {
@@ -330,7 +367,7 @@ function(BaseView, _, MetadataModel, AbstractEditor, FileUpload, UploadDialog,
                         '<a href="#" class="remove-action remove-setting" data-index="<%- index %>"><span class="icon fa fa-times-circle" aria-hidden="true"></span><span class="sr">' + gettext('Remove') + '</span></a>' +   // eslint-disable-line max-len
                     '</li>'
                 );
-                list.append($(template({'ele': ele, 'index': index})));
+                list.append($(template({ele: ele, index: index})));
             });
         },
 
@@ -498,7 +535,7 @@ function(BaseView, _, MetadataModel, AbstractEditor, FileUpload, UploadDialog,
                     '</li>'
                 );
 
-                frag.appendChild($(template({'key': key, 'value': value}))[0]);
+                frag.appendChild($(template({key: key, value: value}))[0]);
             });
 
             list.html([frag]);
@@ -571,7 +608,7 @@ function(BaseView, _, MetadataModel, AbstractEditor, FileUpload, UploadDialog,
 
         upload: function(event) {
             var self = this,
-                target = $(event.currentTarget),
+                $target = $(event.currentTarget),
                 url = '/assets/' + this.options.courseKey + '/',
                 model = new FileUpload({
                     title: gettext('Upload File')
@@ -579,10 +616,10 @@ function(BaseView, _, MetadataModel, AbstractEditor, FileUpload, UploadDialog,
                 view = new UploadDialog({
                     model: model,
                     url: url,
-                    parentElement: target.closest('.xblock-editor'),
+                    parentElement: $target.closest('.xblock-editor'),
                     onSuccess: function(response) {
-                        if (response['asset'] && response['asset']['url']) {
-                            self.model.setValue(response['asset']['url']);
+                        if (response.asset && response.asset.url) {
+                            self.model.setValue(response.asset.url);
                         }
                     }
                 }).show();
@@ -594,7 +631,7 @@ function(BaseView, _, MetadataModel, AbstractEditor, FileUpload, UploadDialog,
     Metadata.License = AbstractEditor.extend({
 
         initialize: function(options) {
-            this.licenseModel = new LicenseModel({'asString': this.model.getValue()});
+            this.licenseModel = new LicenseModel({asString: this.model.getValue()});
             this.licenseView = new LicenseView({model: this.licenseModel});
 
             // Rerender when the license model changes

@@ -4,9 +4,10 @@
 .analytics_close_button {
     .close {
         position: relative;
-        top: 25px;
-        right: 0;
+        top: 40px;
+        right: -130px;
         float: right;
+        z-index: 1;
     }
 }
 

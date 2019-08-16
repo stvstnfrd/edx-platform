@@ -2,7 +2,7 @@
 <%block name="review_highlight">class="active"</%block>
 
 <%!
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from edxmako.shortcuts import marketing_link
 from django.utils.translation import ugettext as _
 from django.utils.translation import ungettext
@@ -297,7 +297,7 @@ from openedx.core.lib.courses import course_image_url
           return false;
        }
        event.preventDefault();
-       location.href = "${reverse('shoppingcart.views.billing_details')}";
+       location.href = "${reverse('billing_details')}";
    });
 
 

@@ -6,6 +6,7 @@ import json
 from django.test.client import RequestFactory
 from mock import patch
 from nose.plugins.attrib import attr
+from six import text_type
 
 from class_dashboard import views
 from student.tests.factories import AdminFactory
@@ -94,11 +95,11 @@ class TestViews(ModuleStoreTestCase):
         instructor = AdminFactory.create()
         self.request.user = instructor
 
-        response = views.all_sequential_open_distrib(self.request, course.id.to_deprecated_string(), self.enrollment)
+        response = views.all_sequential_open_distrib(self.request, text_type(course.id), self.enrollment)
         self.assertEqual('[]', response.content)
 
-        response = views.all_problem_grade_distribution(self.request, course.id.to_deprecated_string(), self.enrollment)
+        response = views.all_problem_grade_distribution(self.request, text_type(course.id), self.enrollment)
         self.assertEqual('[]', response.content)
 
-        response = views.section_problem_grade_distrib(self.request, course.id.to_deprecated_string(), 'no section', self.enrollment)
+        response = views.section_problem_grade_distrib(self.request, text_type(course.id), 'no section', self.enrollment)
         self.assertEqual('{"error": "error"}', response.content)

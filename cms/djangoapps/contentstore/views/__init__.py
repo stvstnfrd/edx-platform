@@ -10,6 +10,7 @@ from .utilities.captions import *
 from .utilities.bulksettings import *
 from .component import *
 from .course import *
+from .checklists import *
 from .entrance_exam import *
 from .error import *
 from .helpers import *
@@ -22,6 +23,7 @@ from .export_git import *
 from .user import *
 from .tabs import *
 from .videos import *
+from .transcript_settings import *
 from .transcripts_ajax import *
 try:
     from .dev import *
