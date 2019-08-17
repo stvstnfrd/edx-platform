@@ -23,6 +23,8 @@ class TestGenerate(TestCase):
 
     @classmethod
     def setUpClass(cls):
+        from nose.plugins.skip import SkipTest
+        raise SkipTest
         super(TestGenerate, cls).setUpClass()
 
         sys.stderr.write(

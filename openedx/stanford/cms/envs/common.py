@@ -10,6 +10,9 @@ from openedx.stanford.lms.envs.common import (
 
 STANFORD_ROOT = REPO_ROOT / 'openedx/stanford'
 
+CELERY_IMPORTS = (
+    'openedx.stanford.cms.djangoapps.contentstore.views.utilities.tasks',
+)
 COPYRIGHT_EMAIL = 'copyright@example.com'
 COURSE_UTILITIES = [
     # Todo: add aws entries for this
@@ -40,7 +43,6 @@ COURSE_UTILITIES = [
     }
 ]
 FEATURES.update({
-    'ALLOW_COURSE_RERUNS': False,
     'ALLOW_HIDING_DISCUSSION_TAB': True,
     # Display option to send email confirmation of course enrollment
     'ENABLE_ENROLLMENT_EMAIL': False,

@@ -9,6 +9,12 @@ ANALYTICS_DATA_URL = None
 # This is actually just a base email.  We'll make it 'noreply+<username>@example.com' to ensure uniqueness
 ANONYMOUS_USER_EMAIL = 'noreply@example.com'
 API_DATE_FORMAT = '%Y-%m-%d'
+
+# Additional queue for grades backfill task (persistent grades).
+GRADES_BACKFILL_QUEUE = 'edx.core.grades_backfill'
+CELERY_QUEUES.update({
+    GRADES_BACKFILL_QUEUE: {},
+})
 COURSE_FORUMS_DOWNLOAD_ROUTING_KEY = HIGH_MEM_QUEUE
 COURSE_MODE_DEFAULTS = {
     'bulk_sku': None,
@@ -95,6 +101,10 @@ MAKO_TEMPLATE_DIRS_BASE += glob(STANFORD_ROOT / 'djangoapps/*/templates')
 MAKO_TEMPLATE_DIRS_BASE += glob(STANFORD_ROOT / 'common/djangoapps/*/templates')
 MAKO_TEMPLATE_DIRS_BASE += glob(STANFORD_ROOT / 'lms/djangoapps/*/templates')
 MAX_ENROLLEES_FOR_METRICS_USING_DB = 100
+MARKETO_API_URL = None
+MARKETO_CLIENT_ID = None
+MARKETO_CLIENT_SECRET = None
+MARKETO_LIST_ID = None
 MIDDLEWARE_CLASSES += (
     'sneakpeek_deeplink.middleware.SneakPeekDeepLinkMiddleware',
 )
@@ -115,6 +125,7 @@ PAYMENT_PLATFORM_NAME = 'PAYMENT PLATFORM NAME'
 # The following fields are available in the URL: {course_id} {student_id}
 PROGRESS_SUCCESS_BUTTON_URL = 'http://<domain>/<path>/{course_id}'
 PROGRESS_SUCCESS_BUTTON_TEXT_OVERRIDE = None
+SEARCH_DISCOVERY_SORT_FIELDS = '_score:desc,start:desc'
 SEARCH_FILTER_GENERATOR = 'openedx.stanford.lms.lib.courseware_search.lms_filter_generator.TileSearchFilterGenerator'
 SHIB_REDIRECT_DOMAIN_WHITELIST = {
     # Mapping of hosts to a list of safe redirect domains from that host
