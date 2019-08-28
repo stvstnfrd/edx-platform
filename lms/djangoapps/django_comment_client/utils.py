@@ -177,6 +177,12 @@ def get_cached_discussion_id_map(course, discussion_ids, user):
     Returns a dict mapping discussion_ids to respective discussion xblock metadata if it is cached and visible to the
     user. If not, returns the result of get_discussion_id_map
     """
+
+    # Prevent retrieving an incorrect key from Memcache.
+    # TODO Remove when the course is no longer accessed.
+    if course.id.org == 'HumanitiesSciences' and course.id.course == 'Beethoven' and course.id.run == 'selfpaced':
+        return get_discussion_id_map(course, user)
+
     try:
         entries = []
         for discussion_id in discussion_ids:
