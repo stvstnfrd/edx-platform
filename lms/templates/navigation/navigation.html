@@ -18,7 +18,6 @@ from openedx.core.djangolib.markup import HTML, Text
 # App that handles subdomain specific branding
 from branding import api as branding_api
 from openedx.core.djangoapps.lang_pref.api import header_language_selector_is_enabled, released_languages
-from student.models import UserProfile
 %>
 
 <script type="text/javascript" src="${static.url('js/header/header.js')}"></script>
@@ -44,7 +43,7 @@ from student.models import UserProfile
       <button class="navbar-toggler navbar-toggler-right mt-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      % if UserProfile.has_registered(user):
+      % if user.is_registered():
         <%include file="navbar-authenticated.html" args="online_help_token=online_help_token"/>
       % else:
         <%include file="navbar-not-authenticated.html" args="online_help_token=online_help_token"/>
@@ -55,7 +54,7 @@ from student.models import UserProfile
   <header id="global-navigation" class="header-global ${"slim" if course else ""}" >
     <nav class="wrapper-header" aria-label="${_('Global')}">
       <%include file="navbar-logo-header.html" args="online_help_token=online_help_token"/>
-      % if UserProfile.has_registered(user):
+      % if user.is_registered():
         <%include file="navbar-authenticated.html" args="online_help_token=online_help_token"/>
       % else:
         <%include file="navbar-not-authenticated.html" args="online_help_token=online_help_token"/>
@@ -67,7 +66,7 @@ from student.models import UserProfile
             <li class="primary">
               <form action="/i18n/setlang/" method="post" class="settings-language-form" id="language-settings-form">
                 <input type="hidden" id="csrf_token" name="csrfmiddlewaretoken" value="${csrf_token}">
-                % if UserProfile.has_registered(user):
+                % if user.is_registered():
                   <input title="preference api" type="hidden" class="url-endpoint" value="${reverse('preferences_api', kwargs={'username': user.username})}" data-user-is-authenticated="true">
                 % else:
                   <input title="session update url" type="hidden" class="url-endpoint" value="${reverse('session_language')}" data-user-is-authenticated="false">
@@ -102,7 +101,7 @@ from student.models import UserProfile
 <![endif]-->
 % endif
 
-%if not UserProfile.has_registered(user):
+% if not user.is_registered():
   <%include file="../forgot_password_modal.html" />
 %endif
 <%include file="../help_modal.html"/>

@@ -551,9 +551,11 @@ def student_dashboard(request):
     if not UserProfile.objects.filter(user=user).exists():
         return redirect(reverse('account_settings'))
 
-    if not UserProfile.has_registered(user):
+    # TODO: Move this logic out to the LMS middleware
+    if user.is_nonregistered():
         logout(request)
         return redirect(reverse('dashboard'))
+
     platform_name = configuration_helpers.get_value("platform_name", settings.PLATFORM_NAME)
 
     enable_verified_certificates = configuration_helpers.get_value(

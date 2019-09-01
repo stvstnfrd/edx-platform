@@ -780,7 +780,7 @@ def get_module_system_for_user(
     )
     if settings.FEATURES.get('SEND_USERS_EMAILADDR_WITH_CODERESPONSE', False):
         system.set('send_users_emailaddr_with_coderesponse', True)
-        if user.is_authenticated():
+        if user.is_authenticated:
             system.set('deanonymized_user_email', user.email)
         else:
             system.set('deanonymized_user_email', '')

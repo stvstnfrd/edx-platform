@@ -49,6 +49,7 @@ FEATURES.update({
 })
 INSTALLED_APPS += (
     'openedx.stanford.djangoapps.course_utils',
+    'openedx.stanford.djangoapps.sneakpeek',
     'openedx.stanford.djangoapps.student_utils',
     # Added here to allow translations
     'freetextresponse',

@@ -89,9 +89,6 @@ from openedx.core.djangoapps.credit.api import (
     is_credit_course,
     is_user_eligible_for_credit
 )
-
-from student.models import UserProfile
-
 from openedx.core.djangoapps.models.course_details import CourseDetails
 from openedx.core.djangoapps.monitoring_utils import set_custom_metrics_for_course_key
 from openedx.core.djangoapps.plugin_api.views import EdxFragmentView
@@ -369,12 +366,6 @@ def course_info(request, course_id):
         if course.bypass_home and is_from_dashboard:
             return redirect(reverse('courseware', args=[course_id]))
 
-        sneakpeek_allowed = is_sneakpeek_allowed(request.user, course, course_key)
-        if sneakpeek_allowed:
-            registered = registered_for_course(course, request.user)
-            regularly_registered = is_regularly_registered(registered, request.user)
-        else:
-            regularly_registered = None
         # Construct the dates fragment
         dates_fragment = None
 
@@ -432,7 +423,6 @@ def course_info(request, course_id):
             'show_enroll_banner': show_enroll_banner,
             'user_is_enrolled': user_is_enrolled,
             'dates_fragment': dates_fragment,
-            'regularly_registered': regularly_registered,
             'course_tools': course_tools,
         }
         context.update(
@@ -785,7 +775,6 @@ def course_about(request, course_id):
             return redirect(reverse(course_home_url_name(course.id), args=[text_type(course.id)]))
 
         registered = registered_for_course(course, request.user)
-        regularly_registered = is_regularly_registered(registered, request.user)
 
         staff_access = bool(has_access(request.user, 'staff', course))
         studio_url = get_studio_url(course, 'settings/details')
@@ -838,8 +827,6 @@ def course_about(request, course_id):
         # Determine which checkout workflow to use -- LMS shoppingcart or Otto basket
         can_add_course_to_cart = _is_shopping_cart_enabled and registration_price and not ecommerce_checkout_link
 
-        sneakpeek_allowed = is_sneakpeek_allowed(request.user, course, course_key)
-
         # Used to provide context to message to student if enrollment not allowed
         can_enroll = bool(has_access(request.user, 'enroll', course))
         invitation_only = course.invitation_only
@@ -849,7 +836,7 @@ def course_about(request, course_id):
         # - Student is already registered for course
         # - Course is already full
         # - Student cannot enroll in course
-        active_reg_button = not(regularly_registered or is_course_full or not can_enroll)
+        active_reg_button = not ((registered and request.user.is_registered()) or is_course_full or not can_enroll)
 
         is_shib_course = uses_shib(course)
 
@@ -896,8 +883,6 @@ def course_about(request, course_id):
             'can_add_course_to_cart': can_add_course_to_cart,
             'cart_link': reverse('shoppingcart.views.show_cart'),
             'pre_requisite_courses': pre_requisite_courses,
-            'regularly_registered': regularly_registered,
-            'sneakpeek_allowed': sneakpeek_allowed,
             'course_image_urls': overview.image_urls,
             'reviews_fragment_view': reviews_fragment_view,
             'sidebar_html_enabled': sidebar_html_enabled,
@@ -1938,28 +1923,6 @@ def financial_assistance_form(request):
             }
         ],
     })
-
-
-def is_sneakpeek_allowed(user, course, course_key):
-    """
-    Helper method for sneakpeek.
-
-    Sneakpeek is only allowed if:
-    1) within enrollment period
-    2) course specifies it's okay
-    3) request.user is not a registered user.
-    """
-    return (has_access(user, 'within_enrollment_period', course) and
-            CoursePreference.course_allows_nonregistered_access(course_key) and
-            not UserProfile.has_registered(user))
-
-
-def is_regularly_registered(registered, user):
-    """
-    Helper method for determining if user is a sneakpeek user.
-    """
-    return (registered and
-            UserProfile.has_registered(user))
 
 
 def get_financial_aid_courses(user):

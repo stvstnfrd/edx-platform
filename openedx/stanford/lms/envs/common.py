@@ -87,11 +87,11 @@ INLINE_ANALYTICS_SUPPORTED_TYPES = {
 }
 INSTALLED_APPS += (
     'branding_stanford',
+    'openedx.stanford.djangoapps.sneakpeek',
     'openedx.stanford.djangoapps.student_utils',
     'openedx.stanford.lms.djangoapps.instructor',
     'openedx.stanford.lms.djangoapps.instructor_task',
     'settings_context_processor',
-    'sneakpeek_deeplink',
     # Added here to allow translations
     'freetextresponse',
     'submit_and_compare',
@@ -107,7 +107,7 @@ MARKETO_CLIENT_ID = None
 MARKETO_CLIENT_SECRET = None
 MARKETO_LIST_ID = None
 MIDDLEWARE_CLASSES += (
-    'sneakpeek_deeplink.middleware.SneakPeekDeepLinkMiddleware',
+    'openedx.stanford.djangoapps.sneakpeek.middleware.SneakPeekLoginMiddleware',
 )
 MKTG_URL_LINK_MAP['BLOG'] = None
 MKTG_URL_LINK_MAP['COPYRIGHT'] = 'copyright'

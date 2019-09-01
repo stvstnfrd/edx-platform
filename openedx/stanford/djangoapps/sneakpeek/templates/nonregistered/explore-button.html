@@ -1,0 +1,32 @@
+<%!
+from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext as _
+%>
+% if course and user.can_enroll_nonregistered(course):
+  <a href="#" class="course_sneakpeek">
+    <span class="sneakpeek">${_("Explore Course")} *</span>
+  </a>
+  <script type="text/javascript">
+  (function (){
+    function sneakpeek_handler(jqXHR) {
+      if (jqXHR.status == 200) {
+        location.href = '${course_target}';
+      }
+      else {
+        $('#register_error')
+        .html("${_('An error occurred. Please try again later.')}")
+        .css('display', 'block');
+      }
+    }
+
+    $('.course_sneakpeek').click(function (event) {
+      $.ajax({
+        url: "${reverse('course_sneakpeek', args=[course.id.to_deprecated_string()])}",
+        type: 'POST',
+        complete: sneakpeek_handler
+      });
+      event.preventDefault();
+    });
+  }());
+  </script>
+% endif
