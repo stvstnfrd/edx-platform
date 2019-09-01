@@ -6,7 +6,8 @@ from mock import patch
 from django.test import RequestFactory
 from django.test.utils import override_settings
 
-from courseware.views.views import get_analytics_answer_dist, process_analytics_answer_dist
+from openedx.stanford.lms.djangoapps.inline_analytics.answer_distribution import get_analytics_answer_dist
+from openedx.stanford.lms.djangoapps.inline_analytics.answer_distribution import process_analytics_answer_dist
 from courseware.tests.factories import UserFactory, InstructorFactory, StaffFactory
 from xmodule.modulestore.tests.factories import CourseFactory
 from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
@@ -41,7 +42,10 @@ class InlineAnalyticsAnswerDistribution(ModuleStoreTestCase):
             '<a href="{ZENDESK_URL}/hc/en-us/requests/new">here</a>'
         ).format(ZENDESK_URL=ZENDESK_URL)
 
-    @override_settings(ZENDESK_URL=ZENDESK_URL)
+    @override_settings(
+        ANALYTICS_API_URL=None,
+        ZENDESK_URL=ZENDESK_URL,
+    )
     def test_no_url(self):
         request = self.factory.post('', self.data, content_type='application/json')
         request.user = self.instructor
@@ -49,7 +53,10 @@ class InlineAnalyticsAnswerDistribution(ModuleStoreTestCase):
         response = get_analytics_answer_dist(request)
         self.assertEquals(response.content, self.zendesk_response)
 
-    @override_settings(ZENDESK_URL=None)
+    @override_settings(
+        ANALYTICS_API_URL=None,
+        ZENDESK_URL=None,
+    )
     def test_no_url_no_zendesk(self):
         request = self.factory.post('', self.data, content_type='application/json')
         request.user = self.instructor
@@ -420,8 +427,9 @@ class InlineAnalyticsAnswerDistribution(ModuleStoreTestCase):
         self.assertEquals(json.loads(return_json.content), processed_data)
 
 
-@override_settings(ANALYTICS_DATA_URL='dummy_url',
-                   ZENDESK_URL=ZENDESK_URL)
+@override_settings(
+    ZENDESK_URL=ZENDESK_URL,
+)
 class InlineAnalyticsAnswerDistributionWithOverrides(ModuleStoreTestCase):
 
     def setUp(self):
@@ -456,8 +464,8 @@ class InlineAnalyticsAnswerDistributionWithOverrides(ModuleStoreTestCase):
         response = get_analytics_answer_dist(request)
         self.assertEquals(response.content, self.zendesk_response)
 
-    @patch('courseware.views.views.process_analytics_answer_dist')
-    @patch('courseware.views.views.Client')
+    @patch('openedx.stanford.lms.djangoapps.inline_analytics.answer_distribution.process_analytics_answer_dist')
+    @patch('openedx.stanford.lms.djangoapps.inline_analytics.answer_distribution.Client')
     def test_staff_and_url(self, mock_client, mock_process_analytics):
         mock_client.return_value.modules.return_value.answer_distribution.return_value = [{}]
         factory = self.factory
@@ -468,8 +476,8 @@ class InlineAnalyticsAnswerDistributionWithOverrides(ModuleStoreTestCase):
         response = get_analytics_answer_dist(request)
         self.assertEquals(response, [{'dummy': 'dummy'}])
 
-    @patch('courseware.views.views.process_analytics_answer_dist')
-    @patch('courseware.views.views.Client')
+    @patch('openedx.stanford.lms.djangoapps.inline_analytics.answer_distribution.process_analytics_answer_dist')
+    @patch('openedx.stanford.lms.djangoapps.inline_analytics.answer_distribution.Client')
     def test_instructor_and_url(self, mock_client, mock_process_analytics):
         mock_client.return_value.modules.return_value.answer_distribution.return_value = [{}]
 
@@ -481,7 +489,7 @@ class InlineAnalyticsAnswerDistributionWithOverrides(ModuleStoreTestCase):
         response = get_analytics_answer_dist(request)
         self.assertEquals(response, [{'dummy': 'dummy'}])
 
-    @patch('courseware.views.views.Client')
+    @patch('openedx.stanford.lms.djangoapps.inline_analytics.answer_distribution.Client')
     def test_not_found_error(self, mock_client):
         mock_client.return_value.modules.return_value.answer_distribution.side_effect = NotFoundError
 
@@ -493,7 +501,7 @@ class InlineAnalyticsAnswerDistributionWithOverrides(ModuleStoreTestCase):
         self.assertEquals(response.status_code, 404)
         self.assertEquals(response.content, 'There are no student answers for this problem yet; please try again later.')
 
-    @patch('courseware.views.views.Client')
+    @patch('openedx.stanford.lms.djangoapps.inline_analytics.answer_distribution.Client')
     def test_invalid_request_error(self, mock_client):
         mock_client.return_value.modules.return_value.answer_distribution.side_effect = InvalidRequestError
 
@@ -505,7 +513,7 @@ class InlineAnalyticsAnswerDistributionWithOverrides(ModuleStoreTestCase):
         self.assertEquals(response.status_code, 500)
         self.assertEquals(response.content, self.zendesk_response)
 
-    @patch('courseware.views.views.Client')
+    @patch('openedx.stanford.lms.djangoapps.inline_analytics.answer_distribution.Client')
     def test_timeout_error(self, mock_client):
         mock_client.return_value.modules.return_value.answer_distribution.side_effect = TimeoutError
 

@@ -1,4 +1,4 @@
-<%page args="id_opened_prefix, id_grade_prefix, id_attempt_prefix, id_tooltip_prefix, course_id, allSubsectionTooltipArr, allProblemTooltipArr, enrollment, **kwargs"/>
+<%page args="id_opened_prefix, id_grade_prefix, id_attempt_prefix, id_tooltip_prefix, course_id, allSubsectionTooltipArr, allProblemTooltipArr, **kwargs"/>
 <%!
   import json
   from django.urls import reverse
@@ -7,7 +7,7 @@
 
 $(function () {
 
-  d3.json("${reverse('all_sequential_open_distrib', kwargs=dict(course_id=text_type(course_id), enrollment=enrollment))}", function(error, json) {
+  d3.json("${reverse('all_sequential_open_distrib', kwargs=dict(course_id=text_type(course_id)))}", function(error, json) {
     var section, paramOpened, barGraphOpened, error;
     var i, curr_id;
     var errorMessage = gettext('Unable to retrieve data, please try again later.');
@@ -54,7 +54,7 @@ $(function () {
     }
   });
 
-  d3.json("${reverse('all_problem_grade_distribution', kwargs=dict(course_id=text_type(course_id), enrollment=enrollment))}", function(error, json) {
+  d3.json("${reverse('all_problem_grade_distribution', kwargs=dict(course_id=text_type(course_id)))}", function(error, json) {
     var section, paramGrade, barGraphGrade, error;
     var i, curr_id;
     var errorMessage = gettext('Unable to retrieve data, please try again later.');

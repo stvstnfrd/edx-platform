@@ -1090,7 +1090,7 @@ class TestProblemReportSplitTestContent(TestReportMixin, TestConditionalContent,
             }
         )
 
-        # Users inherited from TestConditionalContent
+        # Create users
         CourseEnrollmentFactory.create(user=self.student_a, course_id=self.course.id)
         CourseEnrollmentFactory.create(user=self.student_b, course_id=self.course.id)
 

@@ -56,14 +56,6 @@ def data_download_section_data(course_key):
     return data
 
 
-def metrics_section_data(course_key):
-    enrollment = CourseEnrollment.num_enrolled_in(course_key)
-    data = {
-        'enrollment': enrollment,
-    }
-    return data
-
-
 def send_email_section_data():
     keywords = get_keywords_supported()
     data = {
