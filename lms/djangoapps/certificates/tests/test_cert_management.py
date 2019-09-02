@@ -284,6 +284,10 @@ class UpdateCertificateStatusTest(CertificateManagementTest):
             course_id=self.key,
         )
 
+    def _run_command(self, *args, **kwargs):
+        """Run the management command to generate a fake cert. """
+        return call_command('create_fake_cert', *args, **kwargs)
+
     def test_update_cert_default_status(self):
         call_command(
             'update_cert_status',
