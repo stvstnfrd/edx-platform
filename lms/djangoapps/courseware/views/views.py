@@ -432,7 +432,6 @@ def course_info(request, course_id):
             'show_enroll_banner': show_enroll_banner,
             'user_is_enrolled': user_is_enrolled,
             'dates_fragment': dates_fragment,
-            'url_to_enroll': url_to_enroll,
             'regularly_registered': regularly_registered,
             'course_tools': course_tools,
         }
