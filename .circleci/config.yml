@@ -20,9 +20,9 @@ jobs:
         # This branch if available
         - v1-dep-{{ .Branch }}-
         # Default branch if not
-        - v1-dep-master-
+        # - v1-dep-master-
         # Any branch if there are none on the default branch
-        - v1-dep-
+        # - v1-dep-
     # Dependencies
     - run: curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
     - run: sudo apt-get update
