@@ -1,6 +1,7 @@
 """
 Views related to operations on course objects
 """
+import copy
 import json
 import logging
 import os
@@ -12,6 +13,7 @@ from django.http import HttpResponseBadRequest, HttpResponseNotFound
 from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import ensure_csrf_cookie
 from edxmako.shortcuts import render_to_response
+import requests
 
 from opaque_keys import InvalidKeyError
 from util.json_request import JsonResponse
@@ -19,15 +21,18 @@ from xmodule.modulestore.django import modulestore
 from xmodule.modulestore.exceptions import ItemNotFoundError, InsufficientSpecificationError
 from opaque_keys.edx.keys import CourseKey
 from opaque_keys.edx.keys import UsageKey
+from openedx.stanford.cms.djangoapps.contentstore.views.helpers import get_course_and_check_access
+from xmodule.contentstore.content import StaticContent
+from xmodule.contentstore.django import contentstore
+from xmodule.exceptions import NotFoundError
 from xmodule.video_module.transcripts_utils import (
+    get_transcripts_from_youtube,
     GetTranscriptsFromYouTubeException,
     TranscriptsRequestValidationException,
     download_youtube_subs,
+    youtube_video_transcript_name,
 )
 from xmodule.video_module import manage_video_subtitles_save
-
-from contentstore.views.transcripts_ajax import get_transcripts_presence
-from contentstore.views.course import get_course_and_check_access
 
 
 log = logging.getLogger(__name__)
@@ -236,3 +241,154 @@ def get_videos(course):
                     if component.location.category == 'video':
                         video_list.append({'name': component.display_name_with_default, 'location': str(component.location)})
     return video_list
+
+
+def get_transcripts_presence(videos, item):
+    """ fills in the transcripts_presence dictionary after for a given component
+    with its list of videos.
+
+    Returns transcripts_presence dict:
+
+        html5_local: list of html5 ids, if subtitles exist locally for them;
+        is_youtube_mode: bool, if we have youtube_id, and as youtube mode is of higher priority, reflect this with flag;
+        youtube_local: bool, if youtube transcripts exist locally;
+        youtube_server: bool, if youtube transcripts exist on server;
+        youtube_diff: bool, if youtube transcripts exist on youtube server, and are different from local youtube ones;
+        current_item_subs: string, value of item.sub field;
+        status: string, 'Error' or 'Success';
+        subs: string, new value of item.sub field, that should be set in module;
+        command: string, action to front-end what to do and what to show to user.
+    """
+    transcripts_presence = {
+        'html5_local': [],
+        'html5_equal': False,
+        'is_youtube_mode': False,
+        'youtube_local': False,
+        'youtube_server': False,
+        'youtube_diff': True,
+        'current_item_subs': None,
+        'status': 'Success',
+    }
+
+    filename = 'subs_{0}.srt.sjson'.format(item.sub)
+    content_location = StaticContent.compute_location(item.location.course_key, filename)
+    try:
+        local_transcripts = contentstore().find(content_location).data
+        transcripts_presence['current_item_subs'] = item.sub
+    except NotFoundError:
+        pass
+
+    # Check for youtube transcripts presence
+    youtube_id = videos.get('youtube', None)
+    if youtube_id:
+        transcripts_presence['is_youtube_mode'] = True
+
+        # youtube local
+        filename = 'subs_{0}.srt.sjson'.format(youtube_id)
+        content_location = StaticContent.compute_location(item.location.course_key, filename)
+        try:
+            local_transcripts = contentstore().find(content_location).data
+            transcripts_presence['youtube_local'] = True
+        except NotFoundError:
+            log.debug("Can't find transcripts in storage for youtube id: %s", youtube_id)
+
+        # youtube server
+        youtube_text_api = copy.deepcopy(settings.YOUTUBE['TEXT_API'])
+        youtube_text_api['params']['v'] = youtube_id
+        youtube_transcript_name = youtube_video_transcript_name(youtube_text_api)
+        if youtube_transcript_name:
+            youtube_text_api['params']['name'] = youtube_transcript_name
+        youtube_response = requests.get('http://' + youtube_text_api['url'], params=youtube_text_api['params'])
+
+        if youtube_response.status_code == 200 and youtube_response.text:
+            transcripts_presence['youtube_server'] = True
+        #check youtube local and server transcripts for equality
+        if transcripts_presence['youtube_server'] and transcripts_presence['youtube_local']:
+            try:
+                youtube_server_subs = get_transcripts_from_youtube(
+                    youtube_id,
+                    settings,
+                    item.runtime.service(item, "i18n")
+                )
+                if json.loads(local_transcripts) == youtube_server_subs:  # check transcripts for equality
+                    transcripts_presence['youtube_diff'] = False
+            except GetTranscriptsFromYouTubeException:
+                pass
+
+    # Check for html5 local transcripts presence
+    html5_subs = []
+    for html5_id in videos['html5']:
+        filename = 'subs_{0}.srt.sjson'.format(html5_id)
+        content_location = StaticContent.compute_location(item.location.course_key, filename)
+        try:
+            html5_subs.append(contentstore().find(content_location).data)
+            transcripts_presence['html5_local'].append(html5_id)
+        except NotFoundError:
+            log.debug("Can't find transcripts in storage for non-youtube video_id: %s", html5_id)
+        if len(html5_subs) == 2:  # check html5 transcripts for equality
+            transcripts_presence['html5_equal'] = json.loads(html5_subs[0]) == json.loads(html5_subs[1])
+
+    command, subs_to_use = _transcripts_logic(transcripts_presence, videos)
+    transcripts_presence.update({
+        'command': command,
+        'subs': subs_to_use,
+    })
+    return transcripts_presence
+
+
+def _transcripts_logic(transcripts_presence, videos):
+    """
+    By `transcripts_presence` content, figure what show to user:
+
+    returns: `command` and `subs`.
+
+    `command`: string,  action to front-end what to do and what show to user.
+    `subs`: string, new value of item.sub field, that should be set in module.
+
+    `command` is one of::
+
+        replace: replace local youtube subtitles with server one's
+        found: subtitles are found
+        import: import subtitles from youtube server
+        choose: choose one from two html5 subtitles
+        not found: subtitles are not found
+    """
+    command = None
+
+    # new value of item.sub field, that should be set in module.
+    subs = ''
+
+    # youtube transcripts are of high priority than html5 by design
+    if (
+            transcripts_presence['youtube_diff'] and
+            transcripts_presence['youtube_local'] and
+            transcripts_presence['youtube_server']):  # youtube server and local exist
+        command = 'replace'
+        subs = videos['youtube']
+    elif transcripts_presence['youtube_local']:  # only youtube local exist
+        command = 'found'
+        subs = videos['youtube']
+    elif transcripts_presence['youtube_server']:  # only youtube server exist
+        command = 'import'
+    else:  # html5 part
+        if transcripts_presence['html5_local']:  # can be 1 or 2 html5 videos
+            if len(transcripts_presence['html5_local']) == 1 or transcripts_presence['html5_equal']:
+                command = 'found'
+                subs = transcripts_presence['html5_local'][0]
+            else:
+                command = 'choose'
+                subs = transcripts_presence['html5_local'][0]
+        else:  # html5 source have no subtitles
+            # check if item sub has subtitles
+            if transcripts_presence['current_item_subs'] and not transcripts_presence['is_youtube_mode']:
+                log.debug("Command is use existing %s subs", transcripts_presence['current_item_subs'])
+                command = 'use_existing'
+            else:
+                command = 'not_found'
+    log.debug(
+        "Resulted command: %s, current transcripts: %s, youtube mode: %s",
+        command,
+        transcripts_presence['current_item_subs'],
+        transcripts_presence['is_youtube_mode']
+    )
+    return command, subs

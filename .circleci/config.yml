@@ -20,18 +20,18 @@ jobs:
         # This branch if available
         - v1-dep-{{ .Branch }}-
         # Default branch if not
-        - v1-dep-master-
+        # - v1-dep-master-
         # Any branch if there are none on the default branch
-        - v1-dep-
+        # - v1-dep-
     # Dependencies
-    - run: curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+    - run: curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
     - run: sudo apt-get update
     - run: sudo apt-get upgrade
     - run: mkdir -p ~/.cache || true
     - run:
         command: |
           if ! [[ -d ~/.cache/apt/archives ]]; then
-            sudo apt install -y --download-only libssl-dev libffi-dev python-pip
+            sudo apt install -y --download-only libssl-dev libffi-dev python-pip libsqlite3-dev nodejs
             while read package; do
               sudo apt install -y --download-only "${package}" || true
             done <requirements/system/ubuntu/apt-packages.txt
@@ -44,17 +44,8 @@ jobs:
     - run: test -e ~/.cache/venv/edxapp || virtualenv ~/.cache/venv/edxapp
     - run: echo 'source ~/.cache/venv/edxapp/bin/activate' >> $BASH_ENV
     - run: pip install setuptools
-    - run: pip install --exists-action w -r requirements/edx/paver.txt
-    - run: pip install --exists-action w -r requirements/edx/pre.txt
-    - run: pip install --exists-action w -r requirements/edx/github.txt
-    - run: pip install --exists-action w -r requirements/edx/local.txt
-    - run: pip install --exists-action w pbr==0.9.0
-    - run: pip install --exists-action w -r requirements/edx/base.txt
-    - run: pip install --exists-action w -r requirements/edx/paver.txt
-    - run: pip install --exists-action w -r requirements/edx/post.txt
+    - run: pip install --exists-action w -r requirements/edx/testing.txt
     - run: pip install coveralls==1.0
-    - run: pip install pylint
-    - run: pip install astroid
     - run: pip freeze
     - save_cache:
         key: v1-dep-{{ .Branch }}-{{ epoch }}

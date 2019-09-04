@@ -36,6 +36,10 @@ class Info(models.Model):
         auto_now=True,
     )
 
+    class Meta(object):
+        app_label = 'openedx.stanford.djangoapps.auth_lagunita'
+        db_table = 'auth_lagunita_info'
+
     def __unicode__(self):
         message = (
             "Info.objects.get("
