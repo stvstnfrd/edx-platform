@@ -13,7 +13,7 @@ from django_comment_common.models import (
 from openedx.core.djangoapps.course_groups.cohorts import get_legacy_discussion_settings
 from openedx.core.djangoapps.request_cache.middleware import request_cached
 
-from .models import CourseDiscussionSettings
+from django_comment_common.models import CourseDiscussionSettings
 
 
 class ThreadContext(object):

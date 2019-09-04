@@ -10,9 +10,9 @@ from django.contrib.auth.decorators import login_required
 
 from edxmako.shortcuts import render_to_response
 
-from contentstore.views.helpers import xblock_studio_url
-from contentstore.views.course import get_course_and_check_access
 from opaque_keys.edx.keys import CourseKey
+from openedx.stanford.cms.djangoapps.contentstore.views.helpers import get_course_and_check_access
+from openedx.stanford.cms.djangoapps.contentstore.views.helpers import xblock_studio_url
 from xmodule.modulestore.django import modulestore
 from student.auth import has_course_author_access
 

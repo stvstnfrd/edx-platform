@@ -74,6 +74,7 @@ class Role(models.Model):
     class Meta(object):
         # use existing table that was originally created from django_comment_client app
         db_table = 'django_comment_client_role'
+        app_label = 'django_comment_common'
 
     def __unicode__(self):
         # pylint: disable=no-member

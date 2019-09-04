@@ -2,6 +2,7 @@ from cms.envs.test import *
 
 
 INSTALLED_APPS += (
+    'openedx.stanford.djangoapps.auth_lagunita',
     'openedx.stanford.djangoapps.register_cme',
 )
 # Remove sneakpeek during tests to prevent unwanted redirect

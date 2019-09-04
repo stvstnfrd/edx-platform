@@ -25,6 +25,9 @@ class GlobalStatusMessage(ConfigurationModel):
                   '<p>Finally, disable the global status message by adding another empty message with "enabled" '
                   'unchecked.</p>')
 
+    class Meta(object):
+        app_label = 'status'
+
     def full_message(self, course_key):
         """ Returns the full status message, including any course-specific status messages. """
         cache_key = "status_message.{course_id}".format(course_id=unicode(course_key))
