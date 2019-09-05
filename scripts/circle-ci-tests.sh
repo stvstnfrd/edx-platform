@@ -47,8 +47,6 @@ function get_children() {
         case ${app} in
             # hawthorn
             cms.djangoapps.contentstore) ;&
-            cms.djangoapps.course_creators) ;&
-            cms.lib.xblock) ;&
             common.djangoapps.static_replace) ;&
             common.djangoapps.student) ;&
             common.djangoapps.third_party_auth) ;&
@@ -136,10 +134,14 @@ function run_shard_5() {
 
 function run_shard_2() {
     EXIT=0
-    # test_system cms \
-    #     $(get_children openedx/stanford/cms/djangoapps) \
-    # || EXIT=1
-    # emptyxunit "stub"
+    test_system cms \
+        openedx/stanford/cms/djangoapps/contentstore/tests/test_bulksettings.py \
+        openedx/stanford/cms/djangoapps/contentstore/tests/test_bulkupdate.py \
+        openedx/stanford/cms/djangoapps/contentstore/tests/test_utilities.py \
+        $(get_children openedx/stanford/cms/djangoapps) \
+    || EXIT=1
+    # openedx/stanford/cms/djangoapps/contentstore/tests/test_captions.py
+    emptyxunit "stub"
     return ${EXIT}
 }
 
@@ -147,7 +149,7 @@ function run_shard_6() {
     EXIT=0
     test_system cms \
         cms/djangoapps/contentstore/management/commands/tests \
-        $(get_children cms/lib) \
+        cms/lib \
         $(get_children cms/djangoapps) \
     || EXIT=1
     # cms/djangoapps/contentstore/api/tests
