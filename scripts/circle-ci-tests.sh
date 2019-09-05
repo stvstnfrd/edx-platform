@@ -53,7 +53,6 @@ function get_children() {
             common.djangoapps.util) ;&
             lms.djangoapps.courseware) ;&
             lms.djangoapps.instructor) ;&
-            lms.djangoapps.instructor_task) ;&
             lms.djangoapps.lti_provider) ;&
             lms.djangoapps.shoppingcart) ;&
             openedx.core.djangoapps.auth_exchange) ;&
@@ -67,7 +66,6 @@ function get_children() {
             openedx.stanford.cms.djangoapps.contentstore) ;&
             openedx.stanford.djangoapps.auth_lagunita) ;&
             openedx.stanford.djangoapps.register_cme) ;&
-            openedx.stanford.lms.djangoapps.instructor_task) ;&
             openedx.tests.completion_integration) ;&
             # FAIL/ERROR
             common.djangoapps.django_comment_common) ;&
@@ -78,9 +76,9 @@ function get_children() {
             lms.djangoapps.branding) ;&
             lms.djangoapps.ccx) ;&
             openedx.core.djangoapps.cors_csrf) ;&
-            openedx.features.course_experience) ;&
+            openedx.features.course_experience)
             # SEG_FAULT
-            lms.djangoapps.mobile_api)
+            # lms.djangoapps.mobile_api)
                 ;;
             *)
                 apps="${apps} ${app}"
@@ -114,8 +112,7 @@ function run_shard_4() {
 function run_shard_1() {
     EXIT=0
     test_system lms \
-        openedx/stanford/lms/lib \
-        $(get_children openedx/stanford/lms/djangoapps) \
+        openedx/stanford/lms \
     || EXIT=1
     emptyxunit "stub"
     return ${EXIT}
@@ -167,8 +164,6 @@ function run_shard_3() {
     || EXIT=1
     test_system lms \
         openedx/stanford/common \
-    || EXIT=1
-    test_system lms \
         $(get_children openedx/stanford/djangoapps) \
     || EXIT=1
     return $EXIT
