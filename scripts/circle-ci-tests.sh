@@ -32,9 +32,12 @@ function run_paver_quality {
 function test_system() {
     system=${1}
     shift
-    flags='--cov-args="-p"'
-    # paver test_system -s "${system}" -t "${test_id}" ${flags}
-    DJANGO_SETTINGS_MODULE=${system}.envs.test pytest ${@}
+    random_flag=''
+    if [ "${system}" == "lms" ]; then
+        random_flag="--randomly-dont-reorganize"
+    fi
+    echo "DJANGO_SETTINGS_MODULE=openedx.stanford.${system}.envs.test pytest ${random_flag} ${@}"
+    DJANGO_SETTINGS_MODULE=openedx.stanford.${system}.envs.test pytest ${random_flag} ${@}
 }
 function get_children() {
     parent=${1}
@@ -44,15 +47,12 @@ function get_children() {
         case ${app} in
             # hawthorn
             cms.djangoapps.contentstore) ;&
-            cms.djangoapps.course_creators) ;&
-            cms.lib.xblock) ;&
             common.djangoapps.static_replace) ;&
             common.djangoapps.student) ;&
             common.djangoapps.third_party_auth) ;&
             common.djangoapps.util) ;&
             lms.djangoapps.courseware) ;&
             lms.djangoapps.instructor) ;&
-            lms.djangoapps.instructor_task) ;&
             lms.djangoapps.lti_provider) ;&
             lms.djangoapps.shoppingcart) ;&
             openedx.core.djangoapps.auth_exchange) ;&
@@ -66,7 +66,6 @@ function get_children() {
             openedx.stanford.cms.djangoapps.contentstore) ;&
             openedx.stanford.djangoapps.auth_lagunita) ;&
             openedx.stanford.djangoapps.register_cme) ;&
-            openedx.stanford.lms.djangoapps.instructor_task) ;&
             openedx.tests.completion_integration) ;&
             # FAIL/ERROR
             common.djangoapps.django_comment_common) ;&
@@ -77,9 +76,9 @@ function get_children() {
             lms.djangoapps.branding) ;&
             lms.djangoapps.ccx) ;&
             openedx.core.djangoapps.cors_csrf) ;&
-            openedx.features.course_experience) ;&
+            openedx.features.course_experience)
             # SEG_FAULT
-            lms.djangoapps.mobile_api)
+            # lms.djangoapps.mobile_api)
                 ;;
             *)
                 apps="${apps} ${app}"
@@ -92,6 +91,11 @@ function get_children() {
 }
 
 function run_shard_0() {
+    # run stanford-specific quality checks here
+    true
+}
+
+function run_shard_4() {
     PATH=$PATH:node_modules/.bin
     run_paver_quality find_fixme || { EXIT=1; }
     run_paver_quality run_pep8 || { EXIT=1; }
@@ -106,6 +110,16 @@ function run_shard_0() {
 }
 
 function run_shard_1() {
+    EXIT=0
+    test_system lms \
+        openedx/stanford/lms \
+    || EXIT=1
+    emptyxunit "stub"
+    return ${EXIT}
+}
+
+function run_shard_5() {
+    EXIT=0
     test_system lms \
         lms/lib \
         lms/tests.py \
@@ -116,9 +130,23 @@ function run_shard_1() {
 }
 
 function run_shard_2() {
+    EXIT=0
+    test_system cms \
+        openedx/stanford/cms/djangoapps/contentstore/tests/test_bulksettings.py \
+        openedx/stanford/cms/djangoapps/contentstore/tests/test_bulkupdate.py \
+        openedx/stanford/cms/djangoapps/contentstore/tests/test_utilities.py \
+        $(get_children openedx/stanford/cms/djangoapps) \
+    || EXIT=1
+    # openedx/stanford/cms/djangoapps/contentstore/tests/test_captions.py
+    emptyxunit "stub"
+    return ${EXIT}
+}
+
+function run_shard_6() {
+    EXIT=0
     test_system cms \
         cms/djangoapps/contentstore/management/commands/tests \
-        $(get_children cms/lib) \
+        cms/lib \
         $(get_children cms/djangoapps) \
     || EXIT=1
     # cms/djangoapps/contentstore/api/tests
@@ -129,20 +157,20 @@ function run_shard_2() {
 }
 
 function run_shard_3() {
+    EXIT=0
     test_system cms \
         openedx/stanford/common \
-        $(get_children openedx/stanford/cms/djangoapps) \
         $(get_children openedx/stanford/djangoapps) \
     || EXIT=1
     test_system lms \
         openedx/stanford/common \
-    || EXIT=1
-    test_system lms \
-        openedx/stanford/lms \
-    || EXIT=1
-    test_system lms \
         $(get_children openedx/stanford/djangoapps) \
     || EXIT=1
+    return $EXIT
+}
+
+function run_shard_7() {
+    EXIT=0
     test_system cms \
         $(get_children common/djangoapps) \
         $(get_children openedx/core/djangoapps) \
@@ -163,7 +191,7 @@ function run_shard_3() {
     return $EXIT
 }
 
-CIRCLE_JOBS_TOTAL=4
+CIRCLE_JOBS_TOTAL=8
 CIRCLE_NODE_TOTAL=${CIRCLE_NODE_TOTAL:-1}
 CIRCLE_NODE_INDEX=${CIRCLE_NODE_INDEX:-0}
 EXIT=0

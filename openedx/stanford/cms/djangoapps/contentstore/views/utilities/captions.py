@@ -53,7 +53,7 @@ def utility_captions_handler(request, course_key_string):
         json: update the captions of a given video by copying the version of the captions hosted in youtube.
     """
     course_key = CourseKey.from_string(course_key_string)
-    response_format = request.REQUEST.get('format', 'html')
+    response_format = request.POST.get('format') or request.GET.get('format') or 'html'
     if response_format == 'json' or 'application/json' in request.META.get('HTTP_ACCEPT', 'application/json'):
         if request.method == 'POST':  # update
             try:

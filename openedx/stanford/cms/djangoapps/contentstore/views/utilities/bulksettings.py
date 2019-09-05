@@ -139,8 +139,7 @@ def utility_bulksettings_handler(request, course_key_string):
     """
 
     course_key = CourseKey.from_string(course_key_string)
-    response_format = request.REQUEST.get('format', 'html')
-
+    response_format = request.POST.get('format') or request.GET.get('format') or 'html'
     if response_format == 'html':
         if request.method == 'GET':
 
