@@ -1553,6 +1553,7 @@ def _issue_with_data(item, part_id, message_by_part, question_types_by_part, num
     return False
 
 
+def is_course_passed(student, course, course_grade=None):
     """
     check user's course passing status. return True if passed
 
