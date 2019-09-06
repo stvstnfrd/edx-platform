@@ -10,7 +10,7 @@ from student.models import UserProfile
 % if course and user.is_nonregistered():
   <%
   if settings.FEATURES.get('RESTRICT_ENROLL_BY_REG_METHOD'):
-    reg_url = reverse('course-specific-register', args=[course.id.to_deprecated_string()])
+    reg_url = reverse('course-specific-register', args=[unicode(course.id)])
   else:
     reg_url = reverse('register_user')
   %>

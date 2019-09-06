@@ -21,7 +21,7 @@ from django.utils.translation import ugettext as _
 
     $('.course_sneakpeek').click(function (event) {
       $.ajax({
-        url: "${reverse('course_sneakpeek', args=[course.id.to_deprecated_string()])}",
+        url: "${reverse('course_sneakpeek', args=[unicode(course.id)])}",
         type: 'POST',
         complete: sneakpeek_handler
       });
