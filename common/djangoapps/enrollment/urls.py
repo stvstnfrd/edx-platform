@@ -20,4 +20,4 @@ urlpatterns = [
         EnrollmentCourseDetailView.as_view(), name='courseenrollmentdetails'),
     url(r'^unenroll/$', UnenrollmentView.as_view(), name='unenrollment'),
 ]
-urlpatterns += [url(r'', include('openedx.stanford.common.djangoapps.enrollment.urls')),]
+urlpatterns += [url(r'', include('openedx.stanford.common.djangoapps.enrollment.urls')), ]
