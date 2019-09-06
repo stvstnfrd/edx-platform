@@ -10,17 +10,24 @@ set -o pipefail
 # just done via the dependencies override section of circle.yml.
 export NO_PREREQ_INSTALL='true'
 
-EXIT=0
+CIRCLE_JOBS_TOTAL=8
+CIRCLE_NODE_TOTAL=${CIRCLE_NODE_TOTAL:-1}
+CIRCLE_NODE_INDEX=${CIRCLE_NODE_INDEX:-0}
+CIRCLE_TEST_REPORTS=${CIRCLE_TEST_REPORTS:-reports/junit}
+CIRCLE_BUILD_NUM=${CIRCLE_BUILD_NUM:-1}
+export TRAVIS_JOB_ID=${CIRCLE_BUILD_NUM}
+mkdir -p "${CIRCLE_TEST_REPORTS}"
 
-function emptyxunit {
-    mkdir -p reports
-    cat > reports/$1.xml <<END
+function empty_junit {
+    name=${1:-empty}
+    cat > ${CIRCLE_TEST_REPORTS}/${name}.xml <<END
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="$1" tests="1" errors="0" failures="0" skip="0">
-<testcase classname="pavelib.quality" name="$1" time="0.604"></testcase>
+<testsuite name="${name}" tests="1" errors="0" failures="0" skip="0">
+<testcase classname="pavelib.quality" name="${name}" time="0.604"></testcase>
 </testsuite>
 END
 }
+
 function run_paver_quality {
     QUALITY_TASK=$1
     shift
@@ -30,14 +37,18 @@ function run_paver_quality {
     $TOX paver $QUALITY_TASK $* 2>&1 | tee $LOG_PREFIX.log
 }
 function test_system() {
+    name=${1}
+    shift
     system=${1}
     shift
     random_flag=''
     if [ "${system}" == "lms" ]; then
         random_flag="--randomly-dont-reorganize"
     fi
-    echo "DJANGO_SETTINGS_MODULE=openedx.stanford.${system}.envs.test pytest ${random_flag} ${@}"
-    DJANGO_SETTINGS_MODULE=openedx.stanford.${system}.envs.test pytest ${random_flag} ${@}
+    junit_flag="--junit-xml=${CIRCLE_TEST_REPORTS}/pytest-${system}-${name}.xml"
+    cover_flags="--cov --cov-append"
+    echo "DJANGO_SETTINGS_MODULE=openedx.stanford.${system}.envs.test pytest ${junit_flag} ${random_flag} ${cover_flags} ${@}"
+    DJANGO_SETTINGS_MODULE=openedx.stanford.${system}.envs.test pytest ${junit_flag} ${random_flag} ${cover_flags} ${@}
 }
 function get_children() {
     parent=${1}
@@ -51,17 +62,22 @@ function get_children() {
             common.djangoapps.student) ;&
             common.djangoapps.third_party_auth) ;&
             common.djangoapps.util) ;&
+            lms.djangoapps.class_dashboard) ;&
             lms.djangoapps.courseware) ;&
+            lms.djangoapps.django_comment_client) ;&
             lms.djangoapps.instructor) ;&
             lms.djangoapps.lti_provider) ;&
             lms.djangoapps.shoppingcart) ;&
+            lms.djangoapps.verify_student) ;&
             openedx.core.djangoapps.auth_exchange) ;&
             openedx.core.djangoapps.bookmarks) ;&
             openedx.core.djangoapps.catalog) ;&
             openedx.core.djangoapps.credit) ;&
             openedx.core.djangoapps.dark_lang) ;&
             openedx.core.djangoapps.external_auth) ;&
+            openedx.core.djangoapps.lang_pref) ;&
             openedx.core.djangoapps.oauth_dispatch) ;&
+            openedx.core.djangoapps.request_cache) ;&
             openedx.core.djangoapps.user_api) ;&
             openedx.stanford.cms.djangoapps.contentstore) ;&
             openedx.stanford.djangoapps.auth_lagunita) ;&
@@ -97,54 +113,51 @@ function run_shard_0() {
 
 function run_shard_4() {
     PATH=$PATH:node_modules/.bin
+    EXIT=0
     run_paver_quality find_fixme || { EXIT=1; }
     run_paver_quality run_pep8 || { EXIT=1; }
     run_paver_quality run_pylint --system="cms,common,lms,openedx,pavelib" || { EXIT=1; }
-    run_paver_quality run_eslint -l $ESLINT_THRESHOLD || { EXIT=1; }
-    run_paver_quality run_stylelint -l $STYLELINT_THRESHOLD || { EXIT=1; }
-    paver run_quality -p 80 || EXIT=1
-    # run_paver_quality run_complexity || echo "Unable to calculate code complexity. Ignoring error."
-    # run_paver_quality run_xsslint -t $XSSLINT_THRESHOLDS || { EXIT=1; }
-    emptyxunit "stub"
+    ## BROKE: run_paver_quality run_eslint -l ${ESLINT_THRESHOLD} || { EXIT=1; }
+    run_paver_quality run_stylelint -l ${STYLELINT_THRESHOLD} || { EXIT=1; }
+    run_paver_quality run_quality -p 80 || EXIT=1
+    run_paver_quality run_complexity || echo "Unable to calculate code complexity. Ignoring error."
+    run_paver_quality run_xsslint -t $XSSLINT_THRESHOLDS || { EXIT=1; }
     return ${EXIT}
 }
 
 function run_shard_1() {
     EXIT=0
-    test_system lms \
+    test_system stanford-lms lms \
         openedx/stanford/lms \
     || EXIT=1
-    emptyxunit "stub"
     return ${EXIT}
 }
 
 function run_shard_5() {
     EXIT=0
-    test_system lms \
+    test_system edx-lms lms \
         lms/lib \
         lms/tests.py \
         $(get_children lms/djangoapps) \
     || EXIT=1
-    emptyxunit "stub"
     return ${EXIT}
 }
 
 function run_shard_2() {
     EXIT=0
-    test_system cms \
+    test_system stanford-cms cms \
         openedx/stanford/cms/djangoapps/contentstore/tests/test_bulksettings.py \
         openedx/stanford/cms/djangoapps/contentstore/tests/test_bulkupdate.py \
         openedx/stanford/cms/djangoapps/contentstore/tests/test_utilities.py \
         $(get_children openedx/stanford/cms/djangoapps) \
     || EXIT=1
     # openedx/stanford/cms/djangoapps/contentstore/tests/test_captions.py
-    emptyxunit "stub"
     return ${EXIT}
 }
 
 function run_shard_6() {
     EXIT=0
-    test_system cms \
+    test_system edx-cms cms \
         cms/djangoapps/contentstore/management/commands/tests \
         cms/lib \
         $(get_children cms/djangoapps) \
@@ -152,17 +165,16 @@ function run_shard_6() {
     # cms/djangoapps/contentstore/api/tests
     # cms/djangoapps/contentstore/tests
     # cms/djangoapps/contentstore/views/tests
-    emptyxunit "stub"
     return ${EXIT}
 }
 
 function run_shard_3() {
     EXIT=0
-    test_system cms \
+    test_system stanford-common cms \
         openedx/stanford/common \
         $(get_children openedx/stanford/djangoapps) \
     || EXIT=1
-    test_system lms \
+    test_system stanford-common lms \
         openedx/stanford/common \
         $(get_children openedx/stanford/djangoapps) \
     || EXIT=1
@@ -171,14 +183,14 @@ function run_shard_3() {
 
 function run_shard_7() {
     EXIT=0
-    test_system cms \
+    test_system edx-common cms \
         $(get_children common/djangoapps) \
         $(get_children openedx/core/djangoapps) \
         openedx/core/djangolib \
         openedx/core/lib \
         openedx/tests \
     || EXIT=1
-    test_system lms \
+    test_system edx-common lms \
         $(get_children common/djangoapps) \
         $(get_children openedx/core/djangoapps) \
         openedx/core/djangolib \
@@ -186,18 +198,22 @@ function run_shard_7() {
         $(get_children openedx/tests) \
         $(get_children openedx/features) \
     || EXIT=1
+    test_system edx-pavelib lms \
+        pavelib \
+    || EXIT=1
     # paver test_lib --cov-args="-p" --with-xunitmp || EXIT=1
-    emptyxunit "stub"
     return $EXIT
 }
 
-CIRCLE_JOBS_TOTAL=8
-CIRCLE_NODE_TOTAL=${CIRCLE_NODE_TOTAL:-1}
-CIRCLE_NODE_INDEX=${CIRCLE_NODE_INDEX:-0}
-EXIT=0
+_EXIT=0
+empty_junit
 for job in $(seq 0 $(( ${CIRCLE_JOBS_TOTAL} - 1 ))); do
     node=$(( ${job} % ${CIRCLE_NODE_TOTAL} ))
     if [ "${node}" -eq "${CIRCLE_NODE_INDEX}" ]; then
-        run_shard_${job} || EXIT=1
+        run_shard_${job} || _EXIT=1
     fi
 done
+if [ -e reports/quality_junitxml ]; then
+    find reports/quality_junitxml -type f -name '*.xml' -print0 | xargs -0 --no-run-if-empty cp -t "${CIRCLE_TEST_REPORTS}"
+fi
+exit ${_EXIT}

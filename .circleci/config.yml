@@ -1,29 +1,23 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/Stanford-Online/edx-platform
+    working_directory: ~/src/edx-platform
     parallelism: 4
     shell: /bin/bash --login
     environment:
-      CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
-      CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
+      CIRCLE_TEST_REPORTS: /tmp/circleci-results
+      COVERALLS_PARALLEL: true
       NO_PREREQ_INSTALL: false
-    # https://circleci.com/docs/2.0/circleci-images/
     docker:
     - image: 'circleci/buildpack-deps:xenial-scm-browsers'
     steps:
     - checkout
-    # https://circleci.com/docs/2.0/artifacts/
-    - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
     - restore_cache:
         keys:
-        # This branch if available
         - v1-dep-{{ .Branch }}-
-        # Default branch if not
         # - v1-dep-master-
-        # Any branch if there are none on the default branch
         # - v1-dep-
-    # Dependencies
+    - run: echo 'export TRAVIS_JOB_ID="${CIRCLE_BUILD_NUM}"' >> $BASH_ENV
     - run: curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
     - run: sudo apt-get update
     - run: sudo apt-get upgrade
@@ -41,6 +35,7 @@ jobs:
     - run: find ~/.cache/apt/archives -name '*.deb' -print0 | xargs -0 sudo dpkg -i
     - run: sudo service mongodb start || true
     - run: npm install eslint-config-edx eslint-config-edx-es5
+    - run: npm install
     - run: test -e ~/.cache/venv/edxapp || virtualenv ~/.cache/venv/edxapp
     - run: echo 'source ~/.cache/venv/edxapp/bin/activate' >> $BASH_ENV
     - run: pip install setuptools
@@ -54,24 +49,14 @@ jobs:
         - ~/.cache/pip
         - ~/.cache/venv
         - ./node_modules
-    # Test
     - run:
         command: ./scripts/all-tests.sh
         no_output_timeout: 900s
     - run:
-        name: mkdir -p $CIRCLE_TEST_REPORTS/junit
-        command: if [ "$CIRCLE_NODE_INDEX" == "0" ]; then mkdir -p $CIRCLE_TEST_REPORTS/junit; fi
-    - run: if [ $(find reports -type f | wc -l) -gt 0 ] ; then cp -r reports/. $CIRCLE_TEST_REPORTS/junit ; fi
-    - run:
         name: if [ -z $COVERALLS_REPO_TOKEN ]; then echo "Coveralls token not defined."; else coveralls; fi
-        command: if [ "$CIRCLE_NODE_INDEX" == "0" ]; then if [ -z $COVERALLS_REPO_TOKEN ]; then echo "Coveralls token not defined."; else coveralls; fi; fi
+        command: if [ -z $COVERALLS_REPO_TOKEN ]; then echo "Coveralls token not defined."; else coveralls || true; fi
+        when: on_success
     - store_test_results:
-        path: /tmp/circleci-test-results
+        path: /tmp/circleci-results
     - store_artifacts:
-        path: /tmp/circleci-artifacts
-    - store_artifacts:
-        path: reports
-    - store_artifacts:
-        path: test_root/log
-    - store_artifacts:
-        path: /tmp/circleci-test-results
+        path: reports/.coverage
