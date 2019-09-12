@@ -189,7 +189,7 @@ def get_cached_discussion_id_map(course, discussion_ids, user):
                 continue
             entries.append(get_discussion_id_map_entry(xblock))
         return dict(entries)
-    except ItemNotFoundError, DiscussionIdMapIsNotCached:
+    except (ItemNotFoundError, DiscussionIdMapIsNotCached):
         return get_discussion_id_map(course, user)
 
 
@@ -413,7 +413,7 @@ def discussion_category_id_access(course, user, discussion_id, xblock=None):
                 return False
             xblock = modulestore().get_item(key)
         return has_required_keys(xblock) and has_access(user, 'load', xblock, course.id)
-    except ItemNotFoundError, DiscussionIdMapIsNotCached:
+    except (ItemNotFoundError, DiscussionIdMapIsNotCached):
         return discussion_id in get_discussion_categories_ids(course, user)
 
 
