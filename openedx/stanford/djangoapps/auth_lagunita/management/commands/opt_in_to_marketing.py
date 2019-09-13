@@ -24,6 +24,8 @@ class Command(BaseCommand):
 
     access_token = None
     api_url = None
+    blacklist_courses = []
+    blacklist_organizations = []
     client_id = None
     client_secret = None
     dry_run = None
@@ -63,6 +65,20 @@ class Command(BaseCommand):
             '--client-secret',
             help='Override Client Secret for Marketo API access',
         )
+        parser.add_argument(
+            '-b',
+            '--blacklist-organization',
+            help='Set one or more Course Organizations to "blacklist" a user and omit them from optin',
+            action='append',
+            dest='blacklist_organizations',
+        )
+        parser.add_argument(
+            '-B',
+            '--blacklist-course',
+            help='Set one or more Course IDs to "blacklist" a user and omit them from optin',
+            action='append',
+            dest='blacklist_courses',
+        )
 
     def _initialize_settings(self, **kwargs):
         """
@@ -70,6 +86,8 @@ class Command(BaseCommand):
         """
         self.access_token = kwargs['access_token']
         self.api_url = kwargs['api_url'] or settings.MARKETO_API_URL
+        self.blacklist_organizations = kwargs['blacklist_organizations'] or settings.MARKETO_BLACKLIST_ORGANIZATIONS
+        self.blacklist_courses = kwargs['blacklist_courses'] or settings.MARKETO_BLACKLIST_COURSES
         self.client_id = kwargs['client_id'] or settings.MARKETO_CLIENT_ID
         self.client_secret = kwargs['client_secret'] or settings.MARKETO_CLIENT_SECRET
         self.dry_run = kwargs['dry_run']
@@ -97,10 +115,13 @@ class Command(BaseCommand):
             self.client_secret,
         )
         log.info('User lookup attempted')
-        need_subscribed = Info.need_subscribed()
         faked = 0
         failed = 0
         subscribed = 0
+        need_subscribed = Info.need_subscribed(
+            blacklist_organizations=self.blacklist_organizations,
+            blacklist_courses=self.blacklist_courses,
+        )
         for info in need_subscribed:
             user = info.user
             if self.dry_run:
