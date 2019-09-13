@@ -473,6 +473,7 @@ class MongoContentStore(ContentStore):
         return dbkey
 
     def ensure_indexes(self):
+        """
         # Index needed thru 'category' by `_get_all_content_for_course` and others. That query also takes a sort
         # which can be `uploadDate`, `displayname`,
         # TODO: uncomment this line once this index in prod is cleaned up. See OPS-2863 for tracking clean up.
@@ -487,6 +488,7 @@ class MongoContentStore(ContentStore):
             #  sparse=True,
             #  background=True
         #  )
+        """
         create_collection_index(
             self.fs_files,
             [

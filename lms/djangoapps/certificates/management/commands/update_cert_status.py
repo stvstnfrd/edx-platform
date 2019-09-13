@@ -72,7 +72,7 @@ class Command(BaseCommand):
         if not user:
             raise CommandError(u'username-or-email is required')
 
-        status = options['status']
+        status = options.get('status', CertificateStatuses.unavailable)
 
         if status not in VALID_STATUSES:
             raise CommandError(

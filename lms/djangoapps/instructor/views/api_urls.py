@@ -92,4 +92,4 @@ urlpatterns = [
     url(r'^certificate_invalidation_view/$', api.certificate_invalidation_view, name='certificate_invalidation_view'),
 ]
 from django.conf.urls import include
-urlpatterns += [url(r'', include('openedx.stanford.lms.djangoapps.instructor.urls')),]
+urlpatterns += [url(r'', include('openedx.stanford.lms.djangoapps.instructor.urls')), ]
