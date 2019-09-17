@@ -73,7 +73,7 @@ export class StudentAccountDeletion extends React.Component {
     );
 
     const acctDeletionWarningText = StringUtils.interpolate(
-      gettext('{strongStart}Warning: Account deletion is permanent.{strongEnd} Please read the above carefully before proceeding. This is an irreversible action, and {strongStart}you will no longer be able to use the same email on edX.{strongEnd}'),
+      gettext('{strongStart}Warning: Account deletion is permanent.{strongEnd} Please read the above carefully before proceeding. This is an irreversible action, and {strongStart}you will no longer be able to use the same email on this site.{strongEnd}'),
       {
         strongStart: '<strong>',
         strongEnd: '</strong>',
@@ -84,7 +84,7 @@ export class StudentAccountDeletion extends React.Component {
       <div className="account-deletion-details">
         <p className="account-settings-header-subtitle">{ gettext('We’re sorry to see you go!') }</p>
         <p className="account-settings-header-subtitle">{ gettext('Please note: Deletion of your account and personal data is permanent and cannot be undone. We will not be able to recover your account or the data that is deleted.') }</p>
-        <p className="account-settings-header-subtitle">{ gettext('Once your account is deleted, you will be unable to use this account to take any more courses on Lagunita.') }</p>
+        <p className="account-settings-header-subtitle">{ gettext('Once your account is deleted, you will be unable to use this account to take any more courses on this site.') }</p>
         <p
           className="account-settings-header-subtitle"
           dangerouslySetInnerHTML={{ __html: loseAccessText }}
