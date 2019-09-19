@@ -138,7 +138,7 @@ class StudentAccountDeletionConfirmationModal extends React.Component {
                     </div>
                     <div className="alert-content">
                       <h3 className="alert-title">{ gettext('You have selected “Delete my account.” Deletion of your account and personal data is permanent and cannot be undone. We will not be able to recover your account or the data that is deleted.') }</h3>
-                      <p>{ gettext('If you proceed, you will be unable to use this account to take any more courses on Lagunita.') }</p>
+                      <p>{ gettext('If you proceed, you will be unable to use this account to take any more courses on this site.') }</p>
                       <p dangerouslySetInnerHTML={{ __html: loseAccessText }} />
                     </div>
                   </div>
