@@ -28,6 +28,7 @@ EXTRA_MIMETYPES = {
     # '.woff': 'application/font-woff',
 }
 FEATURES.update({
+    'ENABLE_ACCOUNT_DELETION': False,
     'ENABLE_CHAT': False,
     'ENABLE_COURSE_SORTING_BY_START_DATE': False,
     'ENABLE_DISCUSSION_HOME_PANEL': True,
