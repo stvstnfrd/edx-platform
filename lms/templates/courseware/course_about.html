@@ -28,26 +28,6 @@ from six import string_types
       event.preventDefault();
     });
 
-    sneakpeek_handler = function(jqXHR) {
-      if (jqXHR.status == 200) {
-        location.href = "${course_target}";
-      }
-      else {
-        $("#register_error")
-        .html("${_('An error occurred. Please try again later.')}")
-        .css("display", "block");
-      }
-    };
-
-    $(".course_sneakpeek").click(function(event) {
-      $.ajax({
-        url: "${reverse('course_sneakpeek', args=[course.id.to_deprecated_string()])}",
-        type: "POST",
-        complete: sneakpeek_handler
-      });
-      event.preventDefault();
-    });
-
     % if can_add_course_to_cart:
       add_course_complete_handler = function(jqXHR, textStatus) {
         if (jqXHR.status == 200) {
@@ -143,7 +123,7 @@ from six import string_types
         </div>
 
         <div class="main-cta">
-        %if regularly_registered:
+        %if registered and user.is_registered():
           %if show_courseware_link:
             <a href="${course_target}">
           %endif
@@ -202,12 +182,8 @@ from six import string_types
           <a href="${reg_href}" class="${href_class}">
             ${_("Enroll Now")}
           </a>
-          % if sneakpeek_allowed and not regularly_registered:
-            <a href="#" class="course_sneakpeek">
-              <span class="sneakpeek">${_("Explore Course")} *</span>
-            </a>
-            <%include file="sneak_peek_tos_privacy.html" />
-          % endif
+          <%include file="/nonregistered/explore-button.html" args="course_target=course_target" />
+          <%include file="/nonregistered/tos-and-privacy.html" args="user=user, course=course" />
           <div id="register_error"></div>
         %endif
         </div>
@@ -245,9 +221,7 @@ from six import string_types
       <div class="inner-wrapper">
         ${get_course_about_section(request, course, "overview")}
       </div>
-      % if sneakpeek_allowed and not regularly_registered:
-        <%include file="sneak_peek_tos_privacy.html" />
-      % endif
+      <%include file="/nonregistered/tos-and-privacy.html" args="user=user, course=course" />
     </div>
     </%block>
 

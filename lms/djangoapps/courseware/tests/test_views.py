@@ -66,7 +66,6 @@ from openedx.core.lib.url_utils import quote_slashes
 from openedx.features.course_experience import COURSE_OUTLINE_PAGE_FLAG, UNIFIED_COURSE_TAB_FLAG
 from openedx.features.enterprise_support.tests.mixins.enterprise import EnterpriseTestConsentRequired
 from student.models import CourseEnrollment
-from student.tests.factories import NonRegisteredUserFactory
 from student.tests.factories import TEST_PASSWORD, AdminFactory, CourseEnrollmentFactory, UserFactory
 from util.tests.test_date_utils import fake_pgettext, fake_ugettext
 from util.url import reload_django_url_config
@@ -1125,28 +1124,6 @@ class TestAccordionDueDate(BaseDueDateTests):
     @override_waffle_flag(COURSE_OUTLINE_PAGE_FLAG, active=False)
     def test_format_none(self):
         super(TestAccordionDueDate, self).test_format_none()
-
-
-# Stanford Sneak Peek tests
-@attr(shard=1)
-class TestNonRegisteredUser(TestCase):
-    """
-    Tests nonregistered (auto-created) users
-    """
-    def setUp(self):
-        self.request_factory = RequestFactory()
-        self.user = NonRegisteredUserFactory()
-        self.course_id = "course/id/doesnt_matter"
-
-    def test_nonregistered_user_factory(self):
-        self.assertTrue(self.user.profile.nonregistered)
-
-    def test_nonregistered_progress_404(self):
-        with self.assertRaises(Http404):
-            req = self.request_factory.get(reverse('progress', args=[self.course_id]))
-            req.user = self.user
-            views.progress(req, self.course_id)
-# / Stanford Sneak Peek tests
 
 
 @attr(shard=5)

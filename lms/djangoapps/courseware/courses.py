@@ -514,18 +514,6 @@ def sort_by_announcement(courses):
     return courses
 
 
-def registered_for_course(course, user):
-    """
-    Return CourseEnrollment if user is registered for course, else False
-    """
-    if user is None:
-        return False
-    if user.is_authenticated():
-        return CourseEnrollment.is_enrolled(user, course.id)
-    else:
-        return False
-
-
 def sort_by_start_date(courses):
     """
     Returns a list of courses sorted by their start date, latest first.

@@ -124,7 +124,7 @@ class AccessUtilsTestCase(ModuleStoreTestCase):
 
 @ddt.ddt
 @attr(shard=1)
-@mock.patch('student.models.UserProfile.has_registered', mock.Mock(return_value=True))
+@patch('openedx.stanford.djangoapps.sneakpeek.utils.is_registered', Mock(return_value=True))
 class CoursewareContextTestCase(ModuleStoreTestCase):
     """
     Base testcase class for courseware context for the
@@ -231,7 +231,7 @@ class CoursewareContextTestCase(ModuleStoreTestCase):
 
 
 @attr(shard=3)
-@mock.patch('student.models.UserProfile.has_registered', mock.Mock(return_value=True))
+@patch('openedx.stanford.djangoapps.sneakpeek.utils.is_registered', Mock(return_value=True))
 class CachedDiscussionIdMapTestCase(ModuleStoreTestCase):
     """
     Tests that using the cache of discussion id mappings has the same behavior as searching through the course.
@@ -367,7 +367,7 @@ class CategoryMapTestMixin(object):
 
 
 @attr(shard=1)
-@mock.patch('student.models.UserProfile.has_registered', mock.Mock(return_value=True))
+@patch('openedx.stanford.djangoapps.sneakpeek.utils.is_registered', Mock(return_value=True))
 class CategoryMapTestCase(CategoryMapTestMixin, ModuleStoreTestCase):
     """
     Base testcase class for discussion categories for the

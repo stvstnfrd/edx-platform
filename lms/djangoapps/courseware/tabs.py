@@ -10,7 +10,6 @@ from django.utils.translation import ugettext_noop
 from openedx.core.lib.course_tabs import CourseTabPluginManager
 from openedx.features.course_experience import UNIFIED_COURSE_TAB_FLAG, default_course_url_name
 from student.models import CourseEnrollment
-from student.models import UserProfile
 from xmodule.tabs import CourseTab, CourseTabList, course_reverse_func_from_name_func, key_checker
 
 
@@ -312,11 +311,7 @@ def get_course_tab_list(request, course):
     Retrieves the course tab list from xmodule.tabs and manipulates the set as necessary
     """
     user = request.user
-    xmodule_tab_list = CourseTabList.iterate_displayable(
-        course,
-        user=user,
-        is_user_sneakpeek=not UserProfile.has_registered(user),
-    )
+    xmodule_tab_list = CourseTabList.iterate_displayable(course, user=user)
 
     # Now that we've loaded the tabs for this course, perform the Entrance Exam work.
     # If the user has to take an entrance exam, we'll need to hide away all but the

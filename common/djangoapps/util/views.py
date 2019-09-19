@@ -24,7 +24,6 @@ from edxmako.shortcuts import render_to_response, render_to_string
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from openedx.features.enterprise_support import api as enterprise_api
 from student.models import CourseEnrollment
-from student.models import UserProfile
 from student.roles import GlobalStaff
 
 log = logging.getLogger(__name__)
@@ -389,7 +388,7 @@ def get_feedback_form_context(request):
 
     context["additional_info"] = {}
 
-    if UserProfile.has_registered(request.user):
+    if request.user.is_registered():
         context["realname"] = request.user.profile.name
         context["email"] = request.user.email
         context["additional_info"]["username"] = request.user.username
@@ -433,7 +432,7 @@ def submit_feedback(request):
 
     required_fields = ["subject", "details"]
 
-    if not UserProfile.has_registered(request.user):
+    if not request.user.is_registered():
         required_fields += ["name", "email"]
 
     required_field_errs = {
@@ -446,7 +445,7 @@ def submit_feedback(request):
         if field not in request.POST or not request.POST[field]:
             return build_error_response(400, field, required_field_errs[field])
 
-    if not UserProfile.has_registered(request.user):
+    if not request.user.is_registered():
         try:
             validate_email(request.POST["email"])
         except ValidationError:

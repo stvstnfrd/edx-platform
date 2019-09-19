@@ -52,7 +52,6 @@ from student.roles import (
     OrgStaffRole,
     SupportStaffRole
 )
-from student.models import UserProfile
 from util import milestones_helpers as milestones_helpers
 from util.milestones_helpers import (
     any_unfulfilled_milestones,
@@ -330,30 +329,6 @@ def _has_access_course(user, action, courselike):
             else response
         )
 
-    def can_load_forum():
-        """
-        Can this user access the forums in this course?
-        """
-        return (
-            can_load()
-            and
-            UserProfile.has_registered(user)
-        )
-
-    def within_enrollment_period():
-        """
-        Just a time boundary check, handles if start or stop were set to None
-        """
-        now = datetime.now(UTC)
-        start = courselike.enrollment_start
-        if start is not None:
-            start = start.replace(tzinfo=UTC)
-        end = courselike.enrollment_end
-        if end is not None:
-            end = end.replace(tzinfo=UTC)
-
-        return (start is None or now > start) and (end is None or now < end)
-
     def can_enroll():
         """
         Returns whether the user can enroll in the course.
@@ -392,16 +367,16 @@ def _has_access_course(user, action, courselike):
 
     checkers = {
         'load': can_load,
-        'load_forum': can_load_forum,
         'load_mobile': lambda: can_load() and _can_load_course_on_mobile(user, courselike),
         'enroll': can_enroll,
         'see_exists': see_exists,
-        'within_enrollment_period': within_enrollment_period,
         'staff': lambda: _has_staff_access_to_descriptor(user, courselike, courselike.id),
         'instructor': lambda: _has_instructor_access_to_descriptor(user, courselike, courselike.id),
         'see_in_catalog': can_see_in_catalog,
         'see_about_page': can_see_about_page,
     }
+    from openedx.stanford.djangoapps.sneakpeek.lib import extend_checkers_has_access_course
+    checkers.update(extend_checkers_has_access_course(user, courselike, can_load))
 
     return _dispatch(checkers, action, user, courselike)
 
@@ -424,49 +399,6 @@ def _has_access_error_desc(user, action, descriptor, course_key):
     }
 
     return _dispatch(checkers, action, user, descriptor)
-
-
-NONREGISTERED_CATEGORY_WHITELIST = [
-    "about",
-    "chapter",
-    "course",
-    "course_info",
-    "problem",
-    "sequential",
-    "vertical",
-    "videoalpha",
-    #"combinedopenended",
-    #"discussion",
-    "html",
-    #"peergrading",
-    "static_tab",
-    "video",
-    #"annotatable",
-    "book",
-    "conditional",
-    #"crowdsource_hinter",
-    "custom_tag_template",
-    #"discuss",
-    #"error",
-    "hidden",
-    "image",
-    "imagemodal",
-    "invideoquiz",
-    "problemset",
-    "randomize",
-    "raw",
-    "section",
-    "slides",
-    "timelimit",
-    "videodev",
-    "videosequence",
-    "word_cloud",
-    "wrapper",
-]
-
-
-def _can_load_descriptor_nonregistered(descriptor):
-    return descriptor.category in NONREGISTERED_CATEGORY_WHITELIST
 
 
 def _has_group_access(descriptor, user, course_key):
@@ -559,10 +491,8 @@ def _has_access_descriptor(user, action, descriptor, course_key=None):
         students to see modules.  If not, views should check the course, so we
         don't have to hit the enrollments table on every module load.
         """
-        if user.is_authenticated():
-            if not UserProfile.has_registered(user):
-                if not _can_load_descriptor_nonregistered(descriptor):
-                    return ACCESS_DENIED
+        if user.deny_nonregistered_access(descriptor):
+            return ACCESS_DENIED
 
         # If the user (or the role the user is currently masquerading as) does not have
         # access to this content, then deny access. The problem with calling _has_staff_access_to_descriptor

@@ -4,20 +4,23 @@ Tests for deeplink middleware for sneakpeek
 from datetime import datetime, timedelta
 from ddt import ddt, data
 from importlib import import_module
+import unittest
 
 from django.conf import settings
+from django.contrib.auth.models import AnonymousUser
+from django.http import Http404
 from django.test import Client
+from django.test import TestCase
 from django.test.client import RequestFactory
 from django.test.utils import override_settings
-from django.contrib.auth.models import AnonymousUser
-from xmodule.modulestore.tests.django_utils import TEST_DATA_SPLIT_MODULESTORE
-from student.models import CourseEnrollment, UserProfile
-from courseware.models import CoursePreference
-from student.tests.factories import UserFactory
-from xmodule.modulestore.tests.factories import CourseFactory
-from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
+from django.urls import reverse
 
-from sneakpeek_deeplink.middleware import SneakPeekDeepLinkMiddleware
+from student.models import CourseEnrollment
+from student.tests.factories import UserFactory
+from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
+from xmodule.modulestore.tests.django_utils import TEST_DATA_SPLIT_MODULESTORE
+from xmodule.modulestore.tests.factories import CourseFactory
+from .middleware import SneakPeekLoginMiddleware
 
 NO_SNEAKPEEK_PATHS = [
     '/courses/open/course/run/lti_rest_endpoints/',  # lti_rest_endpoint
@@ -29,16 +32,27 @@ NO_SNEAKPEEK_PATHS = [
 ]
 
 
+class NonRegisteredUserFactory(UserFactory):
+    # only difference from UserFactory is the profile has nonregistered bit set
+    @classmethod
+    def _after_postgeneration(cls, obj, create, results=None):
+        if create:
+            obj.profile.nonregistered = True
+            obj.profile.save()
+
+
 @ddt
+@unittest.skipUnless(settings.ROOT_URLCONF == 'lms.urls', 'Test only valid in lms')
 class SneakPeekDeeplinkMiddlewareTests(ModuleStoreTestCase):
     """
     Tests of Sneakpek deeplink middleware
     """
     def setUp(self):
+        from courseware.models import CoursePreference
         super(SneakPeekDeeplinkMiddlewareTests, self).setUp()
         self.client = Client()
         self.factory = RequestFactory()
-        self.middleware = SneakPeekDeepLinkMiddleware()
+        self.middleware = SneakPeekLoginMiddleware()
         month = timedelta(days=30)
         month2 = timedelta(days=60)
         now = datetime.now()
@@ -98,13 +112,13 @@ class SneakPeekDeeplinkMiddlewareTests(ModuleStoreTestCase):
         return req
 
     def assertSuccessfulSneakPeek(self, request, course):
-        self.assertTrue(request.user.is_authenticated())
-        self.assertFalse(UserProfile.has_registered(request.user))
+        self.assertTrue(request.user.is_authenticated)
+        self.assertFalse(request.user.is_registered())
         self.assertTrue(CourseEnrollment.is_enrolled(request.user, course.id))
 
     def assertNoSneakPeek(self, request, course, check_auth=True):
         if check_auth:
-            self.assertFalse(request.user.is_authenticated())
+            self.assertFalse(request.user.is_authenticated)
         self.assertEquals(0, CourseEnrollment.objects.filter(course_id=course.id).count())
 
     def test_sneakpeek_success(self):
@@ -169,6 +183,27 @@ class SneakPeekDeeplinkMiddlewareTests(ModuleStoreTestCase):
         request = self.make_successful_sneakpeek_login_request()
         request.path = '/courses/deleted/course/run/courseware'
         self.assertIsNone(self.middleware.process_request(request))
-        self.assertFalse(request.user.is_authenticated())
+        self.assertFalse(request.user.is_authenticated)
         count = CourseEnrollment.objects.filter(course_id=self.course_to_delete.id).count()
         self.assertEquals(1, count)
+
+
+@unittest.skipUnless(settings.ROOT_URLCONF == 'lms.urls', 'Test only valid in lms')
+class TestNonRegisteredUser(TestCase):
+    """
+    Tests nonregistered (auto-created) users
+    """
+    def setUp(self):
+        self.request_factory = RequestFactory()
+        self.user = NonRegisteredUserFactory()
+        self.course_id = "course/id/doesnt_matter"
+
+    def test_nonregistered_user_factory(self):
+        self.assertTrue(self.user.profile.nonregistered)
+
+    def test_nonregistered_progress_404(self):
+        import courseware.views.views as views
+        with self.assertRaises(Http404):
+            req = self.request_factory.get(reverse('progress', args=[self.course_id]))
+            req.user = self.user
+            views.progress(req, self.course_id)

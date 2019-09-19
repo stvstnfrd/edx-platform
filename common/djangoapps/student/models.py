@@ -36,7 +36,6 @@ from django.db.models.signals import post_save, pre_save
 from django.db.utils import ProgrammingError
 from django.dispatch import receiver
 from django.utils import timezone
-from django.utils.crypto import get_random_string
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext_noop
@@ -499,36 +498,6 @@ class UserProfile(models.Model):
 
     def set_meta(self, meta_json):  # pylint: disable=missing-docstring
         self.meta = json.dumps(meta_json)
-
-    @classmethod
-    def get_random_anon_username(cls):
-        candidate = "anon__{}".format(get_random_string(24))      # django 1.8 has 30 char usernames
-        while User.objects.filter(username=candidate).exists():
-            candidate = "anon__{}".format(get_random_string(24))  # get_random_string output is alphanumeric
-        return candidate
-
-    @classmethod
-    def create_nonregistered_user(cls):
-        anon_username = cls.get_random_anon_username()
-        email_split = settings.ANONYMOUS_USER_EMAIL.split('@')
-        anon_email = "{}+{}@{}".format(email_split[0],
-                                       anon_username,
-                                       email_split[-1])
-        anon_user = User(username=anon_username, email=anon_email, is_active=False)
-        anon_user.save()
-        profile = UserProfile(user=anon_user, nonregistered=True)
-        profile.save()
-        return anon_user
-
-    @classmethod
-    def has_registered(cls, user):
-        """
-        Handles django anonymous users.  SHOULD use this to test whether request.user has registered,
-        i.e. has a profile that says not nonregistered,
-        instead of directly accessing user.profile.nonregistered,
-        because if the user is AnonymousUser it won't have a profile.
-        """
-        return hasattr(user, 'profile') and not user.profile.nonregistered
 
     def set_login_session(self, session_id=None):
         """
