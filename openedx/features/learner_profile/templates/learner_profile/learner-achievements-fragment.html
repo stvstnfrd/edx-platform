@@ -11,7 +11,7 @@ from openedx.core.djangolib.markup import HTML, Text
 
 <div class="learner-achievements">
     % if course_certificates or own_profile:
-        <h3 class="u-field-title">Course Certificates</h3>
+        <h3 class="u-field-title">Course Statements of Accomplishment</h3>
         % if course_certificates:
             % for certificate in course_certificates:
                 <%
@@ -39,7 +39,7 @@ from openedx.core.djangolib.markup import HTML, Text
                         <div class="card certificate-card mode-${certificate['type']}">
                             <div class="card-logo">
                                 <h4 class="sr-only">
-                                    ${_('{course_mode} certificate').format(
+                                    ${_('{course_mode} Statement of Accomplishment').format(
                                         course_mode=certificate['type'],
                                     )}
                                 </h4>
@@ -70,7 +70,7 @@ from openedx.core.djangolib.markup import HTML, Text
             % endfor
         % elif own_profile:
             <div class="learner-message">
-                <h4 class="message-header">${_("You haven't earned any certificates yet.")}</h4>
+                <h4 class="message-header">${_("You haven't earned any Statements of Accomplishment yet.")}</h4>
                 % if settings.FEATURES.get('COURSES_ARE_BROWSABLE'):
                     <p class="message-actions">
                         <a class="btn btn-brand" href="${marketing_link('COURSES')}">
