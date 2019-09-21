@@ -197,9 +197,9 @@ class LearnerProfileViewTest(UrlResetMixin, ModuleStoreTestCase):
         response = self.client.get('/u/{username}'.format(username=profile_username))
 
         if own_profile:
-            self.assertContains(response, 'You haven&#39;t earned any certificates yet.')
+            self.assertContains(response, 'You haven&#39;t earned any Statements of Accomplishment yet.')
         else:
-            self.assertNotContains(response, 'You haven&#39;t earned any certificates yet.')
+            self.assertNotContains(response, 'You haven&#39;t earned any Statements of Accomplishment yet.')
 
     @ddt.data(True, False)
     def test_explore_courses_visibility(self, courses_browsable):
