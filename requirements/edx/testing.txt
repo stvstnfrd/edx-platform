@@ -343,7 +343,7 @@ traceback2==1.4.0         # via testtools, unittest2
 transifex-client==0.13.4
 twisted==18.9.0           # via scrapy
 typing==3.6.6             # via flake8
-ubcpi-xblock==0.6.2
+ubcpi-xblock==0.6.5
 unicodecsv==0.14.1
 unidecode==1.0.23
 unittest2==1.1.0          # via testtools
