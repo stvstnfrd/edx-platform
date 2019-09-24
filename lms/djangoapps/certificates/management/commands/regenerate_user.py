@@ -4,7 +4,6 @@ import copy
 import logging
 from optparse import make_option
 
-from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand, CommandError
 from opaque_keys import InvalidKeyError
@@ -15,9 +14,6 @@ from badges.utils import badges_enabled
 from badges.events.course_complete import get_completion_badge
 from certificates.api import regenerate_user_certificates
 from xmodule.modulestore.django import modulestore
-
-if 'openedx.stanford.djangoapps.register_cme' in settings.INSTALLED_APPS:
-    from openedx.stanford.djangoapps.register_cme.models import ExtraInfo
 
 LOGGER = logging.getLogger(__name__)
 
@@ -116,9 +112,6 @@ class Command(BaseCommand):
         course = modulestore().get_course(course_id, depth=2)
 
         designation = options['designation']
-
-        if 'openedx.stanford.djangoapps.register_cme' in settings.INSTALLED_APPS:
-            designation = options['designation'] or ExtraInfo.lookup_professional_designation(student)
 
         if not options['noop']:
             LOGGER.info(

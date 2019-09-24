@@ -27,6 +27,7 @@ from openedx.core.djangoapps.course_groups.cohorts import get_cohort_id, get_coh
 from request_cache.middleware import request_cached
 from student.roles import GlobalStaff
 from xmodule.modulestore.django import modulestore
+from xmodule.modulestore.exceptions import ItemNotFoundError
 from xmodule.partitions.partitions import ENROLLMENT_TRACK_PARTITION_ID
 from xmodule.partitions.partitions_service import PartitionService
 
@@ -177,12 +178,6 @@ def get_cached_discussion_id_map(course, discussion_ids, user):
     Returns a dict mapping discussion_ids to respective discussion xblock metadata if it is cached and visible to the
     user. If not, returns the result of get_discussion_id_map
     """
-
-    # Prevent retrieving an incorrect key from Memcache.
-    # TODO Remove when the course is no longer accessed.
-    if course.id.org == 'HumanitiesSciences' and course.id.course == 'Beethoven' and course.id.run == 'selfpaced':
-        return get_discussion_id_map(course, user)
-
     try:
         entries = []
         for discussion_id in discussion_ids:
@@ -194,7 +189,7 @@ def get_cached_discussion_id_map(course, discussion_ids, user):
                 continue
             entries.append(get_discussion_id_map_entry(xblock))
         return dict(entries)
-    except DiscussionIdMapIsNotCached:
+    except (ItemNotFoundError, DiscussionIdMapIsNotCached):
         return get_discussion_id_map(course, user)
 
 
@@ -418,7 +413,7 @@ def discussion_category_id_access(course, user, discussion_id, xblock=None):
                 return False
             xblock = modulestore().get_item(key)
         return has_required_keys(xblock) and has_access(user, 'load', xblock, course.id)
-    except DiscussionIdMapIsNotCached:
+    except (ItemNotFoundError, DiscussionIdMapIsNotCached):
         return discussion_id in get_discussion_categories_ids(course, user)
 
 

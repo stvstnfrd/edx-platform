@@ -4,7 +4,6 @@ Views used by XQueue certificate generation.
 import json
 import logging
 
-from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import transaction
 from django.http import Http404, HttpResponse, HttpResponseForbidden
@@ -21,9 +20,6 @@ from certificates.models import (
     GeneratedCertificate,
     certificate_status_for_student
 )
-
-if 'openedx.stanford.djangoapps.register_cme' in settings.INSTALLED_APPS:
-    from openedx.stanford.djangoapps.register_cme.models import ExtraInfo
 
 from util.bad_request_rate_limiter import BadRequestRateLimiter
 from util.json_request import JsonResponse, JsonResponseBadRequest
@@ -51,9 +47,6 @@ def request_certificate(request):
             course = modulestore().get_course(course_key, depth=2)
 
             designation = None
-            if 'openedx.stanford.djangoapps.register_cme' in settings.INSTALLED_APPS:
-                designation = ExtraInfo.lookup_professional_designation(student)
-
             status = certificate_status_for_student(student, course_key)['status']
             if status in [CertificateStatuses.unavailable, CertificateStatuses.notpassing, CertificateStatuses.error]:
                 log_msg = u'Grading and certification requested for user %s in course %s via /request_certificate call'
