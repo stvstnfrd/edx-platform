@@ -1,4 +1,5 @@
 from cms.envs.aws import *
+from lms.envs.common import COURSE_MODE_DEFAULTS
 
 
 CMS_BASE = ENV_TOKENS.get(

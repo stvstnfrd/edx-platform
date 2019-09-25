@@ -16,17 +16,6 @@ CELERY_QUEUES.update({
     GRADES_BACKFILL_QUEUE: {},
 })
 COURSE_FORUMS_DOWNLOAD_ROUTING_KEY = HIGH_MEM_QUEUE
-COURSE_MODE_DEFAULTS = {
-    'bulk_sku': None,
-    'currency': 'usd',
-    'description': None,
-    'expiration_datetime': None,
-    'min_price': 0,
-    'name': 'Audit',
-    'sku': None,
-    'slug': 'audit',
-    'suggested_prices': '',
-}
 # Set to True for systems where students are auto-registered on login
 DISABLE_REGISTER_BUTTON = False
 DISPLAY_COURSE_TILES = True
