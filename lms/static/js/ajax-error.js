@@ -1,5 +1,8 @@
 $(document).ajaxError(function(event, jXHR) {
     if (jXHR.status === 403) {
+        if ($('.sneakpeek-warning').length) {
+            return;
+        }
         var message = gettext(
             'You have been logged out of your edX account. ' +
             'Click Okay to log in again now. ' +
