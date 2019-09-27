@@ -22,7 +22,7 @@ def setup_sneakpeek(request, course_id):
         # if there's no user,
         # create a nonregistered user
         create_and_login_nonregistered_user(request)
-    elif user.is_registered():
+    elif request.user.is_registered():
         # registered users can't sneakpeek,
         # so log them out and create a new nonregistered user
         logout(request)
