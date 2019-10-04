@@ -134,7 +134,7 @@ msgstr ""
 
 #: cms/templates/certificates.html
 msgid "Course Certificates"
-msgstr "Course Statements Of Accompolishment"
+msgstr ""
 
 #: cms/templates/certificates.html cms/templates/certificates.html
 #: cms/templates/certificates.html cms/templates/export.html
