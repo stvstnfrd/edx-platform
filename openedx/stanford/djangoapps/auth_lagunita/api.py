@@ -213,8 +213,8 @@ class MarketoApi(object):
             )
         else:
             token_error_codes = [
-                601,  # Access token invalid
-                602,  # Access token expired
+                '601',  # Access token invalid
+                '602',  # Access token expired
             ]
             try:
                 data = response.json()
@@ -227,7 +227,7 @@ class MarketoApi(object):
                     log.debug("data: %s", data)
                     errors = data.get('errors', [])
                     if any(
-                            error.get('code') in token_error_codes
+                            str(error.get('code', '000')) in token_error_codes
                             for error in errors
                     ):
                         error = 'token'
