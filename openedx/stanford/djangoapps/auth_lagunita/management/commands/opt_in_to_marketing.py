@@ -135,7 +135,7 @@ class Command(BaseCommand):
                     subscribed += 1
                 else:
                     failed += 1
-            time.sleep(0.5)
+                time.sleep(0.5)
         log.info('User lookup completed')
         self.stdout.write('Subscription Summary:')
         self.stdout.write("    Faked: {0}".format(faked))
