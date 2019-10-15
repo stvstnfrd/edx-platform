@@ -85,7 +85,7 @@ from openedx.features.course_experience import course_home_page_title, COURSE_OU
 
   % if staff_access:
   	<%include file="xqa_interface.html"/>
-	% if analytics_url:
+    % if settings.ANALYTICS_API_URL:
 		<script type="text/javascript" src="${static.url('js/inline_analytics.js')}"></script> 
 	% endif
   % endif

@@ -698,7 +698,7 @@ def get_module_system_for_user(
             block_wrappers.append(partial(add_staff_markup, user, disable_staff_debug_info))
 
     # Add button for in-line analytics answer distribution
-    if getattr(settings, 'ANALYTICS_DATA_URL'):
+    if settings.ANALYTICS_API_URL:
         if has_access(user, 'staff', descriptor, course_id):
             block_wrappers.append(partial(add_inline_analytics, user))
 

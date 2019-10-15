@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls import include
 from django.conf.urls import url
 
-import courseware.views.views
+import openedx.stanford.lms.djangoapps.inline_analytics.answer_distribution
 import openedx.stanford.djangoapps.sneakpeek.views
 
 
@@ -16,7 +16,7 @@ urlpatterns = [
     ),
     url(
         r'^get_analytics_answer_dist/',
-        courseware.views.views.get_analytics_answer_dist,
+        openedx.stanford.lms.djangoapps.inline_analytics.answer_distribution.get_analytics_answer_dist,
         name='get_analytics_answer_dist',
     ),
 ]

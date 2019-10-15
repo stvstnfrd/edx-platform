@@ -737,8 +737,6 @@ def _section_metrics(course, access):
         'get_students_problem_grades_url': reverse('get_students_problem_grades'),
         'post_metrics_data_csv_url': reverse('post_metrics_data_csv'),
     }
-    from openedx.stanford.lms.djangoapps.instructor.views.instructor_dashboard import metrics_section_data
-    section_data.update(metrics_section_data(course_key))
     return section_data
 
 
