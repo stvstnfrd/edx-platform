@@ -45,16 +45,9 @@ class HeartbeatFailure(Exception):
     Raised when heartbeat fails.
     """
 
-    def __unicode__(self, *args, **kwargs):
-        return self.message
-
     def __init__(self, msg, service):
         """
         In addition to a msg, provide the name of the service.
         """
         self.service = service
         super(HeartbeatFailure, self).__init__(msg)
-
-
-class TimeExpiredError(Exception):
-    pass

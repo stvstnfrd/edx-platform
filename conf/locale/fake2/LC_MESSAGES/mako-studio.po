@@ -1,0 +1,3929 @@
+# edX translation file
+# Copyright (C) 2019 edX
+# This file is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.
+# EdX Team <info@edx.org>, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.1a\n"
+"Report-Msgid-Bugs-To: openedx-translation@googlegroups.com\n"
+"POT-Creation-Date: 2019-03-08 03:55-0500\n"
+"PO-Revision-Date: 2019-03-08 08:56:36.633635\n"
+"Last-Translator: \n"
+"Language-Team: openedx-translation <openedx-translation@googlegroups.com>\n"
+"Language: fake2\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Generated-By: Babel 1.3\n"
+
+#: cms/templates/404.html
+msgid "The page that you were looking for was not found."
+msgstr "Ŧɥǝ dɐƃǝ ʇɥɐʇ ʎøn ʍǝɹǝ løøʞᴉnƃ ɟøɹ ʍɐs nøʇ ɟønnd."
+
+#: cms/templates/404.html
+msgid ""
+"Go back to the {homepage} or let us know about any pages that may have been "
+"moved at {email}."
+msgstr ""
+"Ǥø bɐɔʞ ʇø ʇɥǝ {homepage} øɹ lǝʇ ns ʞnøʍ ɐbønʇ ɐnʎ dɐƃǝs ʇɥɐʇ ɯɐʎ ɥɐʌǝ bǝǝn "
+"ɯøʌǝd ɐʇ {email}."
+
+#: cms/templates/500.html
+msgid "{studio_name} Server Error"
+msgstr "{studio_name} Sǝɹʌǝɹ Ɇɹɹøɹ"
+
+#: cms/templates/500.html
+msgid "The {em_start}{studio_name}{em_end} servers encountered an error"
+msgstr "Ŧɥǝ {em_start}{studio_name}{em_end} sǝɹʌǝɹs ǝnɔønnʇǝɹǝd ɐn ǝɹɹøɹ"
+
+#: cms/templates/500.html
+msgid ""
+"An error occurred in {studio_name} and the page could not be loaded. Please "
+"try again in a few moments."
+msgstr ""
+"Ⱥn ǝɹɹøɹ øɔɔnɹɹǝd ᴉn {studio_name} ɐnd ʇɥǝ dɐƃǝ ɔønld nøʇ bǝ løɐdǝd. Ᵽlǝɐsǝ "
+"ʇɹʎ ɐƃɐᴉn ᴉn ɐ ɟǝʍ ɯøɯǝnʇs."
+
+#: cms/templates/500.html
+msgid ""
+"We've logged the error and our staff is currently working to resolve this "
+"error as soon as possible."
+msgstr ""
+"Wǝ'ʌǝ løƃƃǝd ʇɥǝ ǝɹɹøɹ ɐnd ønɹ sʇɐɟɟ ᴉs ɔnɹɹǝnʇlʎ ʍøɹʞᴉnƃ ʇø ɹǝsølʌǝ ʇɥᴉs "
+"ǝɹɹøɹ ɐs søøn ɐs døssᴉblǝ."
+
+#: cms/templates/500.html
+msgid "If the problem persists, please email us at {email_link}."
+msgstr "Ɨɟ ʇɥǝ dɹøblǝɯ dǝɹsᴉsʇs, dlǝɐsǝ ǝɯɐᴉl ns ɐʇ {email_link}."
+
+#: cms/templates/accessibility.html
+msgid "Studio Accessibility Policy"
+msgstr "Sʇndᴉø Ⱥɔɔǝssᴉbᴉlᴉʇʎ Ᵽølᴉɔʎ"
+
+#: cms/templates/activation_active.html cms/templates/activation_complete.html
+#: cms/templates/activation_invalid.html
+msgid "{studio_name} Account Activation"
+msgstr "{studio_name} Ⱥɔɔønnʇ Ⱥɔʇᴉʌɐʇᴉøn"
+
+#: cms/templates/activation_active.html
+msgid "Your account is already active"
+msgstr "Ɏønɹ ɐɔɔønnʇ ᴉs ɐlɹǝɐdʎ ɐɔʇᴉʌǝ"
+
+#: cms/templates/activation_active.html
+msgid ""
+"This account, set up using {email}, has already been activated. Please sign "
+"in to start working within {studio_name}."
+msgstr ""
+"Ŧɥᴉs ɐɔɔønnʇ, sǝʇ nd nsᴉnƃ {email}, ɥɐs ɐlɹǝɐdʎ bǝǝn ɐɔʇᴉʌɐʇǝd. Ᵽlǝɐsǝ sᴉƃn "
+"ᴉn ʇø sʇɐɹʇ ʍøɹʞᴉnƃ ʍᴉʇɥᴉn {studio_name}."
+
+#: cms/templates/activation_active.html cms/templates/activation_complete.html
+msgid "Sign into {studio_name}"
+msgstr "Sᴉƃn ᴉnʇø {studio_name}"
+
+#: cms/templates/activation_complete.html
+msgid "Your account activation is complete!"
+msgstr "Ɏønɹ ɐɔɔønnʇ ɐɔʇᴉʌɐʇᴉøn ᴉs ɔøɯdlǝʇǝ!"
+
+#: cms/templates/activation_complete.html
+msgid ""
+"Thank you for activating your account. You may now sign in and start using "
+"{studio_name} to author courses."
+msgstr ""
+"Ŧɥɐnʞ ʎøn ɟøɹ ɐɔʇᴉʌɐʇᴉnƃ ʎønɹ ɐɔɔønnʇ. Ɏøn ɯɐʎ nøʍ sᴉƃn ᴉn ɐnd sʇɐɹʇ nsᴉnƃ "
+"{studio_name} ʇø ɐnʇɥøɹ ɔønɹsǝs."
+
+#: cms/templates/activation_invalid.html
+msgid "Your account activation is invalid"
+msgstr "Ɏønɹ ɐɔɔønnʇ ɐɔʇᴉʌɐʇᴉøn ᴉs ᴉnʌɐlᴉd"
+
+#: cms/templates/activation_invalid.html
+msgid ""
+"We're sorry. Something went wrong with your activation. Check to make sure "
+"the URL you went to was correct, as e-mail programs will sometimes split it "
+"into two lines."
+msgstr ""
+"Wǝ'ɹǝ søɹɹʎ. Søɯǝʇɥᴉnƃ ʍǝnʇ ʍɹønƃ ʍᴉʇɥ ʎønɹ ɐɔʇᴉʌɐʇᴉøn. Ȼɥǝɔʞ ʇø ɯɐʞǝ snɹǝ "
+"ʇɥǝ ɄɌŁ ʎøn ʍǝnʇ ʇø ʍɐs ɔøɹɹǝɔʇ, ɐs ǝ-ɯɐᴉl dɹøƃɹɐɯs ʍᴉll søɯǝʇᴉɯǝs sdlᴉʇ ᴉʇ "
+"ᴉnʇø ʇʍø lᴉnǝs."
+
+#: cms/templates/activation_invalid.html
+msgid ""
+"If you still have issues, contact {platform_name} Support. In the meantime, "
+"you can also return to {link_start}the {studio_name} homepage.{link_end}"
+msgstr ""
+"Ɨɟ ʎøn sʇᴉll ɥɐʌǝ ᴉssnǝs, ɔønʇɐɔʇ {platform_name} Snddøɹʇ. Ɨn ʇɥǝ ɯǝɐnʇᴉɯǝ, "
+"ʎøn ɔɐn ɐlsø ɹǝʇnɹn ʇø {link_start}ʇɥǝ {studio_name} ɥøɯǝdɐƃǝ.{link_end}"
+
+#: cms/templates/asset_index.html cms/templates/asset_index.html
+#: cms/templates/widgets/header.html
+msgid "Files & Uploads"
+msgstr "Fᴉlǝs & Ʉdløɐds"
+
+#: cms/templates/bulksettings.html
+msgid "Tools / Course Utilities"
+msgstr "Ŧøøls / Ȼønɹsǝ Ʉʇᴉlᴉʇᴉǝs"
+
+#: cms/templates/bulksettings.html
+msgid "Problem Settings"
+msgstr "Ᵽɹøblǝɯ Sǝʇʇᴉnƃs"
+
+#: cms/templates/bulksettings.html
+msgid "What is problem settings?"
+msgstr "Wɥɐʇ ᴉs dɹøblǝɯ sǝʇʇᴉnƃs?"
+
+#: cms/templates/bulksettings.html
+msgid ""
+"The problem settings page provides a way to view all problem settings of the"
+" current course in one page."
+msgstr ""
+"Ŧɥǝ dɹøblǝɯ sǝʇʇᴉnƃs dɐƃǝ dɹøʌᴉdǝs ɐ ʍɐʎ ʇø ʌᴉǝʍ ɐll dɹøblǝɯ sǝʇʇᴉnƃs øɟ ʇɥǝ"
+" ɔnɹɹǝnʇ ɔønɹsǝ ᴉn ønǝ dɐƃǝ."
+
+#: cms/templates/bulksettings.html
+msgid "Settings Keys"
+msgstr "Sǝʇʇᴉnƃs Ꝁǝʎs"
+
+#: cms/templates/captions.html
+msgid "Update Video Captions"
+msgstr "Ʉddɐʇǝ Vᴉdǝø Ȼɐdʇᴉøns"
+
+#: cms/templates/certificates.html
+msgid "Course Certificates"
+msgstr "Ȼønɹsǝ Ȼǝɹʇᴉɟᴉɔɐʇǝs"
+
+#: cms/templates/certificates.html cms/templates/certificates.html
+#: cms/templates/certificates.html cms/templates/export.html
+#: cms/templates/widgets/header.html
+msgid "Certificates"
+msgstr "Ȼǝɹʇᴉɟᴉɔɐʇǝs"
+
+#: cms/templates/certificates.html
+msgid "This module is not enabled."
+msgstr "Ŧɥᴉs ɯødnlǝ ᴉs nøʇ ǝnɐblǝd."
+
+#: cms/templates/certificates.html
+msgid "This course does not use a mode that offers certificates."
+msgstr "Ŧɥᴉs ɔønɹsǝ døǝs nøʇ nsǝ ɐ ɯødǝ ʇɥɐʇ øɟɟǝɹs ɔǝɹʇᴉɟᴉɔɐʇǝs."
+
+#: cms/templates/certificates.html
+msgid "Working with Certificates"
+msgstr "Wøɹʞᴉnƃ ʍᴉʇɥ Ȼǝɹʇᴉɟᴉɔɐʇǝs"
+
+#: cms/templates/certificates.html
+msgid ""
+"Specify a course title to use on the certificate if the course's official "
+"title is too long to be displayed well."
+msgstr ""
+"Sdǝɔᴉɟʎ ɐ ɔønɹsǝ ʇᴉʇlǝ ʇø nsǝ øn ʇɥǝ ɔǝɹʇᴉɟᴉɔɐʇǝ ᴉɟ ʇɥǝ ɔønɹsǝ's øɟɟᴉɔᴉɐl "
+"ʇᴉʇlǝ ᴉs ʇøø lønƃ ʇø bǝ dᴉsdlɐʎǝd ʍǝll."
+
+#: cms/templates/certificates.html
+msgid ""
+"For verified certificates, specify between one and four signatories and "
+"upload the associated images."
+msgstr ""
+"Føɹ ʌǝɹᴉɟᴉǝd ɔǝɹʇᴉɟᴉɔɐʇǝs, sdǝɔᴉɟʎ bǝʇʍǝǝn ønǝ ɐnd ɟønɹ sᴉƃnɐʇøɹᴉǝs ɐnd "
+"ndløɐd ʇɥǝ ɐssøɔᴉɐʇǝd ᴉɯɐƃǝs."
+
+#: cms/templates/certificates.html
+msgid ""
+"To edit or delete a certificate before it is activated, hover over the top "
+"right corner of the form and select {em_start}Edit{em_end} or the delete "
+"icon."
+msgstr ""
+"Ŧø ǝdᴉʇ øɹ dǝlǝʇǝ ɐ ɔǝɹʇᴉɟᴉɔɐʇǝ bǝɟøɹǝ ᴉʇ ᴉs ɐɔʇᴉʌɐʇǝd, ɥøʌǝɹ øʌǝɹ ʇɥǝ ʇød "
+"ɹᴉƃɥʇ ɔøɹnǝɹ øɟ ʇɥǝ ɟøɹɯ ɐnd sǝlǝɔʇ {em_start}Ɇdᴉʇ{em_end} øɹ ʇɥǝ dǝlǝʇǝ "
+"ᴉɔøn."
+
+#: cms/templates/certificates.html
+msgid ""
+"To view a sample certificate, choose a course mode and select "
+"{em_start}Preview Certificate{em_end}."
+msgstr ""
+"Ŧø ʌᴉǝʍ ɐ sɐɯdlǝ ɔǝɹʇᴉɟᴉɔɐʇǝ, ɔɥøøsǝ ɐ ɔønɹsǝ ɯødǝ ɐnd sǝlǝɔʇ "
+"{em_start}Ᵽɹǝʌᴉǝʍ Ȼǝɹʇᴉɟᴉɔɐʇǝ{em_end}."
+
+#: cms/templates/certificates.html
+msgid "Issuing Certificates to Learners"
+msgstr "Ɨssnᴉnƃ Ȼǝɹʇᴉɟᴉɔɐʇǝs ʇø Łǝɐɹnǝɹs"
+
+#: cms/templates/certificates.html
+msgid ""
+"To begin issuing course certificates, a course team member with either the "
+"Staff or Admin role selects {em_start}Activate{em_end}. Only course team "
+"members with these roles can edit or delete an activated certificate."
+msgstr ""
+"Ŧø bǝƃᴉn ᴉssnᴉnƃ ɔønɹsǝ ɔǝɹʇᴉɟᴉɔɐʇǝs, ɐ ɔønɹsǝ ʇǝɐɯ ɯǝɯbǝɹ ʍᴉʇɥ ǝᴉʇɥǝɹ ʇɥǝ "
+"Sʇɐɟɟ øɹ Ⱥdɯᴉn ɹølǝ sǝlǝɔʇs {em_start}Ⱥɔʇᴉʌɐʇǝ{em_end}. Ønlʎ ɔønɹsǝ ʇǝɐɯ "
+"ɯǝɯbǝɹs ʍᴉʇɥ ʇɥǝsǝ ɹølǝs ɔɐn ǝdᴉʇ øɹ dǝlǝʇǝ ɐn ɐɔʇᴉʌɐʇǝd ɔǝɹʇᴉɟᴉɔɐʇǝ."
+
+#: cms/templates/certificates.html
+msgid ""
+"{em_start}Do not{em_end} delete certificates after a course has started; "
+"learners who have already earned certificates will no longer be able to "
+"access them."
+msgstr ""
+"{em_start}Đø nøʇ{em_end} dǝlǝʇǝ ɔǝɹʇᴉɟᴉɔɐʇǝs ɐɟʇǝɹ ɐ ɔønɹsǝ ɥɐs sʇɐɹʇǝd; "
+"lǝɐɹnǝɹs ʍɥø ɥɐʌǝ ɐlɹǝɐdʎ ǝɐɹnǝd ɔǝɹʇᴉɟᴉɔɐʇǝs ʍᴉll nø lønƃǝɹ bǝ ɐblǝ ʇø "
+"ɐɔɔǝss ʇɥǝɯ."
+
+#: cms/templates/certificates.html
+msgid "Learn more about certificates"
+msgstr "Łǝɐɹn ɯøɹǝ ɐbønʇ ɔǝɹʇᴉɟᴉɔɐʇǝs"
+
+#: cms/templates/certificates.html cms/templates/certificates.html
+#: cms/templates/group_configurations.html
+#: cms/templates/group_configurations.html cms/templates/settings.html
+#: cms/templates/settings.html cms/templates/settings_advanced.html
+#: cms/templates/settings_advanced.html cms/templates/settings_graders.html
+#: cms/templates/settings_graders.html
+msgid "Other Course Settings"
+msgstr "Øʇɥǝɹ Ȼønɹsǝ Sǝʇʇᴉnƃs"
+
+#: cms/templates/certificates.html cms/templates/settings_graders.html
+msgid "Details &amp; Schedule"
+msgstr "Đǝʇɐᴉls &amp; Sɔɥǝdnlǝ"
+
+#: cms/templates/certificates.html cms/templates/group_configurations.html
+#: cms/templates/settings.html cms/templates/settings_advanced.html
+#: cms/templates/settings_graders.html cms/templates/widgets/header.html
+msgid "Grading"
+msgstr "Ǥɹɐdᴉnƃ"
+
+#: cms/templates/certificates.html cms/templates/group_configurations.html
+#: cms/templates/manage_users.html cms/templates/settings.html
+#: cms/templates/settings_advanced.html cms/templates/settings_graders.html
+#: cms/templates/widgets/header.html
+msgid "Course Team"
+msgstr "Ȼønɹsǝ Ŧǝɐɯ"
+
+#: cms/templates/certificates.html cms/templates/group_configurations.html
+#: cms/templates/settings.html cms/templates/settings_advanced.html
+#: cms/templates/settings_advanced.html cms/templates/settings_graders.html
+#: cms/templates/widgets/header.html
+msgid "Advanced Settings"
+msgstr "Ⱥdʌɐnɔǝd Sǝʇʇᴉnƃs"
+
+#: cms/templates/certificates.html cms/templates/group_configurations.html
+#: cms/templates/group_configurations.html cms/templates/settings.html
+#: cms/templates/settings_advanced.html cms/templates/settings_graders.html
+#: cms/templates/widgets/header.html
+msgid "Group Configurations"
+msgstr "Ǥɹønd Ȼønɟᴉƃnɹɐʇᴉøns"
+
+#: cms/templates/checklists.html cms/templates/checklists.html
+#: cms/templates/widgets/header.html
+msgid "Checklists"
+msgstr "Ȼɥǝɔʞlᴉsʇs"
+
+#: cms/templates/checklists.html cms/templates/export.html
+#: cms/templates/export_git.html cms/templates/import.html
+#: cms/templates/utilities.html cms/templates/widgets/header.html
+#: cms/templates/widgets/header.html
+msgid "Tools"
+msgstr "Ŧøøls"
+
+#: cms/templates/component.html cms/templates/studio_xblock_wrapper.html
+#: cms/templates/studio_xblock_wrapper.html
+msgid "Duplicate"
+msgstr "Đndlᴉɔɐʇǝ"
+
+#: cms/templates/component.html
+msgid "Duplicate this component"
+msgstr "Đndlᴉɔɐʇǝ ʇɥᴉs ɔøɯdønǝnʇ"
+
+#: cms/templates/component.html cms/templates/component.html
+#: cms/templates/studio_xblock_wrapper.html
+#: cms/templates/studio_xblock_wrapper.html
+msgid "Move"
+msgstr "Møʌǝ"
+
+#: cms/templates/component.html cms/templates/studio_xblock_wrapper.html
+#: cms/templates/studio_xblock_wrapper.html
+msgid "Delete"
+msgstr "Đǝlǝʇǝ"
+
+#: cms/templates/component.html
+msgid "Delete this component"
+msgstr "Đǝlǝʇǝ ʇɥᴉs ɔøɯdønǝnʇ"
+
+#: cms/templates/component.html cms/templates/edit-tabs.html
+#: cms/templates/edit-tabs.html cms/templates/studio_xblock_wrapper.html
+msgid "Drag to reorder"
+msgstr "Đɹɐƃ ʇø ɹǝøɹdǝɹ"
+
+#: cms/templates/container.html cms/templates/library.html
+msgid "Display Name"
+msgstr "Đᴉsdlɐʎ Nɐɯǝ"
+
+#: cms/templates/container.html cms/templates/container.html
+#: cms/templates/course-create-rerun.html
+#: cms/templates/course-create-rerun.html cms/templates/course_info.html
+#: cms/templates/course_info.html cms/templates/course_outline.html
+#: cms/templates/course_outline.html cms/templates/edit-tabs.html
+#: cms/templates/edit-tabs.html cms/templates/index.html
+#: cms/templates/index.html cms/templates/library.html
+#: cms/templates/library.html cms/templates/manage_users.html
+#: cms/templates/manage_users.html cms/templates/manage_users_lib.html
+#: cms/templates/manage_users_lib.html cms/templates/textbooks.html
+#: cms/templates/textbooks.html cms/templates/videos_index.html
+#: cms/templates/videos_index.html
+msgid "Page Actions"
+msgstr "Ᵽɐƃǝ Ⱥɔʇᴉøns"
+
+#: cms/templates/container.html
+msgid "Open the courseware in the LMS"
+msgstr "Ødǝn ʇɥǝ ɔønɹsǝʍɐɹǝ ᴉn ʇɥǝ ŁMS"
+
+#: cms/templates/container.html
+msgid "View Live Version"
+msgstr "Vᴉǝʍ Łᴉʌǝ Vǝɹsᴉøn"
+
+#: cms/templates/container.html
+msgid "Preview the courseware in the LMS"
+msgstr "Ᵽɹǝʌᴉǝʍ ʇɥǝ ɔønɹsǝʍɐɹǝ ᴉn ʇɥǝ ŁMS"
+
+#: cms/templates/container.html
+msgid "Preview"
+msgstr "Ᵽɹǝʌᴉǝʍ"
+
+#: cms/templates/container.html
+msgid "Adding components"
+msgstr "Ⱥddᴉnƃ ɔøɯdønǝnʇs"
+
+#: cms/templates/container.html
+msgid ""
+"Select a component type under {strong_start}Add New Component{strong_end}. "
+"Then select a template."
+msgstr ""
+"Sǝlǝɔʇ ɐ ɔøɯdønǝnʇ ʇʎdǝ nndǝɹ {strong_start}Ⱥdd Nǝʍ Ȼøɯdønǝnʇ{strong_end}. "
+"Ŧɥǝn sǝlǝɔʇ ɐ ʇǝɯdlɐʇǝ."
+
+#: cms/templates/container.html
+msgid ""
+"The new component is added at the bottom of the page or group. You can then "
+"edit and move the component."
+msgstr ""
+"Ŧɥǝ nǝʍ ɔøɯdønǝnʇ ᴉs ɐddǝd ɐʇ ʇɥǝ bøʇʇøɯ øɟ ʇɥǝ dɐƃǝ øɹ ƃɹønd. Ɏøn ɔɐn ʇɥǝn "
+"ǝdᴉʇ ɐnd ɯøʌǝ ʇɥǝ ɔøɯdønǝnʇ."
+
+#: cms/templates/container.html
+msgid "Editing components"
+msgstr "Ɇdᴉʇᴉnƃ ɔøɯdønǝnʇs"
+
+#: cms/templates/container.html
+msgid ""
+"Click the {strong_start}Edit{strong_end} icon in a component to edit its "
+"content."
+msgstr ""
+"Ȼlᴉɔʞ ʇɥǝ {strong_start}Ɇdᴉʇ{strong_end} ᴉɔøn ᴉn ɐ ɔøɯdønǝnʇ ʇø ǝdᴉʇ ᴉʇs "
+"ɔønʇǝnʇ."
+
+#: cms/templates/container.html
+msgid "Reorganizing components"
+msgstr "Ɍǝøɹƃɐnᴉzᴉnƃ ɔøɯdønǝnʇs"
+
+#: cms/templates/container.html
+msgid "Drag components to new locations within this component."
+msgstr "Đɹɐƃ ɔøɯdønǝnʇs ʇø nǝʍ løɔɐʇᴉøns ʍᴉʇɥᴉn ʇɥᴉs ɔøɯdønǝnʇ."
+
+#: cms/templates/container.html
+msgid "For content experiments, you can drag components to other groups."
+msgstr "Føɹ ɔønʇǝnʇ ǝxdǝɹᴉɯǝnʇs, ʎøn ɔɐn dɹɐƃ ɔøɯdønǝnʇs ʇø øʇɥǝɹ ƃɹønds."
+
+#: cms/templates/container.html
+msgid "Working with content experiments"
+msgstr "Wøɹʞᴉnƃ ʍᴉʇɥ ɔønʇǝnʇ ǝxdǝɹᴉɯǝnʇs"
+
+#: cms/templates/container.html
+msgid ""
+"Confirm that you have properly configured content in each of your experiment"
+" groups."
+msgstr ""
+"Ȼønɟᴉɹɯ ʇɥɐʇ ʎøn ɥɐʌǝ dɹødǝɹlʎ ɔønɟᴉƃnɹǝd ɔønʇǝnʇ ᴉn ǝɐɔɥ øɟ ʎønɹ ǝxdǝɹᴉɯǝnʇ"
+" ƃɹønds."
+
+#: cms/templates/container.html
+msgid "Learn more about component containers"
+msgstr "Łǝɐɹn ɯøɹǝ ɐbønʇ ɔøɯdønǝnʇ ɔønʇɐᴉnǝɹs"
+
+#: cms/templates/container.html
+msgid "Unit Location"
+msgstr "Ʉnᴉʇ Łøɔɐʇᴉøn"
+
+#: cms/templates/container.html
+msgid "Location ID"
+msgstr "Łøɔɐʇᴉøn ƗĐ"
+
+#: cms/templates/container.html
+msgid ""
+"To create a link to this unit from an HTML component in this course, enter "
+"\"/jump_to_id/<location ID>\" as the URL value."
+msgstr ""
+"Ŧø ɔɹǝɐʇǝ ɐ lᴉnʞ ʇø ʇɥᴉs nnᴉʇ ɟɹøɯ ɐn ĦŦMŁ ɔøɯdønǝnʇ ᴉn ʇɥᴉs ɔønɹsǝ, ǝnʇǝɹ "
+"\"/ɾnɯd_ʇø_ᴉd/<location ID>\" ɐs ʇɥǝ ɄɌŁ ʌɐlnǝ."
+
+#: cms/templates/container.html
+msgid "Location in Course Outline"
+msgstr "Łøɔɐʇᴉøn ᴉn Ȼønɹsǝ Ønʇlᴉnǝ"
+
+#: cms/templates/course-create-rerun.html
+msgid "Create a Course Rerun of:"
+msgstr "Ȼɹǝɐʇǝ ɐ Ȼønɹsǝ Ɍǝɹnn øɟ:"
+
+#: cms/templates/course-create-rerun.html
+msgid "Create a re-run of a course"
+msgstr "Ȼɹǝɐʇǝ ɐ ɹǝ-ɹnn øɟ ɐ ɔønɹsǝ"
+
+#: cms/templates/course-create-rerun.html
+#: cms/templates/course-create-rerun.html cms/templates/index.html
+#: cms/templates/index.html cms/templates/manage_users.html
+#: cms/templates/manage_users_lib.html
+msgid "Cancel"
+msgstr "Ȼɐnɔǝl"
+
+#: cms/templates/course-create-rerun.html
+msgid "You are creating a re-run from:"
+msgstr "Ɏøn ɐɹǝ ɔɹǝɐʇᴉnƃ ɐ ɹǝ-ɹnn ɟɹøɯ:"
+
+#: cms/templates/course-create-rerun.html
+msgid ""
+"Provide identifying information for this re-run of the course. The original "
+"course is not affected in any way by a re-run."
+msgstr ""
+"Ᵽɹøʌᴉdǝ ᴉdǝnʇᴉɟʎᴉnƃ ᴉnɟøɹɯɐʇᴉøn ɟøɹ ʇɥᴉs ɹǝ-ɹnn øɟ ʇɥǝ ɔønɹsǝ. Ŧɥǝ øɹᴉƃᴉnɐl "
+"ɔønɹsǝ ᴉs nøʇ ɐɟɟǝɔʇǝd ᴉn ɐnʎ ʍɐʎ bʎ ɐ ɹǝ-ɹnn."
+
+#: cms/templates/course-create-rerun.html
+msgid ""
+"Note: Together, the organization, course number, and course run must "
+"uniquely identify this new course instance."
+msgstr ""
+"Nøʇǝ: Ŧøƃǝʇɥǝɹ, ʇɥǝ øɹƃɐnᴉzɐʇᴉøn, ɔønɹsǝ nnɯbǝɹ, ɐnd ɔønɹsǝ ɹnn ɯnsʇ "
+"nnᴉbnǝlʎ ᴉdǝnʇᴉɟʎ ʇɥᴉs nǝʍ ɔønɹsǝ ᴉnsʇɐnɔǝ."
+
+#: cms/templates/course-create-rerun.html
+msgid "Required Information to Create a re-run of a course"
+msgstr "Ɍǝbnᴉɹǝd Ɨnɟøɹɯɐʇᴉøn ʇø Ȼɹǝɐʇǝ ɐ ɹǝ-ɹnn øɟ ɐ ɔønɹsǝ"
+
+#. Translators: This is an example name for a new course, seen when
+#. filling out the form to create a new course.
+#: cms/templates/course-create-rerun.html cms/templates/index.html
+msgid "e.g. Introduction to Computer Science"
+msgstr "ǝ.ƃ. Ɨnʇɹødnɔʇᴉøn ʇø Ȼøɯdnʇǝɹ Sɔᴉǝnɔǝ"
+
+#: cms/templates/course-create-rerun.html
+msgid ""
+"The public display name for the new course. (This name is often the same as "
+"the original course name.)"
+msgstr ""
+"Ŧɥǝ dnblᴉɔ dᴉsdlɐʎ nɐɯǝ ɟøɹ ʇɥǝ nǝʍ ɔønɹsǝ. (Ŧɥᴉs nɐɯǝ ᴉs øɟʇǝn ʇɥǝ sɐɯǝ ɐs "
+"ʇɥǝ øɹᴉƃᴉnɐl ɔønɹsǝ nɐɯǝ.)"
+
+#: cms/templates/course-create-rerun.html cms/templates/index.html
+#: cms/templates/index.html cms/templates/settings.html
+msgid "Organization"
+msgstr "Øɹƃɐnᴉzɐʇᴉøn"
+
+#. Translators: This is an example for the name of the organization sponsoring
+#. a course, seen when filling out the form to create a new course. The
+#. organization name cannot contain spaces.
+#. Translators: "e.g. UniversityX or OrganizationX" is a placeholder displayed
+#. when user put no data into this field.
+#: cms/templates/course-create-rerun.html cms/templates/index.html
+#: cms/templates/index.html
+msgid "e.g. UniversityX or OrganizationX"
+msgstr "ǝ.ƃ. ɄnᴉʌǝɹsᴉʇʎX øɹ ØɹƃɐnᴉzɐʇᴉønX"
+
+#: cms/templates/course-create-rerun.html
+msgid ""
+"The name of the organization sponsoring the new course. (This name is often "
+"the same as the original organization name.)"
+msgstr ""
+"Ŧɥǝ nɐɯǝ øɟ ʇɥǝ øɹƃɐnᴉzɐʇᴉøn sdønsøɹᴉnƃ ʇɥǝ nǝʍ ɔønɹsǝ. (Ŧɥᴉs nɐɯǝ ᴉs øɟʇǝn "
+"ʇɥǝ sɐɯǝ ɐs ʇɥǝ øɹᴉƃᴉnɐl øɹƃɐnᴉzɐʇᴉøn nɐɯǝ.)"
+
+#: cms/templates/course-create-rerun.html
+#: cms/templates/course-create-rerun.html
+msgid "Note: No spaces or special characters are allowed."
+msgstr "Nøʇǝ: Nø sdɐɔǝs øɹ sdǝɔᴉɐl ɔɥɐɹɐɔʇǝɹs ɐɹǝ ɐlløʍǝd."
+
+#. Translators: This is an example for the number used to identify a course,
+#. seen when filling out the form to create a new course. The number here is
+#. short for "Computer Science 101". It can contain letters but cannot contain
+#. spaces.
+#: cms/templates/course-create-rerun.html cms/templates/index.html
+msgid "e.g. CS101"
+msgstr "ǝ.ƃ. ȻS101"
+
+#: cms/templates/course-create-rerun.html
+msgid ""
+"The unique number that identifies the new course within the organization.  "
+"(This number will be the same as the original course number and cannot be "
+"changed.)"
+msgstr ""
+"Ŧɥǝ nnᴉbnǝ nnɯbǝɹ ʇɥɐʇ ᴉdǝnʇᴉɟᴉǝs ʇɥǝ nǝʍ ɔønɹsǝ ʍᴉʇɥᴉn ʇɥǝ øɹƃɐnᴉzɐʇᴉøn.  "
+"(Ŧɥᴉs nnɯbǝɹ ʍᴉll bǝ ʇɥǝ sɐɯǝ ɐs ʇɥǝ øɹᴉƃᴉnɐl ɔønɹsǝ nnɯbǝɹ ɐnd ɔɐnnøʇ bǝ "
+"ɔɥɐnƃǝd.)"
+
+#: cms/templates/course-create-rerun.html cms/templates/index.html
+#: cms/templates/settings.html
+msgid "Course Run"
+msgstr "Ȼønɹsǝ Ɍnn"
+
+#. Translators: This is an example for the "run" used to identify different
+#. instances of a course, seen when filling out the form to create a new
+#. course.
+#: cms/templates/course-create-rerun.html cms/templates/index.html
+msgid "e.g. 2014_T1"
+msgstr "ǝ.ƃ. 2014_Ŧ1"
+
+#: cms/templates/course-create-rerun.html
+msgid ""
+"The term in which the new course will run. (This value is often different "
+"than the original course run value.)"
+msgstr ""
+"Ŧɥǝ ʇǝɹɯ ᴉn ʍɥᴉɔɥ ʇɥǝ nǝʍ ɔønɹsǝ ʍᴉll ɹnn. (Ŧɥᴉs ʌɐlnǝ ᴉs øɟʇǝn dᴉɟɟǝɹǝnʇ "
+"ʇɥɐn ʇɥǝ øɹᴉƃᴉnɐl ɔønɹsǝ ɹnn ʌɐlnǝ.)"
+
+#: cms/templates/course-create-rerun.html
+msgid "Create Re-run"
+msgstr "Ȼɹǝɐʇǝ Ɍǝ-ɹnn"
+
+#: cms/templates/course-create-rerun.html
+msgid "When will my course re-run start?"
+msgstr "Wɥǝn ʍᴉll ɯʎ ɔønɹsǝ ɹǝ-ɹnn sʇɐɹʇ?"
+
+#: cms/templates/course-create-rerun.html
+msgid "The new course is set to start on January 1, 2030 at midnight (UTC)."
+msgstr "Ŧɥǝ nǝʍ ɔønɹsǝ ᴉs sǝʇ ʇø sʇɐɹʇ øn Ɉɐnnɐɹʎ 1, 2030 ɐʇ ɯᴉdnᴉƃɥʇ (ɄŦȻ)."
+
+#: cms/templates/course-create-rerun.html
+msgid "What transfers from the original course?"
+msgstr "Wɥɐʇ ʇɹɐnsɟǝɹs ɟɹøɯ ʇɥǝ øɹᴉƃᴉnɐl ɔønɹsǝ?"
+
+#: cms/templates/course-create-rerun.html
+msgid ""
+"The new course has the same course outline and content as the original "
+"course. All problems, videos, announcements, and other files are duplicated "
+"to the new course."
+msgstr ""
+"Ŧɥǝ nǝʍ ɔønɹsǝ ɥɐs ʇɥǝ sɐɯǝ ɔønɹsǝ ønʇlᴉnǝ ɐnd ɔønʇǝnʇ ɐs ʇɥǝ øɹᴉƃᴉnɐl "
+"ɔønɹsǝ. Ⱥll dɹøblǝɯs, ʌᴉdǝøs, ɐnnønnɔǝɯǝnʇs, ɐnd øʇɥǝɹ ɟᴉlǝs ɐɹǝ dndlᴉɔɐʇǝd "
+"ʇø ʇɥǝ nǝʍ ɔønɹsǝ."
+
+#: cms/templates/course-create-rerun.html
+msgid "What does not transfer from the original course?"
+msgstr "Wɥɐʇ døǝs nøʇ ʇɹɐnsɟǝɹ ɟɹøɯ ʇɥǝ øɹᴉƃᴉnɐl ɔønɹsǝ?"
+
+#: cms/templates/course-create-rerun.html
+msgid ""
+"You are the only member of the new course's staff. No students are enrolled "
+"in the course, and there is no student data. There is no content in the "
+"discussion topics or wiki."
+msgstr ""
+"Ɏøn ɐɹǝ ʇɥǝ ønlʎ ɯǝɯbǝɹ øɟ ʇɥǝ nǝʍ ɔønɹsǝ's sʇɐɟɟ. Nø sʇndǝnʇs ɐɹǝ ǝnɹøllǝd "
+"ᴉn ʇɥǝ ɔønɹsǝ, ɐnd ʇɥǝɹǝ ᴉs nø sʇndǝnʇ dɐʇɐ. Ŧɥǝɹǝ ᴉs nø ɔønʇǝnʇ ᴉn ʇɥǝ "
+"dᴉsɔnssᴉøn ʇødᴉɔs øɹ ʍᴉʞᴉ."
+
+#: cms/templates/course-create-rerun.html
+msgid "Learn more about Course Re-runs"
+msgstr "Łǝɐɹn ɯøɹǝ ɐbønʇ Ȼønɹsǝ Ɍǝ-ɹnns"
+
+#: cms/templates/course_info.html cms/templates/course_info.html
+msgid "Course Updates"
+msgstr "Ȼønɹsǝ Ʉddɐʇǝs"
+
+#: cms/templates/course_info.html
+msgid "New Update"
+msgstr "Nǝʍ Ʉddɐʇǝ"
+
+#: cms/templates/course_info.html
+msgid ""
+"Use course updates to notify students of important dates or exams, highlight"
+" particular discussions in the forums, announce schedule changes, and "
+"respond to student questions. You add or edit updates in HTML."
+msgstr ""
+"Ʉsǝ ɔønɹsǝ nddɐʇǝs ʇø nøʇᴉɟʎ sʇndǝnʇs øɟ ᴉɯdøɹʇɐnʇ dɐʇǝs øɹ ǝxɐɯs, ɥᴉƃɥlᴉƃɥʇ"
+" dɐɹʇᴉɔnlɐɹ dᴉsɔnssᴉøns ᴉn ʇɥǝ ɟøɹnɯs, ɐnnønnɔǝ sɔɥǝdnlǝ ɔɥɐnƃǝs, ɐnd "
+"ɹǝsdønd ʇø sʇndǝnʇ bnǝsʇᴉøns. Ɏøn ɐdd øɹ ǝdᴉʇ nddɐʇǝs ᴉn ĦŦMŁ."
+
+#: cms/templates/course_info_introduction_post.html
+msgid "Updates support {link_start}keyword substitution{link_end}."
+msgstr "Ʉddɐʇǝs snddøɹʇ {link_start}ʞǝʎʍøɹd snbsʇᴉʇnʇᴉøn{link_end}."
+
+#: cms/templates/course_outline.html
+msgid ""
+"This course was created as a re-run. Some manual configuration is needed."
+msgstr ""
+"Ŧɥᴉs ɔønɹsǝ ʍɐs ɔɹǝɐʇǝd ɐs ɐ ɹǝ-ɹnn. Søɯǝ ɯɐnnɐl ɔønɟᴉƃnɹɐʇᴉøn ᴉs nǝǝdǝd."
+
+#: cms/templates/course_outline.html
+msgid ""
+"No course content is currently visible, and no learners are enrolled. Be "
+"sure to review and reset all dates, including the Course Start Date; set up "
+"the course team; review course updates and other assets for dated material; "
+"and seed the discussions and wiki."
+msgstr ""
+"Nø ɔønɹsǝ ɔønʇǝnʇ ᴉs ɔnɹɹǝnʇlʎ ʌᴉsᴉblǝ, ɐnd nø lǝɐɹnǝɹs ɐɹǝ ǝnɹøllǝd. Ƀǝ "
+"snɹǝ ʇø ɹǝʌᴉǝʍ ɐnd ɹǝsǝʇ ɐll dɐʇǝs, ᴉnɔlndᴉnƃ ʇɥǝ Ȼønɹsǝ Sʇɐɹʇ Đɐʇǝ; sǝʇ nd "
+"ʇɥǝ ɔønɹsǝ ʇǝɐɯ; ɹǝʌᴉǝʍ ɔønɹsǝ nddɐʇǝs ɐnd øʇɥǝɹ ɐssǝʇs ɟøɹ dɐʇǝd ɯɐʇǝɹᴉɐl; "
+"ɐnd sǝǝd ʇɥǝ dᴉsɔnssᴉøns ɐnd ʍᴉʞᴉ."
+
+#: cms/templates/course_outline.html
+msgid "Warning"
+msgstr "Wɐɹnᴉnƃ"
+
+#: cms/templates/course_outline.html
+msgid "This course uses features that are no longer supported."
+msgstr "Ŧɥᴉs ɔønɹsǝ nsǝs ɟǝɐʇnɹǝs ʇɥɐʇ ɐɹǝ nø lønƃǝɹ snddøɹʇǝd."
+
+#: cms/templates/course_outline.html
+msgid "You must delete or replace the following components."
+msgstr "Ɏøn ɯnsʇ dǝlǝʇǝ øɹ ɹǝdlɐɔǝ ʇɥǝ ɟølløʍᴉnƃ ɔøɯdønǝnʇs."
+
+#: cms/templates/course_outline.html
+msgid "Unsupported Components"
+msgstr "Ʉnsnddøɹʇǝd Ȼøɯdønǝnʇs"
+
+#: cms/templates/course_outline.html
+msgid "Deprecated Component"
+msgstr "Đǝdɹǝɔɐʇǝd Ȼøɯdønǝnʇ"
+
+#: cms/templates/course_outline.html
+msgid ""
+"To avoid errors, {platform_name} strongly recommends that you remove "
+"unsupported features from the course advanced settings. To do this, go to "
+"the {link_start}Advanced Settings page{link_end}, locate the \"Advanced "
+"Module List\" setting, and then delete the following modules from the list."
+msgstr ""
+"Ŧø ɐʌøᴉd ǝɹɹøɹs, {platform_name} sʇɹønƃlʎ ɹǝɔøɯɯǝnds ʇɥɐʇ ʎøn ɹǝɯøʌǝ "
+"nnsnddøɹʇǝd ɟǝɐʇnɹǝs ɟɹøɯ ʇɥǝ ɔønɹsǝ ɐdʌɐnɔǝd sǝʇʇᴉnƃs. Ŧø dø ʇɥᴉs, ƃø ʇø "
+"ʇɥǝ {link_start}Ⱥdʌɐnɔǝd Sǝʇʇᴉnƃs dɐƃǝ{link_end}, løɔɐʇǝ ʇɥǝ \"Ⱥdʌɐnɔǝd "
+"Mødnlǝ Łᴉsʇ\" sǝʇʇᴉnƃ, ɐnd ʇɥǝn dǝlǝʇǝ ʇɥǝ ɟølløʍᴉnƃ ɯødnlǝs ɟɹøɯ ʇɥǝ lᴉsʇ."
+
+#: cms/templates/course_outline.html
+msgid "Unsupported Advance Modules"
+msgstr "Ʉnsnddøɹʇǝd Ⱥdʌɐnɔǝ Mødnlǝs"
+
+#: cms/templates/course_outline.html
+msgid "Click to add a new section"
+msgstr "Ȼlᴉɔʞ ʇø ɐdd ɐ nǝʍ sǝɔʇᴉøn"
+
+#: cms/templates/course_outline.html
+msgid "New Section"
+msgstr "Nǝʍ Sǝɔʇᴉøn"
+
+#: cms/templates/course_outline.html
+msgid "Reindex current course"
+msgstr "Ɍǝᴉndǝx ɔnɹɹǝnʇ ɔønɹsǝ"
+
+#: cms/templates/course_outline.html
+msgid "Reindex"
+msgstr "Ɍǝᴉndǝx"
+
+#: cms/templates/course_outline.html
+msgid "Collapse All Sections"
+msgstr "Ȼøllɐdsǝ Ⱥll Sǝɔʇᴉøns"
+
+#: cms/templates/course_outline.html
+msgid "Expand All Sections"
+msgstr "Ɇxdɐnd Ⱥll Sǝɔʇᴉøns"
+
+#: cms/templates/course_outline.html
+msgid "Click to open the courseware in the LMS in a new tab"
+msgstr "Ȼlᴉɔʞ ʇø ødǝn ʇɥǝ ɔønɹsǝʍɐɹǝ ᴉn ʇɥǝ ŁMS ᴉn ɐ nǝʍ ʇɐb"
+
+#: cms/templates/course_outline.html cms/templates/edit-tabs.html
+msgid "View Live"
+msgstr "Vᴉǝʍ Łᴉʌǝ"
+
+#: cms/templates/course_outline.html cms/templates/course_outline.html
+msgid "Edit Start Date"
+msgstr "Ɇdᴉʇ Sʇɐɹʇ Đɐʇǝ"
+
+#: cms/templates/course_outline.html cms/templates/settings.html
+msgid "Course Pacing"
+msgstr "Ȼønɹsǝ Ᵽɐɔᴉnƃ"
+
+#: cms/templates/course_outline.html cms/templates/settings.html
+msgid "Self-Paced"
+msgstr "Sǝlɟ-Ᵽɐɔǝd"
+
+#: cms/templates/course_outline.html cms/templates/settings.html
+msgid "Instructor-Paced"
+msgstr "Ɨnsʇɹnɔʇøɹ-Ᵽɐɔǝd"
+
+#: cms/templates/course_outline.html
+msgid "Creating your course organization"
+msgstr "Ȼɹǝɐʇᴉnƃ ʎønɹ ɔønɹsǝ øɹƃɐnᴉzɐʇᴉøn"
+
+#: cms/templates/course_outline.html
+msgid "You add sections, subsections, and units directly in the outline."
+msgstr "Ɏøn ɐdd sǝɔʇᴉøns, snbsǝɔʇᴉøns, ɐnd nnᴉʇs dᴉɹǝɔʇlʎ ᴉn ʇɥǝ ønʇlᴉnǝ."
+
+#: cms/templates/course_outline.html
+msgid ""
+"Create a section, then add subsections and units. Open a unit to add course "
+"components."
+msgstr ""
+"Ȼɹǝɐʇǝ ɐ sǝɔʇᴉøn, ʇɥǝn ɐdd snbsǝɔʇᴉøns ɐnd nnᴉʇs. Ødǝn ɐ nnᴉʇ ʇø ɐdd ɔønɹsǝ "
+"ɔøɯdønǝnʇs."
+
+#: cms/templates/course_outline.html
+msgid "Reorganizing your course"
+msgstr "Ɍǝøɹƃɐnᴉzᴉnƃ ʎønɹ ɔønɹsǝ"
+
+#: cms/templates/course_outline.html
+msgid "Drag sections, subsections, and units to new locations in the outline."
+msgstr ""
+"Đɹɐƃ sǝɔʇᴉøns, snbsǝɔʇᴉøns, ɐnd nnᴉʇs ʇø nǝʍ løɔɐʇᴉøns ᴉn ʇɥǝ ønʇlᴉnǝ."
+
+#: cms/templates/course_outline.html
+msgid "Learn more about the course outline"
+msgstr "Łǝɐɹn ɯøɹǝ ɐbønʇ ʇɥǝ ɔønɹsǝ ønʇlᴉnǝ"
+
+#: cms/templates/course_outline.html
+msgid "Setting release dates and grading policies"
+msgstr "Sǝʇʇᴉnƃ ɹǝlǝɐsǝ dɐʇǝs ɐnd ƃɹɐdᴉnƃ dølᴉɔᴉǝs"
+
+#: cms/templates/course_outline.html
+msgid ""
+"Select the Configure icon for a section or subsection to set its release "
+"date. When you configure a subsection, you can also set the grading policy "
+"and due date."
+msgstr ""
+"Sǝlǝɔʇ ʇɥǝ Ȼønɟᴉƃnɹǝ ᴉɔøn ɟøɹ ɐ sǝɔʇᴉøn øɹ snbsǝɔʇᴉøn ʇø sǝʇ ᴉʇs ɹǝlǝɐsǝ "
+"dɐʇǝ. Wɥǝn ʎøn ɔønɟᴉƃnɹǝ ɐ snbsǝɔʇᴉøn, ʎøn ɔɐn ɐlsø sǝʇ ʇɥǝ ƃɹɐdᴉnƃ dølᴉɔʎ "
+"ɐnd dnǝ dɐʇǝ."
+
+#: cms/templates/course_outline.html
+msgid "Learn more about grading policy settings"
+msgstr "Łǝɐɹn ɯøɹǝ ɐbønʇ ƃɹɐdᴉnƃ dølᴉɔʎ sǝʇʇᴉnƃs"
+
+#: cms/templates/course_outline.html
+msgid "Changing the content learners see"
+msgstr "Ȼɥɐnƃᴉnƃ ʇɥǝ ɔønʇǝnʇ lǝɐɹnǝɹs sǝǝ"
+
+#: cms/templates/course_outline.html
+msgid ""
+"To publish draft content, select the Publish icon for a section, subsection,"
+" or unit."
+msgstr ""
+"Ŧø dnblᴉsɥ dɹɐɟʇ ɔønʇǝnʇ, sǝlǝɔʇ ʇɥǝ Ᵽnblᴉsɥ ᴉɔøn ɟøɹ ɐ sǝɔʇᴉøn, snbsǝɔʇᴉøn,"
+" øɹ nnᴉʇ."
+
+#: cms/templates/course_outline.html
+msgid ""
+"To make a section, subsection, or unit unavailable to learners, select the "
+"Configure icon for that level, then select the appropriate "
+"{em_start}Hide{em_end} option. Grades for hidden sections, subsections, and "
+"units are not included in grade calculations."
+msgstr ""
+"Ŧø ɯɐʞǝ ɐ sǝɔʇᴉøn, snbsǝɔʇᴉøn, øɹ nnᴉʇ nnɐʌɐᴉlɐblǝ ʇø lǝɐɹnǝɹs, sǝlǝɔʇ ʇɥǝ "
+"Ȼønɟᴉƃnɹǝ ᴉɔøn ɟøɹ ʇɥɐʇ lǝʌǝl, ʇɥǝn sǝlǝɔʇ ʇɥǝ ɐddɹødɹᴉɐʇǝ "
+"{em_start}Ħᴉdǝ{em_end} ødʇᴉøn. Ǥɹɐdǝs ɟøɹ ɥᴉddǝn sǝɔʇᴉøns, snbsǝɔʇᴉøns, ɐnd "
+"nnᴉʇs ɐɹǝ nøʇ ᴉnɔlndǝd ᴉn ƃɹɐdǝ ɔɐlɔnlɐʇᴉøns."
+
+#: cms/templates/course_outline.html
+msgid ""
+"To hide the content of a subsection from learners after the subsection due "
+"date has passed, select the Configure icon for a subsection, then select "
+"{em_start}Hide content after due date{em_end}. Grades for the subsection "
+"remain included in grade calculations."
+msgstr ""
+"Ŧø ɥᴉdǝ ʇɥǝ ɔønʇǝnʇ øɟ ɐ snbsǝɔʇᴉøn ɟɹøɯ lǝɐɹnǝɹs ɐɟʇǝɹ ʇɥǝ snbsǝɔʇᴉøn dnǝ "
+"dɐʇǝ ɥɐs dɐssǝd, sǝlǝɔʇ ʇɥǝ Ȼønɟᴉƃnɹǝ ᴉɔøn ɟøɹ ɐ snbsǝɔʇᴉøn, ʇɥǝn sǝlǝɔʇ "
+"{em_start}Ħᴉdǝ ɔønʇǝnʇ ɐɟʇǝɹ dnǝ dɐʇǝ{em_end}. Ǥɹɐdǝs ɟøɹ ʇɥǝ snbsǝɔʇᴉøn "
+"ɹǝɯɐᴉn ᴉnɔlndǝd ᴉn ƃɹɐdǝ ɔɐlɔnlɐʇᴉøns."
+
+#: cms/templates/course_outline.html
+msgid "Learn more about content visibility settings"
+msgstr "Łǝɐɹn ɯøɹǝ ɐbønʇ ɔønʇǝnʇ ʌᴉsᴉbᴉlᴉʇʎ sǝʇʇᴉnƃs"
+
+#. Translators: Pages refer to the tabs that appear in the top navigation of
+#. each course.
+#: cms/templates/edit-tabs.html cms/templates/edit-tabs.html
+#: cms/templates/export.html cms/templates/widgets/header.html
+msgid "Pages"
+msgstr "Ᵽɐƃǝs"
+
+#: cms/templates/edit-tabs.html
+msgid "New Page"
+msgstr "Nǝʍ Ᵽɐƃǝ"
+
+#: cms/templates/edit-tabs.html
+msgid ""
+"Note: Pages are publicly visible. If users know the URL of a page, they can "
+"view the page even if they are not registered for or logged in to your "
+"course."
+msgstr ""
+"Nøʇǝ: Ᵽɐƃǝs ɐɹǝ dnblᴉɔlʎ ʌᴉsᴉblǝ. Ɨɟ nsǝɹs ʞnøʍ ʇɥǝ ɄɌŁ øɟ ɐ dɐƃǝ, ʇɥǝʎ ɔɐn "
+"ʌᴉǝʍ ʇɥǝ dɐƃǝ ǝʌǝn ᴉɟ ʇɥǝʎ ɐɹǝ nøʇ ɹǝƃᴉsʇǝɹǝd ɟøɹ øɹ løƃƃǝd ᴉn ʇø ʎønɹ "
+"ɔønɹsǝ."
+
+#: cms/templates/edit-tabs.html
+msgid "Show this page"
+msgstr "Sɥøʍ ʇɥᴉs dɐƃǝ"
+
+#: cms/templates/edit-tabs.html cms/templates/edit-tabs.html
+msgid "Show/hide page"
+msgstr "Sɥøʍ/ɥᴉdǝ dɐƃǝ"
+
+#: cms/templates/edit-tabs.html cms/templates/edit-tabs.html
+msgid "This page cannot be reordered"
+msgstr "Ŧɥᴉs dɐƃǝ ɔɐnnøʇ bǝ ɹǝøɹdǝɹǝd"
+
+#: cms/templates/edit-tabs.html
+msgid "You can add additional custom pages to your course."
+msgstr "Ɏøn ɔɐn ɐdd ɐddᴉʇᴉønɐl ɔnsʇøɯ dɐƃǝs ʇø ʎønɹ ɔønɹsǝ."
+
+#: cms/templates/edit-tabs.html
+msgid "Add a New Page"
+msgstr "Ⱥdd ɐ Nǝʍ Ᵽɐƃǝ"
+
+#: cms/templates/edit-tabs.html
+msgid "What are pages?"
+msgstr "Wɥɐʇ ɐɹǝ dɐƃǝs?"
+
+#: cms/templates/edit-tabs.html
+msgid ""
+"Pages are listed horizontally at the top of your course. Default pages "
+"(Home, Course, Discussion, Wiki, and Progress) are followed by textbooks and"
+" custom pages that you create."
+msgstr ""
+"Ᵽɐƃǝs ɐɹǝ lᴉsʇǝd ɥøɹᴉzønʇɐllʎ ɐʇ ʇɥǝ ʇød øɟ ʎønɹ ɔønɹsǝ. Đǝɟɐnlʇ dɐƃǝs "
+"(Ħøɯǝ, Ȼønɹsǝ, Đᴉsɔnssᴉøn, Wᴉʞᴉ, ɐnd Ᵽɹøƃɹǝss) ɐɹǝ ɟølløʍǝd bʎ ʇǝxʇbøøʞs ɐnd"
+" ɔnsʇøɯ dɐƃǝs ʇɥɐʇ ʎøn ɔɹǝɐʇǝ."
+
+#: cms/templates/edit-tabs.html
+msgid "Custom pages"
+msgstr "Ȼnsʇøɯ dɐƃǝs"
+
+#: cms/templates/edit-tabs.html
+msgid ""
+"You can create and edit custom pages to provide students with additional "
+"course content. For example, you can create pages for the grading policy, "
+"course slides, and a course calendar. "
+msgstr ""
+"Ɏøn ɔɐn ɔɹǝɐʇǝ ɐnd ǝdᴉʇ ɔnsʇøɯ dɐƃǝs ʇø dɹøʌᴉdǝ sʇndǝnʇs ʍᴉʇɥ ɐddᴉʇᴉønɐl "
+"ɔønɹsǝ ɔønʇǝnʇ. Føɹ ǝxɐɯdlǝ, ʎøn ɔɐn ɔɹǝɐʇǝ dɐƃǝs ɟøɹ ʇɥǝ ƃɹɐdᴉnƃ dølᴉɔʎ, "
+"ɔønɹsǝ slᴉdǝs, ɐnd ɐ ɔønɹsǝ ɔɐlǝndɐɹ. "
+
+#: cms/templates/edit-tabs.html
+msgid "How do pages look to students in my course?"
+msgstr "Ħøʍ dø dɐƃǝs løøʞ ʇø sʇndǝnʇs ᴉn ɯʎ ɔønɹsǝ?"
+
+#: cms/templates/edit-tabs.html
+msgid ""
+"Students see the default and custom pages at the top of your course and use "
+"these links to navigate."
+msgstr ""
+"Sʇndǝnʇs sǝǝ ʇɥǝ dǝɟɐnlʇ ɐnd ɔnsʇøɯ dɐƃǝs ɐʇ ʇɥǝ ʇød øɟ ʎønɹ ɔønɹsǝ ɐnd nsǝ "
+"ʇɥǝsǝ lᴉnʞs ʇø nɐʌᴉƃɐʇǝ."
+
+#: cms/templates/edit-tabs.html
+msgid "See an example"
+msgstr "Sǝǝ ɐn ǝxɐɯdlǝ"
+
+#: cms/templates/edit-tabs.html
+msgid "Pages in Your Course"
+msgstr "Ᵽɐƃǝs ᴉn Ɏønɹ Ȼønɹsǝ"
+
+#: cms/templates/edit-tabs.html
+msgid "Preview of Pages in your course"
+msgstr "Ᵽɹǝʌᴉǝʍ øɟ Ᵽɐƃǝs ᴉn ʎønɹ ɔønɹsǝ"
+
+#: cms/templates/edit-tabs.html
+msgid ""
+"Pages appear in your course's top navigation bar. The default pages (Home, "
+"Course, Discussion, Wiki, and Progress) are followed by textbooks and custom"
+" pages."
+msgstr ""
+"Ᵽɐƃǝs ɐddǝɐɹ ᴉn ʎønɹ ɔønɹsǝ's ʇød nɐʌᴉƃɐʇᴉøn bɐɹ. Ŧɥǝ dǝɟɐnlʇ dɐƃǝs (Ħøɯǝ, "
+"Ȼønɹsǝ, Đᴉsɔnssᴉøn, Wᴉʞᴉ, ɐnd Ᵽɹøƃɹǝss) ɐɹǝ ɟølløʍǝd bʎ ʇǝxʇbøøʞs ɐnd ɔnsʇøɯ"
+" dɐƃǝs."
+
+#: cms/templates/edit-tabs.html cms/templates/howitworks.html
+#: cms/templates/howitworks.html cms/templates/howitworks.html
+#: cms/templates/keyword_sub_modal.html
+msgid "close modal"
+msgstr "ɔløsǝ ɯødɐl"
+
+#: cms/templates/error.html
+msgid "Internal Server Error"
+msgstr "Ɨnʇǝɹnɐl Sǝɹʌǝɹ Ɇɹɹøɹ"
+
+#: cms/templates/error.html
+msgid "The Page You Requested Page Cannot be Found"
+msgstr "Ŧɥǝ Ᵽɐƃǝ Ɏøn Ɍǝbnǝsʇǝd Ᵽɐƃǝ Ȼɐnnøʇ bǝ Fønnd"
+
+#: cms/templates/error.html
+msgid ""
+"We're sorry. We couldn't find the {studio_name} page you're looking for. You"
+" may want to return to the {studio_name} Dashboard and try again. If you are"
+" still having problems accessing things, please feel free to "
+"{link_start}contact {studio_name} support{link_end} for further help."
+msgstr ""
+"Wǝ'ɹǝ søɹɹʎ. Wǝ ɔønldn'ʇ ɟᴉnd ʇɥǝ {studio_name} dɐƃǝ ʎøn'ɹǝ løøʞᴉnƃ ɟøɹ. Ɏøn"
+" ɯɐʎ ʍɐnʇ ʇø ɹǝʇnɹn ʇø ʇɥǝ {studio_name} Đɐsɥbøɐɹd ɐnd ʇɹʎ ɐƃɐᴉn. Ɨɟ ʎøn ɐɹǝ"
+" sʇᴉll ɥɐʌᴉnƃ dɹøblǝɯs ɐɔɔǝssᴉnƃ ʇɥᴉnƃs, dlǝɐsǝ ɟǝǝl ɟɹǝǝ ʇø "
+"{link_start}ɔønʇɐɔʇ {studio_name} snddøɹʇ{link_end} ɟøɹ ɟnɹʇɥǝɹ ɥǝld."
+
+#: cms/templates/error.html
+msgid "The Server Encountered an Error"
+msgstr "Ŧɥǝ Sǝɹʌǝɹ Ɇnɔønnʇǝɹǝd ɐn Ɇɹɹøɹ"
+
+#: cms/templates/error.html
+msgid ""
+"We're sorry. There was a problem with the server while trying to process "
+"your last request. You may want to return to the {studio_name} Dashboard or "
+"try this request again. If you are still having problems accessing things, "
+"please feel free to {link_start}contact {studio_name} support{link_end} for "
+"further help."
+msgstr ""
+"Wǝ'ɹǝ søɹɹʎ. Ŧɥǝɹǝ ʍɐs ɐ dɹøblǝɯ ʍᴉʇɥ ʇɥǝ sǝɹʌǝɹ ʍɥᴉlǝ ʇɹʎᴉnƃ ʇø dɹøɔǝss "
+"ʎønɹ lɐsʇ ɹǝbnǝsʇ. Ɏøn ɯɐʎ ʍɐnʇ ʇø ɹǝʇnɹn ʇø ʇɥǝ {studio_name} Đɐsɥbøɐɹd øɹ "
+"ʇɹʎ ʇɥᴉs ɹǝbnǝsʇ ɐƃɐᴉn. Ɨɟ ʎøn ɐɹǝ sʇᴉll ɥɐʌᴉnƃ dɹøblǝɯs ɐɔɔǝssᴉnƃ ʇɥᴉnƃs, "
+"dlǝɐsǝ ɟǝǝl ɟɹǝǝ ʇø {link_start}ɔønʇɐɔʇ {studio_name} snddøɹʇ{link_end} ɟøɹ "
+"ɟnɹʇɥǝɹ ɥǝld."
+
+#: cms/templates/error.html
+msgid "Back to dashboard"
+msgstr "Ƀɐɔʞ ʇø dɐsɥbøɐɹd"
+
+#: cms/templates/export.html cms/templates/export.html
+msgid "Library Export"
+msgstr "Łᴉbɹɐɹʎ Ɇxdøɹʇ"
+
+#: cms/templates/export.html cms/templates/export.html
+msgid "Course Export"
+msgstr "Ȼønɹsǝ Ɇxdøɹʇ"
+
+#: cms/templates/export.html
+msgid "About Exporting Libraries"
+msgstr "Ⱥbønʇ Ɇxdøɹʇᴉnƃ Łᴉbɹɐɹᴉǝs"
+
+#. Translators: ".tar.gz" is a file extension, and should not be translated
+#: cms/templates/export.html
+msgid ""
+"You can export libraries and edit them outside of {studio_name}. The "
+"exported file is a .tar.gz file (that is, a .tar file compressed with GNU "
+"Zip) that contains the library structure and content. You can also re-import"
+" libraries that you've exported."
+msgstr ""
+"Ɏøn ɔɐn ǝxdøɹʇ lᴉbɹɐɹᴉǝs ɐnd ǝdᴉʇ ʇɥǝɯ ønʇsᴉdǝ øɟ {studio_name}. Ŧɥǝ "
+"ǝxdøɹʇǝd ɟᴉlǝ ᴉs ɐ .ʇɐɹ.ƃz ɟᴉlǝ (ʇɥɐʇ ᴉs, ɐ .ʇɐɹ ɟᴉlǝ ɔøɯdɹǝssǝd ʍᴉʇɥ ǤNɄ "
+"Ƶᴉd) ʇɥɐʇ ɔønʇɐᴉns ʇɥǝ lᴉbɹɐɹʎ sʇɹnɔʇnɹǝ ɐnd ɔønʇǝnʇ. Ɏøn ɔɐn ɐlsø ɹǝ-ᴉɯdøɹʇ"
+" lᴉbɹɐɹᴉǝs ʇɥɐʇ ʎøn'ʌǝ ǝxdøɹʇǝd."
+
+#: cms/templates/export.html
+msgid "About Exporting Courses"
+msgstr "Ⱥbønʇ Ɇxdøɹʇᴉnƃ Ȼønɹsǝs"
+
+#. Translators: ".tar.gz" is a file extension, and should not be translated
+#: cms/templates/export.html
+msgid ""
+"You can export courses and edit them outside of {studio_name}. The exported "
+"file is a .tar.gz file (that is, a .tar file compressed with GNU Zip) that "
+"contains the course structure and content. You can also re-import courses "
+"that you've exported."
+msgstr ""
+"Ɏøn ɔɐn ǝxdøɹʇ ɔønɹsǝs ɐnd ǝdᴉʇ ʇɥǝɯ ønʇsᴉdǝ øɟ {studio_name}. Ŧɥǝ ǝxdøɹʇǝd "
+"ɟᴉlǝ ᴉs ɐ .ʇɐɹ.ƃz ɟᴉlǝ (ʇɥɐʇ ᴉs, ɐ .ʇɐɹ ɟᴉlǝ ɔøɯdɹǝssǝd ʍᴉʇɥ ǤNɄ Ƶᴉd) ʇɥɐʇ "
+"ɔønʇɐᴉns ʇɥǝ ɔønɹsǝ sʇɹnɔʇnɹǝ ɐnd ɔønʇǝnʇ. Ɏøn ɔɐn ɐlsø ɹǝ-ᴉɯdøɹʇ ɔønɹsǝs "
+"ʇɥɐʇ ʎøn'ʌǝ ǝxdøɹʇǝd."
+
+#: cms/templates/export.html
+msgid ""
+"{em_start}Caution:{em_end} When you export a course, information such as "
+"MATLAB API keys, LTI passports, annotation secret token strings, and "
+"annotation storage URLs are included in the exported data. If you share your"
+" exported files, you may also be sharing sensitive or license-specific "
+"information."
+msgstr ""
+"{em_start}Ȼɐnʇᴉøn:{em_end} Wɥǝn ʎøn ǝxdøɹʇ ɐ ɔønɹsǝ, ᴉnɟøɹɯɐʇᴉøn snɔɥ ɐs "
+"MȺŦŁȺɃ ȺⱣƗ ʞǝʎs, ŁŦƗ dɐssdøɹʇs, ɐnnøʇɐʇᴉøn sǝɔɹǝʇ ʇøʞǝn sʇɹᴉnƃs, ɐnd "
+"ɐnnøʇɐʇᴉøn sʇøɹɐƃǝ ɄɌŁs ɐɹǝ ᴉnɔlndǝd ᴉn ʇɥǝ ǝxdøɹʇǝd dɐʇɐ. Ɨɟ ʎøn sɥɐɹǝ ʎønɹ"
+" ǝxdøɹʇǝd ɟᴉlǝs, ʎøn ɯɐʎ ɐlsø bǝ sɥɐɹᴉnƃ sǝnsᴉʇᴉʌǝ øɹ lᴉɔǝnsǝ-sdǝɔᴉɟᴉɔ "
+"ᴉnɟøɹɯɐʇᴉøn."
+
+#: cms/templates/export.html
+msgid "Export My Library Content"
+msgstr "Ɇxdøɹʇ Mʎ Łᴉbɹɐɹʎ Ȼønʇǝnʇ"
+
+#: cms/templates/export.html
+msgid "Export My Course Content"
+msgstr "Ɇxdøɹʇ Mʎ Ȼønɹsǝ Ȼønʇǝnʇ"
+
+#: cms/templates/export.html
+msgid "Export Library Content"
+msgstr "Ɇxdøɹʇ Łᴉbɹɐɹʎ Ȼønʇǝnʇ"
+
+#: cms/templates/export.html
+msgid "Export Course Content"
+msgstr "Ɇxdøɹʇ Ȼønɹsǝ Ȼønʇǝnʇ"
+
+#: cms/templates/export.html
+msgid "Library Export Status"
+msgstr "Łᴉbɹɐɹʎ Ɇxdøɹʇ Sʇɐʇns"
+
+#: cms/templates/export.html
+msgid "Course Export Status"
+msgstr "Ȼønɹsǝ Ɇxdøɹʇ Sʇɐʇns"
+
+#: cms/templates/export.html
+msgid "Preparing"
+msgstr "Ᵽɹǝdɐɹᴉnƃ"
+
+#: cms/templates/export.html
+msgid "Preparing to start the export"
+msgstr "Ᵽɹǝdɐɹᴉnƃ ʇø sʇɐɹʇ ʇɥǝ ǝxdøɹʇ"
+
+#: cms/templates/export.html
+msgid "Exporting"
+msgstr "Ɇxdøɹʇᴉnƃ"
+
+#: cms/templates/export.html
+msgid ""
+"Creating the export data files (You can now leave this page safely, but "
+"avoid making drastic changes to content until this export is complete)"
+msgstr ""
+"Ȼɹǝɐʇᴉnƃ ʇɥǝ ǝxdøɹʇ dɐʇɐ ɟᴉlǝs (Ɏøn ɔɐn nøʍ lǝɐʌǝ ʇɥᴉs dɐƃǝ sɐɟǝlʎ, bnʇ "
+"ɐʌøᴉd ɯɐʞᴉnƃ dɹɐsʇᴉɔ ɔɥɐnƃǝs ʇø ɔønʇǝnʇ nnʇᴉl ʇɥᴉs ǝxdøɹʇ ᴉs ɔøɯdlǝʇǝ)"
+
+#: cms/templates/export.html
+msgid "Compressing"
+msgstr "Ȼøɯdɹǝssᴉnƃ"
+
+#: cms/templates/export.html
+msgid "Compressing the exported data and preparing it for download"
+msgstr "Ȼøɯdɹǝssᴉnƃ ʇɥǝ ǝxdøɹʇǝd dɐʇɐ ɐnd dɹǝdɐɹᴉnƃ ᴉʇ ɟøɹ døʍnløɐd"
+
+#: cms/templates/export.html cms/templates/import.html
+msgid "Success"
+msgstr "Snɔɔǝss"
+
+#: cms/templates/export.html
+msgid "Your exported library can now be downloaded"
+msgstr "Ɏønɹ ǝxdøɹʇǝd lᴉbɹɐɹʎ ɔɐn nøʍ bǝ døʍnløɐdǝd"
+
+#: cms/templates/export.html
+msgid "Your exported course can now be downloaded"
+msgstr "Ɏønɹ ǝxdøɹʇǝd ɔønɹsǝ ɔɐn nøʍ bǝ døʍnløɐdǝd"
+
+#: cms/templates/export.html
+msgid "Download Exported Library"
+msgstr "Đøʍnløɐd Ɇxdøɹʇǝd Łᴉbɹɐɹʎ"
+
+#: cms/templates/export.html
+msgid "Download Exported Course"
+msgstr "Đøʍnløɐd Ɇxdøɹʇǝd Ȼønɹsǝ"
+
+#: cms/templates/export.html
+msgid "Data {em_start}exported with{em_end} your course:"
+msgstr "Đɐʇɐ {em_start}ǝxdøɹʇǝd ʍᴉʇɥ{em_end} ʎønɹ ɔønɹsǝ:"
+
+#: cms/templates/export.html
+msgid ""
+"Values from Advanced Settings, including MATLAB API keys and LTI passports"
+msgstr ""
+"Vɐlnǝs ɟɹøɯ Ⱥdʌɐnɔǝd Sǝʇʇᴉnƃs, ᴉnɔlndᴉnƃ MȺŦŁȺɃ ȺⱣƗ ʞǝʎs ɐnd ŁŦƗ dɐssdøɹʇs"
+
+#: cms/templates/export.html
+msgid "Course Content (all Sections, Sub-sections, and Units)"
+msgstr "Ȼønɹsǝ Ȼønʇǝnʇ (ɐll Sǝɔʇᴉøns, Snb-sǝɔʇᴉøns, ɐnd Ʉnᴉʇs)"
+
+#: cms/templates/export.html
+msgid "Course Structure"
+msgstr "Ȼønɹsǝ Sʇɹnɔʇnɹǝ"
+
+#: cms/templates/export.html
+msgid "Individual Problems"
+msgstr "Ɨndᴉʌᴉdnɐl Ᵽɹøblǝɯs"
+
+#: cms/templates/export.html
+msgid "Course Assets"
+msgstr "Ȼønɹsǝ Ⱥssǝʇs"
+
+#: cms/templates/export.html
+msgid "Course Settings"
+msgstr "Ȼønɹsǝ Sǝʇʇᴉnƃs"
+
+#: cms/templates/export.html
+msgid "Data {em_start}not exported{em_end} with your course:"
+msgstr "Đɐʇɐ {em_start}nøʇ ǝxdøɹʇǝd{em_end} ʍᴉʇɥ ʎønɹ ɔønɹsǝ:"
+
+#: cms/templates/export.html
+msgid "User Data"
+msgstr "Ʉsǝɹ Đɐʇɐ"
+
+#: cms/templates/export.html
+msgid "Course Team Data"
+msgstr "Ȼønɹsǝ Ŧǝɐɯ Đɐʇɐ"
+
+#: cms/templates/export.html
+msgid "Forum/discussion Data"
+msgstr "Føɹnɯ/dᴉsɔnssᴉøn Đɐʇɐ"
+
+#: cms/templates/export.html
+msgid "Why export a library?"
+msgstr "Wɥʎ ǝxdøɹʇ ɐ lᴉbɹɐɹʎ?"
+
+#: cms/templates/export.html
+msgid ""
+"You may want to edit the XML in your library directly, outside of "
+"{studio_name}. You may want to create a backup copy of your library. Or, you"
+" may want to create a copy of your library that you can later import into "
+"another library instance and customize."
+msgstr ""
+"Ɏøn ɯɐʎ ʍɐnʇ ʇø ǝdᴉʇ ʇɥǝ XMŁ ᴉn ʎønɹ lᴉbɹɐɹʎ dᴉɹǝɔʇlʎ, ønʇsᴉdǝ øɟ "
+"{studio_name}. Ɏøn ɯɐʎ ʍɐnʇ ʇø ɔɹǝɐʇǝ ɐ bɐɔʞnd ɔødʎ øɟ ʎønɹ lᴉbɹɐɹʎ. Øɹ, ʎøn"
+" ɯɐʎ ʍɐnʇ ʇø ɔɹǝɐʇǝ ɐ ɔødʎ øɟ ʎønɹ lᴉbɹɐɹʎ ʇɥɐʇ ʎøn ɔɐn lɐʇǝɹ ᴉɯdøɹʇ ᴉnʇø "
+"ɐnøʇɥǝɹ lᴉbɹɐɹʎ ᴉnsʇɐnɔǝ ɐnd ɔnsʇøɯᴉzǝ."
+
+#: cms/templates/export.html cms/templates/export.html
+msgid "Opening the downloaded file"
+msgstr "Ødǝnᴉnƃ ʇɥǝ døʍnløɐdǝd ɟᴉlǝ"
+
+#. Translators: ".tar.gz" is a file extension, and should not be translated
+#: cms/templates/export.html
+msgid ""
+"Use an archive program to extract the data from the .tar.gz file. Extracted "
+"data includes the library.xml file, as well as subfolders that contain "
+"library content."
+msgstr ""
+"Ʉsǝ ɐn ɐɹɔɥᴉʌǝ dɹøƃɹɐɯ ʇø ǝxʇɹɐɔʇ ʇɥǝ dɐʇɐ ɟɹøɯ ʇɥǝ .ʇɐɹ.ƃz ɟᴉlǝ. Ɇxʇɹɐɔʇǝd "
+"dɐʇɐ ᴉnɔlndǝs ʇɥǝ lᴉbɹɐɹʎ.xɯl ɟᴉlǝ, ɐs ʍǝll ɐs snbɟøldǝɹs ʇɥɐʇ ɔønʇɐᴉn "
+"lᴉbɹɐɹʎ ɔønʇǝnʇ."
+
+#: cms/templates/export.html
+msgid "Learn more about exporting a library"
+msgstr "Łǝɐɹn ɯøɹǝ ɐbønʇ ǝxdøɹʇᴉnƃ ɐ lᴉbɹɐɹʎ"
+
+#: cms/templates/export.html
+msgid "Why export a course?"
+msgstr "Wɥʎ ǝxdøɹʇ ɐ ɔønɹsǝ?"
+
+#: cms/templates/export.html
+msgid ""
+"You may want to edit the XML in your course directly, outside of "
+"{studio_name}. You may want to create a backup copy of your course. Or, you "
+"may want to create a copy of your course that you can later import into "
+"another course instance and customize."
+msgstr ""
+"Ɏøn ɯɐʎ ʍɐnʇ ʇø ǝdᴉʇ ʇɥǝ XMŁ ᴉn ʎønɹ ɔønɹsǝ dᴉɹǝɔʇlʎ, ønʇsᴉdǝ øɟ "
+"{studio_name}. Ɏøn ɯɐʎ ʍɐnʇ ʇø ɔɹǝɐʇǝ ɐ bɐɔʞnd ɔødʎ øɟ ʎønɹ ɔønɹsǝ. Øɹ, ʎøn "
+"ɯɐʎ ʍɐnʇ ʇø ɔɹǝɐʇǝ ɐ ɔødʎ øɟ ʎønɹ ɔønɹsǝ ʇɥɐʇ ʎøn ɔɐn lɐʇǝɹ ᴉɯdøɹʇ ᴉnʇø "
+"ɐnøʇɥǝɹ ɔønɹsǝ ᴉnsʇɐnɔǝ ɐnd ɔnsʇøɯᴉzǝ."
+
+#: cms/templates/export.html
+msgid "What content is exported?"
+msgstr "Wɥɐʇ ɔønʇǝnʇ ᴉs ǝxdøɹʇǝd?"
+
+#: cms/templates/export.html
+msgid "The following content is exported."
+msgstr "Ŧɥǝ ɟølløʍᴉnƃ ɔønʇǝnʇ ᴉs ǝxdøɹʇǝd."
+
+#: cms/templates/export.html cms/templates/import.html
+msgid "Course content and structure"
+msgstr "Ȼønɹsǝ ɔønʇǝnʇ ɐnd sʇɹnɔʇnɹǝ"
+
+#: cms/templates/export.html cms/templates/import.html
+msgid "Course dates"
+msgstr "Ȼønɹsǝ dɐʇǝs"
+
+#: cms/templates/export.html cms/templates/import.html
+msgid "Grading policy"
+msgstr "Ǥɹɐdᴉnƃ dølᴉɔʎ"
+
+#: cms/templates/export.html cms/templates/import.html
+msgid "Any group configurations"
+msgstr "Ⱥnʎ ƃɹønd ɔønɟᴉƃnɹɐʇᴉøns"
+
+#: cms/templates/export.html cms/templates/import.html
+msgid ""
+"Settings on the Advanced Settings page, including MATLAB API keys and LTI "
+"passports"
+msgstr ""
+"Sǝʇʇᴉnƃs øn ʇɥǝ Ⱥdʌɐnɔǝd Sǝʇʇᴉnƃs dɐƃǝ, ᴉnɔlndᴉnƃ MȺŦŁȺɃ ȺⱣƗ ʞǝʎs ɐnd ŁŦƗ "
+"dɐssdøɹʇs"
+
+#: cms/templates/export.html
+msgid "The following content is not exported."
+msgstr "Ŧɥǝ ɟølløʍᴉnƃ ɔønʇǝnʇ ᴉs nøʇ ǝxdøɹʇǝd."
+
+#: cms/templates/export.html cms/templates/import.html
+msgid ""
+"Learner-specific content, such as learner grades and discussion forum data"
+msgstr ""
+"Łǝɐɹnǝɹ-sdǝɔᴉɟᴉɔ ɔønʇǝnʇ, snɔɥ ɐs lǝɐɹnǝɹ ƃɹɐdǝs ɐnd dᴉsɔnssᴉøn ɟøɹnɯ dɐʇɐ"
+
+#: cms/templates/export.html cms/templates/import.html
+msgid "The course team"
+msgstr "Ŧɥǝ ɔønɹsǝ ʇǝɐɯ"
+
+#. Translators: ".tar.gz" is a file extension, and should not be translated
+#: cms/templates/export.html
+msgid ""
+"Use an archive program to extract the data from the .tar.gz file. Extracted "
+"data includes the course.xml file, as well as subfolders that contain course"
+" content."
+msgstr ""
+"Ʉsǝ ɐn ɐɹɔɥᴉʌǝ dɹøƃɹɐɯ ʇø ǝxʇɹɐɔʇ ʇɥǝ dɐʇɐ ɟɹøɯ ʇɥǝ .ʇɐɹ.ƃz ɟᴉlǝ. Ɇxʇɹɐɔʇǝd "
+"dɐʇɐ ᴉnɔlndǝs ʇɥǝ ɔønɹsǝ.xɯl ɟᴉlǝ, ɐs ʍǝll ɐs snbɟøldǝɹs ʇɥɐʇ ɔønʇɐᴉn ɔønɹsǝ"
+" ɔønʇǝnʇ."
+
+#: cms/templates/export.html
+msgid "Learn more about exporting a course"
+msgstr "Łǝɐɹn ɯøɹǝ ɐbønʇ ǝxdøɹʇᴉnƃ ɐ ɔønɹsǝ"
+
+#: cms/templates/export_git.html
+msgid "Export Course to Git"
+msgstr "Ɇxdøɹʇ Ȼønɹsǝ ʇø Ǥᴉʇ"
+
+#: cms/templates/export_git.html cms/templates/export_git.html
+#: cms/templates/widgets/header.html
+msgid "Export to Git"
+msgstr "Ɇxdøɹʇ ʇø Ǥᴉʇ"
+
+#: cms/templates/export_git.html
+msgid "About Export to Git"
+msgstr "Ⱥbønʇ Ɇxdøɹʇ ʇø Ǥᴉʇ"
+
+#: cms/templates/export_git.html
+msgid "Use this to export your course to its git repository."
+msgstr "Ʉsǝ ʇɥᴉs ʇø ǝxdøɹʇ ʎønɹ ɔønɹsǝ ʇø ᴉʇs ƃᴉʇ ɹǝdøsᴉʇøɹʎ."
+
+#: cms/templates/export_git.html
+msgid ""
+"This will then trigger an automatic update of the main LMS site and update "
+"the contents of your course visible there to students if automatic git "
+"imports are configured."
+msgstr ""
+"Ŧɥᴉs ʍᴉll ʇɥǝn ʇɹᴉƃƃǝɹ ɐn ɐnʇøɯɐʇᴉɔ nddɐʇǝ øɟ ʇɥǝ ɯɐᴉn ŁMS sᴉʇǝ ɐnd nddɐʇǝ "
+"ʇɥǝ ɔønʇǝnʇs øɟ ʎønɹ ɔønɹsǝ ʌᴉsᴉblǝ ʇɥǝɹǝ ʇø sʇndǝnʇs ᴉɟ ɐnʇøɯɐʇᴉɔ ƃᴉʇ "
+"ᴉɯdøɹʇs ɐɹǝ ɔønɟᴉƃnɹǝd."
+
+#: cms/templates/export_git.html
+msgid "Export Course to Git:"
+msgstr "Ɇxdøɹʇ Ȼønɹsǝ ʇø Ǥᴉʇ:"
+
+#: cms/templates/export_git.html
+msgid ""
+"giturl must be defined in your course settings before you can export to git."
+msgstr ""
+"ƃᴉʇnɹl ɯnsʇ bǝ dǝɟᴉnǝd ᴉn ʎønɹ ɔønɹsǝ sǝʇʇᴉnƃs bǝɟøɹǝ ʎøn ɔɐn ǝxdøɹʇ ʇø ƃᴉʇ."
+
+#: cms/templates/export_git.html
+msgid "Export Failed"
+msgstr "Ɇxdøɹʇ Fɐᴉlǝd"
+
+#: cms/templates/export_git.html
+msgid "Export Succeeded"
+msgstr "Ɇxdøɹʇ Snɔɔǝǝdǝd"
+
+#: cms/templates/export_git.html
+msgid "Your course:"
+msgstr "Ɏønɹ ɔønɹsǝ:"
+
+#: cms/templates/export_git.html
+msgid "Course git url:"
+msgstr "Ȼønɹsǝ ƃᴉʇ nɹl:"
+
+#: cms/templates/group_configurations.html
+#: cms/templates/group_configurations.html
+msgid "Experiment Group Configurations"
+msgstr "Ɇxdǝɹᴉɯǝnʇ Ǥɹønd Ȼønɟᴉƃnɹɐʇᴉøns"
+
+#: cms/templates/group_configurations.html
+msgid "This module is disabled at the moment."
+msgstr "Ŧɥᴉs ɯødnlǝ ᴉs dᴉsɐblǝd ɐʇ ʇɥǝ ɯøɯǝnʇ."
+
+#: cms/templates/group_configurations.html
+msgid "Enrollment Track Groups"
+msgstr "Ɇnɹøllɯǝnʇ Ŧɹɐɔʞ Ǥɹønds"
+
+#: cms/templates/group_configurations.html
+msgid ""
+"Enrollment track groups allow you to offer different course content to "
+"learners in each enrollment track. Learners enrolled in each enrollment "
+"track in your course are automatically included in the corresponding "
+"enrollment track group."
+msgstr ""
+"Ɇnɹøllɯǝnʇ ʇɹɐɔʞ ƃɹønds ɐlløʍ ʎøn ʇø øɟɟǝɹ dᴉɟɟǝɹǝnʇ ɔønɹsǝ ɔønʇǝnʇ ʇø "
+"lǝɐɹnǝɹs ᴉn ǝɐɔɥ ǝnɹøllɯǝnʇ ʇɹɐɔʞ. Łǝɐɹnǝɹs ǝnɹøllǝd ᴉn ǝɐɔɥ ǝnɹøllɯǝnʇ "
+"ʇɹɐɔʞ ᴉn ʎønɹ ɔønɹsǝ ɐɹǝ ɐnʇøɯɐʇᴉɔɐllʎ ᴉnɔlndǝd ᴉn ʇɥǝ ɔøɹɹǝsdøndᴉnƃ "
+"ǝnɹøllɯǝnʇ ʇɹɐɔʞ ƃɹønd."
+
+#: cms/templates/group_configurations.html
+msgid ""
+"On unit pages in the course outline, you can restrict access to components "
+"to learners based on their enrollment track."
+msgstr ""
+"Øn nnᴉʇ dɐƃǝs ᴉn ʇɥǝ ɔønɹsǝ ønʇlᴉnǝ, ʎøn ɔɐn ɹǝsʇɹᴉɔʇ ɐɔɔǝss ʇø ɔøɯdønǝnʇs "
+"ʇø lǝɐɹnǝɹs bɐsǝd øn ʇɥǝᴉɹ ǝnɹøllɯǝnʇ ʇɹɐɔʞ."
+
+#: cms/templates/group_configurations.html
+msgid ""
+"You cannot edit enrollment track groups, but you can expand each group to "
+"view details of the course content that is designated for learners in the "
+"group."
+msgstr ""
+"Ɏøn ɔɐnnøʇ ǝdᴉʇ ǝnɹøllɯǝnʇ ʇɹɐɔʞ ƃɹønds, bnʇ ʎøn ɔɐn ǝxdɐnd ǝɐɔɥ ƃɹønd ʇø "
+"ʌᴉǝʍ dǝʇɐᴉls øɟ ʇɥǝ ɔønɹsǝ ɔønʇǝnʇ ʇɥɐʇ ᴉs dǝsᴉƃnɐʇǝd ɟøɹ lǝɐɹnǝɹs ᴉn ʇɥǝ "
+"ƃɹønd."
+
+#: cms/templates/group_configurations.html
+msgid "Content Groups"
+msgstr "Ȼønʇǝnʇ Ǥɹønds"
+
+#: cms/templates/group_configurations.html
+msgid ""
+"If you have cohorts enabled in your course, you can use content groups to "
+"create cohort-specific courseware. In other words, you can customize the "
+"content that particular cohorts see in your course."
+msgstr ""
+"Ɨɟ ʎøn ɥɐʌǝ ɔøɥøɹʇs ǝnɐblǝd ᴉn ʎønɹ ɔønɹsǝ, ʎøn ɔɐn nsǝ ɔønʇǝnʇ ƃɹønds ʇø "
+"ɔɹǝɐʇǝ ɔøɥøɹʇ-sdǝɔᴉɟᴉɔ ɔønɹsǝʍɐɹǝ. Ɨn øʇɥǝɹ ʍøɹds, ʎøn ɔɐn ɔnsʇøɯᴉzǝ ʇɥǝ "
+"ɔønʇǝnʇ ʇɥɐʇ dɐɹʇᴉɔnlɐɹ ɔøɥøɹʇs sǝǝ ᴉn ʎønɹ ɔønɹsǝ."
+
+#: cms/templates/group_configurations.html
+msgid ""
+"Each content group that you create can be associated with one or more "
+"cohorts. In addition to making course content available to all learners, you"
+" can restrict access to some content to learners in specific content groups."
+" Only learners in the cohorts that are associated with the specified content"
+" groups see the additional content."
+msgstr ""
+"Ɇɐɔɥ ɔønʇǝnʇ ƃɹønd ʇɥɐʇ ʎøn ɔɹǝɐʇǝ ɔɐn bǝ ɐssøɔᴉɐʇǝd ʍᴉʇɥ ønǝ øɹ ɯøɹǝ "
+"ɔøɥøɹʇs. Ɨn ɐddᴉʇᴉøn ʇø ɯɐʞᴉnƃ ɔønɹsǝ ɔønʇǝnʇ ɐʌɐᴉlɐblǝ ʇø ɐll lǝɐɹnǝɹs, ʎøn"
+" ɔɐn ɹǝsʇɹᴉɔʇ ɐɔɔǝss ʇø søɯǝ ɔønʇǝnʇ ʇø lǝɐɹnǝɹs ᴉn sdǝɔᴉɟᴉɔ ɔønʇǝnʇ ƃɹønds."
+" Ønlʎ lǝɐɹnǝɹs ᴉn ʇɥǝ ɔøɥøɹʇs ʇɥɐʇ ɐɹǝ ɐssøɔᴉɐʇǝd ʍᴉʇɥ ʇɥǝ sdǝɔᴉɟᴉǝd ɔønʇǝnʇ"
+" ƃɹønds sǝǝ ʇɥǝ ɐddᴉʇᴉønɐl ɔønʇǝnʇ."
+
+#: cms/templates/group_configurations.html
+msgid ""
+"Click {em_start}New content group{em_end} to add a new content group. To "
+"edit the name of a content group, hover over its box and click "
+"{em_start}Edit{em_end}. You can delete a content group only if it is not in "
+"use by a unit. To delete a content group, hover over its box and click the "
+"delete icon."
+msgstr ""
+"Ȼlᴉɔʞ {em_start}Nǝʍ ɔønʇǝnʇ ƃɹønd{em_end} ʇø ɐdd ɐ nǝʍ ɔønʇǝnʇ ƃɹønd. Ŧø "
+"ǝdᴉʇ ʇɥǝ nɐɯǝ øɟ ɐ ɔønʇǝnʇ ƃɹønd, ɥøʌǝɹ øʌǝɹ ᴉʇs bøx ɐnd ɔlᴉɔʞ "
+"{em_start}Ɇdᴉʇ{em_end}. Ɏøn ɔɐn dǝlǝʇǝ ɐ ɔønʇǝnʇ ƃɹønd ønlʎ ᴉɟ ᴉʇ ᴉs nøʇ ᴉn "
+"nsǝ bʎ ɐ nnᴉʇ. Ŧø dǝlǝʇǝ ɐ ɔønʇǝnʇ ƃɹønd, ɥøʌǝɹ øʌǝɹ ᴉʇs bøx ɐnd ɔlᴉɔʞ ʇɥǝ "
+"dǝlǝʇǝ ᴉɔøn."
+
+#: cms/templates/group_configurations.html
+msgid ""
+"Use experiment group configurations if you are conducting content "
+"experiments, also known as A/B testing, in your course. Experiment group "
+"configurations define how many groups of learners are in a content "
+"experiment. When you create a content experiment for a course, you select "
+"the group configuration to use."
+msgstr ""
+"Ʉsǝ ǝxdǝɹᴉɯǝnʇ ƃɹønd ɔønɟᴉƃnɹɐʇᴉøns ᴉɟ ʎøn ɐɹǝ ɔøndnɔʇᴉnƃ ɔønʇǝnʇ "
+"ǝxdǝɹᴉɯǝnʇs, ɐlsø ʞnøʍn ɐs Ⱥ/Ƀ ʇǝsʇᴉnƃ, ᴉn ʎønɹ ɔønɹsǝ. Ɇxdǝɹᴉɯǝnʇ ƃɹønd "
+"ɔønɟᴉƃnɹɐʇᴉøns dǝɟᴉnǝ ɥøʍ ɯɐnʎ ƃɹønds øɟ lǝɐɹnǝɹs ɐɹǝ ᴉn ɐ ɔønʇǝnʇ "
+"ǝxdǝɹᴉɯǝnʇ. Wɥǝn ʎøn ɔɹǝɐʇǝ ɐ ɔønʇǝnʇ ǝxdǝɹᴉɯǝnʇ ɟøɹ ɐ ɔønɹsǝ, ʎøn sǝlǝɔʇ "
+"ʇɥǝ ƃɹønd ɔønɟᴉƃnɹɐʇᴉøn ʇø nsǝ."
+
+#: cms/templates/group_configurations.html
+msgid ""
+"Click {em_start}New Group Configuration{em_end} to add a new configuration. "
+"To edit a configuration, hover over its box and click "
+"{em_start}Edit{em_end}. You can delete a group configuration only if it is "
+"not in use in an experiment. To delete a configuration, hover over its box "
+"and click the delete icon."
+msgstr ""
+"Ȼlᴉɔʞ {em_start}Nǝʍ Ǥɹønd Ȼønɟᴉƃnɹɐʇᴉøn{em_end} ʇø ɐdd ɐ nǝʍ ɔønɟᴉƃnɹɐʇᴉøn. "
+"Ŧø ǝdᴉʇ ɐ ɔønɟᴉƃnɹɐʇᴉøn, ɥøʌǝɹ øʌǝɹ ᴉʇs bøx ɐnd ɔlᴉɔʞ "
+"{em_start}Ɇdᴉʇ{em_end}. Ɏøn ɔɐn dǝlǝʇǝ ɐ ƃɹønd ɔønɟᴉƃnɹɐʇᴉøn ønlʎ ᴉɟ ᴉʇ ᴉs "
+"nøʇ ᴉn nsǝ ᴉn ɐn ǝxdǝɹᴉɯǝnʇ. Ŧø dǝlǝʇǝ ɐ ɔønɟᴉƃnɹɐʇᴉøn, ɥøʌǝɹ øʌǝɹ ᴉʇs bøx "
+"ɐnd ɔlᴉɔʞ ʇɥǝ dǝlǝʇǝ ᴉɔøn."
+
+#: cms/templates/group_configurations.html
+#: cms/templates/settings_advanced.html
+msgid "Details & Schedule"
+msgstr "Đǝʇɐᴉls & Sɔɥǝdnlǝ"
+
+#: cms/templates/howitworks.html
+msgid "Welcome"
+msgstr "Wǝlɔøɯǝ"
+
+#: cms/templates/howitworks.html
+msgid "Welcome to {studio_name}"
+msgstr "Wǝlɔøɯǝ ʇø {studio_name}"
+
+#: cms/templates/howitworks.html
+msgid ""
+"{studio_name} helps manage your online courses, so you can focus on teaching"
+" them"
+msgstr ""
+"{studio_name} ɥǝlds ɯɐnɐƃǝ ʎønɹ ønlᴉnǝ ɔønɹsǝs, sø ʎøn ɔɐn ɟøɔns øn ʇǝɐɔɥᴉnƃ"
+" ʇɥǝɯ"
+
+#: cms/templates/howitworks.html
+msgid "{studio_name}'s Many Features"
+msgstr "{studio_name}'s Mɐnʎ Fǝɐʇnɹǝs"
+
+#: cms/templates/howitworks.html cms/templates/howitworks.html
+msgid "{studio_name} Helps You Keep Your Courses Organized"
+msgstr "{studio_name} Ħǝlds Ɏøn Ꝁǝǝd Ɏønɹ Ȼønɹsǝs Øɹƃɐnᴉzǝd"
+
+#: cms/templates/howitworks.html cms/templates/howitworks.html
+#: cms/templates/howitworks.html
+msgid "Enlarge image"
+msgstr "Ɇnlɐɹƃǝ ᴉɯɐƃǝ"
+
+#: cms/templates/howitworks.html
+msgid "Keeping Your Course Organized"
+msgstr "Ꝁǝǝdᴉnƃ Ɏønɹ Ȼønɹsǝ Øɹƃɐnᴉzǝd"
+
+#: cms/templates/howitworks.html
+msgid ""
+"The backbone of your course is how it is organized. {studio_name} offers an "
+"{strong_start}Outline{strong_end} editor, providing a simple hierarchy and "
+"easy drag and drop to help you and your students stay organized."
+msgstr ""
+"Ŧɥǝ bɐɔʞbønǝ øɟ ʎønɹ ɔønɹsǝ ᴉs ɥøʍ ᴉʇ ᴉs øɹƃɐnᴉzǝd. {studio_name} øɟɟǝɹs ɐn "
+"{strong_start}Ønʇlᴉnǝ{strong_end} ǝdᴉʇøɹ, dɹøʌᴉdᴉnƃ ɐ sᴉɯdlǝ ɥᴉǝɹɐɹɔɥʎ ɐnd "
+"ǝɐsʎ dɹɐƃ ɐnd dɹød ʇø ɥǝld ʎøn ɐnd ʎønɹ sʇndǝnʇs sʇɐʎ øɹƃɐnᴉzǝd."
+
+#: cms/templates/howitworks.html
+msgid "Simple Organization For Content"
+msgstr "Sᴉɯdlǝ Øɹƃɐnᴉzɐʇᴉøn Føɹ Ȼønʇǝnʇ"
+
+#: cms/templates/howitworks.html
+msgid ""
+"{studio_name} uses a simple hierarchy of {strong_start}sections{strong_end} "
+"and {strong_start}subsections{strong_end} to organize your content."
+msgstr ""
+"{studio_name} nsǝs ɐ sᴉɯdlǝ ɥᴉǝɹɐɹɔɥʎ øɟ {strong_start}sǝɔʇᴉøns{strong_end} "
+"ɐnd {strong_start}snbsǝɔʇᴉøns{strong_end} ʇø øɹƃɐnᴉzǝ ʎønɹ ɔønʇǝnʇ."
+
+#: cms/templates/howitworks.html
+msgid "Change Your Mind Anytime"
+msgstr "Ȼɥɐnƃǝ Ɏønɹ Mᴉnd Ⱥnʎʇᴉɯǝ"
+
+#: cms/templates/howitworks.html
+msgid ""
+"Draft your outline and build content anywhere. Simple drag and drop tools "
+"let you reorganize quickly."
+msgstr ""
+"Đɹɐɟʇ ʎønɹ ønʇlᴉnǝ ɐnd bnᴉld ɔønʇǝnʇ ɐnʎʍɥǝɹǝ. Sᴉɯdlǝ dɹɐƃ ɐnd dɹød ʇøøls "
+"lǝʇ ʎøn ɹǝøɹƃɐnᴉzǝ bnᴉɔʞlʎ."
+
+#: cms/templates/howitworks.html
+msgid "Go A Week Or A Semester At A Time"
+msgstr "Ǥø Ⱥ Wǝǝʞ Øɹ Ⱥ Sǝɯǝsʇǝɹ Ⱥʇ Ⱥ Ŧᴉɯǝ"
+
+#: cms/templates/howitworks.html
+msgid ""
+"Build and release {strong_start}sections{strong_end} to your students "
+"incrementally. You don't have to have it all done at once."
+msgstr ""
+"Ƀnᴉld ɐnd ɹǝlǝɐsǝ {strong_start}sǝɔʇᴉøns{strong_end} ʇø ʎønɹ sʇndǝnʇs "
+"ᴉnɔɹǝɯǝnʇɐllʎ. Ɏøn døn'ʇ ɥɐʌǝ ʇø ɥɐʌǝ ᴉʇ ɐll dønǝ ɐʇ ønɔǝ."
+
+#: cms/templates/howitworks.html cms/templates/howitworks.html
+#: cms/templates/howitworks.html
+msgid "Learning is More than Just Lectures"
+msgstr "Łǝɐɹnᴉnƃ ᴉs Møɹǝ ʇɥɐn Ɉnsʇ Łǝɔʇnɹǝs"
+
+#: cms/templates/howitworks.html
+msgid ""
+"{studio_name} lets you weave your content together in a way that reinforces "
+"learning. Insert videos, discussions, and a wide variety of exercises with "
+"just a few clicks."
+msgstr ""
+"{studio_name} lǝʇs ʎøn ʍǝɐʌǝ ʎønɹ ɔønʇǝnʇ ʇøƃǝʇɥǝɹ ᴉn ɐ ʍɐʎ ʇɥɐʇ ɹǝᴉnɟøɹɔǝs "
+"lǝɐɹnᴉnƃ. Ɨnsǝɹʇ ʌᴉdǝøs, dᴉsɔnssᴉøns, ɐnd ɐ ʍᴉdǝ ʌɐɹᴉǝʇʎ øɟ ǝxǝɹɔᴉsǝs ʍᴉʇɥ "
+"ɾnsʇ ɐ ɟǝʍ ɔlᴉɔʞs."
+
+#: cms/templates/howitworks.html
+msgid "Create Learning Pathways"
+msgstr "Ȼɹǝɐʇǝ Łǝɐɹnᴉnƃ Ᵽɐʇɥʍɐʎs"
+
+#: cms/templates/howitworks.html
+msgid ""
+"Help your students understand one concept at a time with multimedia, HTML, "
+"and exercises."
+msgstr ""
+"Ħǝld ʎønɹ sʇndǝnʇs nndǝɹsʇɐnd ønǝ ɔønɔǝdʇ ɐʇ ɐ ʇᴉɯǝ ʍᴉʇɥ ɯnlʇᴉɯǝdᴉɐ, ĦŦMŁ, "
+"ɐnd ǝxǝɹɔᴉsǝs."
+
+#: cms/templates/howitworks.html
+msgid "Work Visually, Organize Quickly"
+msgstr "Wøɹʞ Vᴉsnɐllʎ, Øɹƃɐnᴉzǝ Qnᴉɔʞlʎ"
+
+#: cms/templates/howitworks.html
+msgid ""
+"Work visually and see exactly what your students will see. Reorganize all "
+"your content with drag and drop."
+msgstr ""
+"Wøɹʞ ʌᴉsnɐllʎ ɐnd sǝǝ ǝxɐɔʇlʎ ʍɥɐʇ ʎønɹ sʇndǝnʇs ʍᴉll sǝǝ. Ɍǝøɹƃɐnᴉzǝ ɐll "
+"ʎønɹ ɔønʇǝnʇ ʍᴉʇɥ dɹɐƃ ɐnd dɹød."
+
+#: cms/templates/howitworks.html
+msgid "A Broad Library of Problem Types"
+msgstr "Ⱥ Ƀɹøɐd Łᴉbɹɐɹʎ øɟ Ᵽɹøblǝɯ Ŧʎdǝs"
+
+#: cms/templates/howitworks.html
+msgid ""
+"It's more than just multiple choice. {studio_name} supports more than a "
+"dozen types of problems to challenge your learners."
+msgstr ""
+"Ɨʇ's ɯøɹǝ ʇɥɐn ɾnsʇ ɯnlʇᴉdlǝ ɔɥøᴉɔǝ. {studio_name} snddøɹʇs ɯøɹǝ ʇɥɐn ɐ "
+"døzǝn ʇʎdǝs øɟ dɹøblǝɯs ʇø ɔɥɐllǝnƃǝ ʎønɹ lǝɐɹnǝɹs."
+
+#: cms/templates/howitworks.html cms/templates/howitworks.html
+msgid ""
+"{studio_name} Gives You Simple, Fast, and Incremental Publishing. With "
+"Friends."
+msgstr ""
+"{studio_name} Ǥᴉʌǝs Ɏøn Sᴉɯdlǝ, Fɐsʇ, ɐnd Ɨnɔɹǝɯǝnʇɐl Ᵽnblᴉsɥᴉnƃ. Wᴉʇɥ "
+"Fɹᴉǝnds."
+
+#: cms/templates/howitworks.html
+msgid "Simple, Fast, and Incremental Publishing. With Friends."
+msgstr "Sᴉɯdlǝ, Fɐsʇ, ɐnd Ɨnɔɹǝɯǝnʇɐl Ᵽnblᴉsɥᴉnƃ. Wᴉʇɥ Fɹᴉǝnds."
+
+#: cms/templates/howitworks.html
+msgid ""
+"{studio_name} works like web applications you already know, yet understands "
+"how you build curriculum. Instant publishing to the web when you want it, "
+"incremental release when it makes sense. And with co-authors, you can have a"
+" whole team building a course, together."
+msgstr ""
+"{studio_name} ʍøɹʞs lᴉʞǝ ʍǝb ɐddlᴉɔɐʇᴉøns ʎøn ɐlɹǝɐdʎ ʞnøʍ, ʎǝʇ nndǝɹsʇɐnds "
+"ɥøʍ ʎøn bnᴉld ɔnɹɹᴉɔnlnɯ. Ɨnsʇɐnʇ dnblᴉsɥᴉnƃ ʇø ʇɥǝ ʍǝb ʍɥǝn ʎøn ʍɐnʇ ᴉʇ, "
+"ᴉnɔɹǝɯǝnʇɐl ɹǝlǝɐsǝ ʍɥǝn ᴉʇ ɯɐʞǝs sǝnsǝ. Ⱥnd ʍᴉʇɥ ɔø-ɐnʇɥøɹs, ʎøn ɔɐn ɥɐʌǝ ɐ"
+" ʍɥølǝ ʇǝɐɯ bnᴉldᴉnƃ ɐ ɔønɹsǝ, ʇøƃǝʇɥǝɹ."
+
+#: cms/templates/howitworks.html
+msgid "Instant Changes"
+msgstr "Ɨnsʇɐnʇ Ȼɥɐnƃǝs"
+
+#: cms/templates/howitworks.html
+msgid ""
+"Caught a bug? No problem. When you want, your changes go live when you click"
+" Save."
+msgstr ""
+"Ȼɐnƃɥʇ ɐ bnƃ? Nø dɹøblǝɯ. Wɥǝn ʎøn ʍɐnʇ, ʎønɹ ɔɥɐnƃǝs ƃø lᴉʌǝ ʍɥǝn ʎøn ɔlᴉɔʞ"
+" Sɐʌǝ."
+
+#: cms/templates/howitworks.html
+msgid "Release-On Date Publishing"
+msgstr "Ɍǝlǝɐsǝ-Øn Đɐʇǝ Ᵽnblᴉsɥᴉnƃ"
+
+#: cms/templates/howitworks.html
+msgid ""
+"When you've finished a {strong_start}section{strong_end}, pick when you want"
+" it to go live and {studio_name} takes care of the rest. Build your course "
+"incrementally."
+msgstr ""
+"Wɥǝn ʎøn'ʌǝ ɟᴉnᴉsɥǝd ɐ {strong_start}sǝɔʇᴉøn{strong_end}, dᴉɔʞ ʍɥǝn ʎøn ʍɐnʇ"
+" ᴉʇ ʇø ƃø lᴉʌǝ ɐnd {studio_name} ʇɐʞǝs ɔɐɹǝ øɟ ʇɥǝ ɹǝsʇ. Ƀnᴉld ʎønɹ ɔønɹsǝ "
+"ᴉnɔɹǝɯǝnʇɐllʎ."
+
+#: cms/templates/howitworks.html
+msgid "Work in Teams"
+msgstr "Wøɹʞ ᴉn Ŧǝɐɯs"
+
+#: cms/templates/howitworks.html
+msgid ""
+"Co-authors have full access to all the same authoring tools. Make your "
+"course better through a team effort."
+msgstr ""
+"Ȼø-ɐnʇɥøɹs ɥɐʌǝ ɟnll ɐɔɔǝss ʇø ɐll ʇɥǝ sɐɯǝ ɐnʇɥøɹᴉnƃ ʇøøls. Mɐʞǝ ʎønɹ "
+"ɔønɹsǝ bǝʇʇǝɹ ʇɥɹønƃɥ ɐ ʇǝɐɯ ǝɟɟøɹʇ."
+
+#: cms/templates/howitworks.html
+msgid "Sign Up for {studio_name} Today!"
+msgstr "Sᴉƃn Ʉd ɟøɹ {studio_name} Ŧødɐʎ!"
+
+#: cms/templates/howitworks.html
+msgid "Sign Up & Start Making Your {platform_name} Course"
+msgstr "Sᴉƃn Ʉd & Sʇɐɹʇ Mɐʞᴉnƃ Ɏønɹ {platform_name} Ȼønɹsǝ"
+
+#: cms/templates/howitworks.html
+msgid "Already have a {studio_name} Account? Sign In"
+msgstr "Ⱥlɹǝɐdʎ ɥɐʌǝ ɐ {studio_name} Ⱥɔɔønnʇ? Sᴉƃn Ɨn"
+
+#: cms/templates/howitworks.html
+msgid "Outlining Your Course"
+msgstr "Ønʇlᴉnᴉnƃ Ɏønɹ Ȼønɹsǝ"
+
+#: cms/templates/howitworks.html
+msgid ""
+"Simple two-level outline to organize your course. Drag and drop, and see "
+"your course at a glance."
+msgstr ""
+"Sᴉɯdlǝ ʇʍø-lǝʌǝl ønʇlᴉnǝ ʇø øɹƃɐnᴉzǝ ʎønɹ ɔønɹsǝ. Đɹɐƃ ɐnd dɹød, ɐnd sǝǝ "
+"ʎønɹ ɔønɹsǝ ɐʇ ɐ ƃlɐnɔǝ."
+
+#: cms/templates/howitworks.html
+msgid "More than Just Lectures"
+msgstr "Møɹǝ ʇɥɐn Ɉnsʇ Łǝɔʇnɹǝs"
+
+#: cms/templates/howitworks.html
+msgid ""
+"Quickly create videos, text snippets, inline discussions, and a variety of "
+"problem types."
+msgstr ""
+"Qnᴉɔʞlʎ ɔɹǝɐʇǝ ʌᴉdǝøs, ʇǝxʇ snᴉddǝʇs, ᴉnlᴉnǝ dᴉsɔnssᴉøns, ɐnd ɐ ʌɐɹᴉǝʇʎ øɟ "
+"dɹøblǝɯ ʇʎdǝs."
+
+#: cms/templates/howitworks.html
+msgid "Publishing on Date"
+msgstr "Ᵽnblᴉsɥᴉnƃ øn Đɐʇǝ"
+
+#: cms/templates/howitworks.html
+msgid ""
+"Simply set the date of a section or subsection, and {studio_name} will "
+"publish it to your students for you."
+msgstr ""
+"Sᴉɯdlʎ sǝʇ ʇɥǝ dɐʇǝ øɟ ɐ sǝɔʇᴉøn øɹ snbsǝɔʇᴉøn, ɐnd {studio_name} ʍᴉll "
+"dnblᴉsɥ ᴉʇ ʇø ʎønɹ sʇndǝnʇs ɟøɹ ʎøn."
+
+#: cms/templates/html_error.html
+msgid "We're having trouble rendering your component"
+msgstr "Wǝ'ɹǝ ɥɐʌᴉnƃ ʇɹønblǝ ɹǝndǝɹᴉnƃ ʎønɹ ɔøɯdønǝnʇ"
+
+#: cms/templates/html_error.html
+msgid ""
+"Students will not be able to access this component. Re-edit your component "
+"to fix the error."
+msgstr ""
+"Sʇndǝnʇs ʍᴉll nøʇ bǝ ɐblǝ ʇø ɐɔɔǝss ʇɥᴉs ɔøɯdønǝnʇ. Ɍǝ-ǝdᴉʇ ʎønɹ ɔøɯdønǝnʇ "
+"ʇø ɟᴉx ʇɥǝ ǝɹɹøɹ."
+
+#: cms/templates/import.html cms/templates/import.html
+msgid "Library Import"
+msgstr "Łᴉbɹɐɹʎ Ɨɯdøɹʇ"
+
+#: cms/templates/import.html cms/templates/import.html
+msgid "Course Import"
+msgstr "Ȼønɹsǝ Ɨɯdøɹʇ"
+
+#: cms/templates/import.html
+msgid ""
+"Be sure you want to import a library before continuing. The contents of the "
+"imported library will replace the contents of the existing library. "
+"{em_start}You cannot undo a library import{em_end}. Before you proceed, we "
+"recommend that you export the current library, so that you have a backup "
+"copy of it."
+msgstr ""
+"Ƀǝ snɹǝ ʎøn ʍɐnʇ ʇø ᴉɯdøɹʇ ɐ lᴉbɹɐɹʎ bǝɟøɹǝ ɔønʇᴉnnᴉnƃ. Ŧɥǝ ɔønʇǝnʇs øɟ ʇɥǝ "
+"ᴉɯdøɹʇǝd lᴉbɹɐɹʎ ʍᴉll ɹǝdlɐɔǝ ʇɥǝ ɔønʇǝnʇs øɟ ʇɥǝ ǝxᴉsʇᴉnƃ lᴉbɹɐɹʎ. "
+"{em_start}Ɏøn ɔɐnnøʇ nndø ɐ lᴉbɹɐɹʎ ᴉɯdøɹʇ{em_end}. Ƀǝɟøɹǝ ʎøn dɹøɔǝǝd, ʍǝ "
+"ɹǝɔøɯɯǝnd ʇɥɐʇ ʎøn ǝxdøɹʇ ʇɥǝ ɔnɹɹǝnʇ lᴉbɹɐɹʎ, sø ʇɥɐʇ ʎøn ɥɐʌǝ ɐ bɐɔʞnd "
+"ɔødʎ øɟ ᴉʇ."
+
+#: cms/templates/import.html
+msgid ""
+"The library that you import must be in a .tar.gz file (that is, a .tar file "
+"compressed with GNU Zip). This .tar.gz file must contain a library.xml file."
+" It may also contain other files."
+msgstr ""
+"Ŧɥǝ lᴉbɹɐɹʎ ʇɥɐʇ ʎøn ᴉɯdøɹʇ ɯnsʇ bǝ ᴉn ɐ .ʇɐɹ.ƃz ɟᴉlǝ (ʇɥɐʇ ᴉs, ɐ .ʇɐɹ ɟᴉlǝ "
+"ɔøɯdɹǝssǝd ʍᴉʇɥ ǤNɄ Ƶᴉd). Ŧɥᴉs .ʇɐɹ.ƃz ɟᴉlǝ ɯnsʇ ɔønʇɐᴉn ɐ lᴉbɹɐɹʎ.xɯl ɟᴉlǝ."
+" Ɨʇ ɯɐʎ ɐlsø ɔønʇɐᴉn øʇɥǝɹ ɟᴉlǝs."
+
+#: cms/templates/import.html
+msgid ""
+"The import process has five stages. During the first two stages, you must "
+"stay on this page. You can leave this page after the Unpacking stage has "
+"completed. We recommend, however, that you don't make important changes to "
+"your library until the import operation has completed."
+msgstr ""
+"Ŧɥǝ ᴉɯdøɹʇ dɹøɔǝss ɥɐs ɟᴉʌǝ sʇɐƃǝs. Đnɹᴉnƃ ʇɥǝ ɟᴉɹsʇ ʇʍø sʇɐƃǝs, ʎøn ɯnsʇ "
+"sʇɐʎ øn ʇɥᴉs dɐƃǝ. Ɏøn ɔɐn lǝɐʌǝ ʇɥᴉs dɐƃǝ ɐɟʇǝɹ ʇɥǝ Ʉndɐɔʞᴉnƃ sʇɐƃǝ ɥɐs "
+"ɔøɯdlǝʇǝd. Wǝ ɹǝɔøɯɯǝnd, ɥøʍǝʌǝɹ, ʇɥɐʇ ʎøn døn'ʇ ɯɐʞǝ ᴉɯdøɹʇɐnʇ ɔɥɐnƃǝs ʇø "
+"ʎønɹ lᴉbɹɐɹʎ nnʇᴉl ʇɥǝ ᴉɯdøɹʇ ødǝɹɐʇᴉøn ɥɐs ɔøɯdlǝʇǝd."
+
+#: cms/templates/import.html
+msgid ""
+"Be sure you want to import a course before continuing. The contents of the "
+"imported course will replace the contents of the existing course. "
+"{em_start}You cannot undo a course import{em_end}. Before you proceed, we "
+"recommend that you export the current course, so that you have a backup copy"
+" of it."
+msgstr ""
+"Ƀǝ snɹǝ ʎøn ʍɐnʇ ʇø ᴉɯdøɹʇ ɐ ɔønɹsǝ bǝɟøɹǝ ɔønʇᴉnnᴉnƃ. Ŧɥǝ ɔønʇǝnʇs øɟ ʇɥǝ "
+"ᴉɯdøɹʇǝd ɔønɹsǝ ʍᴉll ɹǝdlɐɔǝ ʇɥǝ ɔønʇǝnʇs øɟ ʇɥǝ ǝxᴉsʇᴉnƃ ɔønɹsǝ. "
+"{em_start}Ɏøn ɔɐnnøʇ nndø ɐ ɔønɹsǝ ᴉɯdøɹʇ{em_end}. Ƀǝɟøɹǝ ʎøn dɹøɔǝǝd, ʍǝ "
+"ɹǝɔøɯɯǝnd ʇɥɐʇ ʎøn ǝxdøɹʇ ʇɥǝ ɔnɹɹǝnʇ ɔønɹsǝ, sø ʇɥɐʇ ʎøn ɥɐʌǝ ɐ bɐɔʞnd ɔødʎ"
+" øɟ ᴉʇ."
+
+#: cms/templates/import.html
+msgid ""
+"The course that you import must be in a .tar.gz file (that is, a .tar file "
+"compressed with GNU Zip). This .tar.gz file must contain a course.xml file. "
+"It may also contain other files."
+msgstr ""
+"Ŧɥǝ ɔønɹsǝ ʇɥɐʇ ʎøn ᴉɯdøɹʇ ɯnsʇ bǝ ᴉn ɐ .ʇɐɹ.ƃz ɟᴉlǝ (ʇɥɐʇ ᴉs, ɐ .ʇɐɹ ɟᴉlǝ "
+"ɔøɯdɹǝssǝd ʍᴉʇɥ ǤNɄ Ƶᴉd). Ŧɥᴉs .ʇɐɹ.ƃz ɟᴉlǝ ɯnsʇ ɔønʇɐᴉn ɐ ɔønɹsǝ.xɯl ɟᴉlǝ. "
+"Ɨʇ ɯɐʎ ɐlsø ɔønʇɐᴉn øʇɥǝɹ ɟᴉlǝs."
+
+#: cms/templates/import.html
+msgid ""
+"The import process has five stages. During the first two stages, you must "
+"stay on this page. You can leave this page after the Unpacking stage has "
+"completed. We recommend, however, that you don't make important changes to "
+"your course until the import operation has completed."
+msgstr ""
+"Ŧɥǝ ᴉɯdøɹʇ dɹøɔǝss ɥɐs ɟᴉʌǝ sʇɐƃǝs. Đnɹᴉnƃ ʇɥǝ ɟᴉɹsʇ ʇʍø sʇɐƃǝs, ʎøn ɯnsʇ "
+"sʇɐʎ øn ʇɥᴉs dɐƃǝ. Ɏøn ɔɐn lǝɐʌǝ ʇɥᴉs dɐƃǝ ɐɟʇǝɹ ʇɥǝ Ʉndɐɔʞᴉnƃ sʇɐƃǝ ɥɐs "
+"ɔøɯdlǝʇǝd. Wǝ ɹǝɔøɯɯǝnd, ɥøʍǝʌǝɹ, ʇɥɐʇ ʎøn døn'ʇ ɯɐʞǝ ᴉɯdøɹʇɐnʇ ɔɥɐnƃǝs ʇø "
+"ʎønɹ ɔønɹsǝ nnʇᴉl ʇɥǝ ᴉɯdøɹʇ ødǝɹɐʇᴉøn ɥɐs ɔøɯdlǝʇǝd."
+
+#: cms/templates/import.html
+msgid "Select a .tar.gz File to Replace Your Library Content"
+msgstr "Sǝlǝɔʇ ɐ .ʇɐɹ.ƃz Fᴉlǝ ʇø Ɍǝdlɐɔǝ Ɏønɹ Łᴉbɹɐɹʎ Ȼønʇǝnʇ"
+
+#: cms/templates/import.html
+msgid "Select a .tar.gz File to Replace Your Course Content"
+msgstr "Sǝlǝɔʇ ɐ .ʇɐɹ.ƃz Fᴉlǝ ʇø Ɍǝdlɐɔǝ Ɏønɹ Ȼønɹsǝ Ȼønʇǝnʇ"
+
+#: cms/templates/import.html
+msgid "Choose a File to Import"
+msgstr "Ȼɥøøsǝ ɐ Fᴉlǝ ʇø Ɨɯdøɹʇ"
+
+#: cms/templates/import.html
+msgid "File Chosen:"
+msgstr "Fᴉlǝ Ȼɥøsǝn:"
+
+#: cms/templates/import.html
+msgid "Replace my library with the selected file"
+msgstr "Ɍǝdlɐɔǝ ɯʎ lᴉbɹɐɹʎ ʍᴉʇɥ ʇɥǝ sǝlǝɔʇǝd ɟᴉlǝ"
+
+#: cms/templates/import.html
+msgid "Replace my course with the selected file"
+msgstr "Ɍǝdlɐɔǝ ɯʎ ɔønɹsǝ ʍᴉʇɥ ʇɥǝ sǝlǝɔʇǝd ɟᴉlǝ"
+
+#: cms/templates/import.html
+msgid "Library Import Status"
+msgstr "Łᴉbɹɐɹʎ Ɨɯdøɹʇ Sʇɐʇns"
+
+#: cms/templates/import.html
+msgid "Course Import Status"
+msgstr "Ȼønɹsǝ Ɨɯdøɹʇ Sʇɐʇns"
+
+#: cms/templates/import.html
+msgid "Uploading"
+msgstr "Ʉdløɐdᴉnƃ"
+
+#: cms/templates/import.html
+msgid "Transferring your file to our servers"
+msgstr "Ŧɹɐnsɟǝɹɹᴉnƃ ʎønɹ ɟᴉlǝ ʇø ønɹ sǝɹʌǝɹs"
+
+#: cms/templates/import.html
+msgid "Unpacking"
+msgstr "Ʉndɐɔʞᴉnƃ"
+
+#: cms/templates/import.html
+msgid ""
+"Expanding and preparing folder/file structure (You can now leave this page "
+"safely, but avoid making drastic changes to content until this import is "
+"complete)"
+msgstr ""
+"Ɇxdɐndᴉnƃ ɐnd dɹǝdɐɹᴉnƃ ɟøldǝɹ/ɟᴉlǝ sʇɹnɔʇnɹǝ (Ɏøn ɔɐn nøʍ lǝɐʌǝ ʇɥᴉs dɐƃǝ "
+"sɐɟǝlʎ, bnʇ ɐʌøᴉd ɯɐʞᴉnƃ dɹɐsʇᴉɔ ɔɥɐnƃǝs ʇø ɔønʇǝnʇ nnʇᴉl ʇɥᴉs ᴉɯdøɹʇ ᴉs "
+"ɔøɯdlǝʇǝ)"
+
+#: cms/templates/import.html
+msgid "Verifying"
+msgstr "Vǝɹᴉɟʎᴉnƃ"
+
+#: cms/templates/import.html
+msgid "Reviewing semantics, syntax, and required data"
+msgstr "Ɍǝʌᴉǝʍᴉnƃ sǝɯɐnʇᴉɔs, sʎnʇɐx, ɐnd ɹǝbnᴉɹǝd dɐʇɐ"
+
+#: cms/templates/import.html
+msgid "Updating Library"
+msgstr "Ʉddɐʇᴉnƃ Łᴉbɹɐɹʎ"
+
+#: cms/templates/import.html
+msgid "Updating Course"
+msgstr "Ʉddɐʇᴉnƃ Ȼønɹsǝ"
+
+#: cms/templates/import.html
+msgid ""
+"Integrating your imported content into this library. This process might take"
+" longer with larger libraries."
+msgstr ""
+"Ɨnʇǝƃɹɐʇᴉnƃ ʎønɹ ᴉɯdøɹʇǝd ɔønʇǝnʇ ᴉnʇø ʇɥᴉs lᴉbɹɐɹʎ. Ŧɥᴉs dɹøɔǝss ɯᴉƃɥʇ ʇɐʞǝ"
+" lønƃǝɹ ʍᴉʇɥ lɐɹƃǝɹ lᴉbɹɐɹᴉǝs."
+
+#: cms/templates/import.html
+msgid ""
+"Integrating your imported content into this course. This process might take "
+"longer with larger courses."
+msgstr ""
+"Ɨnʇǝƃɹɐʇᴉnƃ ʎønɹ ᴉɯdøɹʇǝd ɔønʇǝnʇ ᴉnʇø ʇɥᴉs ɔønɹsǝ. Ŧɥᴉs dɹøɔǝss ɯᴉƃɥʇ ʇɐʞǝ "
+"lønƃǝɹ ʍᴉʇɥ lɐɹƃǝɹ ɔønɹsǝs."
+
+#: cms/templates/import.html
+msgid "Your imported content has now been integrated into this library"
+msgstr "Ɏønɹ ᴉɯdøɹʇǝd ɔønʇǝnʇ ɥɐs nøʍ bǝǝn ᴉnʇǝƃɹɐʇǝd ᴉnʇø ʇɥᴉs lᴉbɹɐɹʎ"
+
+#: cms/templates/import.html
+msgid "Your imported content has now been integrated into this course"
+msgstr "Ɏønɹ ᴉɯdøɹʇǝd ɔønʇǝnʇ ɥɐs nøʍ bǝǝn ᴉnʇǝƃɹɐʇǝd ᴉnʇø ʇɥᴉs ɔønɹsǝ"
+
+#: cms/templates/import.html
+msgid "View Updated Library"
+msgstr "Vᴉǝʍ Ʉddɐʇǝd Łᴉbɹɐɹʎ"
+
+#: cms/templates/import.html
+msgid "View Updated Outline"
+msgstr "Vᴉǝʍ Ʉddɐʇǝd Ønʇlᴉnǝ"
+
+#: cms/templates/import.html
+msgid "Why import a library?"
+msgstr "Wɥʎ ᴉɯdøɹʇ ɐ lᴉbɹɐɹʎ?"
+
+#: cms/templates/import.html
+msgid ""
+"You might want to update an existing library to a new version, or replace an"
+" existing library entirely. You might also have developed a library outside "
+"of {studio_name}."
+msgstr ""
+"Ɏøn ɯᴉƃɥʇ ʍɐnʇ ʇø nddɐʇǝ ɐn ǝxᴉsʇᴉnƃ lᴉbɹɐɹʎ ʇø ɐ nǝʍ ʌǝɹsᴉøn, øɹ ɹǝdlɐɔǝ ɐn"
+" ǝxᴉsʇᴉnƃ lᴉbɹɐɹʎ ǝnʇᴉɹǝlʎ. Ɏøn ɯᴉƃɥʇ ɐlsø ɥɐʌǝ dǝʌǝlødǝd ɐ lᴉbɹɐɹʎ ønʇsᴉdǝ "
+"øɟ {studio_name}."
+
+#: cms/templates/import.html
+msgid "Note: Library content is not automatically updated in courses"
+msgstr "Nøʇǝ: Łᴉbɹɐɹʎ ɔønʇǝnʇ ᴉs nøʇ ɐnʇøɯɐʇᴉɔɐllʎ nddɐʇǝd ᴉn ɔønɹsǝs"
+
+#: cms/templates/import.html
+msgid ""
+"If you change and import a library that is referenced by randomized content "
+"blocks in one or more courses, those courses do not automatically use the "
+"updated content. You must manually refresh the randomized content blocks to "
+"bring them up to date with the latest library content."
+msgstr ""
+"Ɨɟ ʎøn ɔɥɐnƃǝ ɐnd ᴉɯdøɹʇ ɐ lᴉbɹɐɹʎ ʇɥɐʇ ᴉs ɹǝɟǝɹǝnɔǝd bʎ ɹɐndøɯᴉzǝd ɔønʇǝnʇ "
+"bløɔʞs ᴉn ønǝ øɹ ɯøɹǝ ɔønɹsǝs, ʇɥøsǝ ɔønɹsǝs dø nøʇ ɐnʇøɯɐʇᴉɔɐllʎ nsǝ ʇɥǝ "
+"nddɐʇǝd ɔønʇǝnʇ. Ɏøn ɯnsʇ ɯɐnnɐllʎ ɹǝɟɹǝsɥ ʇɥǝ ɹɐndøɯᴉzǝd ɔønʇǝnʇ bløɔʞs ʇø "
+"bɹᴉnƃ ʇɥǝɯ nd ʇø dɐʇǝ ʍᴉʇɥ ʇɥǝ lɐʇǝsʇ lᴉbɹɐɹʎ ɔønʇǝnʇ."
+
+#: cms/templates/import.html
+msgid "Learn more about importing a library"
+msgstr "Łǝɐɹn ɯøɹǝ ɐbønʇ ᴉɯdøɹʇᴉnƃ ɐ lᴉbɹɐɹʎ"
+
+#: cms/templates/import.html
+msgid "Why import a course?"
+msgstr "Wɥʎ ᴉɯdøɹʇ ɐ ɔønɹsǝ?"
+
+#: cms/templates/import.html
+msgid ""
+"You may want to run a new version of an existing course, or replace an "
+"existing course altogether. Or, you may have developed a course outside "
+"{studio_name}."
+msgstr ""
+"Ɏøn ɯɐʎ ʍɐnʇ ʇø ɹnn ɐ nǝʍ ʌǝɹsᴉøn øɟ ɐn ǝxᴉsʇᴉnƃ ɔønɹsǝ, øɹ ɹǝdlɐɔǝ ɐn "
+"ǝxᴉsʇᴉnƃ ɔønɹsǝ ɐlʇøƃǝʇɥǝɹ. Øɹ, ʎøn ɯɐʎ ɥɐʌǝ dǝʌǝlødǝd ɐ ɔønɹsǝ ønʇsᴉdǝ "
+"{studio_name}."
+
+#: cms/templates/import.html
+msgid "What content is imported?"
+msgstr "Wɥɐʇ ɔønʇǝnʇ ᴉs ᴉɯdøɹʇǝd?"
+
+#: cms/templates/import.html
+msgid "The following content is imported."
+msgstr "Ŧɥǝ ɟølløʍᴉnƃ ɔønʇǝnʇ ᴉs ᴉɯdøɹʇǝd."
+
+#: cms/templates/import.html
+msgid "The following content is not imported."
+msgstr "Ŧɥǝ ɟølløʍᴉnƃ ɔønʇǝnʇ ᴉs nøʇ ᴉɯdøɹʇǝd."
+
+#: cms/templates/import.html
+msgid "Warning: Importing while a course is running"
+msgstr "Wɐɹnᴉnƃ: Ɨɯdøɹʇᴉnƃ ʍɥᴉlǝ ɐ ɔønɹsǝ ᴉs ɹnnnᴉnƃ"
+
+#: cms/templates/import.html
+msgid ""
+"If you perform an import while your course is running, and you change the "
+"URL names (or url_name nodes) of any Problem components, the student data "
+"associated with those Problem components may be lost. This data includes "
+"students' problem scores."
+msgstr ""
+"Ɨɟ ʎøn dǝɹɟøɹɯ ɐn ᴉɯdøɹʇ ʍɥᴉlǝ ʎønɹ ɔønɹsǝ ᴉs ɹnnnᴉnƃ, ɐnd ʎøn ɔɥɐnƃǝ ʇɥǝ "
+"ɄɌŁ nɐɯǝs (øɹ nɹl_nɐɯǝ nødǝs) øɟ ɐnʎ Ᵽɹøblǝɯ ɔøɯdønǝnʇs, ʇɥǝ sʇndǝnʇ dɐʇɐ "
+"ɐssøɔᴉɐʇǝd ʍᴉʇɥ ʇɥøsǝ Ᵽɹøblǝɯ ɔøɯdønǝnʇs ɯɐʎ bǝ løsʇ. Ŧɥᴉs dɐʇɐ ᴉnɔlndǝs "
+"sʇndǝnʇs' dɹøblǝɯ sɔøɹǝs."
+
+#: cms/templates/import.html
+msgid "Learn more about importing a course"
+msgstr "Łǝɐɹn ɯøɹǝ ɐbønʇ ᴉɯdøɹʇᴉnƃ ɐ ɔønɹsǝ"
+
+#: cms/templates/index.html cms/templates/index.html
+#: cms/templates/widgets/user_dropdown.html
+#: cms/templates/widgets/user_dropdown.html
+msgid "{studio_name} Home"
+msgstr "{studio_name} Ħøɯǝ"
+
+#: cms/templates/index.html
+msgid "New Course"
+msgstr "Nǝʍ Ȼønɹsǝ"
+
+#: cms/templates/index.html
+msgid "Email staff to create course"
+msgstr "Ɇɯɐᴉl sʇɐɟɟ ʇø ɔɹǝɐʇǝ ɔønɹsǝ"
+
+#: cms/templates/index.html
+msgid "New Library"
+msgstr "Nǝʍ Łᴉbɹɐɹʎ"
+
+#: cms/templates/index.html cms/templates/index.html
+msgid "Please correct the highlighted fields below."
+msgstr "Ᵽlǝɐsǝ ɔøɹɹǝɔʇ ʇɥǝ ɥᴉƃɥlᴉƃɥʇǝd ɟᴉǝlds bǝløʍ."
+
+#: cms/templates/index.html
+msgid "Create a New Course"
+msgstr "Ȼɹǝɐʇǝ ɐ Nǝʍ Ȼønɹsǝ"
+
+#: cms/templates/index.html
+msgid "Required Information to Create a New Course"
+msgstr "Ɍǝbnᴉɹǝd Ɨnɟøɹɯɐʇᴉøn ʇø Ȼɹǝɐʇǝ ɐ Nǝʍ Ȼønɹsǝ"
+
+#: cms/templates/index.html
+msgid ""
+"The public display name for your course. This cannot be changed, but you can"
+" set a different display name in Advanced Settings later."
+msgstr ""
+"Ŧɥǝ dnblᴉɔ dᴉsdlɐʎ nɐɯǝ ɟøɹ ʎønɹ ɔønɹsǝ. Ŧɥᴉs ɔɐnnøʇ bǝ ɔɥɐnƃǝd, bnʇ ʎøn ɔɐn"
+" sǝʇ ɐ dᴉɟɟǝɹǝnʇ dᴉsdlɐʎ nɐɯǝ ᴉn Ⱥdʌɐnɔǝd Sǝʇʇᴉnƃs lɐʇǝɹ."
+
+#: cms/templates/index.html
+msgid ""
+"The name of the organization sponsoring the course. {strong_start}Note: The "
+"organization name is part of the course URL.{strong_end} This cannot be "
+"changed, but you can set a different display name in Advanced Settings "
+"later."
+msgstr ""
+"Ŧɥǝ nɐɯǝ øɟ ʇɥǝ øɹƃɐnᴉzɐʇᴉøn sdønsøɹᴉnƃ ʇɥǝ ɔønɹsǝ. {strong_start}Nøʇǝ: Ŧɥǝ "
+"øɹƃɐnᴉzɐʇᴉøn nɐɯǝ ᴉs dɐɹʇ øɟ ʇɥǝ ɔønɹsǝ ɄɌŁ.{strong_end} Ŧɥᴉs ɔɐnnøʇ bǝ "
+"ɔɥɐnƃǝd, bnʇ ʎøn ɔɐn sǝʇ ɐ dᴉɟɟǝɹǝnʇ dᴉsdlɐʎ nɐɯǝ ᴉn Ⱥdʌɐnɔǝd Sǝʇʇᴉnƃs "
+"lɐʇǝɹ."
+
+#: cms/templates/index.html
+msgid ""
+"The unique number that identifies your course within your organization. "
+"{strong_start}Note: This is part of your course URL, so no spaces or special"
+" characters are allowed and it cannot be changed.{strong_end}"
+msgstr ""
+"Ŧɥǝ nnᴉbnǝ nnɯbǝɹ ʇɥɐʇ ᴉdǝnʇᴉɟᴉǝs ʎønɹ ɔønɹsǝ ʍᴉʇɥᴉn ʎønɹ øɹƃɐnᴉzɐʇᴉøn. "
+"{strong_start}Nøʇǝ: Ŧɥᴉs ᴉs dɐɹʇ øɟ ʎønɹ ɔønɹsǝ ɄɌŁ, sø nø sdɐɔǝs øɹ sdǝɔᴉɐl"
+" ɔɥɐɹɐɔʇǝɹs ɐɹǝ ɐlløʍǝd ɐnd ᴉʇ ɔɐnnøʇ bǝ ɔɥɐnƃǝd.{strong_end}"
+
+#: cms/templates/index.html
+msgid ""
+"The term in which your course will run. {strong_start}Note: This is part of "
+"your course URL, so no spaces or special characters are allowed and it "
+"cannot be changed.{strong_end}"
+msgstr ""
+"Ŧɥǝ ʇǝɹɯ ᴉn ʍɥᴉɔɥ ʎønɹ ɔønɹsǝ ʍᴉll ɹnn. {strong_start}Nøʇǝ: Ŧɥᴉs ᴉs dɐɹʇ øɟ "
+"ʎønɹ ɔønɹsǝ ɄɌŁ, sø nø sdɐɔǝs øɹ sdǝɔᴉɐl ɔɥɐɹɐɔʇǝɹs ɐɹǝ ɐlløʍǝd ɐnd ᴉʇ "
+"ɔɐnnøʇ bǝ ɔɥɐnƃǝd.{strong_end}"
+
+#: cms/templates/index.html cms/templates/index.html
+msgid "Create"
+msgstr "Ȼɹǝɐʇǝ"
+
+#: cms/templates/index.html
+msgid "Create a New Library"
+msgstr "Ȼɹǝɐʇǝ ɐ Nǝʍ Łᴉbɹɐɹʎ"
+
+#: cms/templates/index.html
+msgid "Required Information to Create a New Library"
+msgstr "Ɍǝbnᴉɹǝd Ɨnɟøɹɯɐʇᴉøn ʇø Ȼɹǝɐʇǝ ɐ Nǝʍ Łᴉbɹɐɹʎ"
+
+#: cms/templates/index.html
+msgid "Library Name"
+msgstr "Łᴉbɹɐɹʎ Nɐɯǝ"
+
+#. Translators: This is an example name for a new content library, seen when
+#. filling out the form to create a new library.
+#. (A library is a collection of content or problems.)
+#: cms/templates/index.html
+msgid "e.g. Computer Science Problems"
+msgstr "ǝ.ƃ. Ȼøɯdnʇǝɹ Sɔᴉǝnɔǝ Ᵽɹøblǝɯs"
+
+#: cms/templates/index.html
+msgid "The public display name for your library."
+msgstr "Ŧɥǝ dnblᴉɔ dᴉsdlɐʎ nɐɯǝ ɟøɹ ʎønɹ lᴉbɹɐɹʎ."
+
+#: cms/templates/index.html
+msgid "The public organization name for your library."
+msgstr "Ŧɥǝ dnblᴉɔ øɹƃɐnᴉzɐʇᴉøn nɐɯǝ ɟøɹ ʎønɹ lᴉbɹɐɹʎ."
+
+#: cms/templates/index.html
+msgid "This cannot be changed."
+msgstr "Ŧɥᴉs ɔɐnnøʇ bǝ ɔɥɐnƃǝd."
+
+#: cms/templates/index.html
+msgid "Library Code"
+msgstr "Łᴉbɹɐɹʎ Ȼødǝ"
+
+#. Translators: This is an example for the "code" used to identify a library,
+#. seen when filling out the form to create a new library. This example is
+#. short
+#. for "Computer Science Problems". The example number may contain letters
+#. but must not contain spaces.
+#: cms/templates/index.html
+msgid "e.g. CSPROB"
+msgstr "ǝ.ƃ. ȻSⱣɌØɃ"
+
+#: cms/templates/index.html
+msgid ""
+"The unique code that identifies this library. {strong_start}Note: This is "
+"part of your library URL, so no spaces or special characters are "
+"allowed.{strong_end} This cannot be changed."
+msgstr ""
+"Ŧɥǝ nnᴉbnǝ ɔødǝ ʇɥɐʇ ᴉdǝnʇᴉɟᴉǝs ʇɥᴉs lᴉbɹɐɹʎ. {strong_start}Nøʇǝ: Ŧɥᴉs ᴉs "
+"dɐɹʇ øɟ ʎønɹ lᴉbɹɐɹʎ ɄɌŁ, sø nø sdɐɔǝs øɹ sdǝɔᴉɐl ɔɥɐɹɐɔʇǝɹs ɐɹǝ "
+"ɐlløʍǝd.{strong_end} Ŧɥᴉs ɔɐnnøʇ bǝ ɔɥɐnƃǝd."
+
+#: cms/templates/index.html
+msgid "Organization and Library Settings"
+msgstr "Øɹƃɐnᴉzɐʇᴉøn ɐnd Łᴉbɹɐɹʎ Sǝʇʇᴉnƃs"
+
+#: cms/templates/index.html
+msgid "Show all courses in organization:"
+msgstr "Sɥøʍ ɐll ɔønɹsǝs ᴉn øɹƃɐnᴉzɐʇᴉøn:"
+
+#: cms/templates/index.html
+msgid "For example, MITx"
+msgstr "Føɹ ǝxɐɯdlǝ, MƗŦx"
+
+#: cms/templates/index.html
+msgid "Courses Being Processed"
+msgstr "Ȼønɹsǝs Ƀǝᴉnƃ Ᵽɹøɔǝssǝd"
+
+#: cms/templates/index.html
+msgid "This course run is currently being created."
+msgstr "Ŧɥᴉs ɔønɹsǝ ɹnn ᴉs ɔnɹɹǝnʇlʎ bǝᴉnƃ ɔɹǝɐʇǝd."
+
+#. Translators: This is a status message, used to inform the user of
+#. what the system is doing. This status means that the user has
+#. requested to re-run an existing course, and the system is currently
+#. in the process of duplicating and configuring the existing course
+#. so that it can be re-run.
+#: cms/templates/index.html
+msgid "Configuring as re-run"
+msgstr "Ȼønɟᴉƃnɹᴉnƃ ɐs ɹǝ-ɹnn"
+
+#: cms/templates/index.html
+msgid ""
+"The new course will be added to your course list in 5-10 minutes. Return to "
+"this page or {link_start}refresh it{link_end} to update the course list. The"
+" new course will need some manual configuration."
+msgstr ""
+"Ŧɥǝ nǝʍ ɔønɹsǝ ʍᴉll bǝ ɐddǝd ʇø ʎønɹ ɔønɹsǝ lᴉsʇ ᴉn 5-10 ɯᴉnnʇǝs. Ɍǝʇnɹn ʇø "
+"ʇɥᴉs dɐƃǝ øɹ {link_start}ɹǝɟɹǝsɥ ᴉʇ{link_end} ʇø nddɐʇǝ ʇɥǝ ɔønɹsǝ lᴉsʇ. Ŧɥǝ"
+" nǝʍ ɔønɹsǝ ʍᴉll nǝǝd søɯǝ ɯɐnnɐl ɔønɟᴉƃnɹɐʇᴉøn."
+
+#. Translators: This is a status message for the course re-runs feature.
+#. When a course admin indicates that a course should be re-run, the system
+#. needs to process the request and prepare the new course. The status of
+#. the process will follow this text.
+#: cms/templates/index.html
+msgid "This re-run processing status:"
+msgstr "Ŧɥᴉs ɹǝ-ɹnn dɹøɔǝssᴉnƃ sʇɐʇns:"
+
+#: cms/templates/index.html
+msgid "Configuration Error"
+msgstr "Ȼønɟᴉƃnɹɐʇᴉøn Ɇɹɹøɹ"
+
+#: cms/templates/index.html
+msgid ""
+"A system error occurred while your course was being processed. Please go to "
+"the original course to try the re-run again, or contact your PM for "
+"assistance."
+msgstr ""
+"Ⱥ sʎsʇǝɯ ǝɹɹøɹ øɔɔnɹɹǝd ʍɥᴉlǝ ʎønɹ ɔønɹsǝ ʍɐs bǝᴉnƃ dɹøɔǝssǝd. Ᵽlǝɐsǝ ƃø ʇø "
+"ʇɥǝ øɹᴉƃᴉnɐl ɔønɹsǝ ʇø ʇɹʎ ʇɥǝ ɹǝ-ɹnn ɐƃɐᴉn, øɹ ɔønʇɐɔʇ ʎønɹ ⱣM ɟøɹ "
+"ɐssᴉsʇɐnɔǝ."
+
+#: cms/templates/index.html
+msgid "Archived Courses"
+msgstr "Ⱥɹɔɥᴉʌǝd Ȼønɹsǝs"
+
+#: cms/templates/index.html
+msgid "Libraries"
+msgstr "Łᴉbɹɐɹᴉǝs"
+
+#: cms/templates/index.html
+msgid "Are you staff on an existing {studio_name} course?"
+msgstr "Ⱥɹǝ ʎøn sʇɐɟɟ øn ɐn ǝxᴉsʇᴉnƃ {studio_name} ɔønɹsǝ?"
+
+#: cms/templates/index.html
+msgid ""
+"The course creator must give you access to the course. Contact the course "
+"creator or administrator for the course you are helping to author."
+msgstr ""
+"Ŧɥǝ ɔønɹsǝ ɔɹǝɐʇøɹ ɯnsʇ ƃᴉʌǝ ʎøn ɐɔɔǝss ʇø ʇɥǝ ɔønɹsǝ. Ȼønʇɐɔʇ ʇɥǝ ɔønɹsǝ "
+"ɔɹǝɐʇøɹ øɹ ɐdɯᴉnᴉsʇɹɐʇøɹ ɟøɹ ʇɥǝ ɔønɹsǝ ʎøn ɐɹǝ ɥǝldᴉnƃ ʇø ɐnʇɥøɹ."
+
+#: cms/templates/index.html cms/templates/index.html
+msgid "Create Your First Course"
+msgstr "Ȼɹǝɐʇǝ Ɏønɹ Fᴉɹsʇ Ȼønɹsǝ"
+
+#: cms/templates/index.html
+msgid "Your new course is just a click away!"
+msgstr "Ɏønɹ nǝʍ ɔønɹsǝ ᴉs ɾnsʇ ɐ ɔlᴉɔʞ ɐʍɐʎ!"
+
+#: cms/templates/index.html
+msgid "Becoming a Course Creator in {studio_name}"
+msgstr "Ƀǝɔøɯᴉnƃ ɐ Ȼønɹsǝ Ȼɹǝɐʇøɹ ᴉn {studio_name}"
+
+#: cms/templates/index.html
+msgid ""
+"{studio_name} is a hosted solution for our xConsortium partners and selected"
+" guests. Courses for which you are a team member appear above for you to "
+"edit, while course creator privileges are granted by {platform_name}. Our "
+"team will evaluate your request and provide you feedback within 24 hours "
+"during the work week."
+msgstr ""
+"{studio_name} ᴉs ɐ ɥøsʇǝd sølnʇᴉøn ɟøɹ ønɹ xȻønsøɹʇᴉnɯ dɐɹʇnǝɹs ɐnd sǝlǝɔʇǝd"
+" ƃnǝsʇs. Ȼønɹsǝs ɟøɹ ʍɥᴉɔɥ ʎøn ɐɹǝ ɐ ʇǝɐɯ ɯǝɯbǝɹ ɐddǝɐɹ ɐbøʌǝ ɟøɹ ʎøn ʇø "
+"ǝdᴉʇ, ʍɥᴉlǝ ɔønɹsǝ ɔɹǝɐʇøɹ dɹᴉʌᴉlǝƃǝs ɐɹǝ ƃɹɐnʇǝd bʎ {platform_name}. Ønɹ "
+"ʇǝɐɯ ʍᴉll ǝʌɐlnɐʇǝ ʎønɹ ɹǝbnǝsʇ ɐnd dɹøʌᴉdǝ ʎøn ɟǝǝdbɐɔʞ ʍᴉʇɥᴉn 24 ɥønɹs "
+"dnɹᴉnƃ ʇɥǝ ʍøɹʞ ʍǝǝʞ."
+
+#: cms/templates/index.html cms/templates/index.html cms/templates/index.html
+msgid "Your Course Creator Request Status:"
+msgstr "Ɏønɹ Ȼønɹsǝ Ȼɹǝɐʇøɹ Ɍǝbnǝsʇ Sʇɐʇns:"
+
+#: cms/templates/index.html
+msgid "Request the Ability to Create Courses"
+msgstr "Ɍǝbnǝsʇ ʇɥǝ Ⱥbᴉlᴉʇʎ ʇø Ȼɹǝɐʇǝ Ȼønɹsǝs"
+
+#: cms/templates/index.html cms/templates/index.html
+msgid "Your Course Creator Request Status"
+msgstr "Ɏønɹ Ȼønɹsǝ Ȼɹǝɐʇøɹ Ɍǝbnǝsʇ Sʇɐʇns"
+
+#: cms/templates/index.html
+msgid ""
+"{studio_name} is a hosted solution for our xConsortium partners and selected"
+" guests. Courses for which you are a team member appear above for you to "
+"edit, while course creator privileges are granted by {platform_name}. Our "
+"team is has completed evaluating your request."
+msgstr ""
+"{studio_name} ᴉs ɐ ɥøsʇǝd sølnʇᴉøn ɟøɹ ønɹ xȻønsøɹʇᴉnɯ dɐɹʇnǝɹs ɐnd sǝlǝɔʇǝd"
+" ƃnǝsʇs. Ȼønɹsǝs ɟøɹ ʍɥᴉɔɥ ʎøn ɐɹǝ ɐ ʇǝɐɯ ɯǝɯbǝɹ ɐddǝɐɹ ɐbøʌǝ ɟøɹ ʎøn ʇø "
+"ǝdᴉʇ, ʍɥᴉlǝ ɔønɹsǝ ɔɹǝɐʇøɹ dɹᴉʌᴉlǝƃǝs ɐɹǝ ƃɹɐnʇǝd bʎ {platform_name}. Ønɹ "
+"ʇǝɐɯ ᴉs ɥɐs ɔøɯdlǝʇǝd ǝʌɐlnɐʇᴉnƃ ʎønɹ ɹǝbnǝsʇ."
+
+#: cms/templates/index.html cms/templates/index.html
+msgid "Your Course Creator request is:"
+msgstr "Ɏønɹ Ȼønɹsǝ Ȼɹǝɐʇøɹ ɹǝbnǝsʇ ᴉs:"
+
+#: cms/templates/index.html
+msgid "Denied"
+msgstr "Đǝnᴉǝd"
+
+#: cms/templates/index.html
+msgid ""
+"Your request did not meet the criteria/guidelines specified by "
+"{platform_name} Staff."
+msgstr ""
+"Ɏønɹ ɹǝbnǝsʇ dᴉd nøʇ ɯǝǝʇ ʇɥǝ ɔɹᴉʇǝɹᴉɐ/ƃnᴉdǝlᴉnǝs sdǝɔᴉɟᴉǝd bʎ "
+"{platform_name} Sʇɐɟɟ."
+
+#: cms/templates/index.html
+msgid ""
+"{studio_name} is a hosted solution for our xConsortium partners and selected"
+" guests. Courses for which you are a team member appear above for you to "
+"edit, while course creator privileges are granted by {platform_name}. Our "
+"team is currently  evaluating your request."
+msgstr ""
+"{studio_name} ᴉs ɐ ɥøsʇǝd sølnʇᴉøn ɟøɹ ønɹ xȻønsøɹʇᴉnɯ dɐɹʇnǝɹs ɐnd sǝlǝɔʇǝd"
+" ƃnǝsʇs. Ȼønɹsǝs ɟøɹ ʍɥᴉɔɥ ʎøn ɐɹǝ ɐ ʇǝɐɯ ɯǝɯbǝɹ ɐddǝɐɹ ɐbøʌǝ ɟøɹ ʎøn ʇø "
+"ǝdᴉʇ, ʍɥᴉlǝ ɔønɹsǝ ɔɹǝɐʇøɹ dɹᴉʌᴉlǝƃǝs ɐɹǝ ƃɹɐnʇǝd bʎ {platform_name}. Ønɹ "
+"ʇǝɐɯ ᴉs ɔnɹɹǝnʇlʎ  ǝʌɐlnɐʇᴉnƃ ʎønɹ ɹǝbnǝsʇ."
+
+#: cms/templates/index.html
+msgid "Pending"
+msgstr "Ᵽǝndᴉnƃ"
+
+#: cms/templates/index.html
+msgid ""
+"Your request is currently being reviewed by {platform_name} staff and should"
+" be updated shortly."
+msgstr ""
+"Ɏønɹ ɹǝbnǝsʇ ᴉs ɔnɹɹǝnʇlʎ bǝᴉnƃ ɹǝʌᴉǝʍǝd bʎ {platform_name} sʇɐɟɟ ɐnd sɥønld"
+" bǝ nddɐʇǝd sɥøɹʇlʎ."
+
+#: cms/templates/index.html
+msgid "Were you expecting to see a particular library here?"
+msgstr "Wǝɹǝ ʎøn ǝxdǝɔʇᴉnƃ ʇø sǝǝ ɐ dɐɹʇᴉɔnlɐɹ lᴉbɹɐɹʎ ɥǝɹǝ?"
+
+#: cms/templates/index.html
+msgid ""
+"The library creator must give you access to the library. Contact the library"
+" creator or administrator for the library you are helping to author."
+msgstr ""
+"Ŧɥǝ lᴉbɹɐɹʎ ɔɹǝɐʇøɹ ɯnsʇ ƃᴉʌǝ ʎøn ɐɔɔǝss ʇø ʇɥǝ lᴉbɹɐɹʎ. Ȼønʇɐɔʇ ʇɥǝ lᴉbɹɐɹʎ"
+" ɔɹǝɐʇøɹ øɹ ɐdɯᴉnᴉsʇɹɐʇøɹ ɟøɹ ʇɥǝ lᴉbɹɐɹʎ ʎøn ɐɹǝ ɥǝldᴉnƃ ʇø ɐnʇɥøɹ."
+
+#: cms/templates/index.html cms/templates/index.html
+msgid "Create Your First Library"
+msgstr "Ȼɹǝɐʇǝ Ɏønɹ Fᴉɹsʇ Łᴉbɹɐɹʎ"
+
+#: cms/templates/index.html
+msgid ""
+"Libraries hold a pool of components that can be re-used across multiple "
+"courses. Create your first library with the click of a button!"
+msgstr ""
+"Łᴉbɹɐɹᴉǝs ɥøld ɐ døøl øɟ ɔøɯdønǝnʇs ʇɥɐʇ ɔɐn bǝ ɹǝ-nsǝd ɐɔɹøss ɯnlʇᴉdlǝ "
+"ɔønɹsǝs. Ȼɹǝɐʇǝ ʎønɹ ɟᴉɹsʇ lᴉbɹɐɹʎ ʍᴉʇɥ ʇɥǝ ɔlᴉɔʞ øɟ ɐ bnʇʇøn!"
+
+#: cms/templates/index.html
+msgid "New to {studio_name}?"
+msgstr "Nǝʍ ʇø {studio_name}?"
+
+#: cms/templates/index.html
+msgid ""
+"Click Help in the upper-right corner to get more information about the "
+"{studio_name} page you are viewing. You can also use the links at the bottom"
+" of the page to access our continually updated documentation and other "
+"{studio_name} resources."
+msgstr ""
+"Ȼlᴉɔʞ Ħǝld ᴉn ʇɥǝ nddǝɹ-ɹᴉƃɥʇ ɔøɹnǝɹ ʇø ƃǝʇ ɯøɹǝ ᴉnɟøɹɯɐʇᴉøn ɐbønʇ ʇɥǝ "
+"{studio_name} dɐƃǝ ʎøn ɐɹǝ ʌᴉǝʍᴉnƃ. Ɏøn ɔɐn ɐlsø nsǝ ʇɥǝ lᴉnʞs ɐʇ ʇɥǝ bøʇʇøɯ"
+" øɟ ʇɥǝ dɐƃǝ ʇø ɐɔɔǝss ønɹ ɔønʇᴉnnɐllʎ nddɐʇǝd døɔnɯǝnʇɐʇᴉøn ɐnd øʇɥǝɹ "
+"{studio_name} ɹǝsønɹɔǝs."
+
+#: cms/templates/index.html
+msgid "Getting Started with {studio_name}"
+msgstr "Ǥǝʇʇᴉnƃ Sʇɐɹʇǝd ʍᴉʇɥ {studio_name}"
+
+#: cms/templates/index.html cms/templates/index.html cms/templates/index.html
+msgid "Can I create courses in {studio_name}?"
+msgstr "Ȼɐn Ɨ ɔɹǝɐʇǝ ɔønɹsǝs ᴉn {studio_name}?"
+
+#: cms/templates/index.html
+msgid ""
+"In order to create courses in {studio_name}, you must {link_start}contact "
+"{platform_name} staff to help you create a course{link_end}."
+msgstr ""
+"Ɨn øɹdǝɹ ʇø ɔɹǝɐʇǝ ɔønɹsǝs ᴉn {studio_name}, ʎøn ɯnsʇ {link_start}ɔønʇɐɔʇ "
+"{platform_name} sʇɐɟɟ ʇø ɥǝld ʎøn ɔɹǝɐʇǝ ɐ ɔønɹsǝ{link_end}."
+
+#: cms/templates/index.html
+msgid ""
+"In order to create courses in {studio_name}, you must have course creator "
+"privileges to create your own course."
+msgstr ""
+"Ɨn øɹdǝɹ ʇø ɔɹǝɐʇǝ ɔønɹsǝs ᴉn {studio_name}, ʎøn ɯnsʇ ɥɐʌǝ ɔønɹsǝ ɔɹǝɐʇøɹ "
+"dɹᴉʌᴉlǝƃǝs ʇø ɔɹǝɐʇǝ ʎønɹ øʍn ɔønɹsǝ."
+
+#: cms/templates/index.html
+msgid ""
+"Your request to author courses in {studio_name} has been denied. Please "
+"{link_start}contact {platform_name} Staff with further questions{link_end}."
+msgstr ""
+"Ɏønɹ ɹǝbnǝsʇ ʇø ɐnʇɥøɹ ɔønɹsǝs ᴉn {studio_name} ɥɐs bǝǝn dǝnᴉǝd. Ᵽlǝɐsǝ "
+"{link_start}ɔønʇɐɔʇ {platform_name} Sʇɐɟɟ ʍᴉʇɥ ɟnɹʇɥǝɹ bnǝsʇᴉøns{link_end}."
+
+#: cms/templates/index.html
+msgid "Thanks for signing up, {name}!"
+msgstr "Ŧɥɐnʞs ɟøɹ sᴉƃnᴉnƃ nd, {name}!"
+
+#: cms/templates/index.html
+msgid "We need to verify your email address"
+msgstr "Wǝ nǝǝd ʇø ʌǝɹᴉɟʎ ʎønɹ ǝɯɐᴉl ɐddɹǝss"
+
+#: cms/templates/index.html
+msgid ""
+"Almost there! In order to complete your sign up we need you to verify your "
+"email address ({email}). An activation message and next steps should be "
+"waiting for you there."
+msgstr ""
+"Ⱥlɯøsʇ ʇɥǝɹǝ! Ɨn øɹdǝɹ ʇø ɔøɯdlǝʇǝ ʎønɹ sᴉƃn nd ʍǝ nǝǝd ʎøn ʇø ʌǝɹᴉɟʎ ʎønɹ "
+"ǝɯɐᴉl ɐddɹǝss ({email}). Ⱥn ɐɔʇᴉʌɐʇᴉøn ɯǝssɐƃǝ ɐnd nǝxʇ sʇǝds sɥønld bǝ "
+"ʍɐᴉʇᴉnƃ ɟøɹ ʎøn ʇɥǝɹǝ."
+
+#: cms/templates/index.html
+msgid "Need help?"
+msgstr "Nǝǝd ɥǝld?"
+
+#: cms/templates/index.html
+msgid ""
+"Please check your Junk or Spam folders in case our email isn't in your "
+"INBOX. Still can't find the verification email? Request help via the link "
+"below."
+msgstr ""
+"Ᵽlǝɐsǝ ɔɥǝɔʞ ʎønɹ Ɉnnʞ øɹ Sdɐɯ ɟøldǝɹs ᴉn ɔɐsǝ ønɹ ǝɯɐᴉl ᴉsn'ʇ ᴉn ʎønɹ "
+"ƗNɃØX. Sʇᴉll ɔɐn'ʇ ɟᴉnd ʇɥǝ ʌǝɹᴉɟᴉɔɐʇᴉøn ǝɯɐᴉl? Ɍǝbnǝsʇ ɥǝld ʌᴉɐ ʇɥǝ lᴉnʞ "
+"bǝløʍ."
+
+#: cms/templates/keyword_sub_modal.html
+msgid ""
+"Copy and paste keywords on the left into your {content_type}. They will be "
+"replaced by the values on the right."
+msgstr ""
+"Ȼødʎ ɐnd dɐsʇǝ ʞǝʎʍøɹds øn ʇɥǝ lǝɟʇ ᴉnʇø ʎønɹ {content_type}. Ŧɥǝʎ ʍᴉll bǝ "
+"ɹǝdlɐɔǝd bʎ ʇɥǝ ʌɐlnǝs øn ʇɥǝ ɹᴉƃɥʇ."
+
+#: cms/templates/library.html
+msgid "Content Library"
+msgstr "Ȼønʇǝnʇ Łᴉbɹɐɹʎ"
+
+#: cms/templates/library.html
+msgid "Add Component"
+msgstr "Ⱥdd Ȼøɯdønǝnʇ"
+
+#: cms/templates/library.html
+msgid "Adding content to your library"
+msgstr "Ⱥddᴉnƃ ɔønʇǝnʇ ʇø ʎønɹ lᴉbɹɐɹʎ"
+
+#: cms/templates/library.html
+msgid ""
+"Add components to your library for use in courses, using Add New Component "
+"at the bottom of this page."
+msgstr ""
+"Ⱥdd ɔøɯdønǝnʇs ʇø ʎønɹ lᴉbɹɐɹʎ ɟøɹ nsǝ ᴉn ɔønɹsǝs, nsᴉnƃ Ⱥdd Nǝʍ Ȼøɯdønǝnʇ "
+"ɐʇ ʇɥǝ bøʇʇøɯ øɟ ʇɥᴉs dɐƃǝ."
+
+#: cms/templates/library.html
+msgid ""
+"Components are listed in the order in which they are added, with the most "
+"recently added at the bottom. Use the pagination arrows to navigate from "
+"page to page if you have more than one page of components in your library."
+msgstr ""
+"Ȼøɯdønǝnʇs ɐɹǝ lᴉsʇǝd ᴉn ʇɥǝ øɹdǝɹ ᴉn ʍɥᴉɔɥ ʇɥǝʎ ɐɹǝ ɐddǝd, ʍᴉʇɥ ʇɥǝ ɯøsʇ "
+"ɹǝɔǝnʇlʎ ɐddǝd ɐʇ ʇɥǝ bøʇʇøɯ. Ʉsǝ ʇɥǝ dɐƃᴉnɐʇᴉøn ɐɹɹøʍs ʇø nɐʌᴉƃɐʇǝ ɟɹøɯ "
+"dɐƃǝ ʇø dɐƃǝ ᴉɟ ʎøn ɥɐʌǝ ɯøɹǝ ʇɥɐn ønǝ dɐƃǝ øɟ ɔøɯdønǝnʇs ᴉn ʎønɹ lᴉbɹɐɹʎ."
+
+#: cms/templates/library.html
+msgid "Using library content in courses"
+msgstr "Ʉsᴉnƃ lᴉbɹɐɹʎ ɔønʇǝnʇ ᴉn ɔønɹsǝs"
+
+#: cms/templates/library.html
+msgid ""
+"Use library content in courses by adding the "
+"{em_start}library_content{em_end} policy key to the Advanced Module List in "
+"the course's Advanced Settings, then adding a Randomized Content Block to "
+"your courseware. In the settings for each Randomized Content Block, select "
+"this library as the source library, and specify the number of problems to be"
+" randomly selected and displayed to each student."
+msgstr ""
+"Ʉsǝ lᴉbɹɐɹʎ ɔønʇǝnʇ ᴉn ɔønɹsǝs bʎ ɐddᴉnƃ ʇɥǝ "
+"{em_start}lᴉbɹɐɹʎ_ɔønʇǝnʇ{em_end} dølᴉɔʎ ʞǝʎ ʇø ʇɥǝ Ⱥdʌɐnɔǝd Mødnlǝ Łᴉsʇ ᴉn "
+"ʇɥǝ ɔønɹsǝ's Ⱥdʌɐnɔǝd Sǝʇʇᴉnƃs, ʇɥǝn ɐddᴉnƃ ɐ Ɍɐndøɯᴉzǝd Ȼønʇǝnʇ Ƀløɔʞ ʇø "
+"ʎønɹ ɔønɹsǝʍɐɹǝ. Ɨn ʇɥǝ sǝʇʇᴉnƃs ɟøɹ ǝɐɔɥ Ɍɐndøɯᴉzǝd Ȼønʇǝnʇ Ƀløɔʞ, sǝlǝɔʇ "
+"ʇɥᴉs lᴉbɹɐɹʎ ɐs ʇɥǝ sønɹɔǝ lᴉbɹɐɹʎ, ɐnd sdǝɔᴉɟʎ ʇɥǝ nnɯbǝɹ øɟ dɹøblǝɯs ʇø bǝ"
+" ɹɐndøɯlʎ sǝlǝɔʇǝd ɐnd dᴉsdlɐʎǝd ʇø ǝɐɔɥ sʇndǝnʇ."
+
+#: cms/templates/library.html
+msgid "Learn more about content libraries"
+msgstr "Łǝɐɹn ɯøɹǝ ɐbønʇ ɔønʇǝnʇ lᴉbɹɐɹᴉǝs"
+
+#: cms/templates/manage_users.html
+msgid "Course Team Settings"
+msgstr "Ȼønɹsǝ Ŧǝɐɯ Sǝʇʇᴉnƃs"
+
+#: cms/templates/manage_users.html cms/templates/manage_users_lib.html
+msgid "New Team Member"
+msgstr "Nǝʍ Ŧǝɐɯ Mǝɯbǝɹ"
+
+#: cms/templates/manage_users.html
+msgid "Add a User to Your Course's Team"
+msgstr "Ⱥdd ɐ Ʉsǝɹ ʇø Ɏønɹ Ȼønɹsǝ's Ŧǝɐɯ"
+
+#: cms/templates/manage_users.html cms/templates/manage_users_lib.html
+msgid "New Team Member Information"
+msgstr "Nǝʍ Ŧǝɐɯ Mǝɯbǝɹ Ɨnɟøɹɯɐʇᴉøn"
+
+#: cms/templates/manage_users.html cms/templates/manage_users_lib.html
+msgid "User's Email Address"
+msgstr "Ʉsǝɹ's Ɇɯɐᴉl Ⱥddɹǝss"
+
+#: cms/templates/manage_users.html
+msgid "Provide the email address of the user you want to add as Staff"
+msgstr "Ᵽɹøʌᴉdǝ ʇɥǝ ǝɯɐᴉl ɐddɹǝss øɟ ʇɥǝ nsǝɹ ʎøn ʍɐnʇ ʇø ɐdd ɐs Sʇɐɟɟ"
+
+#: cms/templates/manage_users.html cms/templates/manage_users_lib.html
+msgid "Add User"
+msgstr "Ⱥdd Ʉsǝɹ"
+
+#: cms/templates/manage_users.html
+msgid "Add Team Members to This Course"
+msgstr "Ⱥdd Ŧǝɐɯ Mǝɯbǝɹs ʇø Ŧɥᴉs Ȼønɹsǝ"
+
+#: cms/templates/manage_users.html
+msgid ""
+"Adding team members makes course authoring collaborative. Users must be "
+"signed up for {studio_name} and have an active account."
+msgstr ""
+"Ⱥddᴉnƃ ʇǝɐɯ ɯǝɯbǝɹs ɯɐʞǝs ɔønɹsǝ ɐnʇɥøɹᴉnƃ ɔøllɐbøɹɐʇᴉʌǝ. Ʉsǝɹs ɯnsʇ bǝ "
+"sᴉƃnǝd nd ɟøɹ {studio_name} ɐnd ɥɐʌǝ ɐn ɐɔʇᴉʌǝ ɐɔɔønnʇ."
+
+#: cms/templates/manage_users.html
+msgid "Add a New Team Member"
+msgstr "Ⱥdd ɐ Nǝʍ Ŧǝɐɯ Mǝɯbǝɹ"
+
+#: cms/templates/manage_users.html
+msgid "Course Team Roles"
+msgstr "Ȼønɹsǝ Ŧǝɐɯ Ɍølǝs"
+
+#: cms/templates/manage_users.html
+msgid ""
+"Course team members with the Staff role are course co-authors. They have "
+"full writing and editing privileges on all course content."
+msgstr ""
+"Ȼønɹsǝ ʇǝɐɯ ɯǝɯbǝɹs ʍᴉʇɥ ʇɥǝ Sʇɐɟɟ ɹølǝ ɐɹǝ ɔønɹsǝ ɔø-ɐnʇɥøɹs. Ŧɥǝʎ ɥɐʌǝ "
+"ɟnll ʍɹᴉʇᴉnƃ ɐnd ǝdᴉʇᴉnƃ dɹᴉʌᴉlǝƃǝs øn ɐll ɔønɹsǝ ɔønʇǝnʇ."
+
+#: cms/templates/manage_users.html
+msgid ""
+"Admins are course team members who can add and remove other course team "
+"members."
+msgstr ""
+"Ⱥdɯᴉns ɐɹǝ ɔønɹsǝ ʇǝɐɯ ɯǝɯbǝɹs ʍɥø ɔɐn ɐdd ɐnd ɹǝɯøʌǝ øʇɥǝɹ ɔønɹsǝ ʇǝɐɯ "
+"ɯǝɯbǝɹs."
+
+#: cms/templates/manage_users.html
+msgid ""
+"All course team members can access content in Studio, the LMS, and Insights,"
+" but are not automatically enrolled in the course."
+msgstr ""
+"Ⱥll ɔønɹsǝ ʇǝɐɯ ɯǝɯbǝɹs ɔɐn ɐɔɔǝss ɔønʇǝnʇ ᴉn Sʇndᴉø, ʇɥǝ ŁMS, ɐnd Ɨnsᴉƃɥʇs,"
+" bnʇ ɐɹǝ nøʇ ɐnʇøɯɐʇᴉɔɐllʎ ǝnɹøllǝd ᴉn ʇɥǝ ɔønɹsǝ."
+
+#: cms/templates/manage_users.html
+msgid "Transferring Ownership"
+msgstr "Ŧɹɐnsɟǝɹɹᴉnƃ Øʍnǝɹsɥᴉd"
+
+#: cms/templates/manage_users.html
+msgid ""
+"Every course must have an Admin. If you are the Admin and you want to "
+"transfer ownership of the course, click <strong>Add admin access</strong> to"
+" make another user the Admin, then ask that user to remove you from the "
+"Course Team list."
+msgstr ""
+"Ɇʌǝɹʎ ɔønɹsǝ ɯnsʇ ɥɐʌǝ ɐn Ⱥdɯᴉn. Ɨɟ ʎøn ɐɹǝ ʇɥǝ Ⱥdɯᴉn ɐnd ʎøn ʍɐnʇ ʇø "
+"ʇɹɐnsɟǝɹ øʍnǝɹsɥᴉd øɟ ʇɥǝ ɔønɹsǝ, ɔlᴉɔʞ <strong>Ⱥdd ɐdɯᴉn ɐɔɔǝss</strong> ʇø"
+" ɯɐʞǝ ɐnøʇɥǝɹ nsǝɹ ʇɥǝ Ⱥdɯᴉn, ʇɥǝn ɐsʞ ʇɥɐʇ nsǝɹ ʇø ɹǝɯøʌǝ ʎøn ɟɹøɯ ʇɥǝ "
+"Ȼønɹsǝ Ŧǝɐɯ lᴉsʇ."
+
+#: cms/templates/manage_users_lib.html
+msgid "Library User Access"
+msgstr "Łᴉbɹɐɹʎ Ʉsǝɹ Ⱥɔɔǝss"
+
+#: cms/templates/manage_users_lib.html cms/templates/widgets/header.html
+msgid "User Access"
+msgstr "Ʉsǝɹ Ⱥɔɔǝss"
+
+#: cms/templates/manage_users_lib.html
+msgid "Grant Access to This Library"
+msgstr "Ǥɹɐnʇ Ⱥɔɔǝss ʇø Ŧɥᴉs Łᴉbɹɐɹʎ"
+
+#: cms/templates/manage_users_lib.html
+msgid "Provide the email address of the user you want to add"
+msgstr "Ᵽɹøʌᴉdǝ ʇɥǝ ǝɯɐᴉl ɐddɹǝss øɟ ʇɥǝ nsǝɹ ʎøn ʍɐnʇ ʇø ɐdd"
+
+#: cms/templates/manage_users_lib.html
+msgid "Add More Users to This Library"
+msgstr "Ⱥdd Møɹǝ Ʉsǝɹs ʇø Ŧɥᴉs Łᴉbɹɐɹʎ"
+
+#: cms/templates/manage_users_lib.html
+msgid ""
+"Grant other members of your course team access to this library. New library "
+"users must have an active {studio_name} account."
+msgstr ""
+"Ǥɹɐnʇ øʇɥǝɹ ɯǝɯbǝɹs øɟ ʎønɹ ɔønɹsǝ ʇǝɐɯ ɐɔɔǝss ʇø ʇɥᴉs lᴉbɹɐɹʎ. Nǝʍ lᴉbɹɐɹʎ "
+"nsǝɹs ɯnsʇ ɥɐʌǝ ɐn ɐɔʇᴉʌǝ {studio_name} ɐɔɔønnʇ."
+
+#: cms/templates/manage_users_lib.html
+msgid "Add a New User"
+msgstr "Ⱥdd ɐ Nǝʍ Ʉsǝɹ"
+
+#: cms/templates/manage_users_lib.html
+msgid "Library Access Roles"
+msgstr "Łᴉbɹɐɹʎ Ⱥɔɔǝss Ɍølǝs"
+
+#: cms/templates/manage_users_lib.html
+msgid "There are three access roles for libraries: User, Staff, and Admin."
+msgstr "Ŧɥǝɹǝ ɐɹǝ ʇɥɹǝǝ ɐɔɔǝss ɹølǝs ɟøɹ lᴉbɹɐɹᴉǝs: Ʉsǝɹ, Sʇɐɟɟ, ɐnd Ⱥdɯᴉn."
+
+#: cms/templates/manage_users_lib.html
+msgid ""
+"Library Users can view library content and can reference or use library "
+"components in their courses, but they cannot edit the contents of a library."
+msgstr ""
+"Łᴉbɹɐɹʎ Ʉsǝɹs ɔɐn ʌᴉǝʍ lᴉbɹɐɹʎ ɔønʇǝnʇ ɐnd ɔɐn ɹǝɟǝɹǝnɔǝ øɹ nsǝ lᴉbɹɐɹʎ "
+"ɔøɯdønǝnʇs ᴉn ʇɥǝᴉɹ ɔønɹsǝs, bnʇ ʇɥǝʎ ɔɐnnøʇ ǝdᴉʇ ʇɥǝ ɔønʇǝnʇs øɟ ɐ lᴉbɹɐɹʎ."
+
+#: cms/templates/manage_users_lib.html
+msgid ""
+"Library Staff are content co-authors. They have full editing privileges on "
+"the contents of a library."
+msgstr ""
+"Łᴉbɹɐɹʎ Sʇɐɟɟ ɐɹǝ ɔønʇǝnʇ ɔø-ɐnʇɥøɹs. Ŧɥǝʎ ɥɐʌǝ ɟnll ǝdᴉʇᴉnƃ dɹᴉʌᴉlǝƃǝs øn "
+"ʇɥǝ ɔønʇǝnʇs øɟ ɐ lᴉbɹɐɹʎ."
+
+#: cms/templates/manage_users_lib.html
+msgid ""
+"Library Admins have full editing privileges and can also add and remove "
+"other team members. There must be at least one user with the Admin role in a"
+" library."
+msgstr ""
+"Łᴉbɹɐɹʎ Ⱥdɯᴉns ɥɐʌǝ ɟnll ǝdᴉʇᴉnƃ dɹᴉʌᴉlǝƃǝs ɐnd ɔɐn ɐlsø ɐdd ɐnd ɹǝɯøʌǝ "
+"øʇɥǝɹ ʇǝɐɯ ɯǝɯbǝɹs. Ŧɥǝɹǝ ɯnsʇ bǝ ɐʇ lǝɐsʇ ønǝ nsǝɹ ʍᴉʇɥ ʇɥǝ Ⱥdɯᴉn ɹølǝ ᴉn ɐ"
+" lᴉbɹɐɹʎ."
+
+#: cms/templates/register.html cms/templates/widgets/header.html
+msgid "Sign Up"
+msgstr "Sᴉƃn Ʉd"
+
+#: cms/templates/register.html
+msgid "Sign Up for {studio_name}"
+msgstr "Sᴉƃn Ʉd ɟøɹ {studio_name}"
+
+#: cms/templates/register.html
+msgid "Already have a {studio_name} Account? Sign in"
+msgstr "Ⱥlɹǝɐdʎ ɥɐʌǝ ɐ {studio_name} Ⱥɔɔønnʇ? Sᴉƃn ᴉn"
+
+#: cms/templates/register.html
+msgid ""
+"Ready to start creating online courses? Sign up below and start creating "
+"your first {platform_name} course today."
+msgstr ""
+"Ɍǝɐdʎ ʇø sʇɐɹʇ ɔɹǝɐʇᴉnƃ ønlᴉnǝ ɔønɹsǝs? Sᴉƃn nd bǝløʍ ɐnd sʇɐɹʇ ɔɹǝɐʇᴉnƃ "
+"ʎønɹ ɟᴉɹsʇ {platform_name} ɔønɹsǝ ʇødɐʎ."
+
+#: cms/templates/register.html
+msgid "Required Information to Sign Up for {studio_name}"
+msgstr "Ɍǝbnᴉɹǝd Ɨnɟøɹɯɐʇᴉøn ʇø Sᴉƃn Ʉd ɟøɹ {studio_name}"
+
+#: cms/templates/register.html
+msgid ""
+"This will be used in public discussions with your courses and in our edX101 "
+"support forums"
+msgstr ""
+"Ŧɥᴉs ʍᴉll bǝ nsǝd ᴉn dnblᴉɔ dᴉsɔnssᴉøns ʍᴉʇɥ ʎønɹ ɔønɹsǝs ɐnd ᴉn ønɹ ǝdX101 "
+"snddøɹʇ ɟøɹnɯs"
+
+#: cms/templates/register.html
+msgid "Your Location"
+msgstr "Ɏønɹ Łøɔɐʇᴉøn"
+
+#: cms/templates/register.html
+msgid "Preferred Language"
+msgstr "Ᵽɹǝɟǝɹɹǝd Łɐnƃnɐƃǝ"
+
+#: cms/templates/register.html
+msgid "I agree to the {a_start} Terms of Service {a_end}"
+msgstr "Ɨ ɐƃɹǝǝ ʇø ʇɥǝ {a_start} Ŧǝɹɯs øɟ Sǝɹʌᴉɔǝ {a_end}"
+
+#: cms/templates/register.html
+msgid "Create My Account &amp; Start Authoring Courses"
+msgstr "Ȼɹǝɐʇǝ Mʎ Ⱥɔɔønnʇ &amp; Sʇɐɹʇ Ⱥnʇɥøɹᴉnƃ Ȼønɹsǝs"
+
+#: cms/templates/register.html
+msgid "Common {studio_name} Questions"
+msgstr "Ȼøɯɯøn {studio_name} Qnǝsʇᴉøns"
+
+#: cms/templates/register.html
+msgid "Who is {studio_name} for?"
+msgstr "Wɥø ᴉs {studio_name} ɟøɹ?"
+
+#: cms/templates/register.html
+msgid ""
+"{studio_name} is for anyone that wants to create online courses that "
+"leverage the global {platform_name} platform. Our users are often faculty "
+"members, teaching assistants and course staff, and members of instructional "
+"technology groups."
+msgstr ""
+"{studio_name} ᴉs ɟøɹ ɐnʎønǝ ʇɥɐʇ ʍɐnʇs ʇø ɔɹǝɐʇǝ ønlᴉnǝ ɔønɹsǝs ʇɥɐʇ "
+"lǝʌǝɹɐƃǝ ʇɥǝ ƃløbɐl {platform_name} dlɐʇɟøɹɯ. Ønɹ nsǝɹs ɐɹǝ øɟʇǝn ɟɐɔnlʇʎ "
+"ɯǝɯbǝɹs, ʇǝɐɔɥᴉnƃ ɐssᴉsʇɐnʇs ɐnd ɔønɹsǝ sʇɐɟɟ, ɐnd ɯǝɯbǝɹs øɟ ᴉnsʇɹnɔʇᴉønɐl "
+"ʇǝɔɥnøløƃʎ ƃɹønds."
+
+#: cms/templates/register.html
+msgid ""
+"How technically savvy do I need to be to create courses in {studio_name}?"
+msgstr ""
+"Ħøʍ ʇǝɔɥnᴉɔɐllʎ sɐʌʌʎ dø Ɨ nǝǝd ʇø bǝ ʇø ɔɹǝɐʇǝ ɔønɹsǝs ᴉn {studio_name}?"
+
+#: cms/templates/register.html
+msgid ""
+"{studio_name} is designed to be easy to use by almost anyone familiar with "
+"common web-based authoring environments (Wordpress, Moodle, etc.). No "
+"programming knowledge is required, but for some of the more advanced "
+"features, a technical background would be helpful. As always, we are here to"
+" help, so don't hesitate to dive right in."
+msgstr ""
+"{studio_name} ᴉs dǝsᴉƃnǝd ʇø bǝ ǝɐsʎ ʇø nsǝ bʎ ɐlɯøsʇ ɐnʎønǝ ɟɐɯᴉlᴉɐɹ ʍᴉʇɥ "
+"ɔøɯɯøn ʍǝb-bɐsǝd ɐnʇɥøɹᴉnƃ ǝnʌᴉɹønɯǝnʇs (Wøɹddɹǝss, Møødlǝ, ǝʇɔ.). Nø "
+"dɹøƃɹɐɯɯᴉnƃ ʞnøʍlǝdƃǝ ᴉs ɹǝbnᴉɹǝd, bnʇ ɟøɹ søɯǝ øɟ ʇɥǝ ɯøɹǝ ɐdʌɐnɔǝd "
+"ɟǝɐʇnɹǝs, ɐ ʇǝɔɥnᴉɔɐl bɐɔʞƃɹønnd ʍønld bǝ ɥǝldɟnl. Ⱥs ɐlʍɐʎs, ʍǝ ɐɹǝ ɥǝɹǝ ʇø"
+" ɥǝld, sø døn'ʇ ɥǝsᴉʇɐʇǝ ʇø dᴉʌǝ ɹᴉƃɥʇ ᴉn."
+
+#: cms/templates/register.html
+msgid "I've never authored a course online before. Is there help?"
+msgstr "Ɨ'ʌǝ nǝʌǝɹ ɐnʇɥøɹǝd ɐ ɔønɹsǝ ønlᴉnǝ bǝɟøɹǝ. Ɨs ʇɥǝɹǝ ɥǝld?"
+
+#: cms/templates/register.html
+msgid ""
+"Absolutely. We have created an online course, edX101, that describes some "
+"best practices: from filming video, creating exercises, to the basics of "
+"running an online course. Additionally, we're always here to help, just drop"
+" us a note."
+msgstr ""
+"Ⱥbsølnʇǝlʎ. Wǝ ɥɐʌǝ ɔɹǝɐʇǝd ɐn ønlᴉnǝ ɔønɹsǝ, ǝdX101, ʇɥɐʇ dǝsɔɹᴉbǝs søɯǝ "
+"bǝsʇ dɹɐɔʇᴉɔǝs: ɟɹøɯ ɟᴉlɯᴉnƃ ʌᴉdǝø, ɔɹǝɐʇᴉnƃ ǝxǝɹɔᴉsǝs, ʇø ʇɥǝ bɐsᴉɔs øɟ "
+"ɹnnnᴉnƃ ɐn ønlᴉnǝ ɔønɹsǝ. Ⱥddᴉʇᴉønɐllʎ, ʍǝ'ɹǝ ɐlʍɐʎs ɥǝɹǝ ʇø ɥǝld, ɾnsʇ dɹød"
+" ns ɐ nøʇǝ."
+
+#: cms/templates/settings.html
+msgid "Schedule & Details Settings"
+msgstr "Sɔɥǝdnlǝ & Đǝʇɐᴉls Sǝʇʇᴉnƃs"
+
+#: cms/templates/settings.html cms/templates/widgets/header.html
+msgid "Schedule & Details"
+msgstr "Sɔɥǝdnlǝ & Đǝʇɐᴉls"
+
+#: cms/templates/settings.html
+msgid "Basic Information"
+msgstr "Ƀɐsᴉɔ Ɨnɟøɹɯɐʇᴉøn"
+
+#: cms/templates/settings.html
+msgid "The nuts and bolts of your course"
+msgstr "Ŧɥǝ nnʇs ɐnd bølʇs øɟ ʎønɹ ɔønɹsǝ"
+
+#: cms/templates/settings.html cms/templates/settings.html
+#: cms/templates/settings.html cms/templates/settings.html
+#: cms/templates/settings.html cms/templates/settings.html
+msgid "This field is disabled: this information cannot be changed."
+msgstr "Ŧɥᴉs ɟᴉǝld ᴉs dᴉsɐblǝd: ʇɥᴉs ᴉnɟøɹɯɐʇᴉøn ɔɐnnøʇ bǝ ɔɥɐnƃǝd."
+
+#: cms/templates/settings.html
+msgid "Course Summary Page"
+msgstr "Ȼønɹsǝ Snɯɯɐɹʎ Ᵽɐƃǝ"
+
+#: cms/templates/settings.html
+msgid "(for student enrollment and access)"
+msgstr "(ɟøɹ sʇndǝnʇ ǝnɹøllɯǝnʇ ɐnd ɐɔɔǝss)"
+
+#: cms/templates/settings.html
+msgid "Enroll in {course_display_name}"
+msgstr "Ɇnɹøll ᴉn {course_display_name}"
+
+#: cms/templates/settings.html
+msgid ""
+"The course \"{course_display_name}\", provided by {platform_name}, is open "
+"for enrollment. Please navigate to this course at {link_for_about_page} to "
+"enroll."
+msgstr ""
+"Ŧɥǝ ɔønɹsǝ \"{course_display_name}\", dɹøʌᴉdǝd bʎ {platform_name}, ᴉs ødǝn "
+"ɟøɹ ǝnɹøllɯǝnʇ. Ᵽlǝɐsǝ nɐʌᴉƃɐʇǝ ʇø ʇɥᴉs ɔønɹsǝ ɐʇ {link_for_about_page} ʇø "
+"ǝnɹøll."
+
+#: cms/templates/settings.html
+msgid "Send a note to students via email"
+msgstr "Sǝnd ɐ nøʇǝ ʇø sʇndǝnʇs ʌᴉɐ ǝɯɐᴉl"
+
+#: cms/templates/settings.html
+msgid "Invite your students"
+msgstr "Ɨnʌᴉʇǝ ʎønɹ sʇndǝnʇs"
+
+#: cms/templates/settings.html
+msgid "Promoting Your Course with {platform_name}"
+msgstr "Ᵽɹøɯøʇᴉnƃ Ɏønɹ Ȼønɹsǝ ʍᴉʇɥ {platform_name}"
+
+#: cms/templates/settings.html
+msgid ""
+"Your course summary page will not be viewable until your course has been "
+"announced. To provide content for the page and preview it, follow the "
+"instructions provided by your Program Manager."
+msgstr ""
+"Ɏønɹ ɔønɹsǝ snɯɯɐɹʎ dɐƃǝ ʍᴉll nøʇ bǝ ʌᴉǝʍɐblǝ nnʇᴉl ʎønɹ ɔønɹsǝ ɥɐs bǝǝn "
+"ɐnnønnɔǝd. Ŧø dɹøʌᴉdǝ ɔønʇǝnʇ ɟøɹ ʇɥǝ dɐƃǝ ɐnd dɹǝʌᴉǝʍ ᴉʇ, ɟølløʍ ʇɥǝ "
+"ᴉnsʇɹnɔʇᴉøns dɹøʌᴉdǝd bʎ ʎønɹ Ᵽɹøƃɹɐɯ Mɐnɐƃǝɹ."
+
+#: cms/templates/settings.html
+msgid "Course Credit Requirements"
+msgstr "Ȼønɹsǝ Ȼɹǝdᴉʇ Ɍǝbnᴉɹǝɯǝnʇs"
+
+#: cms/templates/settings.html
+msgid "Steps required to earn course credit"
+msgstr "Sʇǝds ɹǝbnᴉɹǝd ʇø ǝɐɹn ɔønɹsǝ ɔɹǝdᴉʇ"
+
+#: cms/templates/settings.html cms/templates/settings.html
+msgid "Minimum Grade"
+msgstr "Mᴉnᴉɯnɯ Ǥɹɐdǝ"
+
+#: cms/templates/settings.html
+msgid "Successful Proctored Exam"
+msgstr "Snɔɔǝssɟnl Ᵽɹøɔʇøɹǝd Ɇxɐɯ"
+
+#: cms/templates/settings.html
+msgid "Proctored Exam {number}"
+msgstr "Ᵽɹøɔʇøɹǝd Ɇxɐɯ {number}"
+
+#: cms/templates/settings.html
+msgid "ID Verification"
+msgstr "ƗĐ Vǝɹᴉɟᴉɔɐʇᴉøn"
+
+#: cms/templates/settings.html
+msgid "In-Course Reverification {number}"
+msgstr "Ɨn-Ȼønɹsǝ Ɍǝʌǝɹᴉɟᴉɔɐʇᴉøn {number}"
+
+#: cms/templates/settings.html
+msgid "Set the pacing for this course"
+msgstr "Sǝʇ ʇɥǝ dɐɔᴉnƃ ɟøɹ ʇɥᴉs ɔønɹsǝ"
+
+#: cms/templates/settings.html
+msgid ""
+"Instructor-paced courses progress at the pace that the course author sets. "
+"You can configure release dates for course content and due dates for "
+"assignments."
+msgstr ""
+"Ɨnsʇɹnɔʇøɹ-dɐɔǝd ɔønɹsǝs dɹøƃɹǝss ɐʇ ʇɥǝ dɐɔǝ ʇɥɐʇ ʇɥǝ ɔønɹsǝ ɐnʇɥøɹ sǝʇs. "
+"Ɏøn ɔɐn ɔønɟᴉƃnɹǝ ɹǝlǝɐsǝ dɐʇǝs ɟøɹ ɔønɹsǝ ɔønʇǝnʇ ɐnd dnǝ dɐʇǝs ɟøɹ "
+"ɐssᴉƃnɯǝnʇs."
+
+#: cms/templates/settings.html
+msgid ""
+"Self-paced courses do not have release dates for course content or due dates"
+" for assignments. Learners can complete course material at any time before "
+"the course end date."
+msgstr ""
+"Sǝlɟ-dɐɔǝd ɔønɹsǝs dø nøʇ ɥɐʌǝ ɹǝlǝɐsǝ dɐʇǝs ɟøɹ ɔønɹsǝ ɔønʇǝnʇ øɹ dnǝ dɐʇǝs"
+" ɟøɹ ɐssᴉƃnɯǝnʇs. Łǝɐɹnǝɹs ɔɐn ɔøɯdlǝʇǝ ɔønɹsǝ ɯɐʇǝɹᴉɐl ɐʇ ɐnʎ ʇᴉɯǝ bǝɟøɹǝ "
+"ʇɥǝ ɔønɹsǝ ǝnd dɐʇǝ."
+
+#: cms/templates/settings.html
+msgid "Course Schedule"
+msgstr "Ȼønɹsǝ Sɔɥǝdnlǝ"
+
+#: cms/templates/settings.html
+msgid "Dates that control when your course can be viewed"
+msgstr "Đɐʇǝs ʇɥɐʇ ɔønʇɹøl ʍɥǝn ʎønɹ ɔønɹsǝ ɔɐn bǝ ʌᴉǝʍǝd"
+
+#: cms/templates/settings.html
+msgid "First day the course begins"
+msgstr "Fᴉɹsʇ dɐʎ ʇɥǝ ɔønɹsǝ bǝƃᴉns"
+
+#: cms/templates/settings.html
+msgid "Course Start Time"
+msgstr "Ȼønɹsǝ Sʇɐɹʇ Ŧᴉɯǝ"
+
+#: cms/templates/settings.html cms/templates/settings.html
+#: cms/templates/settings.html cms/templates/settings.html
+msgid "(UTC)"
+msgstr "(ɄŦȻ)"
+
+#: cms/templates/settings.html
+msgid "Last day your course is active"
+msgstr "Łɐsʇ dɐʎ ʎønɹ ɔønɹsǝ ᴉs ɐɔʇᴉʌǝ"
+
+#: cms/templates/settings.html
+msgid "Course End Time"
+msgstr "Ȼønɹsǝ Ɇnd Ŧᴉɯǝ"
+
+#: cms/templates/settings.html
+msgid "Certificates Available Date"
+msgstr "Ȼǝɹʇᴉɟᴉɔɐʇǝs Ⱥʌɐᴉlɐblǝ Đɐʇǝ"
+
+#: cms/templates/settings.html
+msgid "By default, 48 hours after course end date"
+msgstr "Ƀʎ dǝɟɐnlʇ, 48 ɥønɹs ɐɟʇǝɹ ɔønɹsǝ ǝnd dɐʇǝ"
+
+#: cms/templates/settings.html
+msgid "Enrollment Start Date"
+msgstr "Ɇnɹøllɯǝnʇ Sʇɐɹʇ Đɐʇǝ"
+
+#: cms/templates/settings.html
+msgid "First day students can enroll"
+msgstr "Fᴉɹsʇ dɐʎ sʇndǝnʇs ɔɐn ǝnɹøll"
+
+#: cms/templates/settings.html
+msgid "Enrollment Start Time"
+msgstr "Ɇnɹøllɯǝnʇ Sʇɐɹʇ Ŧᴉɯǝ"
+
+#: cms/templates/settings.html
+msgid "Enrollment End Date"
+msgstr "Ɇnɹøllɯǝnʇ Ɇnd Đɐʇǝ"
+
+#: cms/templates/settings.html
+msgid "Last day students can enroll."
+msgstr "Łɐsʇ dɐʎ sʇndǝnʇs ɔɐn ǝnɹøll."
+
+#: cms/templates/settings.html
+msgid "Contact your edX partner manager to update these settings."
+msgstr "Ȼønʇɐɔʇ ʎønɹ ǝdX dɐɹʇnǝɹ ɯɐnɐƃǝɹ ʇø nddɐʇǝ ʇɥǝsǝ sǝʇʇᴉnƃs."
+
+#: cms/templates/settings.html
+msgid "Enrollment End Time"
+msgstr "Ɇnɹøllɯǝnʇ Ɇnd Ŧᴉɯǝ"
+
+#: cms/templates/settings.html
+msgid "Course Details"
+msgstr "Ȼønɹsǝ Đǝʇɐᴉls"
+
+#: cms/templates/settings.html
+msgid "Provide useful information about your course"
+msgstr "Ᵽɹøʌᴉdǝ nsǝɟnl ᴉnɟøɹɯɐʇᴉøn ɐbønʇ ʎønɹ ɔønɹsǝ"
+
+#: cms/templates/settings.html
+msgid "Course Language"
+msgstr "Ȼønɹsǝ Łɐnƃnɐƃǝ"
+
+#: cms/templates/settings.html
+msgid ""
+"Identify the course language here. This is used to assist users find courses"
+" that are taught in a specific language. It is also used to localize the "
+"'From:' field in bulk emails."
+msgstr ""
+"Ɨdǝnʇᴉɟʎ ʇɥǝ ɔønɹsǝ lɐnƃnɐƃǝ ɥǝɹǝ. Ŧɥᴉs ᴉs nsǝd ʇø ɐssᴉsʇ nsǝɹs ɟᴉnd ɔønɹsǝs"
+" ʇɥɐʇ ɐɹǝ ʇɐnƃɥʇ ᴉn ɐ sdǝɔᴉɟᴉɔ lɐnƃnɐƃǝ. Ɨʇ ᴉs ɐlsø nsǝd ʇø løɔɐlᴉzǝ ʇɥǝ "
+"'Fɹøɯ:' ɟᴉǝld ᴉn bnlʞ ǝɯɐᴉls."
+
+#: cms/templates/settings.html
+msgid "Introducing Your Course"
+msgstr "Ɨnʇɹødnɔᴉnƃ Ɏønɹ Ȼønɹsǝ"
+
+#: cms/templates/settings.html
+msgid "Information for prospective students"
+msgstr "Ɨnɟøɹɯɐʇᴉøn ɟøɹ dɹøsdǝɔʇᴉʌǝ sʇndǝnʇs"
+
+#: cms/templates/settings.html
+msgid "Course Title"
+msgstr "Ȼønɹsǝ Ŧᴉʇlǝ"
+
+#: cms/templates/settings.html
+msgid "Displayed as title on the course details page. Limit to 50 characters."
+msgstr ""
+"Đᴉsdlɐʎǝd ɐs ʇᴉʇlǝ øn ʇɥǝ ɔønɹsǝ dǝʇɐᴉls dɐƃǝ. Łᴉɯᴉʇ ʇø 50 ɔɥɐɹɐɔʇǝɹs."
+
+#: cms/templates/settings.html
+msgid "Course Subtitle"
+msgstr "Ȼønɹsǝ Snbʇᴉʇlǝ"
+
+#: cms/templates/settings.html
+msgid ""
+"Displayed as subtitle on the course details page. Limit to 150 characters."
+msgstr ""
+"Đᴉsdlɐʎǝd ɐs snbʇᴉʇlǝ øn ʇɥǝ ɔønɹsǝ dǝʇɐᴉls dɐƃǝ. Łᴉɯᴉʇ ʇø 150 ɔɥɐɹɐɔʇǝɹs."
+
+#: cms/templates/settings.html
+msgid "Course Duration"
+msgstr "Ȼønɹsǝ Đnɹɐʇᴉøn"
+
+#: cms/templates/settings.html
+msgid "Displayed on the course details page. Limit to 50 characters."
+msgstr "Đᴉsdlɐʎǝd øn ʇɥǝ ɔønɹsǝ dǝʇɐᴉls dɐƃǝ. Łᴉɯᴉʇ ʇø 50 ɔɥɐɹɐɔʇǝɹs."
+
+#: cms/templates/settings.html
+msgid "Course Description"
+msgstr "Ȼønɹsǝ Đǝsɔɹᴉdʇᴉøn"
+
+#: cms/templates/settings.html
+msgid "Displayed on the course details page. Limit to 1000 characters."
+msgstr "Đᴉsdlɐʎǝd øn ʇɥǝ ɔønɹsǝ dǝʇɐᴉls dɐƃǝ. Łᴉɯᴉʇ ʇø 1000 ɔɥɐɹɐɔʇǝɹs."
+
+#: cms/templates/settings.html
+msgid "Course Short Description"
+msgstr "Ȼønɹsǝ Sɥøɹʇ Đǝsɔɹᴉdʇᴉøn"
+
+#: cms/templates/settings.html
+msgid ""
+"Appears on the course catalog page when students roll over the course name. "
+"Limit to ~150 characters"
+msgstr ""
+"Ⱥddǝɐɹs øn ʇɥǝ ɔønɹsǝ ɔɐʇɐløƃ dɐƃǝ ʍɥǝn sʇndǝnʇs ɹøll øʌǝɹ ʇɥǝ ɔønɹsǝ nɐɯǝ. "
+"Łᴉɯᴉʇ ʇø ~150 ɔɥɐɹɐɔʇǝɹs"
+
+#: cms/templates/settings.html
+msgid "Course Overview"
+msgstr "Ȼønɹsǝ Øʌǝɹʌᴉǝʍ"
+
+#: cms/templates/settings.html
+msgid "HTML Code Editor"
+msgstr "ĦŦMŁ Ȼødǝ Ɇdᴉʇøɹ"
+
+#: cms/templates/settings.html
+msgid ""
+"Introductions, prerequisites, FAQs that are used on {a_link_start}your "
+"course summary page{a_link_end} (formatted in HTML)"
+msgstr ""
+"Ɨnʇɹødnɔʇᴉøns, dɹǝɹǝbnᴉsᴉʇǝs, FȺQs ʇɥɐʇ ɐɹǝ nsǝd øn {a_link_start}ʎønɹ "
+"ɔønɹsǝ snɯɯɐɹʎ dɐƃǝ{a_link_end} (ɟøɹɯɐʇʇǝd ᴉn ĦŦMŁ)"
+
+#: cms/templates/settings.html
+msgid "Course About Sidebar HTML"
+msgstr "Ȼønɹsǝ Ⱥbønʇ Sᴉdǝbɐɹ ĦŦMŁ"
+
+#: cms/templates/settings.html
+msgid ""
+"Custom sidebar content for {a_link_start}your course summary "
+"page{a_link_end} (formatted in HTML)"
+msgstr ""
+"Ȼnsʇøɯ sᴉdǝbɐɹ ɔønʇǝnʇ ɟøɹ {a_link_start}ʎønɹ ɔønɹsǝ snɯɯɐɹʎ "
+"dɐƃǝ{a_link_end} (ɟøɹɯɐʇʇǝd ᴉn ĦŦMŁ)"
+
+#: cms/templates/settings.html cms/templates/settings.html
+#: cms/templates/settings.html
+msgid "Course Card Image"
+msgstr "Ȼønɹsǝ Ȼɐɹd Ɨɯɐƃǝ"
+
+#: cms/templates/settings.html cms/templates/settings.html
+#: cms/templates/settings.html
+msgid ""
+"You can manage this image along with all of your other {a_link_start}files "
+"and uploads{a_link_end}"
+msgstr ""
+"Ɏøn ɔɐn ɯɐnɐƃǝ ʇɥᴉs ᴉɯɐƃǝ ɐlønƃ ʍᴉʇɥ ɐll øɟ ʎønɹ øʇɥǝɹ {a_link_start}ɟᴉlǝs "
+"ɐnd ndløɐds{a_link_end}"
+
+#: cms/templates/settings.html
+msgid ""
+"Your course currently does not have an image. Please upload one (JPEG or PNG"
+" format, and minimum suggested dimensions are 375px wide by 200px tall)"
+msgstr ""
+"Ɏønɹ ɔønɹsǝ ɔnɹɹǝnʇlʎ døǝs nøʇ ɥɐʌǝ ɐn ᴉɯɐƃǝ. Ᵽlǝɐsǝ ndløɐd ønǝ (ɈⱣɆǤ øɹ ⱣNǤ"
+" ɟøɹɯɐʇ, ɐnd ɯᴉnᴉɯnɯ snƃƃǝsʇǝd dᴉɯǝnsᴉøns ɐɹǝ 375dx ʍᴉdǝ bʎ 200dx ʇɐll)"
+
+#. Translators: This is the placeholder text for a field that requests the URL
+#. for a course image
+#: cms/templates/settings.html
+msgid "Your course image URL"
+msgstr "Ɏønɹ ɔønɹsǝ ᴉɯɐƃǝ ɄɌŁ"
+
+#: cms/templates/settings.html
+msgid ""
+"Please provide a valid path and name to your course image (Note: only JPEG "
+"or PNG format supported)"
+msgstr ""
+"Ᵽlǝɐsǝ dɹøʌᴉdǝ ɐ ʌɐlᴉd dɐʇɥ ɐnd nɐɯǝ ʇø ʎønɹ ɔønɹsǝ ᴉɯɐƃǝ (Nøʇǝ: ønlʎ ɈⱣɆǤ "
+"øɹ ⱣNǤ ɟøɹɯɐʇ snddøɹʇǝd)"
+
+#: cms/templates/settings.html
+msgid "Upload Course Card Image"
+msgstr "Ʉdløɐd Ȼønɹsǝ Ȼɐɹd Ɨɯɐƃǝ"
+
+#: cms/templates/settings.html cms/templates/settings.html
+#: cms/templates/settings.html
+msgid "Course Banner Image"
+msgstr "Ȼønɹsǝ Ƀɐnnǝɹ Ɨɯɐƃǝ"
+
+#: cms/templates/settings.html
+msgid ""
+"Your course currently does not have an image. Please upload one (JPEG or PNG"
+" format, and minimum suggested dimensions are 1440px wide by 400px tall)"
+msgstr ""
+"Ɏønɹ ɔønɹsǝ ɔnɹɹǝnʇlʎ døǝs nøʇ ɥɐʌǝ ɐn ᴉɯɐƃǝ. Ᵽlǝɐsǝ ndløɐd ønǝ (ɈⱣɆǤ øɹ ⱣNǤ"
+" ɟøɹɯɐʇ, ɐnd ɯᴉnᴉɯnɯ snƃƃǝsʇǝd dᴉɯǝnsᴉøns ɐɹǝ 1440dx ʍᴉdǝ bʎ 400dx ʇɐll)"
+
+#. Translators: This is the placeholder text for a field that requests the URL
+#. for a course banner image
+#: cms/templates/settings.html
+msgid "Your banner image URL"
+msgstr "Ɏønɹ bɐnnǝɹ ᴉɯɐƃǝ ɄɌŁ"
+
+#: cms/templates/settings.html
+msgid ""
+"Please provide a valid path and name to your banner image (Note: only JPEG "
+"or PNG format supported)"
+msgstr ""
+"Ᵽlǝɐsǝ dɹøʌᴉdǝ ɐ ʌɐlᴉd dɐʇɥ ɐnd nɐɯǝ ʇø ʎønɹ bɐnnǝɹ ᴉɯɐƃǝ (Nøʇǝ: ønlʎ ɈⱣɆǤ "
+"øɹ ⱣNǤ ɟøɹɯɐʇ snddøɹʇǝd)"
+
+#: cms/templates/settings.html
+msgid "Upload Course Banner Image"
+msgstr "Ʉdløɐd Ȼønɹsǝ Ƀɐnnǝɹ Ɨɯɐƃǝ"
+
+#: cms/templates/settings.html
+msgid "Course Video Thumbnail Image"
+msgstr "Ȼønɹsǝ Vᴉdǝø Ŧɥnɯbnɐᴉl Ɨɯɐƃǝ"
+
+#: cms/templates/settings.html cms/templates/settings.html
+msgid "Video Thumbnail Image"
+msgstr "Vᴉdǝø Ŧɥnɯbnɐᴉl Ɨɯɐƃǝ"
+
+#: cms/templates/settings.html
+msgid ""
+"Your course currently does not have a video thumbnail image. Please upload "
+"one (JPEG or PNG format, and minimum suggested dimensions are 375px wide by "
+"200px tall)"
+msgstr ""
+"Ɏønɹ ɔønɹsǝ ɔnɹɹǝnʇlʎ døǝs nøʇ ɥɐʌǝ ɐ ʌᴉdǝø ʇɥnɯbnɐᴉl ᴉɯɐƃǝ. Ᵽlǝɐsǝ ndløɐd "
+"ønǝ (ɈⱣɆǤ øɹ ⱣNǤ ɟøɹɯɐʇ, ɐnd ɯᴉnᴉɯnɯ snƃƃǝsʇǝd dᴉɯǝnsᴉøns ɐɹǝ 375dx ʍᴉdǝ bʎ "
+"200dx ʇɐll)"
+
+#. Translators: This is the placeholder text for a field that requests the URL
+#. for a course video thumbnail image
+#: cms/templates/settings.html
+msgid "Your video thumbnail image URL"
+msgstr "Ɏønɹ ʌᴉdǝø ʇɥnɯbnɐᴉl ᴉɯɐƃǝ ɄɌŁ"
+
+#: cms/templates/settings.html
+msgid ""
+"Please provide a valid path and name to your video thumbnail image (Note: "
+"only JPEG or PNG format supported)"
+msgstr ""
+"Ᵽlǝɐsǝ dɹøʌᴉdǝ ɐ ʌɐlᴉd dɐʇɥ ɐnd nɐɯǝ ʇø ʎønɹ ʌᴉdǝø ʇɥnɯbnɐᴉl ᴉɯɐƃǝ (Nøʇǝ: "
+"ønlʎ ɈⱣɆǤ øɹ ⱣNǤ ɟøɹɯɐʇ snddøɹʇǝd)"
+
+#: cms/templates/settings.html
+msgid "Upload Video Thumbnail Image"
+msgstr "Ʉdløɐd Vᴉdǝø Ŧɥnɯbnɐᴉl Ɨɯɐƃǝ"
+
+#: cms/templates/settings.html cms/templates/settings.html
+msgid "Course Introduction Video"
+msgstr "Ȼønɹsǝ Ɨnʇɹødnɔʇᴉøn Vᴉdǝø"
+
+#: cms/templates/settings.html
+msgid "Delete Current Video"
+msgstr "Đǝlǝʇǝ Ȼnɹɹǝnʇ Vᴉdǝø"
+
+#. Translators: This is the placeholder text for a field that requests a
+#. YouTube video ID for a course video
+#: cms/templates/settings.html
+msgid "your YouTube video's ID"
+msgstr "ʎønɹ ɎønŦnbǝ ʌᴉdǝø's ƗĐ"
+
+#: cms/templates/settings.html
+msgid "Enter your YouTube video's ID (along with any restriction parameters)"
+msgstr "Ɇnʇǝɹ ʎønɹ ɎønŦnbǝ ʌᴉdǝø's ƗĐ (ɐlønƃ ʍᴉʇɥ ɐnʎ ɹǝsʇɹᴉɔʇᴉøn dɐɹɐɯǝʇǝɹs)"
+
+#: cms/templates/settings.html
+msgid "Learning Outcomes"
+msgstr "Łǝɐɹnᴉnƃ Ønʇɔøɯǝs"
+
+#: cms/templates/settings.html
+msgid "Add the learning outcomes for this course"
+msgstr "Ⱥdd ʇɥǝ lǝɐɹnᴉnƃ ønʇɔøɯǝs ɟøɹ ʇɥᴉs ɔønɹsǝ"
+
+#: cms/templates/settings.html
+msgid "Add Learning Outcome"
+msgstr "Ⱥdd Łǝɐɹnᴉnƃ Ønʇɔøɯǝ"
+
+#: cms/templates/settings.html
+msgid "Add details about the instructors for this course"
+msgstr "Ⱥdd dǝʇɐᴉls ɐbønʇ ʇɥǝ ᴉnsʇɹnɔʇøɹs ɟøɹ ʇɥᴉs ɔønɹsǝ"
+
+#: cms/templates/settings.html
+msgid "Add Instructor"
+msgstr "Ⱥdd Ɨnsʇɹnɔʇøɹ"
+
+#: cms/templates/settings.html
+msgid "Course Enrollment Email"
+msgstr "Ȼønɹsǝ Ɇnɹøllɯǝnʇ Ɇɯɐᴉl"
+
+#: cms/templates/settings.html
+msgid "Settings for emails that students receive upon course enrollment"
+msgstr "Sǝʇʇᴉnƃs ɟøɹ ǝɯɐᴉls ʇɥɐʇ sʇndǝnʇs ɹǝɔǝᴉʌǝ ndøn ɔønɹsǝ ǝnɹøllɯǝnʇ"
+
+#: cms/templates/settings.html
+msgid ""
+"{strong_start}By default, this feature is disabled.{strong_end} You can "
+"either use the default email content or create your own. Students enrolling "
+"right on the start date will receive the post-course-start email. "
+"{strong_start}Email bodies support {link_start}keyword "
+"substitution{link_end}.{strong_end}"
+msgstr ""
+"{strong_start}Ƀʎ dǝɟɐnlʇ, ʇɥᴉs ɟǝɐʇnɹǝ ᴉs dᴉsɐblǝd.{strong_end} Ɏøn ɔɐn "
+"ǝᴉʇɥǝɹ nsǝ ʇɥǝ dǝɟɐnlʇ ǝɯɐᴉl ɔønʇǝnʇ øɹ ɔɹǝɐʇǝ ʎønɹ øʍn. Sʇndǝnʇs ǝnɹøllᴉnƃ "
+"ɹᴉƃɥʇ øn ʇɥǝ sʇɐɹʇ dɐʇǝ ʍᴉll ɹǝɔǝᴉʌǝ ʇɥǝ døsʇ-ɔønɹsǝ-sʇɐɹʇ ǝɯɐᴉl. "
+"{strong_start}Ɇɯɐᴉl bødᴉǝs snddøɹʇ {link_start}ʞǝʎʍøɹd "
+"snbsʇᴉʇnʇᴉøn{link_end}.{strong_end}"
+
+#: cms/templates/settings.html
+msgid "Enable enrollment emails"
+msgstr "Ɇnɐblǝ ǝnɹøllɯǝnʇ ǝɯɐᴉls"
+
+#: cms/templates/settings.html
+msgid ""
+"Message for students who enroll {strong_start}before the start "
+"date{strong_end}"
+msgstr ""
+"Mǝssɐƃǝ ɟøɹ sʇndǝnʇs ʍɥø ǝnɹøll {strong_start}bǝɟøɹǝ ʇɥǝ sʇɐɹʇ "
+"dɐʇǝ{strong_end}"
+
+#: cms/templates/settings.html cms/templates/settings.html
+msgid "Send me a copy of this via email"
+msgstr "Sǝnd ɯǝ ɐ ɔødʎ øɟ ʇɥᴉs ʌᴉɐ ǝɯɐᴉl"
+
+#: cms/templates/settings.html cms/templates/settings.html
+msgid "Send me a test email"
+msgstr "Sǝnd ɯǝ ɐ ʇǝsʇ ǝɯɐᴉl"
+
+#: cms/templates/settings.html cms/templates/settings.html
+msgid "Reset to default content"
+msgstr "Ɍǝsǝʇ ʇø dǝɟɐnlʇ ɔønʇǝnʇ"
+
+#: cms/templates/settings.html cms/templates/settings.html
+msgid "Subject of the Email"
+msgstr "Snbɾǝɔʇ øɟ ʇɥǝ Ɇɯɐᴉl"
+
+#: cms/templates/settings.html cms/templates/settings.html
+msgid "Body of the Email"
+msgstr "Ƀødʎ øɟ ʇɥǝ Ɇɯɐᴉl"
+
+#: cms/templates/settings.html
+msgid ""
+"This email will be sent to any student who enrolls in the course before its "
+"start date."
+msgstr ""
+"Ŧɥᴉs ǝɯɐᴉl ʍᴉll bǝ sǝnʇ ʇø ɐnʎ sʇndǝnʇ ʍɥø ǝnɹølls ᴉn ʇɥǝ ɔønɹsǝ bǝɟøɹǝ ᴉʇs "
+"sʇɐɹʇ dɐʇǝ."
+
+#: cms/templates/settings.html
+msgid ""
+"Message for students who enroll {strong_start}on or after the start "
+"date{strong_end}"
+msgstr ""
+"Mǝssɐƃǝ ɟøɹ sʇndǝnʇs ʍɥø ǝnɹøll {strong_start}øn øɹ ɐɟʇǝɹ ʇɥǝ sʇɐɹʇ "
+"dɐʇǝ{strong_end}"
+
+#: cms/templates/settings.html
+msgid ""
+"This email will be sent to any student who enrolls in the course after its "
+"start date."
+msgstr ""
+"Ŧɥᴉs ǝɯɐᴉl ʍᴉll bǝ sǝnʇ ʇø ɐnʎ sʇndǝnʇ ʍɥø ǝnɹølls ᴉn ʇɥǝ ɔønɹsǝ ɐɟʇǝɹ ᴉʇs "
+"sʇɐɹʇ dɐʇǝ."
+
+#: cms/templates/settings.html
+msgid "Expectations of the students taking this course"
+msgstr "Ɇxdǝɔʇɐʇᴉøns øɟ ʇɥǝ sʇndǝnʇs ʇɐʞᴉnƃ ʇɥᴉs ɔønɹsǝ"
+
+#: cms/templates/settings.html
+msgid "Hours of Effort per Week"
+msgstr "Ħønɹs øɟ Ɇɟɟøɹʇ dǝɹ Wǝǝʞ"
+
+#: cms/templates/settings.html
+msgid "Time spent on all course work"
+msgstr "Ŧᴉɯǝ sdǝnʇ øn ɐll ɔønɹsǝ ʍøɹʞ"
+
+#: cms/templates/settings.html
+msgid "Prerequisite Course"
+msgstr "Ᵽɹǝɹǝbnᴉsᴉʇǝ Ȼønɹsǝ"
+
+#: cms/templates/settings.html
+msgid "None"
+msgstr "Nønǝ"
+
+#: cms/templates/settings.html
+msgid "Course that students must complete before beginning this course"
+msgstr "Ȼønɹsǝ ʇɥɐʇ sʇndǝnʇs ɯnsʇ ɔøɯdlǝʇǝ bǝɟøɹǝ bǝƃᴉnnᴉnƃ ʇɥᴉs ɔønɹsǝ"
+
+#: cms/templates/settings.html
+msgid "set pre-requisite course"
+msgstr "sǝʇ dɹǝ-ɹǝbnᴉsᴉʇǝ ɔønɹsǝ"
+
+#: cms/templates/settings.html
+msgid "Entrance Exam"
+msgstr "Ɇnʇɹɐnɔǝ Ɇxɐɯ"
+
+#: cms/templates/settings.html
+msgid "Require students to pass an exam before beginning the course."
+msgstr "Ɍǝbnᴉɹǝ sʇndǝnʇs ʇø dɐss ɐn ǝxɐɯ bǝɟøɹǝ bǝƃᴉnnᴉnƃ ʇɥǝ ɔønɹsǝ."
+
+#: cms/templates/settings.html
+msgid ""
+"You can now view and author your course entrance exam from the "
+"{link_start}Course Outline{link_end}."
+msgstr ""
+"Ɏøn ɔɐn nøʍ ʌᴉǝʍ ɐnd ɐnʇɥøɹ ʎønɹ ɔønɹsǝ ǝnʇɹɐnɔǝ ǝxɐɯ ɟɹøɯ ʇɥǝ "
+"{link_start}Ȼønɹsǝ Ønʇlᴉnǝ{link_end}."
+
+#: cms/templates/settings.html
+msgid "Grade Requirements"
+msgstr "Ǥɹɐdǝ Ɍǝbnᴉɹǝɯǝnʇs"
+
+#: cms/templates/settings.html
+msgid " %"
+msgstr " %"
+
+#: cms/templates/settings.html
+msgid ""
+"The score student must meet in order to successfully complete the entrance "
+"exam. "
+msgstr ""
+"Ŧɥǝ sɔøɹǝ sʇndǝnʇ ɯnsʇ ɯǝǝʇ ᴉn øɹdǝɹ ʇø snɔɔǝssɟnllʎ ɔøɯdlǝʇǝ ʇɥǝ ǝnʇɹɐnɔǝ "
+"ǝxɐɯ. "
+
+#: cms/templates/settings.html
+msgid "Course Content License"
+msgstr "Ȼønɹsǝ Ȼønʇǝnʇ Łᴉɔǝnsǝ"
+
+#. Translators: At the course settings, the editor is able to select the
+#. default course content license.
+#. The course content will have this license set, some assets can override the
+#. license with their own.
+#. In the form, the license selector for course content is described using the
+#. following string:
+#: cms/templates/settings.html
+msgid "Select the default license for course content"
+msgstr "Sǝlǝɔʇ ʇɥǝ dǝɟɐnlʇ lᴉɔǝnsǝ ɟøɹ ɔønɹsǝ ɔønʇǝnʇ"
+
+#: cms/templates/settings.html
+msgid "How are these settings used?"
+msgstr "Ħøʍ ɐɹǝ ʇɥǝsǝ sǝʇʇᴉnƃs nsǝd?"
+
+#: cms/templates/settings.html
+msgid ""
+"Your course's schedule determines when students can enroll in and begin a "
+"course."
+msgstr ""
+"Ɏønɹ ɔønɹsǝ's sɔɥǝdnlǝ dǝʇǝɹɯᴉnǝs ʍɥǝn sʇndǝnʇs ɔɐn ǝnɹøll ᴉn ɐnd bǝƃᴉn ɐ "
+"ɔønɹsǝ."
+
+#: cms/templates/settings.html
+msgid ""
+"Other information from this page appears on the About page for your course. "
+"This information includes the course overview, course image, introduction "
+"video, and estimated time requirements. Students use About pages to choose "
+"new courses to take."
+msgstr ""
+"Øʇɥǝɹ ᴉnɟøɹɯɐʇᴉøn ɟɹøɯ ʇɥᴉs dɐƃǝ ɐddǝɐɹs øn ʇɥǝ Ⱥbønʇ dɐƃǝ ɟøɹ ʎønɹ ɔønɹsǝ. "
+"Ŧɥᴉs ᴉnɟøɹɯɐʇᴉøn ᴉnɔlndǝs ʇɥǝ ɔønɹsǝ øʌǝɹʌᴉǝʍ, ɔønɹsǝ ᴉɯɐƃǝ, ᴉnʇɹødnɔʇᴉøn "
+"ʌᴉdǝø, ɐnd ǝsʇᴉɯɐʇǝd ʇᴉɯǝ ɹǝbnᴉɹǝɯǝnʇs. Sʇndǝnʇs nsǝ Ⱥbønʇ dɐƃǝs ʇø ɔɥøøsǝ "
+"nǝʍ ɔønɹsǝs ʇø ʇɐʞǝ."
+
+#: cms/templates/settings_advanced.html
+msgid "Your policy changes have been saved."
+msgstr "Ɏønɹ dølᴉɔʎ ɔɥɐnƃǝs ɥɐʌǝ bǝǝn sɐʌǝd."
+
+#: cms/templates/settings_advanced.html
+msgid "There was an error saving your information. Please see below."
+msgstr "Ŧɥǝɹǝ ʍɐs ɐn ǝɹɹøɹ sɐʌᴉnƃ ʎønɹ ᴉnɟøɹɯɐʇᴉøn. Ᵽlǝɐsǝ sǝǝ bǝløʍ."
+
+#: cms/templates/settings_advanced.html
+msgid "Manual Policy Definition"
+msgstr "Mɐnnɐl Ᵽølᴉɔʎ Đǝɟᴉnᴉʇᴉøn"
+
+#: cms/templates/settings_advanced.html
+msgid ""
+"{strong_start}Warning{strong_end}: Do not modify these policies unless you "
+"are familiar with their purpose."
+msgstr ""
+"{strong_start}Wɐɹnᴉnƃ{strong_end}: Đø nøʇ ɯødᴉɟʎ ʇɥǝsǝ dølᴉɔᴉǝs nnlǝss ʎøn "
+"ɐɹǝ ɟɐɯᴉlᴉɐɹ ʍᴉʇɥ ʇɥǝᴉɹ dnɹdøsǝ."
+
+#: cms/templates/settings_advanced.html
+msgid "Show Deprecated Settings"
+msgstr "Sɥøʍ Đǝdɹǝɔɐʇǝd Sǝʇʇᴉnƃs"
+
+#: cms/templates/settings_advanced.html
+msgid "What do advanced settings do?"
+msgstr "Wɥɐʇ dø ɐdʌɐnɔǝd sǝʇʇᴉnƃs dø?"
+
+#: cms/templates/settings_advanced.html
+msgid ""
+"Advanced settings control specific course functionality. On this page, you "
+"can edit manual policies, which are JSON-based key and value pairs that "
+"control specific course settings."
+msgstr ""
+"Ⱥdʌɐnɔǝd sǝʇʇᴉnƃs ɔønʇɹøl sdǝɔᴉɟᴉɔ ɔønɹsǝ ɟnnɔʇᴉønɐlᴉʇʎ. Øn ʇɥᴉs dɐƃǝ, ʎøn "
+"ɔɐn ǝdᴉʇ ɯɐnnɐl dølᴉɔᴉǝs, ʍɥᴉɔɥ ɐɹǝ ɈSØN-bɐsǝd ʞǝʎ ɐnd ʌɐlnǝ dɐᴉɹs ʇɥɐʇ "
+"ɔønʇɹøl sdǝɔᴉɟᴉɔ ɔønɹsǝ sǝʇʇᴉnƃs."
+
+#: cms/templates/settings_advanced.html
+msgid ""
+"Any policies you modify here override all other information you've defined "
+"elsewhere in {studio_name}. Do not edit policies unless you are familiar "
+"with both their purpose and syntax."
+msgstr ""
+"Ⱥnʎ dølᴉɔᴉǝs ʎøn ɯødᴉɟʎ ɥǝɹǝ øʌǝɹɹᴉdǝ ɐll øʇɥǝɹ ᴉnɟøɹɯɐʇᴉøn ʎøn'ʌǝ dǝɟᴉnǝd "
+"ǝlsǝʍɥǝɹǝ ᴉn {studio_name}. Đø nøʇ ǝdᴉʇ dølᴉɔᴉǝs nnlǝss ʎøn ɐɹǝ ɟɐɯᴉlᴉɐɹ "
+"ʍᴉʇɥ bøʇɥ ʇɥǝᴉɹ dnɹdøsǝ ɐnd sʎnʇɐx."
+
+#: cms/templates/settings_advanced.html
+msgid ""
+"{em_start}Note:{em_end} When you enter strings as policy values, ensure that"
+" you use double quotation marks (\") around the string. Do not use single "
+"quotation marks (')."
+msgstr ""
+"{em_start}Nøʇǝ:{em_end} Wɥǝn ʎøn ǝnʇǝɹ sʇɹᴉnƃs ɐs dølᴉɔʎ ʌɐlnǝs, ǝnsnɹǝ ʇɥɐʇ"
+" ʎøn nsǝ dønblǝ bnøʇɐʇᴉøn ɯɐɹʞs (\") ɐɹønnd ʇɥǝ sʇɹᴉnƃ. Đø nøʇ nsǝ sᴉnƃlǝ "
+"bnøʇɐʇᴉøn ɯɐɹʞs (')."
+
+#: cms/templates/settings_graders.html
+msgid "Grading Settings"
+msgstr "Ǥɹɐdᴉnƃ Sǝʇʇᴉnƃs"
+
+#: cms/templates/settings_graders.html
+msgid "Overall Grade Range"
+msgstr "Øʌǝɹɐll Ǥɹɐdǝ Ɍɐnƃǝ"
+
+#: cms/templates/settings_graders.html
+msgid "Your overall grading scale for student final grades"
+msgstr "Ɏønɹ øʌǝɹɐll ƃɹɐdᴉnƃ sɔɐlǝ ɟøɹ sʇndǝnʇ ɟᴉnɐl ƃɹɐdǝs"
+
+#: cms/templates/settings_graders.html
+msgid "Add grade"
+msgstr "Ⱥdd ƃɹɐdǝ"
+
+#: cms/templates/settings_graders.html
+msgid "Credit Eligibility"
+msgstr "Ȼɹǝdᴉʇ Ɇlᴉƃᴉbᴉlᴉʇʎ"
+
+#: cms/templates/settings_graders.html
+msgid "Settings for course credit eligibility"
+msgstr "Sǝʇʇᴉnƃs ɟøɹ ɔønɹsǝ ɔɹǝdᴉʇ ǝlᴉƃᴉbᴉlᴉʇʎ"
+
+#: cms/templates/settings_graders.html
+msgid "Minimum Credit-Eligible Grade:"
+msgstr "Mᴉnᴉɯnɯ Ȼɹǝdᴉʇ-Ɇlᴉƃᴉblǝ Ǥɹɐdǝ:"
+
+#: cms/templates/settings_graders.html
+msgid "Must be greater than or equal to the course passing grade"
+msgstr "Mnsʇ bǝ ƃɹǝɐʇǝɹ ʇɥɐn øɹ ǝbnɐl ʇø ʇɥǝ ɔønɹsǝ dɐssᴉnƃ ƃɹɐdǝ"
+
+#: cms/templates/settings_graders.html
+msgid "Grading Rules &amp; Policies"
+msgstr "Ǥɹɐdᴉnƃ Ɍnlǝs &amp; Ᵽølᴉɔᴉǝs"
+
+#: cms/templates/settings_graders.html
+msgid "Deadlines, requirements, and logistics around grading student work"
+msgstr "Đǝɐdlᴉnǝs, ɹǝbnᴉɹǝɯǝnʇs, ɐnd løƃᴉsʇᴉɔs ɐɹønnd ƃɹɐdᴉnƃ sʇndǝnʇ ʍøɹʞ"
+
+#: cms/templates/settings_graders.html
+msgid "Grace Period on Deadline:"
+msgstr "Ǥɹɐɔǝ Ᵽǝɹᴉød øn Đǝɐdlᴉnǝ:"
+
+#: cms/templates/settings_graders.html
+msgid "Leeway on due dates"
+msgstr "Łǝǝʍɐʎ øn dnǝ dɐʇǝs"
+
+#: cms/templates/settings_graders.html
+msgid "Assignment Types"
+msgstr "Ⱥssᴉƃnɯǝnʇ Ŧʎdǝs"
+
+#: cms/templates/settings_graders.html
+msgid "Categories and labels for any exercises that are gradable"
+msgstr "Ȼɐʇǝƃøɹᴉǝs ɐnd lɐbǝls ɟøɹ ɐnʎ ǝxǝɹɔᴉsǝs ʇɥɐʇ ɐɹǝ ƃɹɐdɐblǝ"
+
+#: cms/templates/settings_graders.html
+msgid "New Assignment Type"
+msgstr "Nǝʍ Ⱥssᴉƃnɯǝnʇ Ŧʎdǝ"
+
+#: cms/templates/settings_graders.html
+msgid "What can I do on this page?"
+msgstr "Wɥɐʇ ɔɐn Ɨ dø øn ʇɥᴉs dɐƃǝ?"
+
+#: cms/templates/settings_graders.html
+msgid ""
+"You can use the slider under Overall Grade Range to specify whether your "
+"course is pass/fail or graded by letter, and to establish the thresholds for"
+" each grade."
+msgstr ""
+"Ɏøn ɔɐn nsǝ ʇɥǝ slᴉdǝɹ nndǝɹ Øʌǝɹɐll Ǥɹɐdǝ Ɍɐnƃǝ ʇø sdǝɔᴉɟʎ ʍɥǝʇɥǝɹ ʎønɹ "
+"ɔønɹsǝ ᴉs dɐss/ɟɐᴉl øɹ ƃɹɐdǝd bʎ lǝʇʇǝɹ, ɐnd ʇø ǝsʇɐblᴉsɥ ʇɥǝ ʇɥɹǝsɥølds ɟøɹ"
+" ǝɐɔɥ ƃɹɐdǝ."
+
+#: cms/templates/settings_graders.html
+msgid ""
+"You can specify whether your course offers students a grace period for late "
+"assignments."
+msgstr ""
+"Ɏøn ɔɐn sdǝɔᴉɟʎ ʍɥǝʇɥǝɹ ʎønɹ ɔønɹsǝ øɟɟǝɹs sʇndǝnʇs ɐ ƃɹɐɔǝ dǝɹᴉød ɟøɹ lɐʇǝ "
+"ɐssᴉƃnɯǝnʇs."
+
+#: cms/templates/settings_graders.html
+msgid ""
+"You can also create assignment types, such as homework, labs, quizzes, and "
+"exams, and specify how much of a student's grade each assignment type is "
+"worth."
+msgstr ""
+"Ɏøn ɔɐn ɐlsø ɔɹǝɐʇǝ ɐssᴉƃnɯǝnʇ ʇʎdǝs, snɔɥ ɐs ɥøɯǝʍøɹʞ, lɐbs, bnᴉzzǝs, ɐnd "
+"ǝxɐɯs, ɐnd sdǝɔᴉɟʎ ɥøʍ ɯnɔɥ øɟ ɐ sʇndǝnʇ's ƃɹɐdǝ ǝɐɔɥ ɐssᴉƃnɯǝnʇ ʇʎdǝ ᴉs "
+"ʍøɹʇɥ."
+
+#: cms/templates/studio_xblock_wrapper.html
+#: cms/templates/studio_xblock_wrapper.html
+msgid "Expand or Collapse"
+msgstr "Ɇxdɐnd øɹ Ȼøllɐdsǝ"
+
+#: cms/templates/studio_xblock_wrapper.html
+msgid "Access Settings"
+msgstr "Ⱥɔɔǝss Sǝʇʇᴉnƃs"
+
+#: cms/templates/studio_xblock_wrapper.html
+msgid "Set Access"
+msgstr "Sǝʇ Ⱥɔɔǝss"
+
+#: cms/templates/studio_xblock_wrapper.html
+msgid "This block contains multiple components."
+msgstr "Ŧɥᴉs bløɔʞ ɔønʇɐᴉns ɯnlʇᴉdlǝ ɔøɯdønǝnʇs."
+
+#: cms/templates/studio_xblock_wrapper.html
+msgid "Location:"
+msgstr "Łøɔɐʇᴉøn:"
+
+#: cms/templates/textbooks.html cms/templates/textbooks.html
+#: cms/templates/widgets/header.html
+msgid "Textbooks"
+msgstr "Ŧǝxʇbøøʞs"
+
+#: cms/templates/textbooks.html
+msgid "New Textbook"
+msgstr "Nǝʍ Ŧǝxʇbøøʞ"
+
+#: cms/templates/textbooks.html
+msgid "Why should I break my textbook into chapters?"
+msgstr "Wɥʎ sɥønld Ɨ bɹǝɐʞ ɯʎ ʇǝxʇbøøʞ ᴉnʇø ɔɥɐdʇǝɹs?"
+
+#: cms/templates/textbooks.html
+msgid ""
+"Breaking your textbook into multiple chapters reduces loading times for "
+"students, especially those with slow Internet connections. Breaking up "
+"textbooks into chapters can also help students more easily find topic-based "
+"information."
+msgstr ""
+"Ƀɹǝɐʞᴉnƃ ʎønɹ ʇǝxʇbøøʞ ᴉnʇø ɯnlʇᴉdlǝ ɔɥɐdʇǝɹs ɹǝdnɔǝs løɐdᴉnƃ ʇᴉɯǝs ɟøɹ "
+"sʇndǝnʇs, ǝsdǝɔᴉɐllʎ ʇɥøsǝ ʍᴉʇɥ sløʍ Ɨnʇǝɹnǝʇ ɔønnǝɔʇᴉøns. Ƀɹǝɐʞᴉnƃ nd "
+"ʇǝxʇbøøʞs ᴉnʇø ɔɥɐdʇǝɹs ɔɐn ɐlsø ɥǝld sʇndǝnʇs ɯøɹǝ ǝɐsᴉlʎ ɟᴉnd ʇødᴉɔ-bɐsǝd "
+"ᴉnɟøɹɯɐʇᴉøn."
+
+#: cms/templates/textbooks.html
+msgid "What if my book isn't divided into chapters?"
+msgstr "Wɥɐʇ ᴉɟ ɯʎ bøøʞ ᴉsn'ʇ dᴉʌᴉdǝd ᴉnʇø ɔɥɐdʇǝɹs?"
+
+#: cms/templates/textbooks.html
+msgid ""
+"If your textbook doesn't have individual chapters, you can upload the entire"
+" text as a single chapter and enter a name of your choice in the Chapter "
+"Name field."
+msgstr ""
+"Ɨɟ ʎønɹ ʇǝxʇbøøʞ døǝsn'ʇ ɥɐʌǝ ᴉndᴉʌᴉdnɐl ɔɥɐdʇǝɹs, ʎøn ɔɐn ndløɐd ʇɥǝ ǝnʇᴉɹǝ"
+" ʇǝxʇ ɐs ɐ sᴉnƃlǝ ɔɥɐdʇǝɹ ɐnd ǝnʇǝɹ ɐ nɐɯǝ øɟ ʎønɹ ɔɥøᴉɔǝ ᴉn ʇɥǝ Ȼɥɐdʇǝɹ "
+"Nɐɯǝ ɟᴉǝld."
+
+#: cms/templates/textbooks.html
+msgid "Learn more about textbooks"
+msgstr "Łǝɐɹn ɯøɹǝ ɐbønʇ ʇǝxʇbøøʞs"
+
+#: cms/templates/utilities.html
+msgid "Current Utilities"
+msgstr "Ȼnɹɹǝnʇ Ʉʇᴉlᴉʇᴉǝs"
+
+#: cms/templates/utilities.html
+msgid "What are course utilities?"
+msgstr "Wɥɐʇ ɐɹǝ ɔønɹsǝ nʇᴉlᴉʇᴉǝs?"
+
+#: cms/templates/utilities.html
+msgid ""
+"The utilities section provides a gateway to self-service tasks or  bulk "
+"operations to course instructors. The utilities are meant to provide "
+"services that makes it easier for the instructors to manage their courses."
+msgstr ""
+"Ŧɥǝ nʇᴉlᴉʇᴉǝs sǝɔʇᴉøn dɹøʌᴉdǝs ɐ ƃɐʇǝʍɐʎ ʇø sǝlɟ-sǝɹʌᴉɔǝ ʇɐsʞs øɹ  bnlʞ "
+"ødǝɹɐʇᴉøns ʇø ɔønɹsǝ ᴉnsʇɹnɔʇøɹs. Ŧɥǝ nʇᴉlᴉʇᴉǝs ɐɹǝ ɯǝɐnʇ ʇø dɹøʌᴉdǝ "
+"sǝɹʌᴉɔǝs ʇɥɐʇ ɯɐʞǝs ᴉʇ ǝɐsᴉǝɹ ɟøɹ ʇɥǝ ᴉnsʇɹnɔʇøɹs ʇø ɯɐnɐƃǝ ʇɥǝᴉɹ ɔønɹsǝs."
+
+#: cms/templates/videos_index.html cms/templates/videos_index.html
+#: cms/templates/widgets/header.html
+msgid "Video Uploads"
+msgstr "Vᴉdǝø Ʉdløɐds"
+
+#: cms/templates/videos_index.html
+msgid "Course Video Settings"
+msgstr "Ȼønɹsǝ Vᴉdǝø Sǝʇʇᴉnƃs"
+
+#: cms/templates/visibility_editor.html cms/templates/visibility_editor.html
+msgid "Access is not restricted"
+msgstr "Ⱥɔɔǝss ᴉs nøʇ ɹǝsʇɹᴉɔʇǝd"
+
+#: cms/templates/visibility_editor.html
+msgid ""
+"Access to this unit is not restricted, but visibility might be affected by "
+"inherited settings."
+msgstr ""
+"Ⱥɔɔǝss ʇø ʇɥᴉs nnᴉʇ ᴉs nøʇ ɹǝsʇɹᴉɔʇǝd, bnʇ ʌᴉsᴉbᴉlᴉʇʎ ɯᴉƃɥʇ bǝ ɐɟɟǝɔʇǝd bʎ "
+"ᴉnɥǝɹᴉʇǝd sǝʇʇᴉnƃs."
+
+#: cms/templates/visibility_editor.html
+msgid ""
+"Access to this component is not restricted, but visibility might be affected"
+" by inherited settings."
+msgstr ""
+"Ⱥɔɔǝss ʇø ʇɥᴉs ɔøɯdønǝnʇ ᴉs nøʇ ɹǝsʇɹᴉɔʇǝd, bnʇ ʌᴉsᴉbᴉlᴉʇʎ ɯᴉƃɥʇ bǝ ɐɟɟǝɔʇǝd"
+" bʎ ᴉnɥǝɹᴉʇǝd sǝʇʇᴉnƃs."
+
+#: cms/templates/visibility_editor.html
+msgid ""
+"You can restrict access to this unit to learners in specific enrollment "
+"tracks or content groups."
+msgstr ""
+"Ɏøn ɔɐn ɹǝsʇɹᴉɔʇ ɐɔɔǝss ʇø ʇɥᴉs nnᴉʇ ʇø lǝɐɹnǝɹs ᴉn sdǝɔᴉɟᴉɔ ǝnɹøllɯǝnʇ "
+"ʇɹɐɔʞs øɹ ɔønʇǝnʇ ƃɹønds."
+
+#: cms/templates/visibility_editor.html
+msgid ""
+"You can restrict access to this component to learners in specific enrollment"
+" tracks or content groups."
+msgstr ""
+"Ɏøn ɔɐn ɹǝsʇɹᴉɔʇ ɐɔɔǝss ʇø ʇɥᴉs ɔøɯdønǝnʇ ʇø lǝɐɹnǝɹs ᴉn sdǝɔᴉɟᴉɔ ǝnɹøllɯǝnʇ"
+" ʇɹɐɔʞs øɹ ɔønʇǝnʇ ƃɹønds."
+
+#: cms/templates/visibility_editor.html
+msgid ""
+"You can restrict access to this unit to learners in specific content groups."
+msgstr ""
+"Ɏøn ɔɐn ɹǝsʇɹᴉɔʇ ɐɔɔǝss ʇø ʇɥᴉs nnᴉʇ ʇø lǝɐɹnǝɹs ᴉn sdǝɔᴉɟᴉɔ ɔønʇǝnʇ ƃɹønds."
+
+#: cms/templates/visibility_editor.html
+msgid ""
+"You can restrict access to this component to learners in specific content "
+"groups."
+msgstr ""
+"Ɏøn ɔɐn ɹǝsʇɹᴉɔʇ ɐɔɔǝss ʇø ʇɥᴉs ɔøɯdønǝnʇ ʇø lǝɐɹnǝɹs ᴉn sdǝɔᴉɟᴉɔ ɔønʇǝnʇ "
+"ƃɹønds."
+
+#: cms/templates/visibility_editor.html
+msgid "Manage content groups"
+msgstr "Mɐnɐƃǝ ɔønʇǝnʇ ƃɹønds"
+
+#. Translators: Any text between {screen_reader_start} and {screen_reader_end}
+#. is only read by screen readers and never shown in the browser.
+#: cms/templates/visibility_editor.html
+msgid ""
+"{screen_reader_start}Warning:{screen_reader_end} The unit that contains this"
+" component is hidden from learners. The unit setting overrides the component"
+" access settings defined here."
+msgstr ""
+"{screen_reader_start}Wɐɹnᴉnƃ:{screen_reader_end} Ŧɥǝ nnᴉʇ ʇɥɐʇ ɔønʇɐᴉns ʇɥᴉs"
+" ɔøɯdønǝnʇ ᴉs ɥᴉddǝn ɟɹøɯ lǝɐɹnǝɹs. Ŧɥǝ nnᴉʇ sǝʇʇᴉnƃ øʌǝɹɹᴉdǝs ʇɥǝ ɔøɯdønǝnʇ"
+" ɐɔɔǝss sǝʇʇᴉnƃs dǝɟᴉnǝd ɥǝɹǝ."
+
+#: cms/templates/visibility_editor.html
+msgid "Access is restricted to:"
+msgstr "Ⱥɔɔǝss ᴉs ɹǝsʇɹᴉɔʇǝd ʇø:"
+
+#: cms/templates/visibility_editor.html
+msgid "Restrict access to:"
+msgstr "Ɍǝsʇɹᴉɔʇ ɐɔɔǝss ʇø:"
+
+#: cms/templates/visibility_editor.html
+msgid "Select a group type"
+msgstr "Sǝlǝɔʇ ɐ ƃɹønd ʇʎdǝ"
+
+#: cms/templates/visibility_editor.html
+msgid "All Learners and Staff"
+msgstr "Ⱥll Łǝɐɹnǝɹs ɐnd Sʇɐɟɟ"
+
+#: cms/templates/visibility_editor.html
+msgid "Select one or more groups:"
+msgstr "Sǝlǝɔʇ ønǝ øɹ ɯøɹǝ ƃɹønds:"
+
+#: cms/templates/visibility_editor.html
+msgid "Deleted Group"
+msgstr "Đǝlǝʇǝd Ǥɹønd"
+
+#: cms/templates/visibility_editor.html
+msgid ""
+"This group no longer exists.  Choose another group or remove the access "
+"restriction."
+msgstr ""
+"Ŧɥᴉs ƃɹønd nø lønƃǝɹ ǝxᴉsʇs.  Ȼɥøøsǝ ɐnøʇɥǝɹ ƃɹønd øɹ ɹǝɯøʌǝ ʇɥǝ ɐɔɔǝss "
+"ɹǝsʇɹᴉɔʇᴉøn."
+
+#: cms/templates/emails/activation_email.txt
+msgid ""
+"Thank you for signing up for {studio_name}! To activate your account, please"
+" copy and paste this address into your web browser's address bar:"
+msgstr ""
+"Ŧɥɐnʞ ʎøn ɟøɹ sᴉƃnᴉnƃ nd ɟøɹ {studio_name}! Ŧø ɐɔʇᴉʌɐʇǝ ʎønɹ ɐɔɔønnʇ, dlǝɐsǝ"
+" ɔødʎ ɐnd dɐsʇǝ ʇɥᴉs ɐddɹǝss ᴉnʇø ʎønɹ ʍǝb bɹøʍsǝɹ's ɐddɹǝss bɐɹ:"
+
+#: cms/templates/emails/activation_email.txt
+msgid ""
+"If you didn't request this, you don't need to do anything; you won't receive"
+" any more email from us. Please do not reply to this e-mail; if you require "
+"assistance, check the help section of the {studio_name} web site."
+msgstr ""
+"Ɨɟ ʎøn dᴉdn'ʇ ɹǝbnǝsʇ ʇɥᴉs, ʎøn døn'ʇ nǝǝd ʇø dø ɐnʎʇɥᴉnƃ; ʎøn ʍøn'ʇ ɹǝɔǝᴉʌǝ"
+" ɐnʎ ɯøɹǝ ǝɯɐᴉl ɟɹøɯ ns. Ᵽlǝɐsǝ dø nøʇ ɹǝdlʎ ʇø ʇɥᴉs ǝ-ɯɐᴉl; ᴉɟ ʎøn ɹǝbnᴉɹǝ "
+"ɐssᴉsʇɐnɔǝ, ɔɥǝɔʞ ʇɥǝ ɥǝld sǝɔʇᴉøn øɟ ʇɥǝ {studio_name} ʍǝb sᴉʇǝ."
+
+#: cms/templates/emails/activation_email_subject.txt
+msgid "Your account for {studio_name}"
+msgstr "Ɏønɹ ɐɔɔønnʇ ɟøɹ {studio_name}"
+
+#: cms/templates/emails/course_creator_admin_subject.txt
+msgid "{email} has requested {studio_name} course creator privileges on edge"
+msgstr "{email} ɥɐs ɹǝbnǝsʇǝd {studio_name} ɔønɹsǝ ɔɹǝɐʇøɹ dɹᴉʌᴉlǝƃǝs øn ǝdƃǝ"
+
+#: cms/templates/emails/course_creator_admin_user_pending.txt
+msgid ""
+"User '{user}' with e-mail {email} has requested {studio_name} course creator"
+" privileges on edge."
+msgstr ""
+"Ʉsǝɹ '{user}' ʍᴉʇɥ ǝ-ɯɐᴉl {email} ɥɐs ɹǝbnǝsʇǝd {studio_name} ɔønɹsǝ ɔɹǝɐʇøɹ"
+" dɹᴉʌᴉlǝƃǝs øn ǝdƃǝ."
+
+#: cms/templates/emails/course_creator_admin_user_pending.txt
+msgid "To grant or deny this request, use the course creator admin table."
+msgstr "Ŧø ƃɹɐnʇ øɹ dǝnʎ ʇɥᴉs ɹǝbnǝsʇ, nsǝ ʇɥǝ ɔønɹsǝ ɔɹǝɐʇøɹ ɐdɯᴉn ʇɐblǝ."
+
+#: cms/templates/emails/course_creator_denied.txt
+msgid ""
+"Your request for course creation rights to {studio_name} have been denied. "
+"If you believe this was in error, please contact {email}"
+msgstr ""
+"Ɏønɹ ɹǝbnǝsʇ ɟøɹ ɔønɹsǝ ɔɹǝɐʇᴉøn ɹᴉƃɥʇs ʇø {studio_name} ɥɐʌǝ bǝǝn dǝnᴉǝd. "
+"Ɨɟ ʎøn bǝlᴉǝʌǝ ʇɥᴉs ʍɐs ᴉn ǝɹɹøɹ, dlǝɐsǝ ɔønʇɐɔʇ {email}"
+
+#: cms/templates/emails/course_creator_granted.txt
+msgid ""
+"Your request for course creation rights to {studio_name} have been granted. To create your first course, visit\n"
+"\n"
+"{url}"
+msgstr ""
+"Ɏønɹ ɹǝbnǝsʇ ɟøɹ ɔønɹsǝ ɔɹǝɐʇᴉøn ɹᴉƃɥʇs ʇø {studio_name} ɥɐʌǝ bǝǝn ƃɹɐnʇǝd. Ŧø ɔɹǝɐʇǝ ʎønɹ ɟᴉɹsʇ ɔønɹsǝ, ʌᴉsᴉʇ\n"
+"\n"
+"{url}"
+
+#: cms/templates/emails/course_creator_revoked.txt
+msgid ""
+"Your course creation rights to {studio_name} have been revoked. If you "
+"believe this was in error, please contact {email}"
+msgstr ""
+"Ɏønɹ ɔønɹsǝ ɔɹǝɐʇᴉøn ɹᴉƃɥʇs ʇø {studio_name} ɥɐʌǝ bǝǝn ɹǝʌøʞǝd. Ɨɟ ʎøn "
+"bǝlᴉǝʌǝ ʇɥᴉs ʍɐs ᴉn ǝɹɹøɹ, dlǝɐsǝ ɔønʇɐɔʇ {email}"
+
+#: cms/templates/emails/course_creator_subject.txt
+msgid "Your course creator status for {studio_name}"
+msgstr "Ɏønɹ ɔønɹsǝ ɔɹǝɐʇøɹ sʇɐʇns ɟøɹ {studio_name}"
+
+#: cms/templates/emails/user_task_complete_email.txt
+msgid ""
+"Your {task_name} task has completed with the status '{task_status}'. Use "
+"this URL to view task details or download any files created: {detail_url}"
+msgstr ""
+"Ɏønɹ {task_name} ʇɐsʞ ɥɐs ɔøɯdlǝʇǝd ʍᴉʇɥ ʇɥǝ sʇɐʇns '{task_status}'. Ʉsǝ "
+"ʇɥᴉs ɄɌŁ ʇø ʌᴉǝʍ ʇɐsʞ dǝʇɐᴉls øɹ døʍnløɐd ɐnʎ ɟᴉlǝs ɔɹǝɐʇǝd: {detail_url}"
+
+#: cms/templates/emails/user_task_complete_email.txt
+msgid ""
+"Your {task_name} task has completed with the status '{task_status}'. Sign in"
+" to view the details of your task or download any files created."
+msgstr ""
+"Ɏønɹ {task_name} ʇɐsʞ ɥɐs ɔøɯdlǝʇǝd ʍᴉʇɥ ʇɥǝ sʇɐʇns '{task_status}'. Sᴉƃn ᴉn"
+" ʇø ʌᴉǝʍ ʇɥǝ dǝʇɐᴉls øɟ ʎønɹ ʇɐsʞ øɹ døʍnløɐd ɐnʎ ɟᴉlǝs ɔɹǝɐʇǝd."
+
+#: cms/templates/emails/user_task_complete_email_subject.txt
+msgid "{platform_name} {studio_name}: Task Status Update"
+msgstr "{platform_name} {studio_name}: Ŧɐsʞ Sʇɐʇns Ʉddɐʇǝ"
+
+#: cms/templates/maintenance/_force_publish_course.html
+msgid "Required data to force publish course."
+msgstr "Ɍǝbnᴉɹǝd dɐʇɐ ʇø ɟøɹɔǝ dnblᴉsɥ ɔønɹsǝ."
+
+#: cms/templates/maintenance/_force_publish_course.html
+msgid "course-v1:edX+DemoX+Demo_Course"
+msgstr "ɔønɹsǝ-ʌ1:ǝdX+ĐǝɯøX+Đǝɯø_Ȼønɹsǝ"
+
+#: cms/templates/maintenance/_force_publish_course.html
+msgid "Force Publish Course"
+msgstr "Føɹɔǝ Ᵽnblᴉsɥ Ȼønɹsǝ"
+
+#: cms/templates/maintenance/_force_publish_course.html
+msgid "Reset values"
+msgstr "Ɍǝsǝʇ ʌɐlnǝs"
+
+#: cms/templates/maintenance/base.html cms/templates/maintenance/index.html
+msgid "Maintenance Dashboard"
+msgstr "Mɐᴉnʇǝnɐnɔǝ Đɐsɥbøɐɹd"
+
+#: cms/templates/registration/activation_complete.html
+msgid "Thanks for activating your account."
+msgstr "Ŧɥɐnʞs ɟøɹ ɐɔʇᴉʌɐʇᴉnƃ ʎønɹ ɐɔɔønnʇ."
+
+#: cms/templates/registration/activation_complete.html
+msgid "This account has already been activated."
+msgstr "Ŧɥᴉs ɐɔɔønnʇ ɥɐs ɐlɹǝɐdʎ bǝǝn ɐɔʇᴉʌɐʇǝd."
+
+#: cms/templates/registration/activation_complete.html
+msgid "Visit your {link_start}dashboard{link_end} to see your courses."
+msgstr "Vᴉsᴉʇ ʎønɹ {link_start}dɐsɥbøɐɹd{link_end} ʇø sǝǝ ʎønɹ ɔønɹsǝs."
+
+#: cms/templates/registration/activation_complete.html
+msgid "You can now {link_start}sign in{link_end}."
+msgstr "Ɏøn ɔɐn nøʍ {link_start}sᴉƃn ᴉn{link_end}."
+
+#: cms/templates/registration/activation_invalid.html
+msgid "Activation Invalid"
+msgstr "Ⱥɔʇᴉʌɐʇᴉøn Ɨnʌɐlᴉd"
+
+#: cms/templates/registration/activation_invalid.html
+msgid ""
+"Something went wrong. Email programs sometimes split URLs into two lines, so"
+" make sure the URL you're using is formatted correctly. If you still have "
+"issues, send us an email message at {email_start}{email}{email_end}."
+msgstr ""
+"Søɯǝʇɥᴉnƃ ʍǝnʇ ʍɹønƃ. Ɇɯɐᴉl dɹøƃɹɐɯs søɯǝʇᴉɯǝs sdlᴉʇ ɄɌŁs ᴉnʇø ʇʍø lᴉnǝs, sø"
+" ɯɐʞǝ snɹǝ ʇɥǝ ɄɌŁ ʎøn'ɹǝ nsᴉnƃ ᴉs ɟøɹɯɐʇʇǝd ɔøɹɹǝɔʇlʎ. Ɨɟ ʎøn sʇᴉll ɥɐʌǝ "
+"ᴉssnǝs, sǝnd ns ɐn ǝɯɐᴉl ɯǝssɐƃǝ ɐʇ {email_start}{email}{email_end}."
+
+#: cms/templates/registration/activation_invalid.html
+msgid "Return to the {link_start}home page{link_end}."
+msgstr "Ɍǝʇnɹn ʇø ʇɥǝ {link_start}ɥøɯǝ dɐƃǝ{link_end}."
+
+#: cms/templates/registration/reg_complete.html
+msgid ""
+"We've sent an email message to {email} with instructions for activating your"
+" account."
+msgstr ""
+"Wǝ'ʌǝ sǝnʇ ɐn ǝɯɐᴉl ɯǝssɐƃǝ ʇø {email} ʍᴉʇɥ ᴉnsʇɹnɔʇᴉøns ɟøɹ ɐɔʇᴉʌɐʇᴉnƃ ʎønɹ"
+" ɐɔɔønnʇ."
+
+#: cms/templates/widgets/footer.html
+msgid "Policies"
+msgstr "Ᵽølᴉɔᴉǝs"
+
+#: cms/templates/widgets/footer.html
+msgid "Accessibility Accommodation Request"
+msgstr "Ⱥɔɔǝssᴉbᴉlᴉʇʎ Ⱥɔɔøɯɯødɐʇᴉøn Ɍǝbnǝsʇ"
+
+#: cms/templates/widgets/footer.html
+msgid "LMS"
+msgstr "ŁMS"
+
+#. Translators: 'EdX', 'edX', 'Studio', and 'Open edX' are trademarks of 'edX
+#. Inc.'. Please do not translate any of these trademarks and company names.
+#: cms/templates/widgets/footer.html
+msgid ""
+"EdX, Open edX, Studio, and the edX and Open edX logos are registered "
+"trademarks or trademarks of {link_start}edX Inc.{link_end}"
+msgstr ""
+"ɆdX, Ødǝn ǝdX, Sʇndᴉø, ɐnd ʇɥǝ ǝdX ɐnd Ødǝn ǝdX løƃøs ɐɹǝ ɹǝƃᴉsʇǝɹǝd "
+"ʇɹɐdǝɯɐɹʞs øɹ ʇɹɐdǝɯɐɹʞs øɟ {link_start}ǝdX Ɨnɔ.{link_end}"
+
+#: cms/templates/widgets/header.html
+msgid "Current Course:"
+msgstr "Ȼnɹɹǝnʇ Ȼønɹsǝ:"
+
+#: cms/templates/widgets/header.html cms/templates/widgets/header.html
+msgid "Course Navigation"
+msgstr "Ȼønɹsǝ Nɐʌᴉƃɐʇᴉøn"
+
+#: cms/templates/widgets/header.html
+msgid "Outline"
+msgstr "Ønʇlᴉnǝ"
+
+#: cms/templates/widgets/header.html cms/templates/widgets/header.html
+msgid "Import"
+msgstr "Ɨɯdøɹʇ"
+
+#: cms/templates/widgets/header.html cms/templates/widgets/header.html
+msgid "Export"
+msgstr "Ɇxdøɹʇ"
+
+#: cms/templates/widgets/header.html
+msgid "Utilities"
+msgstr "Ʉʇᴉlᴉʇᴉǝs"
+
+#: cms/templates/widgets/header.html
+msgid "Current Library:"
+msgstr "Ȼnɹɹǝnʇ Łᴉbɹɐɹʎ:"
+
+#: cms/templates/widgets/header.html
+msgid "Library"
+msgstr "Łᴉbɹɐɹʎ"
+
+#: cms/templates/widgets/header.html
+msgid "Language preference"
+msgstr "Łɐnƃnɐƃǝ dɹǝɟǝɹǝnɔǝ"
+
+#: cms/templates/widgets/header.html cms/templates/widgets/header.html
+msgid "Account Navigation"
+msgstr "Ⱥɔɔønnʇ Nɐʌᴉƃɐʇᴉøn"
+
+#: cms/templates/widgets/header.html cms/templates/widgets/header.html
+msgid "Contextual Online Help"
+msgstr "Ȼønʇǝxʇnɐl Ønlᴉnǝ Ħǝld"
+
+#: cms/templates/widgets/header_nav_help_post.html
+msgid "Studio Documentation"
+msgstr "Sʇndᴉø Đøɔnɯǝnʇɐʇᴉøn"
+
+#: cms/templates/widgets/header_nav_help_post.html
+msgid "Help Center"
+msgstr "Ħǝld Ȼǝnʇǝɹ"
+
+#: cms/templates/widgets/header_nav_help_post.html
+msgid "Share your feedback with us."
+msgstr "Sɥɐɹǝ ʎønɹ ɟǝǝdbɐɔʞ ʍᴉʇɥ ns."
+
+#: cms/templates/widgets/metadata-edit.html
+msgid "Launch Latex Source Compiler"
+msgstr "Łɐnnɔɥ Łɐʇǝx Sønɹɔǝ Ȼøɯdᴉlǝɹ"
+
+#: cms/templates/widgets/problem-edit.html
+#: cms/templates/widgets/problem-edit.html
+msgid "Heading"
+msgstr "Ħǝɐdᴉnƃ"
+
+#: cms/templates/widgets/problem-edit.html
+#: cms/templates/widgets/problem-edit.html
+msgid "Insert a heading"
+msgstr "Ɨnsǝɹʇ ɐ ɥǝɐdᴉnƃ"
+
+#: cms/templates/widgets/problem-edit.html
+#: cms/templates/widgets/problem-edit.html
+msgid "Multiple Choice"
+msgstr "Mnlʇᴉdlǝ Ȼɥøᴉɔǝ"
+
+#: cms/templates/widgets/problem-edit.html
+#: cms/templates/widgets/problem-edit.html
+msgid "Add a multiple choice question"
+msgstr "Ⱥdd ɐ ɯnlʇᴉdlǝ ɔɥøᴉɔǝ bnǝsʇᴉøn"
+
+#: cms/templates/widgets/problem-edit.html
+#: cms/templates/widgets/problem-edit.html
+msgid "Checkboxes"
+msgstr "Ȼɥǝɔʞbøxǝs"
+
+#: cms/templates/widgets/problem-edit.html
+#: cms/templates/widgets/problem-edit.html
+msgid "Add a question with checkboxes"
+msgstr "Ⱥdd ɐ bnǝsʇᴉøn ʍᴉʇɥ ɔɥǝɔʞbøxǝs"
+
+#: cms/templates/widgets/problem-edit.html
+#: cms/templates/widgets/problem-edit.html
+msgid "Text Input"
+msgstr "Ŧǝxʇ Ɨndnʇ"
+
+#: cms/templates/widgets/problem-edit.html
+#: cms/templates/widgets/problem-edit.html
+msgid "Insert a text response"
+msgstr "Ɨnsǝɹʇ ɐ ʇǝxʇ ɹǝsdønsǝ"
+
+#: cms/templates/widgets/problem-edit.html
+#: cms/templates/widgets/problem-edit.html
+msgid "Numerical Input"
+msgstr "Nnɯǝɹᴉɔɐl Ɨndnʇ"
+
+#: cms/templates/widgets/problem-edit.html
+#: cms/templates/widgets/problem-edit.html
+msgid "Insert a numerical response"
+msgstr "Ɨnsǝɹʇ ɐ nnɯǝɹᴉɔɐl ɹǝsdønsǝ"
+
+#: cms/templates/widgets/problem-edit.html
+#: cms/templates/widgets/problem-edit.html
+msgid "Dropdown"
+msgstr "Đɹøddøʍn"
+
+#: cms/templates/widgets/problem-edit.html
+#: cms/templates/widgets/problem-edit.html
+msgid "Insert a dropdown response"
+msgstr "Ɨnsǝɹʇ ɐ dɹøddøʍn ɹǝsdønsǝ"
+
+#: cms/templates/widgets/problem-edit.html
+#: cms/templates/widgets/problem-edit.html
+msgid "Explanation"
+msgstr "Ɇxdlɐnɐʇᴉøn"
+
+#: cms/templates/widgets/problem-edit.html
+#: cms/templates/widgets/problem-edit.html
+msgid "Add an explanation for this question"
+msgstr "Ⱥdd ɐn ǝxdlɐnɐʇᴉøn ɟøɹ ʇɥᴉs bnǝsʇᴉøn"
+
+#: cms/templates/widgets/problem-edit.html
+msgid "Advanced Editor"
+msgstr "Ⱥdʌɐnɔǝd Ɇdᴉʇøɹ"
+
+#: cms/templates/widgets/problem-edit.html
+msgid "Toggle Cheatsheet"
+msgstr "Ŧøƃƃlǝ Ȼɥǝɐʇsɥǝǝʇ"
+
+#: cms/templates/widgets/problem-edit.html
+msgid "Label"
+msgstr "Łɐbǝl"
+
+#: cms/templates/widgets/sock_links.html
+msgid "Access the Open edX Portal"
+msgstr "Ⱥɔɔǝss ʇɥǝ Ødǝn ǝdX Ᵽøɹʇɐl"
+
+#: cms/templates/widgets/sock_links.html
+msgid "Open edX Portal"
+msgstr "Ødǝn ǝdX Ᵽøɹʇɐl"
+
+#: cms/templates/widgets/user_dropdown.html
+#: cms/templates/widgets/user_dropdown.html
+msgid "Currently signed in as:"
+msgstr "Ȼnɹɹǝnʇlʎ sᴉƃnǝd ᴉn ɐs:"
+
+#: cms/templates/widgets/user_dropdown.html
+msgid "Maintenance"
+msgstr "Mɐᴉnʇǝnɐnɔǝ"

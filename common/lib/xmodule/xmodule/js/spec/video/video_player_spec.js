@@ -1,9 +1,11 @@
-(function(requirejs, require, define, undefined) {
+/* global YT */
+
+(function(require, define, undefined) {
     'use strict';
 
     require(
-['video/03_video_player.js', 'hls'],
-function(VideoPlayer, HLS) {
+['video/03_video_player.js', 'hls', 'underscore'],
+function(VideoPlayer, HLS, _) {
     describe('VideoPlayer', function() {
         var STATUS = window.STATUS,
             state,
@@ -12,7 +14,7 @@ function(VideoPlayer, HLS) {
 
         (function() {
             emptyArguments = arguments;
-        })();
+        }());
 
         beforeEach(function() {
             oldOTBD = window.onTouchBasedDevice;
@@ -54,7 +56,7 @@ function(VideoPlayer, HLS) {
 
                 it('create video caption', function() {
                     expect(state.videoCaption).toBeDefined();
-                    expect(state.speed).toEqual('1.50');
+                    expect(state.speed).toEqual(1.5);
                     expect(state.config.transcriptTranslationUrl)
                         .toEqual('/transcript/translation/__lang__');
                 });
@@ -62,7 +64,7 @@ function(VideoPlayer, HLS) {
                 it('create video speed control', function() {
                     expect(state.videoSpeedControl).toBeDefined();
                     expect(state.videoSpeedControl.el).toHaveClass('speeds');
-                    expect(state.speed).toEqual('1.50');
+                    expect(state.speed).toEqual(1.5);
                 });
 
                 it('create video progress slider', function() {
@@ -409,7 +411,7 @@ function(VideoPlayer, HLS) {
                         jQuery.Event('slide'), {value: 30}
                     );
                     expect(state.videoPlayer.currentTime).toBe(30);
-                    expect(state.videoPlayer.updatePlayTime).toHaveBeenCalledWith(30, 120);
+                    expect(state.videoPlayer.updatePlayTime).toHaveBeenCalledWith(30, true);
                 });
             });
 
@@ -483,8 +485,7 @@ function(VideoPlayer, HLS) {
 
             describe(
                 'when the current time is unavailable from the player',
-                function()
-            {
+                function() {
                     beforeEach(function() {
                         state.videoPlayer.player.getCurrentTime = function() {
                             return NaN;
@@ -500,8 +501,7 @@ function(VideoPlayer, HLS) {
 
             describe(
                 'when the current time is available from the player',
-                function()
-            {
+                function() {
                     beforeEach(function() {
                         state.videoPlayer.player.getCurrentTime = function() {
                             return 60;
@@ -511,14 +511,15 @@ function(VideoPlayer, HLS) {
 
                     it('trigger updatePlayTime event', function() {
                         expect(state.videoPlayer.updatePlayTime)
-                        .toHaveBeenCalledWith(60, undefined);
+                        .toHaveBeenCalledWith(60);
                     });
                 });
         });
 
         // Disabled 1/13/14 due to flakiness observed in master
         xdescribe('update with start & end time', function() {
-            var START_TIME = 1, END_TIME = 2;
+            var START_TIME = 1,
+                END_TIME = 2;
 
             beforeEach(function() {
                 state = jasmine.initializePlayer(
@@ -538,8 +539,7 @@ function(VideoPlayer, HLS) {
 
             it(
                 'video is paused on first endTime, start & end time are reset',
-                function(done)
-            {
+                function(done) {
                     var duration;
 
                     state.videoProgressSlider.notifyThroughHandleEnd.calls.reset();
@@ -582,7 +582,7 @@ function(VideoPlayer, HLS) {
                     return false;
                 }).then(function() {
                     state.videoPlayer.goToStartTime = false;
-                    state.videoPlayer.updatePlayTime(60, duration);
+                    state.videoPlayer.updatePlayTime(60);
 
                     expect($('.vidtime')).toHaveHtml('1:00 / 1:00');
                 }).always(done);
@@ -609,7 +609,7 @@ function(VideoPlayer, HLS) {
                     return duration > 0;
                 }, 1000).then(function() {
                     state.videoPlayer.goToStartTime = false;
-                    state.videoPlayer.updatePlayTime(60, duration);
+                    state.videoPlayer.updatePlayTime(60);
 
                     expect(state.videoProgressSlider.updatePlayTime)
                         .toHaveBeenCalledWith({
@@ -623,8 +623,7 @@ function(VideoPlayer, HLS) {
         // Disabled 1/13/14 due to flakiness observed in master
         xdescribe(
             'updatePlayTime when start & end times are defined',
-            function()
-        {
+            function() {
                 var START_TIME = 1,
                     END_TIME = 2;
 
@@ -646,8 +645,7 @@ function(VideoPlayer, HLS) {
 
                 it(
                 'when duration becomes available, updatePlayTime() is called',
-                function(done)
-            {
+                function(done) {
                     var duration;
 
                     expect(state.videoPlayer.initialSeekToStartTime).toBeTruthy();
@@ -823,8 +821,7 @@ function(VideoPlayer, HLS) {
             it('`is-touch` class name is added to container', function() {
                 $.each(
                     ['iPad', 'Android', 'iPhone'],
-                    function(index, device)
-                {
+                    function(index, device) {
                         window.onTouchBasedDevice.and.returnValue([device]);
                         state = jasmine.initializePlayer();
 
@@ -1011,6 +1008,21 @@ function(VideoPlayer, HLS) {
             });
         });
 
+        describe('Video duration', function() {
+            beforeEach(function() {
+                state = jasmine.initializePlayer();
+                spyOn(state.videoPlayer, 'duration').and.returnValue(61);
+            });
+
+            it('overrides the duration if not set', function(done) {
+                jasmine.waitUntil(function() {
+                    return state.duration !== undefined;
+                }).then(function() {
+                    expect(state.duration).toEqual(61);
+                }).always(done);
+            });
+        });
+
         describe('Overlay Play Button', function() {
             var playButtonOverlaySelector = '.video-wrapper .btn-play.fa.fa-youtube-play.fa-2x';
             beforeEach(function() {
@@ -1055,4 +1067,4 @@ function(VideoPlayer, HLS) {
         });
     });
 });
-}(RequireJS.requirejs, RequireJS.require, RequireJS.define));
+}(require, define));

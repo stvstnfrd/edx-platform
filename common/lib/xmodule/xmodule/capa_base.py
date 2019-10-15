@@ -12,13 +12,14 @@ import sys
 import traceback
 
 from django.conf import settings
-from django.utils.timezone import UTC
 # We don't want to force a dependency on datadog, so make the import conditional
 try:
     import dogstats_wrapper as dog_stats_api
 except ImportError:
     dog_stats_api = None
 from pytz import utc
+from django.utils.encoding import smart_text
+from six import text_type
 
 from capa.capa_problem import LoncapaProblem, LoncapaSystem
 from capa.inputtypes import Status
@@ -27,15 +28,12 @@ from capa.util import convert_files_to_filenames, get_inner_html_from_xpath
 from xblock.fields import Boolean, Dict, Float, Integer, Scope, String, XMLString
 from xblock.scorable import ScorableXBlockMixin, Score
 from xmodule.capa_base_constants import RANDOMIZATION, SHOWANSWER
-from xmodule.capa_base_constants import SHOW_CORRECTNESS
 from xmodule.exceptions import NotFoundError
 from xmodule.graders import ShowCorrectness
 from .fields import Date, Timedelta, ScoreField
 from .progress import Progress
 
 from openedx.core.djangolib.markup import HTML, Text
-
-from xmodule.exceptions import TimeExpiredError
 
 log = logging.getLogger("edx.courseware")
 
@@ -112,12 +110,8 @@ class CapaFields(object):
     )
     max_attempts = Integer(
         display_name=_("Maximum Attempts"),
-        help=_(
-            'Defines the number of times a student can try to answer this problem. '
-            'If the value is not set, infinite attempts are allowed. '
-            'NOTE: If a problem is timed, we only allow a single attempt, and ignore '
-            'the value in this field.'
-        ),
+        help=_("Defines the number of times a student can try to answer this problem. "
+               "If the value is not set, infinite attempts are allowed."),
         values={"min": 0}, scope=Scope.settings
     )
     due = Date(help=_("Date that this problem is due by"), scope=Scope.settings)
@@ -151,7 +145,16 @@ class CapaFields(object):
             {"display_name": _("Finished"), "value": SHOWANSWER.FINISHED},
             {"display_name": _("Correct or Past Due"), "value": SHOWANSWER.CORRECT_OR_PAST_DUE},
             {"display_name": _("Past Due"), "value": SHOWANSWER.PAST_DUE},
-            {"display_name": _("Never"), "value": SHOWANSWER.NEVER}]
+            {"display_name": _("Never"), "value": SHOWANSWER.NEVER},
+            {"display_name": _("After Some Number of Attempts"), "value": SHOWANSWER.AFTER_SOME_NUMBER_OF_ATTEMPTS},
+        ]
+    )
+    attempts_before_showanswer_button = Integer(
+        display_name=_("Show Answer: Number of Attempts"),
+        help=_("Number of times the student must attempt to answer the question before the Show Answer button appears."),
+        values={"min": 0},
+        default=0,
+        scope=Scope.settings,
     )
     force_save_button = Boolean(
         help=_("Whether to force the save button to appear on the page"),
@@ -196,8 +199,8 @@ class CapaFields(object):
     # enforce_type is set to False here because this field is saved as a dict in the database.
     score = ScoreField(help=_("Dictionary with the current student score"), scope=Scope.user_state, enforce_type=False)
     has_saved_answers = Boolean(help=_("Whether or not the answers have been saved since last submit"),
-                                scope=Scope.user_state)
-    done = Boolean(help=_("Whether the student has answered the problem"), scope=Scope.user_state)
+                                scope=Scope.user_state, default=False)
+    done = Boolean(help=_("Whether the student has answered the problem"), scope=Scope.user_state, default=False)
     seed = Integer(help=_("Random seed for this student"), scope=Scope.user_state)
     last_submission_time = Date(help=_("Last submission time"), scope=Scope.user_state)
     submission_wait_seconds = Integer(
@@ -253,7 +256,7 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
         # Need the problem location in openendedresponse to send out.  Adding
         # it to the system here seems like the least clunky way to get it
         # there.
-        self.runtime.set('location', self.location.to_deprecated_string())
+        self.runtime.set('location', text_type(self.location))
 
         try:
             # TODO (vshnayder): move as much as possible of this work and error
@@ -271,7 +274,7 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
 
         except Exception as err:  # pylint: disable=broad-except
             msg = u'cannot create LoncapaProblem {loc}: {err}'.format(
-                loc=self.location.to_deprecated_string(), err=err)
+                loc=text_type(self.location), err=err)
             # TODO (vshnayder): do modules need error handlers too?
             # We shouldn't be switching on DEBUG.
             if self.runtime.DEBUG:
@@ -293,7 +296,7 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
                 problem_text = (
                     u'<problem><text><span class="inline-error">'
                     u'Problem {url} has an error:</span>{msg}</text></problem>'.format(
-                        url=self.location.to_deprecated_string(),
+                        url=text_type(self.location),
                         msg=msg,
                     )
                 )
@@ -443,7 +446,7 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
 
         return self.runtime.render_template('problem_ajax.html', {
             'element_id': self.location.html_id(),
-            'id': self.location.to_deprecated_string(),
+            'id': text_type(self.location),
             'ajax_url': self.runtime.ajax_url,
             'current_score': curr_score,
             'total_possible': total_possible,
@@ -479,13 +482,12 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
         Return True/False to indicate whether to enable the "Submit" button.
         """
         submitted_without_reset = (self.is_submitted() and self.rerandomize == RANDOMIZATION.ALWAYS)
-        submitted_timed_question = (self.is_submitted() and self.is_timed_problem())
 
         # If the problem is closed (past due / too many attempts)
         # then we disable the "submit" button
         # Also, disable the "submit" button if we're waiting
         # for the user to reset a randomized problem
-        if self.closed() or submitted_without_reset or submitted_timed_question:
+        if self.closed() or submitted_without_reset:
             return False
         else:
             return True
@@ -524,7 +526,6 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
         else:
             is_survey_question = (self.max_attempts == 0)
             needs_reset = self.is_submitted() and self.rerandomize == RANDOMIZATION.ALWAYS
-            submitted_timed_question = self.is_submitted() and self.is_timed_problem()
 
             # If the student has unlimited attempts, and their answers
             # are not randomized, then we do not need a save button
@@ -545,9 +546,7 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
             # then do NOT show the save button
             # If we're waiting for the user to reset a randomized problem
             # then do NOT show the save button
-            # If the question is timed, enforce that we can only attempt
-            # once. Thus, do NOT show the save button
-            elif (self.closed() and not is_survey_question) or needs_reset or submitted_timed_question:
+            elif (self.closed() and not is_survey_question) or needs_reset:
                 return False
             else:
                 return True
@@ -561,17 +560,17 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
 
         `err` is the Exception encountered while rendering the problem HTML.
         """
-        log.exception(err.message)
+        log.exception(text_type(err))
 
         # TODO (vshnayder): another switch on DEBUG.
         if self.runtime.DEBUG:
             msg = (
                 u'[courseware.capa.capa_module] <font size="+1" color="red">'
                 u'Failed to generate HTML for problem {url}</font>'.format(
-                    url=cgi.escape(self.location.to_deprecated_string()))
+                    url=cgi.escape(text_type(self.location)))
             )
-            msg += u'<p>Error:</p><p><pre>{msg}</pre></p>'.format(msg=cgi.escape(err.message))
-            msg += u'<p><pre>{tb}</pre></p>'.format(tb=cgi.escape(traceback.format_exc()))
+            msg += u'<p>Error:</p><p><pre>{msg}</pre></p>'.format(msg=cgi.escape(text_type(err)))
+            msg += u'<p><pre>{tb}</pre></p>'.format(tb=traceback.format_exc())
             html = msg
 
         else:
@@ -643,11 +642,7 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
 
     def get_demand_hint(self, hint_index):
         """
-        Return html for the problem.
-        For timed problems, returns an interstitial view if
-        the problem has not yet been started.
-
-        Also returns demand hints.
+        Return html for the problem, including demand hints.
 
         hint_index (int): (None is the default) if not None, this is the index of the next demand
             hint to show.
@@ -663,12 +658,15 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
             # Translators: {previous_hints} is the HTML of hints that have already been generated, {hint_number_prefix}
             # is a header for this hint, and {hint_text} is the text of the hint itself.
             # This string is being passed to translation only for possible reordering of the placeholders.
-            total_text = HTML(_('{previous_hints}<li><strong>{hint_number_prefix}</strong>{hint_text}</li>')).format(
+            total_text = HTML(_('{previous_hints}{list_start_tag}{strong_text}{hint_text}</li>')).format(
                 previous_hints=HTML(total_text),
-                # Translators: e.g. "Hint 1 of 3: " meaning we are showing the first of three hints.
-                # This text is shown in bold before the accompanying hint text.
-                hint_number_prefix=Text(_("Hint ({hint_num} of {hints_count}): ")).format(
-                    hint_num=counter + 1, hints_count=len(demand_hints)
+                list_start_tag=HTML('<li class="hint-index-{counter}" tabindex="-1">').format(counter=counter),
+                strong_text=HTML('<strong>{hint_number_prefix}</strong>').format(
+                    # Translators: e.g. "Hint 1 of 3: " meaning we are showing the first of three hints.
+                    # This text is shown in bold before the accompanying hint text.
+                    hint_number_prefix=Text(_("Hint ({hint_num} of {hints_count}): ")).format(
+                        hint_num=counter + 1, hints_count=len(demand_hints)
+                    )
                 ),
                 # Course-authored HTML demand hints are supported.
                 hint_text=HTML(get_inner_html_from_xpath(demand_hints[counter]))
@@ -680,7 +678,7 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
         # Log this demand-hint request. Note that this only logs the last hint requested (although now
         # all previously shown hints are still displayed).
         event_info = dict()
-        event_info['module_id'] = self.location.to_deprecated_string()
+        event_info['module_id'] = text_type(self.location)
         event_info['hint_index'] = hint_index
         event_info['hint_len'] = len(demand_hints)
         event_info['hint_text'] = get_inner_html_from_xpath(demand_hints[hint_index])
@@ -721,26 +719,9 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
         submit_button_submitting = self.submit_button_submitting_name()
         should_enable_submit_button = self.should_enable_submit_button()
 
-        # For timed problems
-        now = datetime.datetime.now(UTC())
-        problem_has_finished = False
-        total_seconds_left = -1
-        end_time_to_display = now + datetime.timedelta(minutes=self.minutes_allowed)
-
-        if self.is_timed_problem() and self.time_started:
-            end_time_to_display = self.time_started + datetime.timedelta(minutes=self.minutes_allowed)
-            problem_has_finished = end_time_to_display >= now
-            time_left = end_time_to_display - now
-            total_seconds_left = (time_left).total_seconds()
-
-        # because we use self.due and not self.close_date below, this is not the actual end_time, but the
-        # end_time we want to display to the user
-        if self.due and end_time_to_display:
-            end_time_to_display = min(self.due, end_time_to_display)
-
         content = {
             'name': self.display_name_with_default,
-            'html': html,
+            'html': smart_text(html),
             'weight': self.weight,
         }
 
@@ -759,7 +740,7 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
 
         context = {
             'problem': content,
-            'id': self.location.to_deprecated_string(),
+            'id': text_type(self.location),
             'short_id': self.location.html_id(),
             'submit_button': submit_button,
             'submit_button_submitting': submit_button_submitting,
@@ -776,12 +757,8 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
             'has_saved_answers': self.has_saved_answers,
             'save_message': save_message,
         }
-        context.update(self.get_timed_context(total_seconds_left, end_time_to_display))
 
-        if self.is_timed_problem() and not self.time_started:
-            html = self.runtime.render_template('problem_interstitial.html', context)
-        else:
-            html = self.runtime.render_template('problem.html', context)
+        html = self.runtime.render_template('problem.html', context)
 
         if encapsulate:
             html = u'<div id="problem_{id}" class="problem" data-url="{ajax_url}">'.format(
@@ -901,8 +878,6 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
             return True
         if self.is_past_due():
             return True
-        if self.exceeded_time_limit():
-            return True
 
         return False
 
@@ -947,7 +922,7 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
             # unless the problem explicitly prevents it
             return True
         elif self.showanswer == SHOWANSWER.ATTEMPTED:
-            return self.attempts > 0
+            return self.attempts > 0 or self.is_past_due()
         elif self.showanswer == SHOWANSWER.ANSWERED:
             # NOTE: this is slightly different from 'attempted' -- resetting the problems
             # makes lcp.done False, but leaves attempts unchanged.
@@ -961,6 +936,11 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
             return self.is_correct() or self.is_past_due()
         elif self.showanswer == SHOWANSWER.PAST_DUE:
             return self.is_past_due()
+        elif self.showanswer == SHOWANSWER.AFTER_SOME_NUMBER_OF_ATTEMPTS:
+            required_attempts = self.attempts_before_showanswer_button
+            if self.max_attempts and required_attempts >= self.max_attempts:
+                required_attempts = self.max_attempts
+            return self.attempts >= required_attempts
         elif self.showanswer == SHOWANSWER.ALWAYS:
             return True
 
@@ -1047,7 +1027,7 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
             (and also screen reader text).
         """
         event_info = dict()
-        event_info['problem_id'] = self.location.to_deprecated_string()
+        event_info['problem_id'] = text_type(self.location)
         self.track_function_unmask('showanswer', event_info)
         if not self.answer_available():
             raise NotFoundError('Answer is not available')
@@ -1201,14 +1181,14 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
         """
         event_info = dict()
         event_info['state'] = self.lcp.get_state()
-        event_info['problem_id'] = self.location.to_deprecated_string()
+        event_info['problem_id'] = text_type(self.location)
 
         self.lcp.has_saved_answers = False
         answers = self.make_dict_of_responses(data)
         answers_without_files = convert_files_to_filenames(answers)
         event_info['answers'] = answers_without_files
 
-        metric_name = u'capa.problem_check.{}'.format
+        metric_name = u'capa.check_problem.{}'.format
         # Can override current time
         current_time = datetime.datetime.now(utc)
         if override_time is not False:
@@ -1222,8 +1202,6 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
             self.track_function_unmask('problem_check_fail', event_info)
             if dog_stats_api:
                 dog_stats_api.increment(metric_name('checks'), tags=[u'result:failed', u'failure:closed'])
-            if self.exceeded_time_limit():
-                raise TimeExpiredError(_("Time has expired"))
             raise NotFoundError(_("Problem is closed."))
 
         # Problem submitted. Student should reset before checking again
@@ -1281,17 +1259,17 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
             # the full exception, including traceback,
             # in the response
             if self.runtime.user_is_staff:
-                msg = u"Staff debug info: {tb}".format(tb=cgi.escape(traceback.format_exc()))
+                msg = u"Staff debug info: {tb}".format(tb=traceback.format_exc())
 
             # Otherwise, display just an error message,
             # without a stack trace
             else:
-                escaped_message = cgi.escape(inst.args[0])
+                full_error = inst.args[0]
                 try:
                     # only return the error value of the exception
-                    msg = escaped_message.split("\\n")[-2].split(": ", 1)[1]
+                    msg = full_error.split("\\n")[-2].split(": ", 1)[1]
                 except IndexError:
-                    msg = escaped_message
+                    msg = full_error
 
             return {'success': msg}
 
@@ -1301,7 +1279,7 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
             self.set_score(self.score_from_lcp())
 
             if self.runtime.DEBUG:
-                msg = u"Error checking problem: {}".format(err.message)
+                msg = u"Error checking problem: {}".format(text_type(err))
                 msg += u'\nTraceback:\n{}'.format(traceback.format_exc())
                 return {'success': msg}
             raise
@@ -1519,7 +1497,7 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
         """
         event_info = dict()
         event_info['state'] = self.lcp.get_state()
-        event_info['problem_id'] = self.location.to_deprecated_string()
+        event_info['problem_id'] = text_type(self.location)
 
         answers = self.make_dict_of_responses(data)
         event_info['answers'] = answers
@@ -1579,7 +1557,7 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
         """
         event_info = dict()
         event_info['old_state'] = self.lcp.get_state()
-        event_info['problem_id'] = self.location.to_deprecated_string()
+        event_info['problem_id'] = text_type(self.location)
         _ = self.runtime.service(self, "i18n").ugettext
 
         if self.closed():
@@ -1644,7 +1622,7 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
         Returns the error messages for exceptions occurring while performing
         the rescoring, rather than throwing them.
         """
-        event_info = {'state': self.lcp.get_state(), 'problem_id': self.location.to_deprecated_string()}
+        event_info = {'state': self.lcp.get_state(), 'problem_id': text_type(self.location)}
 
         _ = self.runtime.service(self, "i18n").ugettext
 

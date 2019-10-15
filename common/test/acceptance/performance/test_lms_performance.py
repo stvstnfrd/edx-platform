@@ -1,7 +1,6 @@
 """
 Single page performance tests for LMS.
 """
-from bok_choy.web_app_test import with_cache
 from nose.plugins.attrib import attr
 
 from common.test.acceptance.fixtures.course import CourseFixture, CourseUpdateDesc, XBlockFixtureDesc
@@ -71,7 +70,6 @@ class LmsPerformanceTest(UniqueCourseTest):
         page.visit()
         self.har_capturer.save_har(self.browser, har_name)
 
-    @with_cache
     def test_visit_coursware(self):
         """
         Produce a HAR for loading the Coursware page.
@@ -79,7 +77,6 @@ class LmsPerformanceTest(UniqueCourseTest):
         courseware_page = CoursewarePage(self.browser, self.course_id)
         self._make_har_file(courseware_page)
 
-    @with_cache
     def test_visit_dashboard(self):
         """
         Produce a HAR for loading the Dashboard page.
@@ -87,7 +84,6 @@ class LmsPerformanceTest(UniqueCourseTest):
         dashboard_page = DashboardPage(self.browser)
         self._make_har_file(dashboard_page)
 
-    @with_cache
     def test_visit_course_info(self):
         """
         Produce a HAR for loading the Course Info page.
@@ -95,7 +91,6 @@ class LmsPerformanceTest(UniqueCourseTest):
         course_info_page = CourseInfoPage(self.browser, self.course_id)
         self._make_har_file(course_info_page)
 
-    @with_cache
     def test_visit_login_page(self):
         """
         Produce a HAR for loading the Login page.
@@ -106,7 +101,6 @@ class LmsPerformanceTest(UniqueCourseTest):
         LogoutPage(self.browser).visit()
         self._make_har_file(login_page)
 
-    @with_cache
     def test_visit_progress_page(self):
         """
         Produce a HAR for loading the Progress page.

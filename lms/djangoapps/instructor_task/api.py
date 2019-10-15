@@ -12,7 +12,7 @@ from collections import Counter
 from celery.states import READY_STATES
 
 from bulk_email.models import CourseEmail
-from certificates.models import CertificateGenerationHistory
+from lms.djangoapps.certificates.models import CertificateGenerationHistory
 from lms.djangoapps.instructor_task.api_helper import (
     check_arguments_for_rescoring,
     check_arguments_for_overriding,
@@ -330,7 +330,7 @@ def submit_calculate_problem_responses_csv(request, course_key, problem_location
     """
     task_type = 'problem_responses_csv'
     task_class = calculate_problem_responses_csv
-    task_input = {'problem_location': problem_location}
+    task_input = {'problem_location': problem_location, 'user_id': request.user.pk}
     task_key = ""
 
     return submit_task(request, task_type, task_class, course_key, task_input, task_key)
@@ -431,7 +431,7 @@ def submit_course_survey_report(request, course_key):
     return submit_task(request, task_type, task_class, course_key, task_input, task_key)
 
 
-def submit_proctored_exam_results_report(request, course_key, features):  # pylint: disable=invalid-name
+def submit_proctored_exam_results_report(request, course_key):  # pylint: disable=invalid-name
     """
     Submits a task to generate a HTML File containing the executive summary report.
 
@@ -439,7 +439,7 @@ def submit_proctored_exam_results_report(request, course_key, features):  # pyli
     """
     task_type = 'proctored_exam_results_report'
     task_class = proctored_exam_results_csv
-    task_input = {'features': features}
+    task_input = {}
     task_key = ""
 
     return submit_task(request, task_type, task_class, course_key, task_input, task_key)

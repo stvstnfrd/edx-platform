@@ -7,9 +7,9 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseNotFound
 
-from cms.djangoapps.contentstore.utils import reverse_course_url
 from edxmako.shortcuts import render_to_response
 from opaque_keys.edx.keys import CourseKey
+from openedx.stanford.cms.djangoapps.contentstore.views.helpers import reverse_course_url
 from student.auth import has_course_author_access
 from util.json_request import JsonResponse
 from xmodule.capa_base import CapaFields
@@ -131,11 +131,8 @@ def utility_bulkupdate_handler(request, course_key_string):
     settings
     """
     course_key = CourseKey.from_string(course_key_string)
-    response_format = request.REQUEST.get('format', 'html')
-
     if not has_course_author_access(request.user, course_key):
         raise PermissionDenied()
-
     if request.method == 'GET':
         return _utility_bulkupdate_get_handler(course_key_string)
     elif request.method == 'POST':

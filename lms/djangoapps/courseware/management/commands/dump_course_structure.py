@@ -1,5 +1,5 @@
 """
-A Django command that dumps the structure of a course as a JSON object or CSV list.
+Dump the structure of a course as a JSON object.
 
 The resulting JSON object has one entry for each module in the course:
 
@@ -17,16 +17,12 @@ The resulting JSON object has one entry for each module in the course:
 """
 
 import json
-import csv
-import StringIO
-from optparse import make_option
 from textwrap import dedent
 
 from django.core.management.base import BaseCommand, CommandError
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import CourseKey
 from xblock.fields import Scope
-
 from xblock_discussion import DiscussionXBlock
 from xmodule.modulestore.django import modulestore
 from xmodule.modulestore.inheritance import compute_inherited_metadata, own_metadata
@@ -36,40 +32,22 @@ INHERITED_FILTER_LIST = ['children', 'xml_attributes']
 
 
 class Command(BaseCommand):
-    """
-    Write out to stdout a structural and metadata information for a
-    course as a JSON object
-    """
-    args = "<course_id>"
     help = dedent(__doc__).strip()
-    option_list = BaseCommand.option_list + (
-        make_option('--modulestore',
-                    action='store',
-                    default='default',
-                    help='Name of the modulestore'),
-        make_option('--flat',
-                    action='store_true',
-                    dest='flat',
-                    default=False,
-                    help='Show "flattened" course content with order and levels'),
-        make_option('--csv',
-                    action='store_true',
-                    dest='csv',
-                    default=False,
-                    help='output in CSV format (default is JSON)'),
-        make_option('--inherited',
-                    action='store_true',
-                    default=False,
-                    help='Whether to include inherited metadata'),
-        make_option('--inherited_defaults',
-                    action='store_true',
-                    default=False,
-                    help='Whether to include default values of inherited metadata'),
-    )
+
+    def add_arguments(self, parser):
+        parser.add_argument('course_id',
+                            help='specifies the course to dump')
+        parser.add_argument('--modulestore',
+                            default='default',
+                            help='name of the modulestore')
+        parser.add_argument('--inherited',
+                            action='store_true',
+                            help='include inherited metadata'),
+        parser.add_argument('--inherited_defaults',
+                            action='store_true',
+                            help='include default values of inherited metadata'),
 
     def handle(self, *args, **options):
-        if len(args) != 1:
-            raise CommandError("course_id not specified")
 
         # Get the modulestore
 
@@ -78,7 +56,7 @@ class Command(BaseCommand):
         # Get the course data
 
         try:
-            course_key = CourseKey.from_string(args[0])
+            course_key = CourseKey.from_string(options['course_id'])
         except InvalidKeyError:
             raise CommandError("Invalid course_id")
 
@@ -92,16 +70,8 @@ class Command(BaseCommand):
             compute_inherited_metadata(course)
 
         # Convert course data to dictionary and dump it as JSON to stdout
-        if options['flat']:
-            info = dump_module_by_position(course_id, course)
-        else:
-            info = dump_module(course, inherited=options['inherited'], defaults=options['inherited_defaults'])
 
-        if options['csv']:
-            csvout = StringIO.StringIO()
-            writer = csv.writer(csvout, dialect='excel')
-            writer.writerows(info)
-            return csvout.getvalue()
+        info = dump_module(course, inherited=options['inherited'], defaults=options['inherited_defaults'])
 
         return json.dumps(info, indent=2, sort_keys=True, default=unicode)
 
@@ -123,7 +93,7 @@ def dump_module(module, destination=None, inherited=False, defaults=False):
     filtered_metadata = {k: v for k, v in items.iteritems() if k not in FILTER_LIST}
 
     destination[unicode(module.location)] = {
-        'category': module.location.category,
+        'category': module.location.block_type,
         'children': [unicode(child) for child in getattr(module, 'children', [])],
         'metadata': filtered_metadata,
     }
@@ -150,59 +120,4 @@ def dump_module(module, destination=None, inherited=False, defaults=False):
     for child in module.get_children():
         dump_module(child, destination, inherited, defaults)
 
-    return destination
-
-
-def dump_module_by_position(course_id, module, level=0,
-                            destination=None, prefix=None, parent=None):
-    """
-    Add a module and all of its children to the end of the list.
-    Keep a running tally of position in the list and indent level.
-    """
-    pos = 0
-    if destination:
-        pos = destination[-1][1] + 1  # pos is the 2nd col
-
-    if level == 0:
-        display_name_long = ""
-    elif level == 1:
-        display_name_long = module.display_name
-    else:
-        display_name_long = prefix + "," + module.display_name
-
-    if destination is None:
-        destination = [
-            (
-                'course_id',
-                'position',
-                'level',
-                'module_id',
-                'type',
-                'displayname',
-                'path',
-                'parent',
-            ),
-        ]
-
-    destination.append(
-        (
-            course_id,
-            pos,
-            level,
-            module.id,
-            module.location.category,
-            module.display_name,
-            display_name_long,
-            parent,
-        )
-    )
-    for child in module.get_children():
-        dump_module_by_position(
-            course_id,
-            child,
-            level=level + 1,
-            destination=destination,
-            prefix=display_name_long,
-            parent=module.id,
-        )
     return destination

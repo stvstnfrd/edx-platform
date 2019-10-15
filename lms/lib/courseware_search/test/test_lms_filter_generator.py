@@ -13,7 +13,8 @@ from xmodule.modulestore.tests.factories import CourseFactory, ItemFactory
 
 @override_settings(SEARCH_FILTER_GENERATOR="lms.lib.courseware_search.lms_filter_generator.LmsSearchFilterGenerator")
 class LmsSearchFilterGeneratorTestCase(ModuleStoreTestCase):
-    """ Tests for search filter generator """
+    """ Tests for search result processor """
+    shard = 5
 
     def build_courses(self):
         """

@@ -15,17 +15,6 @@ CELERY_QUEUES.update({
     GRADES_BACKFILL_QUEUE: {},
 })
 COURSE_FORUMS_DOWNLOAD_ROUTING_KEY = HIGH_MEM_QUEUE
-COURSE_MODE_DEFAULTS = {
-    'bulk_sku': None,
-    'currency': 'usd',
-    'description': None,
-    'expiration_datetime': None,
-    'min_price': 0,
-    'name': 'Audit',
-    'sku': None,
-    'slug': 'audit',
-    'suggested_prices': '',
-}
 # Set to True for systems where students are auto-registered on login
 DISABLE_REGISTER_BUTTON = False
 DISPLAY_COURSE_TILES = True
@@ -34,6 +23,7 @@ EXTRA_MIMETYPES = {
     # '.woff': 'application/font-woff',
 }
 FEATURES.update({
+    'ENABLE_ACCOUNT_DELETION': False,
     'ENABLE_CHAT': False,
     'ENABLE_COURSE_SORTING_BY_START_DATE': False,
     'ENABLE_DISCUSSION_HOME_PANEL': True,
@@ -85,20 +75,20 @@ INLINE_ANALYTICS_SUPPORTED_TYPES = {
 }
 INSTALLED_APPS += (
     'branding_stanford',
+    'openedx.stanford.djangoapps.sneakpeek',
     'openedx.stanford.djangoapps.student_utils',
     'openedx.stanford.lms.djangoapps.instructor',
     'openedx.stanford.lms.djangoapps.instructor_task',
     'settings_context_processor',
-    'sneakpeek_deeplink',
     # Added here to allow translations
     'freetextresponse',
     'submit_and_compare',
     'inline_dropdown',
     'xblockmufi',
 )
-MAKO_TEMPLATES['main'] += glob(STANFORD_ROOT / 'djangoapps/*/templates')
-MAKO_TEMPLATES['main'] += glob(STANFORD_ROOT / 'common/djangoapps/*/templates')
-MAKO_TEMPLATES['main'] += glob(STANFORD_ROOT / 'lms/djangoapps/*/templates')
+MAKO_TEMPLATE_DIRS_BASE += glob(STANFORD_ROOT / 'djangoapps/*/templates')
+MAKO_TEMPLATE_DIRS_BASE += glob(STANFORD_ROOT / 'common/djangoapps/*/templates')
+MAKO_TEMPLATE_DIRS_BASE += glob(STANFORD_ROOT / 'lms/djangoapps/*/templates')
 MAX_ENROLLEES_FOR_METRICS_USING_DB = 100
 MARKETO_API_URL = None
 MARKETO_BLACKLIST_COURSES = []
@@ -107,7 +97,7 @@ MARKETO_CLIENT_ID = None
 MARKETO_CLIENT_SECRET = None
 MARKETO_LIST_ID = None
 MIDDLEWARE_CLASSES += (
-    'sneakpeek_deeplink.middleware.SneakPeekDeepLinkMiddleware',
+    'openedx.stanford.djangoapps.sneakpeek.middleware.SneakPeekLoginMiddleware',
 )
 MKTG_URL_LINK_MAP['BLOG'] = None
 MKTG_URL_LINK_MAP['COPYRIGHT'] = 'copyright'
@@ -136,6 +126,9 @@ SHIB_REDIRECT_DOMAIN_WHITELIST = {
 STATICFILES_DIRS += glob(STANFORD_ROOT / 'djangoapps/*/static')
 STATICFILES_DIRS += glob(STANFORD_ROOT / 'common/djangoapps/*/static')
 STATICFILES_DIRS += glob(STANFORD_ROOT / 'lms/djangoapps/*/static')
+STATICFILES_DIRS += [
+    NODE_MODULES_ROOT / 'edx-pattern-library/pattern-library',
+]
 STUDENT_FORUMS_DOWNLOAD_ROUTING_KEY = HIGH_MEM_QUEUE
 STUDENT_RESPONSES_DOWNLOAD = {
     'STORAGE_TYPE': 'localfs',
@@ -152,13 +145,6 @@ STUDENT_RESPONSES_REPORT_SUPPORTED_TYPES = {
 TEMPLATE_VISIBLE_SETTINGS = [
     # These settings' values will be exposed to all templates
     'FEATURES',
-]
-TEMPLATES[0]['DIRS'] += glob(STANFORD_ROOT / 'djangoapps/*/templates')
-TEMPLATES[0]['DIRS'] += glob(STANFORD_ROOT / 'common/djangoapps/*/templates')
-TEMPLATES[0]['DIRS'] += glob(STANFORD_ROOT / 'lms/djangoapps/*/templates')
-TEMPLATES[0]['OPTIONS']['context_processors'] += [
-    # Include TEMPLATE_VISIBLE_SETTINGS in templates
-    'settings_context_processor.context_processors.settings',
 ]
 TYPES_WITH_CHILD_PROBLEMS_LIST = [
     # These types are children of children of units.

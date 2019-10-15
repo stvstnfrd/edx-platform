@@ -5,7 +5,8 @@ import urllib
 from django.conf import settings
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.cache import cache
-from django.core.urlresolvers import reverse
+from django.urls import reverse
+from django.db import transaction
 from django.http import Http404, HttpResponse
 from django.shortcuts import redirect
 from django.utils import translation
@@ -19,7 +20,6 @@ import student.views
 from edxmako.shortcuts import marketing_link, render_to_response
 from openedx.core.djangoapps.lang_pref.api import released_languages
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
-from student.models import UserProfile
 from util.cache import cache_if_anonymous
 from util.json_request import JsonResponse
 
@@ -27,13 +27,13 @@ log = logging.getLogger(__name__)
 
 
 @ensure_csrf_cookie
+@transaction.non_atomic_requests
 @cache_if_anonymous()
 def index(request):
-    '''
+    """
     Redirects to main page -- info page if user authenticated, or marketing if not
-    '''
-
-    if UserProfile.has_registered(request.user):
+    """
+    if request.user.is_registered():
         # Only redirect to dashboard if user has
         # courses in his/her dashboard. Otherwise UX is a bit cryptic.
         # In this case, we want to have the user stay on a course catalog

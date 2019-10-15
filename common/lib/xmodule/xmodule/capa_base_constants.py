@@ -4,15 +4,6 @@ Constants for capa_base problems
 """
 
 
-class SHOW_CORRECTNESS(object):  # pylint: disable=invalid-name
-    """
-    Constants for when to show correctness
-    """
-    ALWAYS = "always"
-    PAST_DUE = "past_due"
-    NEVER = "never"
-
-
 class SHOWANSWER(object):
     """
     Constants for when to show answer
@@ -25,6 +16,7 @@ class SHOWANSWER(object):
     CORRECT_OR_PAST_DUE = "correct_or_past_due"
     PAST_DUE = "past_due"
     NEVER = "never"
+    AFTER_SOME_NUMBER_OF_ATTEMPTS = "after_attempts"
 
 
 class RANDOMIZATION(object):

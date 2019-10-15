@@ -173,7 +173,7 @@ from django.template.defaultfilters import escapejs
         });
         $('.metrics-left svg, .metrics-right svg').remove();
 
-        ${all_section_metrics.body("metric_opened_", "metric_grade_", "metric_attempts_", "metric_tooltip_", course.id, allSubsectionTooltipArr, allProblemTooltipArr, section_data['enrollment'])}
+        ${all_section_metrics.body("metric_opened_", "metric_grade_", "metric_attempts_", "metric_tooltip_", course.id, allSubsectionTooltipArr, allProblemTooltipArr)}
       }
 
       // For downloading subsection and problem data as csv

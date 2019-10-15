@@ -4,11 +4,12 @@ Tests for class dashboard (Metrics tab in instructor dashboard)
 
 import json
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.test.client import RequestFactory
 from django.test.utils import override_settings
 from mock import patch
 from nose.plugins.attrib import attr
+from six import text_type
 
 from capa.tests.response_xml_factory import StringResponseXMLFactory
 from class_dashboard.dashboard_data import (
@@ -36,7 +37,7 @@ from xmodule.modulestore.tests.factories import CourseFactory, ItemFactory
 USER_COUNT = 11
 
 
-@attr(shard=1)
+@attr(shard=6)
 class TestGetProblemGradeDistribution(SharedModuleStoreTestCase):
     """
     Tests related to class_dashboard/dashboard_data.py
@@ -175,7 +176,7 @@ class TestGetProblemGradeDistribution(SharedModuleStoreTestCase):
 
     @override_settings(MAX_ENROLLEES_FOR_METRICS_USING_DB=(USER_COUNT + 1))
     def test_get_problem_grade_distribution_from_db(self):
-        prob_grade_distrib, total_student_count = get_problem_grade_distribution(self.course.id, USER_COUNT)
+        prob_grade_distrib, total_student_count = get_problem_grade_distribution(self.course.id)
 
         for problem in prob_grade_distrib:
             max_grade = prob_grade_distrib[problem]['max_grade']
@@ -195,7 +196,7 @@ class TestGetProblemGradeDistribution(SharedModuleStoreTestCase):
             },
         ]
 
-        prob_grade_distrib, total_student_count = get_problem_grade_distribution(self.course.id, USER_COUNT)
+        prob_grade_distrib, total_student_count = get_problem_grade_distribution(self.course.id)
 
         for problem in prob_grade_distrib:
             max_grade = prob_grade_distrib[problem]['max_grade']
@@ -204,9 +205,9 @@ class TestGetProblemGradeDistribution(SharedModuleStoreTestCase):
         for val in total_student_count.values():
             self.assertEquals(USER_COUNT, val)
 
-    @override_settings(ANALYTICS_DATA_URL='', MAX_ENROLLEES_FOR_METRICS_USING_DB=(USER_COUNT - 1))
+    @override_settings(ANALYTICS_API_URL='', MAX_ENROLLEES_FOR_METRICS_USING_DB=(USER_COUNT - 1))
     def test_get_problem_grade_distribution_api_not_set(self):
-        prob_grade_distrib, total_student_count = get_problem_grade_distribution(self.course.id, USER_COUNT)
+        prob_grade_distrib, total_student_count = get_problem_grade_distribution(self.course.id)
 
         for problem in prob_grade_distrib:
             max_grade = prob_grade_distrib[problem]['max_grade']
@@ -217,7 +218,7 @@ class TestGetProblemGradeDistribution(SharedModuleStoreTestCase):
 
     @override_settings(MAX_ENROLLEES_FOR_METRICS_USING_DB=(USER_COUNT + 1))
     def test_get_sequential_open_distibution_from_db(self):
-        sequential_open_distrib = get_sequential_open_distrib(self.course.id, USER_COUNT)
+        sequential_open_distrib = get_sequential_open_distrib(self.course.id)
 
         for problem in sequential_open_distrib:
             num_students = sequential_open_distrib[problem]
@@ -227,15 +228,15 @@ class TestGetProblemGradeDistribution(SharedModuleStoreTestCase):
     @override_settings(MAX_ENROLLEES_FOR_METRICS_USING_DB=(USER_COUNT - 1))
     def test_get_sequential_open_distibution_from_client(self, mock_client):
         mock_client.return_value.modules.return_value.sequential_open_distribution.return_value = [{'count': USER_COUNT}]
-        sequential_open_distrib = get_sequential_open_distrib(self.course.id, USER_COUNT)
+        sequential_open_distrib = get_sequential_open_distrib(self.course.id)
 
         for problem in sequential_open_distrib:
             num_students = sequential_open_distrib[problem]
             self.assertEquals(USER_COUNT, num_students)
 
-    @override_settings(ANALYTICS_DATA_URL='', MAX_ENROLLEES_FOR_METRICS_USING_DB=(USER_COUNT - 1))
+    @override_settings(ANALYTICS_API_URL='', MAX_ENROLLEES_FOR_METRICS_USING_DB=(USER_COUNT - 1))
     def test_get_sequential_open_distibution_api_not_set(self):
-        sequential_open_distrib = get_sequential_open_distrib(self.course.id, USER_COUNT)
+        sequential_open_distrib = get_sequential_open_distrib(self.course.id)
 
         for problem in sequential_open_distrib:
             num_students = sequential_open_distrib[problem]
@@ -243,8 +244,8 @@ class TestGetProblemGradeDistribution(SharedModuleStoreTestCase):
 
     @override_settings(MAX_ENROLLEES_FOR_METRICS_USING_DB=(USER_COUNT + 1))
     def test_get_problem_set_grade_distrib_from_db(self):
-        prob_grade_distrib, __ = get_problem_grade_distribution(self.course.id, USER_COUNT)
-        probset_grade_distrib = get_problem_set_grade_distrib(self.course.id, prob_grade_distrib, USER_COUNT)
+        prob_grade_distrib, __ = get_problem_grade_distribution(self.course.id)
+        probset_grade_distrib = get_problem_set_grade_distrib(self.course.id, prob_grade_distrib)
 
         for problem in probset_grade_distrib:
             max_grade = probset_grade_distrib[problem]['max_grade']
@@ -267,8 +268,8 @@ class TestGetProblemGradeDistribution(SharedModuleStoreTestCase):
             },
         ]
 
-        prob_grade_distrib, __ = get_problem_grade_distribution(self.course.id, USER_COUNT)
-        probset_grade_distrib = get_problem_set_grade_distrib(self.course.id, prob_grade_distrib, USER_COUNT)
+        prob_grade_distrib, __ = get_problem_grade_distribution(self.course.id)
+        probset_grade_distrib = get_problem_set_grade_distrib(self.course.id, prob_grade_distrib)
 
         for problem in probset_grade_distrib:
             max_grade = probset_grade_distrib[problem]['max_grade']
@@ -280,10 +281,10 @@ class TestGetProblemGradeDistribution(SharedModuleStoreTestCase):
                 sum_attempts += item[1]
             self.assertEquals(USER_COUNT, sum_attempts)
 
-    @override_settings(ANALYTICS_DATA_URL='', MAX_ENROLLEES_FOR_METRICS_USING_DB=(USER_COUNT - 1))
+    @override_settings(ANALYTICS_API_URL='', MAX_ENROLLEES_FOR_METRICS_USING_DB=(USER_COUNT - 1))
     def test_get_problem_set_grade_distrib_api_not_set(self):
-        prob_grade_distrib, __ = get_problem_grade_distribution(self.course.id, USER_COUNT)
-        probset_grade_distrib = get_problem_set_grade_distrib(self.course.id, prob_grade_distrib, USER_COUNT)
+        prob_grade_distrib, __ = get_problem_grade_distribution(self.course.id)
+        probset_grade_distrib = get_problem_set_grade_distrib(self.course.id, prob_grade_distrib)
 
         for problem in probset_grade_distrib:
             max_grade = probset_grade_distrib[problem]['max_grade']
@@ -305,7 +306,7 @@ class TestGetProblemGradeDistribution(SharedModuleStoreTestCase):
             },
         ]
 
-        d3_data = get_d3_problem_grade_distrib(self.course.id, USER_COUNT)
+        d3_data = get_d3_problem_grade_distrib(self.course.id)
         for data in d3_data:
             for stack_data in data['data']:
                 sum_values = 0
@@ -317,7 +318,7 @@ class TestGetProblemGradeDistribution(SharedModuleStoreTestCase):
     def test_get_d3_sequential_open_distrib(self, mock_client):
         mock_client.return_value.modules.return_value.sequential_open_distribution.return_value = [{'count': 0}]
 
-        d3_data = get_d3_sequential_open_distrib(self.course.id, USER_COUNT)
+        d3_data = get_d3_sequential_open_distrib(self.course.id)
 
         for data in d3_data:
             for stack_data in data['data']:
@@ -335,7 +336,7 @@ class TestGetProblemGradeDistribution(SharedModuleStoreTestCase):
             },
         ]
 
-        d3_data = get_d3_section_grade_distrib(self.course.id, 0, USER_COUNT)
+        d3_data = get_d3_section_grade_distrib(self.course.id, 0)
 
         for stack_data in d3_data:
             sum_values = 0
@@ -345,7 +346,7 @@ class TestGetProblemGradeDistribution(SharedModuleStoreTestCase):
 
     def test_get_students_problem_grades(self):
 
-        attributes = '?module_id=' + self.item.location.to_deprecated_string() + '&course_id=' + self.course.id.to_deprecated_string()
+        attributes = '?module_id=' + text_type(self.item.location) + '&course_id=' + self.course.id.to_deprecated_string()
         request = self.request_factory.get(reverse('get_students_problem_grades') + attributes)
 
         response = get_students_problem_grades(request)
@@ -363,7 +364,7 @@ class TestGetProblemGradeDistribution(SharedModuleStoreTestCase):
     def test_get_students_problem_grades_max(self):
 
         with patch('class_dashboard.dashboard_data.MAX_SCREEN_LIST_LENGTH', 2):
-            attributes = '?module_id=' + self.item.location.to_deprecated_string() + '&course_id=' + self.course.id.to_deprecated_string()
+            attributes = '?module_id=' + text_type(self.item.location) + '&course_id=' + self.course.id.to_deprecated_string()
             request = self.request_factory.get(reverse('get_students_problem_grades') + attributes)
 
             response = get_students_problem_grades(request)
@@ -377,7 +378,7 @@ class TestGetProblemGradeDistribution(SharedModuleStoreTestCase):
     def test_get_students_problem_grades_csv(self):
 
         tooltip = 'P1.2.1 Q1 - 3382 Students (100%: 1/1 questions)'
-        attributes = '?module_id=' + self.item.location.to_deprecated_string() + '&course_id=' + self.course.id.to_deprecated_string() + '&tooltip=' + tooltip + '&csv=true'
+        attributes = '?module_id=' + text_type(self.item.location) + '&course_id=' + self.course.id.to_deprecated_string() + '&tooltip=' + tooltip + '&csv=true'
         request = self.request_factory.get(reverse('get_students_problem_grades') + attributes)
 
         response = get_students_problem_grades(request)
@@ -397,7 +398,7 @@ class TestGetProblemGradeDistribution(SharedModuleStoreTestCase):
 
     def test_get_students_opened_subsection(self):
 
-        attributes = '?module_id=' + self.sub_section.location.to_deprecated_string() + '&course_id=' + self.course.id.to_deprecated_string()
+        attributes = '?module_id=' + text_type(self.item.location) + '&course_id=' + self.course.id.to_deprecated_string()
         request = self.request_factory.get(reverse('get_students_opened_subsection') + attributes)
 
         response = get_students_opened_subsection(request)
@@ -410,7 +411,7 @@ class TestGetProblemGradeDistribution(SharedModuleStoreTestCase):
 
         with patch('class_dashboard.dashboard_data.MAX_SCREEN_LIST_LENGTH', 2):
 
-            attributes = '?module_id=' + self.sub_section.location.to_deprecated_string() + '&course_id=' + self.course.id.to_deprecated_string()
+            attributes = '?module_id=' + text_type(self.item.location) + '&course_id=' + self.course.id.to_deprecated_string()
             request = self.request_factory.get(reverse('get_students_opened_subsection') + attributes)
 
             response = get_students_opened_subsection(request)
@@ -424,7 +425,7 @@ class TestGetProblemGradeDistribution(SharedModuleStoreTestCase):
     def test_get_students_opened_subsection_csv(self):
 
         tooltip = '4162 students opened Subsection 5: Relational Algebra Exercises'
-        attributes = '?module_id=' + self.sub_section.location.to_deprecated_string() + '&course_id=' + self.course.id.to_deprecated_string() + '&tooltip=' + tooltip + '&csv=true'
+        attributes = '?module_id=' + text_type(self.item.location) + '&course_id=' + self.course.id.to_deprecated_string() + '&tooltip=' + tooltip + '&csv=true'
         request = self.request_factory.get(reverse('get_students_opened_subsection') + attributes)
 
         response = get_students_opened_subsection(request)
@@ -443,7 +444,7 @@ class TestGetProblemGradeDistribution(SharedModuleStoreTestCase):
 
         data = json.dumps({'sections': sections,
                            'tooltips': tooltips,
-                           'course_id': course_id.to_deprecated_string(),
+                           'course_id': text_type(course_id),
                            'data_type': data_type,
                            })
 
@@ -479,7 +480,7 @@ class TestGetProblemGradeDistribution(SharedModuleStoreTestCase):
 
         data = json.dumps({'sections': sections,
                            'tooltips': tooltips,
-                           'course_id': course_id.to_deprecated_string(),
+                           'course_id': text_type(course_id),
                            'data_type': data_type,
                            })
 

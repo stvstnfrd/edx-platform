@@ -30,7 +30,6 @@ class ResetButtonTestCase(unittest.TestCase):
                 'name': u'Checkboxes',
                 'weight': None,
             },
-            'problem_is_timed': False,
             'reset_button': True,
             'save_button': True,
             'save_message': 'Saving...',

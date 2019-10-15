@@ -1,4 +1,31 @@
 .course-info {
+    header.course-profile {
+        .intro-inner-wrapper {
+            .intro {
+                .main-cta {
+                    span.sneakpeek {
+                        background: $button-archive-color;
+                        border: 1px solid darken($button-archive-color, 50%);
+                        border-radius: 5px;
+
+                        @include box-sizing(border-box);
+
+                        color: darken($button-archive-color, 50%);
+                        display: block;
+                        letter-spacing: 1px;
+                        padding: 15px 20px;
+                        text-align: center;
+
+                        @include float(left);
+                        @include margin(0, 0, 0, 2%);
+                        @include transition(none);
+
+                        width: flex-grid(4, 8);
+                    }
+                }
+            }
+        }
+    }
     .sneakpeek-warning {
         clear: both;
         padding-top: 10px;

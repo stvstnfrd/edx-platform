@@ -9,6 +9,7 @@ import urllib
 
 from django import db
 from django.conf import settings
+from django.db.utils import ConnectionDoesNotExist
 from pymongo import MongoClient
 from pymongo.errors import PyMongoError
 from pytz import UTC
@@ -22,11 +23,21 @@ from lms.djangoapps.instructor_task.tasks_helper.utils import UPDATE_STATUS_FAIL
 from lms.djangoapps.instructor_task.tasks_helper.utils import UPDATE_STATUS_SUCCEEDED
 from openedx.stanford.lms.djangoapps.instructor_analytics.basic import student_responses
 from util.file import course_filename_prefix_generator
-from util.query import get_read_replica_cursor_if_available
 
 FORUMS_MONGO_PARAMS = settings.FORUM_MONGO_PARAMS
 ORA2_ANSWER_PART_SEPARATOR = '\n-----\n'
 TASK_LOG = logging.getLogger('stanford.celery.task')
+
+
+def get_read_replica_cursor_if_available(db):
+    """
+    Returns cursor to read_replica or default if not available
+    """
+    try:
+        cursor = db.connections['read_replica'].cursor()
+    except ConnectionDoesNotExist:
+        cursor = db.connection.cursor()
+    return cursor
 
 
 def generate_student_forums_query(course_id):

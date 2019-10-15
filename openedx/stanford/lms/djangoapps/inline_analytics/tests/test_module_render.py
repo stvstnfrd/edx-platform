@@ -15,7 +15,7 @@ from xmodule.modulestore.tests.factories import ItemFactory
 from xmodule.x_module import STUDENT_VIEW
 
 
-@override_settings(ANALYTICS_DATA_URL='dummy_url')
+@override_settings(ANALYTICS_API_URL='dummy_url')
 class TestInlineAnalytics(ModuleStoreTestCase):
     """
     Verify that Inline Analytics fragment is generated correctly
@@ -75,7 +75,7 @@ class TestInlineAnalytics(ModuleStoreTestCase):
         result_fragment = module.render(STUDENT_VIEW)
         self.assertIn('Staff Analytics Info', result_fragment.content)
 
-    @override_settings(ANALYTICS_DATA_URL=None)
+    @override_settings(ANALYTICS_API_URL=None)
     def test_inline_analytics_disabled(self):
         module = render.get_module(
             self.user,

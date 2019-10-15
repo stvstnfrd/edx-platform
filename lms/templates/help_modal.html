@@ -6,23 +6,22 @@ from datetime import datetime
 import pytz
 from django.conf import settings
 from django.utils.translation import ugettext as _
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from openedx.core.djangolib.js_utils import js_escaped_string
 from openedx.core.djangolib.markup import HTML, Text
 from xmodule.tabs import CourseTabList
-from student.models import UserProfile
 %>
 
 % if settings.FEATURES.get('ENABLE_FEEDBACK_SUBMISSION', False):
 
-<div class="help-tab">
+<div class="help-tab hidden-mobile">
   <a href="#help-modal" rel="leanModal" role="button">${_("Support")}</a>
 </div>
 
 <div id="help-modal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" tabindex="-1" aria-labelledby="support-platform-name">
   <div class="inner-wrapper">
     ## TODO: find a way to refactor this
-    <button class="close-modal" tabindex="0">
+    <button class="btn-link close-modal" tabindex="0">
       <span class="icon fa fa-remove" aria-hidden="true"></span>
       <span class="sr">
         ## Translators: this is a control to allow users to exit out of this modal interface (a menu or piece of UI that takes the full focus of the screen)
@@ -43,10 +42,9 @@ from student.models import UserProfile
     <%
       discussion_tab = CourseTabList.get_discussion(course) if course else None
       discussion_link = discussion_tab.link_func(course, reverse) if (discussion_tab and discussion_tab.is_enabled(course, user=user)) else None
-      has_user_registered = UserProfile.has_registered(user)
     %>
 
-    % if discussion_link and has_user_registered:
+    % if discussion_link:
         <p>${Text(_('For {strong_start}questions on course lectures, homework, tools, or materials for this course{strong_end}, post in the {link_start}course discussion forum{link_end}.')).format(
           strong_start=HTML('<strong>'),
           strong_end=HTML('</strong>'),
@@ -58,7 +56,7 @@ from student.models import UserProfile
         </p>
     % endif
 
-        <p>${Text(_('Have {strong_start}general questions about {platform_name}{strong_end}? You can find lots of helpful information in the {platform_name} {link_start}Help Center{link_end}.')).format(
+        <p>${Text(_('Have {strong_start}general questions about {platform_name}{strong_end}? You can find lots of helpful information in the {platform_name} {link_start}FAQ{link_end}.')).format(
             strong_start=HTML('<strong>'),
             strong_end=HTML('</strong>'),
             link_start=HTML('<a href="{url}" id="feedback-faq-link" target="_blank">').format(
@@ -68,29 +66,22 @@ from student.models import UserProfile
             platform_name=static.get_platform_name())}
           </p>
 
-        <div class="help-buttons">
-          <li>
-              <a class="help-modal-button" href="${marketing_link('FAQ')}" target="_blank">
-                  ${_('Access the Help Center')}
-              </a>
-          </li>
-        </div>
+        <p>${Text(_('Have a {strong_start}question about something specific{strong_end}? You can contact the {platform_name} general support team directly:')).format(
+            strong_start=HTML('<strong>'),
+            strong_end=HTML('</strong>'),
+            platform_name=static.get_platform_name()
+          )}</p>
         <hr>
 
-    % if course:
-        <%include file="help-contact-link.html" />
+        <div class="help-buttons">
+            <button type="button" class="btn btn-outline-primary" id="feedback_link_problem">${_('Report a problem')}</button>
+            <button type="button" class="btn btn-outline-primary" id="feedback_link_suggestion">${_('Make a suggestion')}</button>
+            <button type="button" class="btn btn-outline-primary" id="feedback_link_question">${_('Ask a question')}</button>
+        </div>
 
         <p class="note">${_('Please note: The {platform_name} support team is English speaking. While we will do our best to address your inquiry in any language, our responses will be in English.').format(
             platform_name=static.get_platform_name()
         )}</p>
-    % else:
-        <p>${_('Here are some of the most popular articles from the Help Center:')}</p>
-        <ul class="help-buttons">
-              % for link in settings.HELP_MODAL_LINKS:
-                <li><a href="${link['url']}" target="_blank" ${'class="last-link"' if loop.last else ''}>${link['text']}</a></li>
-              % endfor
-        </ul>
-    % endif
 
     </div>
 
@@ -102,7 +93,7 @@ from student.models import UserProfile
           <div class="feedback-form-error" aria-live="polite">
               <div id="feedback_error" class="modal-form-error" tabindex="-1"></div>
           </div>
-    % if not (user.is_authenticated() and UserProfile.has_registered(user)):
+    % if not user.is_authenticated:
           <label data-field="name" for="feedback_form_name">${_('Name')}*</label>
           <input name="name" type="text" id="feedback_form_name" required>
           <label data-field="email" for="feedback_form_email">${_('E-mail')}*</label>
@@ -139,8 +130,8 @@ from student.models import UserProfile
         <p>
         ${Text(_(
             'Thank you for your inquiry or feedback.  We typically respond to a request '
-            'within three business days, Monday to Friday.  In the meantime, please '
-            'review our {link_start}Help Center articles{link_end} where most questions have '
+            'within one business day, Monday to Friday.  In the meantime, please '
+            'review our {link_start}detailed FAQs{link_end} where most questions have '
             'already been answered.'
         )).format(
             link_start=HTML('<a href="{}" target="_blank" id="success-feedback-faq-link">').format(marketing_link('FAQ')),
@@ -250,7 +241,7 @@ $(document).ready(function() {
             return option;
         };
 
-    % if user.is_authenticated():
+    % if user.is_authenticated:
         userAuthenticated = true;
     % endif
 

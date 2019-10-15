@@ -7,7 +7,7 @@ stored in this model.
 from django.db import models
 
 from config_models.models import ConfigurationModel
-from openedx.core.djangoapps.xmodule_django.models import CourseKeyField
+from opaque_keys.edx.django.models import CourseKeyField
 
 
 class TileConfiguration(ConfigurationModel):

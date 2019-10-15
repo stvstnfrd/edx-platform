@@ -14,8 +14,11 @@ import textwrap
 import unittest
 
 import ddt
+from django.utils.encoding import smart_text
+from edx_user_state_client.interface import XBlockUserState
 from lxml import etree
 from mock import Mock, patch, DEFAULT
+import six
 import webob
 from webob.multidict import MultiDict
 
@@ -25,9 +28,8 @@ from capa import responsetypes
 from capa.responsetypes import (StudentInputError, LoncapaProblemError,
                                 ResponseError)
 from capa.xqueue_interface import XQueueInterface
-from xmodule.exceptions import TimeExpiredError
 from xmodule.capa_module import CapaModule, CapaDescriptor, ComplexEncoder
-from opaque_keys.edx.locations import Location
+from opaque_keys.edx.locator import BlockUsageLocator, CourseLocator
 from xblock.field_data import DictFieldData
 from xblock.fields import ScopeIds
 from xblock.scorable import Score
@@ -100,13 +102,11 @@ class CapaFactory(object):
 
             attempts: also added to instance state.  Will be converted to an int.
         """
-        location = Location(
-            "edX",
-            "capa_test",
-            "2012_Fall",
+        location = BlockUsageLocator(
+            CourseLocator("edX", "capa_test", "2012_Fall", deprecated=True),
             "problem",
             "SampleProblem{0}".format(cls.next_num()),
-            None
+            deprecated=True,
         )
         if xml is None:
             xml = cls.sample_problem_xml
@@ -183,6 +183,7 @@ if submission[0] == '':
 
 @ddt.ddt
 class CapaModuleTest(unittest.TestCase):
+    shard = 1
 
     def setUp(self):
         super(CapaModuleTest, self).setUp()
@@ -275,39 +276,39 @@ class CapaModuleTest(unittest.TestCase):
             'showanswer': 'attempted',
             'max_attempts': '1',
             'show_correctness': 'always',
-        }, True),
+        }, False, True),
         # If show_correctness=never, Answer is never visible
         ({
             'showanswer': 'attempted',
             'max_attempts': '1',
             'show_correctness': 'never',
-        }, False),
+        }, False, False),
         # If show_correctness=past_due, answer is not visible before due date
         ({
             'showanswer': 'attempted',
             'show_correctness': 'past_due',
             'max_attempts': '1',
             'due': 'tomorrow_str',
-        }, False),
+        }, False, False),
         # If show_correctness=past_due, answer is visible after due date
         ({
             'showanswer': 'attempted',
             'show_correctness': 'past_due',
             'max_attempts': '1',
             'due': 'yesterday_str',
-        }, True),
+        }, True, True),
     )
     @ddt.unpack
-    def test_showanswer_hide_correctness(self, problem_data, answer_available):
+    def test_showanswer_hide_correctness(self, problem_data, answer_available_no_attempt, answer_available_after_attempt):
         """
         Ensure that the answer will not be shown when correctness is being hidden.
         """
         if 'due' in problem_data:
             problem_data['due'] = getattr(self, problem_data['due'])
         problem = CapaFactory.create(**problem_data)
-        self.assertFalse(problem.answer_available())
+        self.assertEqual(problem.answer_available(), answer_available_no_attempt)
         problem.attempts = 1
-        self.assertEqual(problem.answer_available(), answer_available)
+        self.assertEqual(problem.answer_available(), answer_available_after_attempt)
 
     def test_showanswer_closed(self):
 
@@ -413,6 +414,115 @@ class CapaModuleTest(unittest.TestCase):
                                             due=self.yesterday_str,
                                             graceperiod=self.two_day_delta_str)
         self.assertFalse(still_in_grace.answer_available())
+
+    def test_showanswer_after_attempts_with_max(self):
+        """
+        Button should not be visible when attempts < required attempts.
+
+        Even with max attempts set, the show answer button should only
+        show up after the user has attempted answering the question for
+        the requisite number of times, i.e `attempts_before_showanswer_button`
+        """
+        problem = CapaFactory.create(
+            showanswer='after_attempts',
+            attempts='2',
+            attempts_before_showanswer_button='3',
+            max_attempts='5',
+        )
+        self.assertFalse(problem.answer_available())
+
+    def test_showanswer_after_attempts_no_max(self):
+        """
+        Button should not be visible when attempts < required attempts.
+
+        Even when max attempts is NOT set, the answer should still
+        only be available after the student has attempted the
+        problem at least `attempts_before_showanswer_button` times
+        """
+        problem = CapaFactory.create(
+            showanswer='after_attempts',
+            attempts='2',
+            attempts_before_showanswer_button='3',
+        )
+        self.assertFalse(problem.answer_available())
+
+    def test_showanswer_after_attempts_used_all_attempts(self):
+        """
+        Button should be visible even after all attempts are used up.
+
+        As long as the student has attempted  the question for
+        the requisite number of times, then the show ans. button is
+        visible even after they have exhausted their attempts.
+        """
+        problem = CapaFactory.create(
+            showanswer='after_attempts',
+            attempts_before_showanswer_button='2',
+            max_attempts='3',
+            attempts='3',
+            due=self.tomorrow_str,
+        )
+        self.assertTrue(problem.answer_available())
+
+    def test_showanswer_after_attempts_past_due_date(self):
+        """
+        Show Answer button should be visible even after the due date.
+
+        As long as the student has attempted the problem for the requisite
+        number of times, the answer should be available past the due date.
+        """
+        problem = CapaFactory.create(
+            showanswer='after_attempts',
+            attempts_before_showanswer_button='2',
+            attempts='2',
+            due=self.yesterday_str,
+        )
+        self.assertTrue(problem.answer_available())
+
+    def test_showanswer_after_attempts_still_in_grace(self):
+        """
+        If attempts > required attempts, ans. is available in grace period.
+
+        As long as the user has attempted for the requisite # of times,
+        the show answer button is visible throughout the grace period.
+        """
+        problem = CapaFactory.create(
+            showanswer='after_attempts',
+            after_attempts='3',
+            attempts='4',
+            due=self.yesterday_str,
+            graceperiod=self.two_day_delta_str,
+        )
+        self.assertTrue(problem.answer_available())
+
+    def test_showanswer_after_attempts_large(self):
+        """
+        If required attempts > max attempts then required attempts = max attempts.
+
+        Ensure that if attempts_before_showanswer_button > max_attempts,
+        the button should show up after all attempts are used up,
+        i.e after_attempts falls back to max_attempts
+        """
+        problem = CapaFactory.create(
+            showanswer='after_attempts',
+            attempts_before_showanswer_button='5',
+            max_attempts='3',
+            attempts='3',
+        )
+        self.assertTrue(problem.answer_available())
+
+    def test_showanswer_after_attempts_zero(self):
+        """
+        Button should always be visible if required min attempts = 0.
+
+        If attempts_before_showanswer_button = 0, then the show answer
+        button should be visible at all times.
+        """
+        problem = CapaFactory.create(
+            showanswer='after_attempts',
+            attempts_before_showanswer_button='0',
+            attempts='0',
+        )
+        self.assertTrue(problem.answer_available())
 
     def test_showanswer_finished(self):
         """
@@ -868,7 +978,7 @@ class CapaModuleTest(unittest.TestCase):
             # Ensure that the user is NOT staff
             module.system.user_is_staff = False
 
-            # Simulate a codejail exception 'Exception: test error'
+            # Simulate a codejail exception "Exception: Couldn't execute jailed code"
             with patch('capa.capa_problem.LoncapaProblem.grade_answers') as mock_grade:
                 try:
                     raise ResponseError(
@@ -877,14 +987,14 @@ class CapaModuleTest(unittest.TestCase):
                         '  File "jailed_code", line 15, in <module>\\n'
                         '    exec code in g_dict\\n  File "<string>", line 67, in <module>\\n'
                         '  File "<string>", line 65, in check_func\\n'
-                        'Exception: test error\\n\' with status code: 1',)
+                        'Exception: Couldn\'t execute jailed code\\n\' with status code: 1',)
                 except ResponseError as err:
-                    mock_grade.side_effect = exception_class(err.message)
+                    mock_grade.side_effect = exception_class(six.text_type(err))
                 get_request_dict = {CapaFactory.input_key(): '3.14'}
                 result = module.submit_problem(get_request_dict)
 
             # Expect an AJAX alert message in 'success' without the text of the stack trace
-            expected_msg = 'test error'
+            expected_msg = 'Couldn\'t execute jailed code'
             self.assertEqual(expected_msg, result['success'])
 
             # Expect that the number of attempts is NOT incremented
@@ -1537,10 +1647,19 @@ class CapaModuleTest(unittest.TestCase):
         self.assertFalse(result['should_enable_next_hint'])
 
     def test_demand_hint_logging(self):
+        def mock_location_text(self):
+            """
+            Mock implementation of __unicode__ or __str__ for the module's location.
+            """
+            return u'i4x://edX/capa_test/problem/meh'
+
         module = CapaFactory.create(xml=self.demand_xml)
         # Re-mock the module_id to a fixed string, so we can check the logging
         module.location = Mock(module.location)
-        module.location.to_deprecated_string.return_value = 'i4x://edX/capa_test/problem/meh'
+        if six.PY2:
+            module.location.__unicode__ = mock_location_text
+        else:
+            module.location.__str__ = mock_location_text
 
         with patch.object(module.runtime, 'publish') as mock_track_function:
             module.get_problem_html()
@@ -1878,85 +1997,6 @@ class CapaModuleTest(unittest.TestCase):
         </problem>
     """)
 
-    def test_timed_problem_interstitial(self):
-        """
-        Test interstitial warning for timed exams.
-        """
-        module = CapaFactory.create(minutes_allowed=5)
-        self.assertTrue(module.is_timed_problem())
-
-        html = module.get_problem_html(encapsulate=False)
-        expected_html = module.runtime.render_template(
-            "problem_interstitial.html", {
-                "problem_is_timed": True,
-                "problem_has_finished": False,
-                "end_time": datetime.datetime.now(UTC) + datetime.timedelta(minutes=5),
-                "submit_button": module.submit_button_name(),
-            }
-        )
-
-        # Expect that we get the rendered template back
-        self.assertEquals(html, expected_html)
-
-    def test_start_problem(self):
-        """
-        Tests starting a problem and recording the time started
-        """
-        module = CapaFactory.create(minutes_allowed=5)
-        rendered = module.start_problem()
-
-        self.assertIsNotNone(module.time_started)
-        self.assertTrue(module.should_enable_submit_button())
-        self.assertFalse(module.closed())
-
-    def test_time_expired(self):
-        """
-        Tests that when time runs out, an error will pop up when
-        you try to submit
-        """
-        module = CapaFactory.create(minutes_allowed=5, attempts=3)
-        now = datetime.datetime.now(UTC)
-        past = now - datetime.timedelta(minutes=10)
-        module.time_started = past
-
-        self.assertTrue(module.exceeded_time_limit())
-
-        with self.assertRaises(TimeExpiredError) as context:
-            module.start_problem()
-            get_request_dict = {CapaFactory.answer_key(): '3'}
-            module.submit_problem(get_request_dict)
-
-    def test_timed_multi_attempt(self):
-        """
-        Limit student to single attempts with timed, multi-attempt problems
-        """
-        module = CapaFactory.create(minutes_allowed=5, attempts=3)
-        module.start_problem()
-
-        with patch('capa.correctmap.CorrectMap.is_correct') as mock_is_correct:
-            with patch('capa.capa_problem.LoncapaProblem.grade_answers') as mock_grade:
-                mock_is_correct.return_value = False
-                mock_grade.return_value = CorrectMap(
-                    answer_id='1_2_1',
-                    correctness="correct",
-                    npoints=0.9,
-                )
-                get_request_dict = {CapaFactory.answer_key(): '3'}
-                results = module.submit_problem(get_request_dict)
-                self.assertFalse(module.should_show_reset_button())
-                self.assertFalse(module.should_enable_submit_button())
-
-    def test_timed_save(self):
-        """
-        Test that saving during a timed exam still works
-        """
-        module = CapaFactory.create(minutes_allowed=30, max_attempts=3)
-        module.start_problem()
-        get_request_dict = {CapaFactory.input_key(): 'choice_3'}
-        self.assertTrue(module.should_show_save_button())
-        module.save_problem(get_request_dict)
-        self.assertFalse(module.closed())
-
     def test_check_unmask(self):
         """
         Check that shuffle unmasking is plumbed through: when submit_problem is called,
@@ -2073,6 +2113,7 @@ class CapaModuleTest(unittest.TestCase):
 
 @ddt.ddt
 class CapaDescriptorTest(unittest.TestCase):
+    shard = 1
 
     sample_checkbox_problem_xml = textwrap.dedent("""
         <problem>
@@ -2676,6 +2717,22 @@ class CapaDescriptorTest(unittest.TestCase):
             }
         )
 
+    def test_indexing_non_latin_problem(self):
+        sample_text_input_problem_xml = textwrap.dedent("""
+            <problem>
+                <script type="text/python">FX1_VAL='Καλημέρα'</script>
+                <p>Δοκιμή με μεταβλητές με Ελληνικούς χαρακτήρες μέσα σε python: $FX1_VAL</p>
+            </problem>
+        """)
+        name = "Non latin Input"
+        descriptor = self._create_descriptor(sample_text_input_problem_xml, name=name)
+        capa_content = " FX1_VAL='Καλημέρα' Δοκιμή με μεταβλητές με Ελληνικούς χαρακτήρες μέσα σε python: $FX1_VAL "
+
+        descriptor_dict = descriptor.index_dictionary()
+        self.assertEquals(
+            descriptor_dict['content']['capa_content'], smart_text(capa_content)
+        )
+
     def test_indexing_checkboxes_with_hints_and_feedback(self):
         name = "Checkboxes with Hints and Feedback"
         descriptor = self._create_descriptor(self.sample_checkboxes_with_hints_and_feedback_problem_xml, name=name)
@@ -2852,6 +2909,8 @@ class CapaDescriptorTest(unittest.TestCase):
 
 
 class ComplexEncoderTest(unittest.TestCase):
+    shard = 1
+
     def test_default(self):
         """
         Check that complex numbers can be encoded into JSON.
@@ -2866,6 +2925,7 @@ class TestProblemCheckTracking(unittest.TestCase):
     """
     Ensure correct tracking information is included in events emitted during problem checks.
     """
+    shard = 1
 
     def setUp(self):
         super(TestProblemCheckTracking, self).setUp()
@@ -3183,3 +3243,79 @@ class TestProblemCheckTracking(unittest.TestCase):
         problem.runtime.replace_jump_to_id_urls = Mock()
         problem.get_answer(data)
         self.assertTrue(problem.runtime.replace_jump_to_id_urls.called)
+
+
+class TestCapaDescriptorReportGeneration(unittest.TestCase):
+    """
+    Ensure that Capa report generation works correctly
+    """
+
+    def setUp(self):
+        self.find_question_label_patcher = patch(
+            'capa.capa_problem.LoncapaProblem.find_question_label',
+            lambda self, answer_id: answer_id
+        )
+        self.find_answer_text_patcher = patch(
+            'capa.capa_problem.LoncapaProblem.find_answer_text',
+            lambda self, answer_id, current_answer: current_answer
+        )
+        self.find_question_label_patcher.start()
+        self.find_answer_text_patcher.start()
+        self.addCleanup(self.find_question_label_patcher.stop)
+        self.addCleanup(self.find_answer_text_patcher.stop)
+
+    def _mock_user_state_generator(self, user_count=1, response_count=10):
+        for uid in range(user_count):
+            yield self._user_state(username='user{}'.format(uid), response_count=response_count)
+
+    def _user_state(self, username='testuser', response_count=10, suffix=''):
+        return XBlockUserState(
+            username=username,
+            state={
+                'student_answers': {
+                    '{}_answerid_{}{}'.format(username, aid, suffix): '{}_answer_{}'.format(username, aid)
+                    for aid in range(response_count)
+                },
+                'seed': 1,
+                'correct_map': {},
+            },
+            block_key=None,
+            updated=None,
+            scope=None,
+        )
+
+    def _get_descriptor(self):
+        scope_ids = Mock(block_type='problem')
+        descriptor = CapaDescriptor(get_test_system(), scope_ids=scope_ids)
+        descriptor.runtime = Mock()
+        descriptor.data = '<problem/>'
+        return descriptor
+
+    def test_generate_report_data_not_implemented(self):
+        scope_ids = Mock(block_type='noproblem')
+        descriptor = CapaDescriptor(get_test_system(), scope_ids=scope_ids)
+        with self.assertRaises(NotImplementedError):
+            next(descriptor.generate_report_data(iter([])))
+
+    def test_generate_report_data_limit_responses(self):
+        descriptor = self._get_descriptor()
+        report_data = list(descriptor.generate_report_data(self._mock_user_state_generator(), 2))
+        self.assertEquals(2, len(report_data))
+
+    def test_generate_report_data_dont_limit_responses(self):
+        descriptor = self._get_descriptor()
+        user_count = 5
+        response_count = 10
+        report_data = list(descriptor.generate_report_data(
+            self._mock_user_state_generator(
+                user_count=user_count,
+                response_count=response_count,
+            )
+        ))
+        self.assertEquals(user_count * response_count, len(report_data))
+
+    def test_generate_report_data_skip_dynamath(self):
+        descriptor = self._get_descriptor()
+        iterator = iter([self._user_state(suffix='_dynamath')])
+        report_data = list(descriptor.generate_report_data(iterator))
+        self.assertEquals(0, len(report_data))

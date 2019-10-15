@@ -1,24 +1,5 @@
 #!/usr/bin/env bash
-###############################################################################
-#
-#   circle-ci-tests.sh
-#
-#   Execute tests for edx-platform on circleci.com
-#
-#   Forks should configure parallelism, and use this script
-#   to define which tests to run in each of the containers.
-#
-###############################################################################
-
-# From the sh(1) man page of FreeBSD:
-# Exit immediately if any untested command fails. in non-interactive
-# mode.  The exit status of a command is considered to be explicitly
-# tested if the command is part of the list used to control an if,
-# elif, while, or until; if the command is the left hand operand of
-# an “&&” or “||” operator; or if the command is a pipeline preceded
-# by the ! operator.  If a shell function is executed and its exit
-# status is explicitly tested, all commands of the function are con‐
-# sidered to be tested as well.
+# Exit immediately if any untested command fails
 set -e
 
 # Return status is that of the last command to fail in a
@@ -29,23 +10,79 @@ set -o pipefail
 # just done via the dependencies override section of circle.yml.
 export NO_PREREQ_INSTALL='true'
 
-EXIT=0
+CIRCLE_JOBS_TOTAL=8
+CIRCLE_NODE_TOTAL=${CIRCLE_NODE_TOTAL:-1}
+CIRCLE_NODE_INDEX=${CIRCLE_NODE_INDEX:-0}
+CIRCLE_TEST_REPORTS=${CIRCLE_TEST_REPORTS:-reports/junit}
+CIRCLE_BUILD_NUM=${CIRCLE_BUILD_NUM:-1}
+export TRAVIS_JOB_ID=${CIRCLE_BUILD_NUM}
+mkdir -p "${CIRCLE_TEST_REPORTS}"
 
-function test_system() {
-    system=${1}
-    test_id=${2}
-    flags='--with-flaky --cov-args="-p" --with-xunitmp'
-    paver test_system -s "${system}" -t "${test_id}" ${flags}
-    return ${?}
+function empty_junit {
+    name=${1:-empty}
+    cat > ${CIRCLE_TEST_REPORTS}/${name}.xml <<END
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="${name}" tests="1" errors="0" failures="0" skip="0">
+<testcase classname="pavelib.quality" name="${name}" time="0.604"></testcase>
+</testsuite>
+END
 }
-function test_system_children() {
+
+function run_paver_quality {
+    QUALITY_TASK=$1
+    shift
+    mkdir -p test_root/log/
+    LOG_PREFIX=test_root/log/$QUALITY_TASK
+    echo "Inspecting code quality and storing report: ${QUALITY_TASK}"
+    $TOX paver $QUALITY_TASK $* 2>&1 | tee $LOG_PREFIX.log
+}
+function test_system() {
+    name=${1}
+    shift
     system=${1}
-    parent=${2}
-    parent=$(echo ${parent} | sed 's/\./\//g')
+    shift
+    random_flag=''
+    if [ "${system}" == "lms" ]; then
+        random_flag="--randomly-dont-reorganize"
+    fi
+    junit_flag="--junit-xml=${CIRCLE_TEST_REPORTS}/pytest-${system}-${name}.xml"
+    cover_flags="--cov --cov-append"
+    echo "DJANGO_SETTINGS_MODULE=openedx.stanford.${system}.envs.test pytest ${junit_flag} ${random_flag} ${cover_flags} ${@}"
+    DJANGO_SETTINGS_MODULE=openedx.stanford.${system}.envs.test pytest ${junit_flag} ${random_flag} ${cover_flags} ${@}
+}
+function get_children() {
+    parent=${1}
     exit_code=0
+    apps=""
     for app in $(find "${parent}" -mindepth 1 -maxdepth 1 -type d | tr '/' '.' | sort); do
-        echo "TEST: ${app}"
         case ${app} in
+            # hawthorn
+            cms.djangoapps.contentstore) ;&
+            common.djangoapps.static_replace) ;&
+            common.djangoapps.student) ;&
+            common.djangoapps.third_party_auth) ;&
+            common.djangoapps.util) ;&
+            lms.djangoapps.class_dashboard) ;&
+            lms.djangoapps.courseware) ;&
+            lms.djangoapps.django_comment_client) ;&
+            lms.djangoapps.instructor) ;&
+            lms.djangoapps.lti_provider) ;&
+            lms.djangoapps.shoppingcart) ;&
+            lms.djangoapps.verify_student) ;&
+            openedx.core.djangoapps.auth_exchange) ;&
+            openedx.core.djangoapps.bookmarks) ;&
+            openedx.core.djangoapps.catalog) ;&
+            openedx.core.djangoapps.credit) ;&
+            openedx.core.djangoapps.dark_lang) ;&
+            openedx.core.djangoapps.external_auth) ;&
+            openedx.core.djangoapps.lang_pref) ;&
+            openedx.core.djangoapps.oauth_dispatch) ;&
+            openedx.core.djangoapps.request_cache) ;&
+            openedx.core.djangoapps.user_api) ;&
+            openedx.stanford.cms.djangoapps.contentstore) ;&
+            openedx.stanford.djangoapps.auth_lagunita) ;&
+            openedx.stanford.djangoapps.register_cme) ;&
+            openedx.tests.completion_integration) ;&
             # FAIL/ERROR
             common.djangoapps.django_comment_common) ;&
             common.djangoapps.pipeline_mako) ;&
@@ -55,100 +92,128 @@ function test_system_children() {
             lms.djangoapps.branding) ;&
             lms.djangoapps.ccx) ;&
             openedx.core.djangoapps.cors_csrf) ;&
-            openedx.features.course_experience) ;&
+            openedx.features.course_experience)
             # SEG_FAULT
-            lms.djangoapps.mobile_api)
-                continue
+            # lms.djangoapps.mobile_api)
                 ;;
             *)
-                test_system "${system}" "${app}" || exit_code=1
+                apps="${apps} ${app}"
                 ;;
         esac
     done
-    return ${exit_code}
+    if [ -n "${apps}" ]; then
+        echo "$(echo ${apps} | tr '.' '/')"
+    fi
 }
 
-if [ "$CIRCLE_NODE_TOTAL" == "1" ] ; then
-    echo "Only 1 container is being used to run the tests."
-    echo "To run in more containers, configure parallelism for this repo's settings "
-    echo "via the CircleCI UI and adjust scripts/circle-ci-tests.sh to match."
+function run_shard_0() {
+    # run stanford-specific quality checks here
+    true
+}
 
-    echo "Running tests for common/lib/ and pavelib/"
-    paver test_lib --with-flaky --cov-args="-p" --with-xunitmp || EXIT=1
-    echo "Running python tests for Studio"
-    paver test_system -s cms --with-flaky --cov-args="-p" --with-xunitmp || EXIT=1
-    echo "Running python tests for lms"
-    paver test_system -s lms --with-flaky --cov-args="-p" --with-xunitmp || EXIT=1
+function run_shard_4() {
+    PATH=$PATH:node_modules/.bin
+    EXIT=0
+    run_paver_quality find_fixme || { EXIT=1; }
+    run_paver_quality run_pep8 || { EXIT=1; }
+    run_paver_quality run_pylint --system="cms,common,lms,openedx,pavelib" || { EXIT=1; }
+    ## BROKE: run_paver_quality run_eslint -l ${ESLINT_THRESHOLD} || { EXIT=1; }
+    run_paver_quality run_stylelint -l ${STYLELINT_THRESHOLD} || { EXIT=1; }
+    run_paver_quality run_quality -p 80 || EXIT=1
+    run_paver_quality run_complexity || echo "Unable to calculate code complexity. Ignoring error."
+    run_paver_quality run_xsslint -t $XSSLINT_THRESHOLDS || { EXIT=1; }
+    return ${EXIT}
+}
 
-    exit $EXIT
-else
-    # Split up the tests to run in parallel on 4 containers
-    case $CIRCLE_NODE_INDEX in
-        0)  # run the quality metrics
-            mkdir -p reports
-            echo "Finding fixme's and storing report..."
-            paver find_fixme > reports/fixme.log || { cat reports/fixme.log; EXIT=1; }
+function run_shard_1() {
+    EXIT=0
+    test_system stanford-lms lms \
+        openedx/stanford/lms \
+    || EXIT=1
+    return ${EXIT}
+}
 
-            echo "Finding pep8 violations and storing report..."
-            paver run_pep8 > reports/pep8.log || { cat reports/pep8.log; EXIT=1; }
+function run_shard_5() {
+    EXIT=0
+    test_system edx-lms lms \
+        lms/lib \
+        lms/tests.py \
+        $(get_children lms/djangoapps) \
+    || EXIT=1
+    return ${EXIT}
+}
 
-            echo "Finding pylint violations and storing in report..."
-            # HACK: we need to print something to the console, otherwise circleci
-            # fails and aborts the job because nothing is displayed for > 10 minutes.
-            paver run_pylint -l $PYLINT_THRESHOLD | tee reports/pylint.log || EXIT=1
+function run_shard_2() {
+    EXIT=0
+    test_system stanford-cms cms \
+        openedx/stanford/cms/djangoapps/contentstore/tests/test_bulksettings.py \
+        openedx/stanford/cms/djangoapps/contentstore/tests/test_bulkupdate.py \
+        openedx/stanford/cms/djangoapps/contentstore/tests/test_utilities.py \
+        $(get_children openedx/stanford/cms/djangoapps) \
+    || EXIT=1
+    # openedx/stanford/cms/djangoapps/contentstore/tests/test_captions.py
+    return ${EXIT}
+}
 
-            PATH=$PATH:node_modules/.bin
+function run_shard_6() {
+    EXIT=0
+    test_system edx-cms cms \
+        cms/djangoapps/contentstore/management/commands/tests \
+        cms/lib \
+        $(get_children cms/djangoapps) \
+    || EXIT=1
+    # cms/djangoapps/contentstore/api/tests
+    # cms/djangoapps/contentstore/tests
+    # cms/djangoapps/contentstore/views/tests
+    return ${EXIT}
+}
 
-            echo "Finding ESLint violations and storing report..."
-            paver run_eslint -l $ESLINT_THRESHOLD > reports/eslint.log || { cat reports/eslint.log; EXIT=1; }
+function run_shard_3() {
+    EXIT=0
+    test_system stanford-common cms \
+        openedx/stanford/common \
+        $(get_children openedx/stanford/djangoapps) \
+    || EXIT=1
+    test_system stanford-common lms \
+        openedx/stanford/common \
+        $(get_children openedx/stanford/djangoapps) \
+    || EXIT=1
+    return $EXIT
+}
 
-            # Run quality task. Pass in the 'fail-under' percentage to diff-quality
-            paver run_quality -p 100 || EXIT=1
+function run_shard_7() {
+    EXIT=0
+    test_system edx-common cms \
+        $(get_children common/djangoapps) \
+        $(get_children openedx/core/djangoapps) \
+        openedx/core/djangolib \
+        openedx/core/lib \
+        openedx/tests \
+    || EXIT=1
+    test_system edx-common lms \
+        $(get_children common/djangoapps) \
+        $(get_children openedx/core/djangoapps) \
+        openedx/core/djangolib \
+        openedx/core/lib \
+        $(get_children openedx/tests) \
+        $(get_children openedx/features) \
+    || EXIT=1
+    test_system edx-pavelib lms \
+        pavelib \
+    || EXIT=1
+    # paver test_lib --cov-args="-p" --with-xunitmp || EXIT=1
+    return $EXIT
+}
 
-            echo "Running code complexity report (python)."
-            paver run_complexity > reports/code_complexity.log || echo "Unable to calculate code complexity. Ignoring error."
-
-            test_system lms openedx.stanford.common || EXIT=1
-            test_system lms openedx.stanford.djangoapps || EXIT=1
-            test_system lms openedx.stanford.lms || EXIT=1
-            test_system_children lms openedx.features || EXIT=1
-            test_system lms openedx.tests || EXIT=1
-            test_system lms lms.tests || EXIT=1
-            test_system lms lms.lib || EXIT=1
-            test_system_children lms common.djangoapps || EXIT=1
-            exit $EXIT
-            ;;
-
-        1)  # run all of the lms unit tests
-            test_system_children lms lms.djangoapps || EXIT=1
-            exit $EXIT
-            ;;
-
-        2)  # run all of the cms unit tests
-            test_system cms openedx.stanford.cms || EXIT=1
-            test_system cms openedx.stanford.common || EXIT=1
-            test_system cms openedx.stanford.djangoapps || EXIT=1
-            test_system_children cms openedx.core.djangoapps || EXIT=1
-            test_system cms openedx.core.djangolib || EXIT=1
-            test_system cms openedx.core.lib || EXIT=1
-            test_system cms openedx.tests || EXIT=1
-            test_system cms cms || EXIT=1
-            test_system_children cms common.djangoapps || EXIT=1
-            exit $EXIT
-            ;;
-
-        3)  # run the commonlib unit tests
-            paver test_lib --with-flaky --cov-args="-p" --with-xunitmp || EXIT=1
-            test_system lms openedx.core.lib || EXIT=1
-            test_system lms openedx.core.djangolib || EXIT=1
-            test_system_children lms openedx.core.djangoapps || EXIT=1
-            exit $EXIT
-            ;;
-
-        *)
-            echo "No tests were executed in this container."
-            echo "Please adjust scripts/circle-ci-tests.sh to match your parallelism."
-            exit 1
-            ;;
-    esac
+_EXIT=0
+empty_junit
+for job in $(seq 0 $(( ${CIRCLE_JOBS_TOTAL} - 1 ))); do
+    node=$(( ${job} % ${CIRCLE_NODE_TOTAL} ))
+    if [ "${node}" -eq "${CIRCLE_NODE_INDEX}" ]; then
+        run_shard_${job} || _EXIT=1
+    fi
+done
+if [ -e reports/quality_junitxml ]; then
+    find reports/quality_junitxml -type f -name '*.xml' -print0 | xargs -0 --no-run-if-empty cp -t "${CIRCLE_TEST_REPORTS}"
 fi
+exit ${_EXIT}

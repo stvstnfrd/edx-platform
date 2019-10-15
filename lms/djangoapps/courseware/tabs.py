@@ -10,7 +10,6 @@ from django.utils.translation import ugettext_noop
 from openedx.core.lib.course_tabs import CourseTabPluginManager
 from openedx.features.course_experience import UNIFIED_COURSE_TAB_FLAG, default_course_url_name
 from student.models import CourseEnrollment
-from student.models import UserProfile
 from xmodule.tabs import CourseTab, CourseTabList, course_reverse_func_from_name_func, key_checker
 
 
@@ -20,9 +19,8 @@ class EnrolledTab(CourseTab):
     """
     @classmethod
     def is_enabled(cls, course, user=None):
-        if user is None:
-            return True
-        return bool(CourseEnrollment.is_enrolled(user, course.id) or has_access(user, 'staff', course, course.id))
+        return user and user.is_authenticated and \
+            bool(CourseEnrollment.is_enrolled(user, course.id) or has_access(user, 'staff', course, course.id))
 
 
 class CoursewareTab(EnrolledTab):
@@ -37,6 +35,16 @@ class CoursewareTab(EnrolledTab):
     is_default = False
     is_visible_to_sneak_peek = True
     supports_preview_menu = True
+
+    @classmethod
+    def is_enabled(cls, course, user=None):
+        """
+        Returns true if this tab is enabled.
+        """
+        # If this is the unified course tab then it is always enabled
+        if UNIFIED_COURSE_TAB_FLAG.is_enabled(course.id):
+            return True
+        return super(CoursewareTab, cls).is_enabled(course, user)
 
     @property
     def link_func(self):
@@ -63,10 +71,7 @@ class CourseInfoTab(CourseTab):
 
     @classmethod
     def is_enabled(cls, course, user=None):
-        """
-        The "Home" tab is not shown for the new unified course experience.
-        """
-        return not UNIFIED_COURSE_TAB_FLAG.is_enabled(course.id)
+        return True
 
 
 class SyllabusTab(EnrolledTab):
@@ -117,7 +122,7 @@ class TextbookTabsBase(CourseTab):
 
     @classmethod
     def is_enabled(cls, course, user=None):
-        return user is None or user.is_authenticated()
+        return user is None or user.is_authenticated
 
     @classmethod
     def items(cls, course):
@@ -306,16 +311,7 @@ def get_course_tab_list(request, course):
     Retrieves the course tab list from xmodule.tabs and manipulates the set as necessary
     """
     user = request.user
-    is_user_enrolled = user.is_authenticated() and CourseEnrollment.is_enrolled(user, course.id)
-    xmodule_tab_list = CourseTabList.iterate_displayable(
-        course,
-        user=user,
-        settings=settings,
-        is_user_authenticated=user.is_authenticated(),
-        is_user_staff=has_access(user, 'staff', course, course.id),
-        is_user_enrolled=is_user_enrolled,
-        is_user_sneakpeek=not UserProfile.has_registered(user),
-    )
+    xmodule_tab_list = CourseTabList.iterate_displayable(course, user=user)
 
     # Now that we've loaded the tabs for this course, perform the Entrance Exam work.
     # If the user has to take an entrance exam, we'll need to hide away all but the
@@ -329,6 +325,9 @@ def get_course_tab_list(request, course):
             if tab.type != 'courseware':
                 continue
             tab.name = _("Entrance Exam")
+        # TODO: LEARNER-611 - once the course_info tab is removed, remove this code
+        if UNIFIED_COURSE_TAB_FLAG.is_enabled(course.id) and tab.type == 'course_info':
+            continue
         if tab.type == 'static_tab' and tab.course_staff_only and \
                 not bool(user and has_access(user, 'staff', course, course.id)):
             continue
