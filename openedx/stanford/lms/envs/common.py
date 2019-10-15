@@ -84,7 +84,6 @@ INSTALLED_APPS += (
     'freetextresponse',
     'submit_and_compare',
     'inline_dropdown',
-    'xblockmufi',
 )
 MAKO_TEMPLATE_DIRS_BASE += glob(STANFORD_ROOT / 'djangoapps/*/templates')
 MAKO_TEMPLATE_DIRS_BASE += glob(STANFORD_ROOT / 'common/djangoapps/*/templates')
