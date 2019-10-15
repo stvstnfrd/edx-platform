@@ -58,7 +58,6 @@ class TestScoredBlockTypes(TestCase):
         'library_content', 'split_test', 'conditional', 'library', 'randomize',
         'problem', 'drag-and-drop-v2', 'openassessment', 'lti', 'lti_consumer',
         'videosequence', 'problemset', 'acid_parent', 'done', 'wrapper', 'edx_sga',
-        'freetextresponse',
         'image-coding',
         'inline-dropdown',
         'problem-builder', 'pb-column', 'pb-mcq', 'pb-mrq', 'pb-rating', 'pb-table',
