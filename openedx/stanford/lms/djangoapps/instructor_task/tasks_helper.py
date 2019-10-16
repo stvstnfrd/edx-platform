@@ -70,7 +70,7 @@ def generate_student_forums_query(course_id):
 
 def collect_student_forums_data(course_id):
     """
-    Given a SlashSeparatedCourseKey course_id, return headers and information
+    Given a CourseKey course_id, return headers and information
     related to student forums usage
     """
     try:
@@ -115,7 +115,7 @@ def push_ora2_responses_to_s3(_xmodule_instance_args, _entry_id, course_id, _tas
 
 def collect_course_forums_data(course_id):
     """
-    Given a SlashSeparatedCourseKey course_id, return headers and information
+    Given a CourseKey course_id, return headers and information
     related to course forums usage such as upvotes, downvotes, and number of posts
     """
     def merge_join_course_forums(threads, responses, comments):

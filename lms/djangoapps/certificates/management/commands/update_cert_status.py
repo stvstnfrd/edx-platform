@@ -14,7 +14,6 @@ from django.core.management.base import CommandError
 
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import CourseKey
-from opaque_keys.edx.locations import SlashSeparatedCourseKey
 
 from lms.djangoapps.certificates.models import CertificateStatuses
 from lms.djangoapps.certificates.models import GeneratedCertificate
@@ -60,11 +59,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         if options['course_id']:
-            # try to parse out the course from the serialized form
-            try:
-                course_id = CourseKey.from_string(options['course_id'])
-            except InvalidKeyError:
-                course_id = SlashSeparatedCourseKey.from_deprecated_string(options['course_id'])
+            course_id = CourseKey.from_string(options['course_id'])
         else:
             raise CommandError(u'course-id is required')
 

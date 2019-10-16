@@ -7,7 +7,7 @@ from optparse import make_option
 from django.core.management.base import BaseCommand, CommandError
 
 from opaque_keys import InvalidKeyError
-from opaque_keys.edx.locations import SlashSeparatedCourseKey
+from opaque_keys.edx.keys import CourseKey
 from xmodule.modulestore.django import modulestore
 
 from openedx.stanford.lms.djangoapps.instructor_task.tasks_helper import student_response_rows
@@ -38,7 +38,7 @@ class Command(BaseCommand):
             raise CommandError("course_id not specified")
         store = modulestore()
         try:
-            course_id = SlashSeparatedCourseKey.from_deprecated_string(args[0])
+            course_id = CourseKey.from_string(args[0])
         except InvalidKeyError:
             raise CommandError("Invalid course_id")
         course = store.get_course(course_id)

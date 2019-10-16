@@ -8,7 +8,7 @@ import os
 from django.core.management.base import BaseCommand, CommandError
 
 from opaque_keys import InvalidKeyError
-from opaque_keys.edx.locations import SlashSeparatedCourseKey
+from opaque_keys.edx.keys import CourseKey
 
 from openedx.stanford.lms.djangoapps.instructor_task.tasks_helper import collect_course_forums_data
 
@@ -35,7 +35,7 @@ class Command(BaseCommand):
         if not args:
             raise CommandError('Course ID must be specified to fetch data')
         try:
-            course_id = SlashSeparatedCourseKey.from_deprecated_string(args[0])
+            course_id = CourseKey.from_string(args[0])
         except InvalidKeyError:
             raise CommandError('The course ID given was invalid')
         file_name = "{course_id}-course-forums.csv".format(course_id=args[0].replace('/', '-'))

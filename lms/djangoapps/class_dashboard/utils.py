@@ -1,7 +1,8 @@
 from django.conf import settings
 from django.db.models import Count
+from six import text_type
 
-from opaque_keys.edx.locations import SlashSeparatedCourseKey
+from opaque_keys.edx.keys import CourseKey
 
 from analyticsclient.client import Client
 from analyticsclient.exceptions import NotFoundError
@@ -77,7 +78,7 @@ def construct_problem_data(prob_grade_distrib, total_student_count, c_subsection
                 'color': percent,
                 'value': count_grade,
                 'tooltip': tooltip,
-                'module_url': component.location.to_deprecated_string(),
+                'module_url': text_type(component.location),
             })
 
     problem = {
@@ -106,14 +107,14 @@ def get_non_student_list_from_request(request):
     Find all user_ids with instructor or staff roles in student_courseaccessrole table
     """
     course_id = request.GET.get('course_id')
-    course_key = SlashSeparatedCourseKey.from_deprecated_string(course_id)
+    course_key = CourseKey.from_string(course_id)
     module_state_key = course_key.make_usage_key_from_deprecated_string(request.GET.get('module_id'))
     users = get_non_student_list(course_key)
     return users
 
 
 def get_problem_set_grade_distrib_api(course_id, problem_set):
-    course_key = SlashSeparatedCourseKey.from_deprecated_string(course_id)
+    course_key = CourseKey.from_string(course_id)
     enrollment = CourseEnrollment.objects.enrollment_counts(course_key)
     prob_grade_distrib = None
     if enrollment <= settings.MAX_ENROLLEES_FOR_METRICS_USING_DB or not settings.ANALYTICS_API_URL:
