@@ -65,11 +65,13 @@ class Command(BaseCommand):
         self._initialize_settings(**kwargs)
         self._set_logging_verbosity()
         header = self._get_header_row()
-        self.stdout.write("CSV: {0}".format(header))
+        self.output_row(header)
         rows = self.get_rows()
         for row in rows:
-            self.stdout.write("CSV: {0}".format(row))
-        return
+            self.output_row(row)
+
+    def output_row(self, row):
+        self.stdout.write("CSV: {0}".format(row))
 
     def get_rows(self):
         courses = get_all_course_overviews(self.blacklist_organizations, self.blacklist_courses)
