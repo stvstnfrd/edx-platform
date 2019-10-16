@@ -365,7 +365,7 @@ def get_d3_section_grade_distrib(course_id, section):
                         c_problem += 1
                         problem_set.append(library_problem.location)
                         problem_info[library_problem.location] = {
-                            'id': library_problem.location.to_deprecated_string(),
+                            'id': text_type(library_problem.location),
                             'x_value': "P{0}.{1}.{2}".format(c_subsection, c_unit, c_problem),
                             'display_name': own_metadata(library_problem).get('display_name', ''),
                         }
