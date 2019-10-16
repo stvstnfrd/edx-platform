@@ -64,7 +64,7 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         self._initialize_settings(**kwargs)
         self._set_logging_verbosity()
-        header = self._get_header_row()
+        header = _get_header_row()
         self.output_row(header)
         rows = self.get_rows()
         for row in rows:
