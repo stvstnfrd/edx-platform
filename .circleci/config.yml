@@ -15,8 +15,8 @@ jobs:
     - restore_cache:
         keys:
         - v1-dep-{{ .Branch }}-
-        # - v1-dep-master-
-        # - v1-dep-
+        - v1-dep-master-
+        - v1-dep-
     - run: echo 'export TRAVIS_JOB_ID="${CIRCLE_BUILD_NUM}"' >> $BASH_ENV
     - run: curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
     - run: sudo apt-get update
