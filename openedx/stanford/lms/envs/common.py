@@ -75,6 +75,7 @@ INLINE_ANALYTICS_SUPPORTED_TYPES = {
 }
 INSTALLED_APPS += (
     'branding_stanford',
+    'openedx.stanford.djangoapps.recurring_reports',
     'openedx.stanford.djangoapps.sneakpeek',
     'openedx.stanford.djangoapps.student_utils',
     'openedx.stanford.lms.djangoapps.instructor',
