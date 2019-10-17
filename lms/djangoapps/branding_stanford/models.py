@@ -4,10 +4,13 @@ Model for branding_stanford
 This was implemented initially so that the list of course tiles could be
 stored in this model.
 """
+from django.conf import settings
 from django.db import models
 
 from config_models.models import ConfigurationModel
 from opaque_keys.edx.django.models import CourseKeyField
+from opaque_keys.edx.keys import CourseKey
+from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 
 
 class TileConfiguration(ConfigurationModel):
@@ -22,3 +25,30 @@ class TileConfiguration(ConfigurationModel):
 
     def __unicode__(self):
         return u"{0} {1} {2}".format(self.site, self.course_id, self.enabled)
+
+
+def get_visible_courses(org=None, filter_=None):
+    """
+    Get list of visible course tiles
+    """
+    if not settings.DISPLAY_COURSE_TILES:
+        return []
+    orgs = []
+    if org:
+        orgs.append(org)
+    filtered_by_db = TileConfiguration.objects.filter(
+        enabled=True,
+    ).values('course_id').order_by('-change_date')
+    courses = None
+    if filtered_by_db:
+        filtered_by_db_keys = frozenset([
+            CourseKey.from_string(c['course_id'])
+            for c in filtered_by_db
+        ])
+        courses = CourseOverview.get_all_courses(orgs=orgs, filter_=None)
+        courses = [
+            course
+            for course in courses
+            if course.id in filtered_by_db_keys
+        ]
+    return courses
