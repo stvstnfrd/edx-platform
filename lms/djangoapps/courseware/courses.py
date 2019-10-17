@@ -33,7 +33,7 @@ from opaque_keys.edx.keys import UsageKey
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from path import Path as path
-from opaque_keys.edx.locations import SlashSeparatedCourseKey
+from opaque_keys.edx.keys import CourseKey
 from six import text_type
 from static_replace import replace_static_urls
 from student.models import CourseEnrollment
@@ -471,7 +471,7 @@ def get_courses(user, org=None, filter_=None):
     ).values('course_id').order_by('-change_date')
     if filtered_by_db:
         filtered_by_db_ids = [course['course_id'] for course in filtered_by_db]
-        filtered_by_db_keys = frozenset([SlashSeparatedCourseKey.from_string(c) for c in filtered_by_db_ids])
+        filtered_by_db_keys = frozenset([CourseKey.from_string(c) for c in filtered_by_db_ids])
         courses = [
             course
             for course in courses
