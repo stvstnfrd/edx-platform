@@ -3,7 +3,7 @@ unidecode
 xblock-image-modal==1.0.1
 -e git+https://github.com/openlearninginitiative/xblock-image-coding.git@cee23e3d59943066159ca13839c82a12d9ccf749#egg=xblock_image_coding
 -e git+https://github.com/Stanford-Online/xblock-qualtrics-survey@e35ea220af30ac6066588c9dd2a7518fac50222d#egg=xblock-qualtrics-survey==1.0.0
--e git+https://github.com/Stanford-Online/xblock-free-text-response@release/v0.4.0#egg=xblock-free-text-response==0.4.0
+-e git+https://github.com/Stanford-Online/xblock-free-text-response@release/v1.0.0#egg=xblock-free-text-response==1.0.0
 -e git+https://github.com/Stanford-Online/xblock-grademe.git@v1.0.0#egg=grademebutton
 -e git+https://github.com/edx-solutions/xblock-ooyala.git@32d52edaa820dbdbf846d8a84f6bccbf0b9c8218#egg=xblock_ooyala_player-master
 -e git+https://github.com/Stanford-Online/xblock-submit-and-compare.git@release/0.7.0#egg=xblock-submit-and-compare==0.7.0

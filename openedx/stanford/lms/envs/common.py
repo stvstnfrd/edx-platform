@@ -81,7 +81,6 @@ INSTALLED_APPS += (
     'openedx.stanford.lms.djangoapps.instructor_task',
     'settings_context_processor',
     # Added here to allow translations
-    'freetextresponse',
     'submit_and_compare',
     'inline_dropdown',
 )
