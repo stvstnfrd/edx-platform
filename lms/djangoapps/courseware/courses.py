@@ -7,7 +7,7 @@ from collections import defaultdict
 from datetime import datetime
 
 import branding
-from branding_stanford.models import TileConfiguration
+from branding_stanford.models import get_visible_courses
 import pytz
 from courseware.access import has_access
 from courseware.access_response import StartDateError, MilestoneAccessError
@@ -33,7 +33,6 @@ from opaque_keys.edx.keys import UsageKey
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from path import Path as path
-from opaque_keys.edx.locations import SlashSeparatedCourseKey
 from six import text_type
 from static_replace import replace_static_urls
 from student.models import CourseEnrollment
@@ -459,26 +458,9 @@ def get_courses(user, org=None, filter_=None):
     Returns a list of courses available, sorted by course.number and optionally
     filtered by org code (case-insensitive).
     """
-    # In the event we don't want any course tiles displayed
-    if not getattr(settings, 'DISPLAY_COURSE_TILES', False):
-        return []
-    orgs = []
-    if org:
-        orgs.append(org)
-    courses = CourseOverview.get_all_courses(orgs=orgs, filter_=None)
-    filtered_by_db = TileConfiguration.objects.filter(
-        enabled=True,
-    ).values('course_id').order_by('-change_date')
-    if filtered_by_db:
-        filtered_by_db_ids = [course['course_id'] for course in filtered_by_db]
-        filtered_by_db_keys = frozenset([SlashSeparatedCourseKey.from_string(c) for c in filtered_by_db_ids])
-        courses = [
-            course
-            for course in courses
-            if course.id in filtered_by_db_keys
-        ]
+    courses = get_visible_courses(org=org, filter_=filter_)
+    if courses is not None:
         return courses
-
     courses = branding.get_visible_courses(org=org, filter_=filter_)
 
     permission_name = configuration_helpers.get_value(
