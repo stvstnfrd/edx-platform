@@ -346,7 +346,7 @@ class TestGetProblemGradeDistribution(SharedModuleStoreTestCase):
 
     def test_get_students_problem_grades(self):
 
-        attributes = '?module_id=' + text_type(self.item.location) + '&course_id=' + text_type(self.course.id)
+        attributes = '?module_id=' + text_type(self.item.location)
         request = self.request_factory.get(reverse('get_students_problem_grades') + attributes)
 
         response = get_students_problem_grades(request)
@@ -364,7 +364,7 @@ class TestGetProblemGradeDistribution(SharedModuleStoreTestCase):
     def test_get_students_problem_grades_max(self):
 
         with patch('class_dashboard.dashboard_data.MAX_SCREEN_LIST_LENGTH', 2):
-            attributes = '?module_id=' + text_type(self.item.location) + '&course_id=' + text_type(self.course.id)
+            attributes = '?module_id=' + text_type(self.item.location)
             request = self.request_factory.get(reverse('get_students_problem_grades') + attributes)
 
             response = get_students_problem_grades(request)
@@ -378,7 +378,7 @@ class TestGetProblemGradeDistribution(SharedModuleStoreTestCase):
     def test_get_students_problem_grades_csv(self):
 
         tooltip = 'P1.2.1 Q1 - 3382 Students (100%: 1/1 questions)'
-        attributes = '?module_id=' + text_type(self.item.location) + '&course_id=' + text_type(self.course.id) + '&tooltip=' + tooltip + '&csv=true'
+        attributes = '?module_id=' + text_type(self.item.location) + '&tooltip=' + tooltip + '&csv=true'
         request = self.request_factory.get(reverse('get_students_problem_grades') + attributes)
 
         response = get_students_problem_grades(request)
@@ -398,7 +398,7 @@ class TestGetProblemGradeDistribution(SharedModuleStoreTestCase):
 
     def test_get_students_opened_subsection(self):
 
-        attributes = '?module_id=' + text_type(self.item.location) + '&course_id=' + text_type(self.course.id)
+        attributes = '?module_id=' + text_type(self.item.location)
         request = self.request_factory.get(reverse('get_students_opened_subsection') + attributes)
 
         response = get_students_opened_subsection(request)
@@ -411,7 +411,7 @@ class TestGetProblemGradeDistribution(SharedModuleStoreTestCase):
 
         with patch('class_dashboard.dashboard_data.MAX_SCREEN_LIST_LENGTH', 2):
 
-            attributes = '?module_id=' + text_type(self.item.location) + '&course_id=' + text_type(self.course.id)
+            attributes = '?module_id=' + text_type(self.item.location)
             request = self.request_factory.get(reverse('get_students_opened_subsection') + attributes)
 
             response = get_students_opened_subsection(request)
@@ -425,7 +425,7 @@ class TestGetProblemGradeDistribution(SharedModuleStoreTestCase):
     def test_get_students_opened_subsection_csv(self):
 
         tooltip = '4162 students opened Subsection 5: Relational Algebra Exercises'
-        attributes = '?module_id=' + text_type(self.item.location) + '&course_id=' + text_type(self.course.id) + '&tooltip=' + tooltip + '&csv=true'
+        attributes = '?module_id=' + text_type(self.item.location) + '&tooltip=' + tooltip + '&csv=true'
         request = self.request_factory.get(reverse('get_students_opened_subsection') + attributes)
 
         response = get_students_opened_subsection(request)
