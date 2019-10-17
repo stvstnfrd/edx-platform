@@ -1,6 +1,6 @@
 -r coverage.txt
 unidecode
-git+https://github.com/Stanford-Online/xblock-image-modal@284aad53496cfa71963d06c17b58181ed8006eb6#egg=xblock-image-modal==1.0.0
+xblock-image-modal==1.0.1
 -e git+https://github.com/openlearninginitiative/xblock-image-coding.git@cee23e3d59943066159ca13839c82a12d9ccf749#egg=xblock_image_coding
 -e git+https://github.com/Stanford-Online/xblock-qualtrics-survey@e35ea220af30ac6066588c9dd2a7518fac50222d#egg=xblock-qualtrics-survey==1.0.0
 -e git+https://github.com/Stanford-Online/xblock-free-text-response@release/v0.4.0#egg=xblock-free-text-response==0.4.0

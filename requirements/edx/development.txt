@@ -375,7 +375,7 @@ web-fragments==0.2.2
 webob==1.8.5
 werkzeug==0.14.1
 wrapt==1.10.5
-xblock-image-modal==0.4.1
+xblock-image-modal==1.0.1
 xblock-review==1.1.5
 xblock==1.2.2
 xmltodict==0.11.0
