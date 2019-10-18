@@ -266,7 +266,7 @@ watchdog==0.9.0
 web-fragments==0.2.2
 webob==1.8.5              # via xblock
 wrapt==1.10.5
-xblock-image-modal==1.0.1
+xblock-image-modal==1.0.2
 xblock-review==1.1.5
 xblock==1.2.2
 zendesk==1.1.1
