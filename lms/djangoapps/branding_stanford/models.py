@@ -9,7 +9,6 @@ from django.db import models
 
 from config_models.models import ConfigurationModel
 from opaque_keys.edx.django.models import CourseKeyField
-from opaque_keys.edx.keys import CourseKey
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 
 
@@ -42,8 +41,8 @@ def get_visible_courses(org=None, filter_=None):
     courses = None
     if filtered_by_db:
         filtered_by_db_keys = frozenset([
-            CourseKey.from_string(c['course_id'])
-            for c in filtered_by_db
+            course['course_id']
+            for course in filtered_by_db
         ])
         courses = CourseOverview.get_all_courses(orgs=orgs, filter_=None)
         courses = [
