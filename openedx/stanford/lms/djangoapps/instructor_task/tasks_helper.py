@@ -13,6 +13,7 @@ from django.db.utils import ConnectionDoesNotExist
 from pymongo import MongoClient
 from pymongo.errors import PyMongoError
 from pytz import UTC
+from six import text_type
 
 from django_comment_client.management_utils import get_mongo_connection_string
 from lms.djangoapps.instructor_task.tasks_helper.utils import upload_csv_to_report_store
@@ -50,7 +51,7 @@ def generate_student_forums_query(course_id):
     query = [
         {
             '$match': {
-                'course_id': course_id.to_deprecated_string(),
+                'course_id': text_type(course_id),
             },
         },
         {
@@ -70,7 +71,7 @@ def generate_student_forums_query(course_id):
 
 def collect_student_forums_data(course_id):
     """
-    Given a SlashSeparatedCourseKey course_id, return headers and information
+    Given a CourseKey course_id, return headers and information
     related to student forums usage
     """
     try:
@@ -115,7 +116,7 @@ def push_ora2_responses_to_s3(_xmodule_instance_args, _entry_id, course_id, _tas
 
 def collect_course_forums_data(course_id):
     """
-    Given a SlashSeparatedCourseKey course_id, return headers and information
+    Given a CourseKey course_id, return headers and information
     related to course forums usage such as upvotes, downvotes, and number of posts
     """
     def merge_join_course_forums(threads, responses, comments):
@@ -237,7 +238,7 @@ def _push_csv_responses_to_s3(csv_fn, filename, course_id, action_name):
         update_task_progress()
         return UPDATE_STATUS_FAILED
     timestamp_str = start_time.strftime('%Y-%m-%d-%H%M')
-    course_id_string = urllib.quote(course_id.to_deprecated_string().replace('/', '_'))
+    course_id_string = urllib.quote(text_type(course_id).replace('/', '_'))
     curr_step = "Uploading CSV"
     update_task_progress()
     upload_csv_to_report_store(
@@ -437,7 +438,7 @@ def generate_course_forums_query(course_id, query_type, parent_id_check=None):
     query = [
         {
             '$match': {
-                'course_id': course_id.to_deprecated_string(),
+                'course_id': text_type(course_id),
                 '_type': query_type,
             },
         },

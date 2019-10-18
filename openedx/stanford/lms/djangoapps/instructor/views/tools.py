@@ -1,6 +1,8 @@
 import csv
 import json
 
+from six import text_type
+
 
 def generate_course_forums_d3(url_handle):
     """
@@ -75,7 +77,7 @@ def parse_student_data(student_data):
 
 
 def reverse_ora2_responses(course, endpoint, include_email):
-    course_id = course.id.to_deprecated_string()
+    course_id = text_type(course.id)
     url = reverse(
         endpoint,
         kwargs={

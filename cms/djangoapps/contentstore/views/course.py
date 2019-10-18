@@ -24,7 +24,6 @@ from django.views.decorators.http import require_GET, require_http_methods
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import CourseKey
 from opaque_keys.edx.locations import Location
-from opaque_keys.edx.locations import SlashSeparatedCourseKey
 from opaque_keys.edx.locator import BlockUsageLocator
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.djangoapps.waffle_utils import WaffleSwitchNamespace
@@ -704,17 +703,11 @@ def _process_courses_list(courses_iter, in_process_course_actions, split_archive
         """
         Return a dict of the data which the view requires for each course
         """
-        if isinstance(course.id, SlashSeparatedCourseKey):
-            course_module = modulestore().get_course(course.id, depth=0)
-            lms_link = get_lms_link_for_item(course_module.location)
-        else:
-            lms_link = get_lms_link_for_item(course.location)
-
         return {
             'display_name': course.display_name,
             'course_key': unicode(course.location.course_key),
             'url': reverse_course_url('course_handler', course.id),
-            'lms_link': lms_link,
+            'lms_link': get_lms_link_for_item(course.location),
             'rerun_link': _get_rerun_link_for_item(course.id),
             'org': course.display_org_with_default,
             'number': course.display_number_with_default,

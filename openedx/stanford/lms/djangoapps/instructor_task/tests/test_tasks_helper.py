@@ -8,6 +8,7 @@ from django.conf import settings
 from mock import Mock
 from mock import patch
 from pytz import UTC
+from six import text_type
 
 from courseware.tests.factories import StudentModuleFactory
 from lms.djangoapps.instructor_task.models import ReportStore
@@ -123,7 +124,7 @@ class TestInstructorOra2Report(StanfordReportTestCase):
                 mock_collect_data.return_value = (test_header, test_rows)
                 with patch('lms.djangoapps.instructor_task.models.DjangoStorageReportStore.store_rows') as mock_store_rows:
                     timestamp_str = start_time.strftime('%Y-%m-%d-%H%M')
-                    course_id_string = urllib.quote(self.course.id.to_deprecated_string().replace('/', '_'))
+                    course_id_string = urllib.quote(text_type(self.course.id).replace('/', '_'))
                     filename = u'{}_ORA2_responses_anonymous_{}.csv'.format(course_id_string, timestamp_str)
                     return_val = push_ora2_responses_to_s3(None, None, self.course.id, {'include_email': 'False'}, 'generated')
                     self.assertEqual(return_val, UPDATE_STATUS_SUCCEEDED)
@@ -157,7 +158,7 @@ class TestInstructorOra2EmailReport(StanfordReportTestCase):
                 mock_collect_data.return_value = (test_header, test_rows)
                 with patch('lms.djangoapps.instructor_task.models.DjangoStorageReportStore.store_rows') as mock_store_rows:
                     timestamp_str = start_time.strftime('%Y-%m-%d-%H%M')
-                    course_id_string = urllib.quote(self.course.id.to_deprecated_string().replace('/', '_'))
+                    course_id_string = urllib.quote(text_type(self.course.id).replace('/', '_'))
                     filename = u'{}_ORA2_responses_including_email_{}.csv'.format(course_id_string, timestamp_str)
                     return_val = push_ora2_responses_to_s3(None, None, self.course.id, {'include_email': 'True'}, 'generated')
                     self.assertEqual(return_val, UPDATE_STATUS_SUCCEEDED)

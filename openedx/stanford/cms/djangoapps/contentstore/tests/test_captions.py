@@ -56,7 +56,6 @@ class Basetranscripts(CourseTestCase):
 
         # Add video module
         data = {
-            # 'parent_locator': self.location.to_deprecated_string(),
             'parent_locator': self.unicode_locator,
             'category': 'video',
             'type': 'video'

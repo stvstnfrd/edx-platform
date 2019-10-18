@@ -18,7 +18,6 @@ from lms.djangoapps.instructor_task.api_helper import AlreadyRunningError
 from lms.djangoapps.instructor_task.models import ReportStore
 from opaque_keys.edx import locator
 from opaque_keys.edx.keys import CourseKey
-from opaque_keys.edx.locations import SlashSeparatedCourseKey
 from student.models import unique_id_for_user
 from util.json_request import JsonResponse
 
@@ -46,7 +45,7 @@ def delete_report_download(request, course_id):
     """
     Delete a downloaded report from the Instructor Dashboard
     """
-    course_id = SlashSeparatedCourseKey.from_string(course_id)
+    course_id = CourseKey.from_string(course_id)
     filename = request.POST.get('filename')
     report_store = ReportStore.from_config(config_name='GRADES_DOWNLOAD')
     report_store.delete_file(course_id, filename)
@@ -111,7 +110,7 @@ def get_course_forums_usage_view(request, course_id):
     """
     Push a Celery task to aggregate course forums statistics into a .csv
     """
-    course_key = SlashSeparatedCourseKey.from_deprecated_string(course_id)
+    course_key = CourseKey.from_string(course_id)
     try:
         api.request_report(request, course_key, 'course_forums_usage')
     except AlreadyRunningError:
@@ -171,7 +170,7 @@ def get_student_forums_usage_view(request, course_id):
     """
     Push a Celery task to aggregate student forums usage statistics into a .csv
     """
-    course_key = SlashSeparatedCourseKey.from_deprecated_string(course_id)
+    course_key = CourseKey.from_string(course_id)
     try:
         api.request_report(request, course_key, 'student_forums')
     except AlreadyRunningError:
@@ -198,7 +197,7 @@ def get_student_responses_view(request, course_id):
     """
     Raise AlreadyRunningError if student response CSV is still being generated
     """
-    course_key = SlashSeparatedCourseKey.from_deprecated_string(course_id)
+    course_key = CourseKey.from_string(course_id)
     try:
         api.request_report(request, course_key, 'student_responses')
     except AlreadyRunningError:
@@ -226,7 +225,7 @@ def graph_course_forums_usage(request, course_id):
     Generate a d3 graphable csv-string by checking the report store for the clicked_on file
     """
     clicked_text = request.POST.get('clicked_on')
-    course_key = SlashSeparatedCourseKey.from_deprecated_string(course_id)
+    course_key = CourseKey.from_string(course_id)
     report_store = ReportStore.from_config(config_name='GRADES_DOWNLOAD')
     graph = None
     if clicked_text:

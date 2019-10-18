@@ -1,12 +1,12 @@
 from django.core.urlresolvers import reverse
+from six import text_type
 
 from student.models import CourseEnrollment
 from util.keyword_substitution import get_keywords_supported
 
 
 def data_download_section_data(course_key):
-    course_id = unicode(course_key)
-    course_id_deprecated = course_key.to_deprecated_string()
+    course_id = text_type(course_key)
     data = {
         'delete_report_download_url': reverse(
             'delete_report_download',
@@ -17,20 +17,20 @@ def data_download_section_data(course_key):
         'get_course_forums_usage_url': reverse(
             'get_course_forums_usage',
             kwargs={
-                'course_id': course_id_deprecated,
+                'course_id': course_id,
             },
         ),
         'get_ora2_email_responses_url': reverse(
             'get_ora2_responses',
             kwargs={
-                'course_id': course_id_deprecated,
+                'course_id': course_id,
                 'include_email': True,
             },
         ),
         'get_ora2_responses_url': reverse(
             'get_ora2_responses',
             kwargs={
-                'course_id': course_id_deprecated,
+                'course_id': course_id,
                 'include_email': False,
             },
         ),
@@ -43,7 +43,7 @@ def data_download_section_data(course_key):
         'get_student_responses_url': reverse(
             'get_student_responses',
             kwargs={
-                'course_id': course_id_deprecated,
+                'course_id': course_id,
             },
         ),
         'graph_course_forums_usage_url': reverse(
@@ -65,7 +65,7 @@ def send_email_section_data():
 
 
 def student_admin_section_data(course_key):
-    course_id = unicode(course_key)
+    course_id = text_type(course_key)
     data = {
         'get_blank_lti_url': reverse(
             'get_blank_lti',

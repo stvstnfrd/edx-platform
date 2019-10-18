@@ -3,7 +3,7 @@ import logging
 from django.contrib.auth import logout
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseForbidden
 from django.views.decorators.http import require_POST
-from opaque_keys.edx.locations import SlashSeparatedCourseKey
+from opaque_keys.edx.keys import CourseKey
 
 from courseware.models import CoursePreference
 from openedx.stanford.djangoapps.sneakpeek.lib import check_can_enroll_in_course
@@ -15,7 +15,7 @@ log = logging.getLogger("stanford.sneakpeek")
 
 @require_POST
 def setup_sneakpeek(request, course_id):
-    course_key = SlashSeparatedCourseKey.from_deprecated_string(course_id)
+    course_key = CourseKey.from_string(course_id)
     if not CoursePreference.course_allows_nonregistered_access(course_key):
         return HttpResponseForbidden("Cannot access the course")
     if not request.user.is_authenticated:

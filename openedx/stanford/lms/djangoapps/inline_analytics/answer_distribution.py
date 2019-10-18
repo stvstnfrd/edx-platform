@@ -6,7 +6,7 @@ from django.http import Http404
 from django.http import HttpResponseNotFound
 from django.http import HttpResponseServerError
 from django.utils.translation import ugettext as _
-from opaque_keys.edx.locations import SlashSeparatedCourseKey
+from opaque_keys.edx.keys import CourseKey
 from pytz import timezone
 
 from analyticsclient.client import Client
@@ -103,7 +103,7 @@ def get_analytics_answer_dist(request):
     module_id = all_data['module_id']
     question_types_by_part = all_data['question_types_by_part']
     num_options_by_part = all_data['num_options_by_part']
-    course_key = SlashSeparatedCourseKey.from_string(all_data['course_id'])
+    course_key = CourseKey.from_string(all_data['course_id'])
 
     try:
         course = get_course_with_access(request.user, 'staff', course_key, depth=None)
