@@ -23,7 +23,5 @@ class TileSearchFilterGenerator(LmsSearchFilterGenerator):
             course_tiles_ids = TileConfiguration.objects.filter(
                 enabled=True,
             ).values_list('course_id', flat=True).order_by('-change_date')
-            courses = list(course_tiles_ids)
-            if len(courses):
-                field_dictionary['course'] = courses
+            field_dictionary['course'] = list(course_tiles_ids)
         return field_dictionary
