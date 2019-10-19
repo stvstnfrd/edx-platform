@@ -12,10 +12,6 @@ from paver.easy import task, needs
 from .utils.i18n_helpers import (
     CONFIG,
     clean_pofile,
-    extract_platform_django,
-    extract_platform_djangojs,
-    extract_platform_mako,
-    extract_platform_underscore,
     extract_theme_mako,
     extract_theme_tos,
     fix_privacy,
@@ -24,6 +20,7 @@ from .utils.i18n_helpers import (
     merge_translations,
     pull,
     push,
+    rename_platform_pofiles,
 )
 
 
@@ -34,21 +31,14 @@ logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 @task
 @needs(
-    'pavelib.prereqs.install_prereqs',
+    'pavelib.i18n.i18n_extract',
 )
 def stanfordi18n_extract_platform():
     """
     Extract platform strings that need translation.
     """
-    LOG.info('Extracting platform...')
-    helpers = [
-        extract_platform_mako,
-        extract_platform_underscore,
-        extract_platform_django,
-        extract_platform_djangojs,
-    ]
-    for helper in helpers:
-        filename = helper()
+    renamed_files = rename_platform_pofiles()
+    for filename in renamed_files:
         clean_pofile(filename)
     LOG.info('Extracted platform.')
 

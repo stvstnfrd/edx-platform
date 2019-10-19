@@ -67,27 +67,57 @@ source_file = conf/locale/en/LC_MESSAGES/djangojs.po
 source_lang = en
 type = PO
 
-[stanford-openedx.django]
-file_filter = conf/locale/<lang>/LC_MESSAGES/stanford_django.po
-source_file = conf/locale/en/LC_MESSAGES/stanford_django.po
+[stanford-openedx.django-partial]
+file_filter = conf/locale/<lang>/LC_MESSAGES/stanford-django-partial.po
+source_file = conf/locale/en/LC_MESSAGES/stanford-django-partial.po
 source_lang = en
 type = PO
 
-[stanford-openedx.djangojs]
-file_filter = conf/locale/<lang>/LC_MESSAGES/stanford_djangojs.po
-source_file = conf/locale/en/LC_MESSAGES/stanford_djangojs.po
+[stanford-openedx.django-studio]
+file_filter = conf/locale/<lang>/LC_MESSAGES/stanford-django-studio.po
+source_file = conf/locale/en/LC_MESSAGES/stanford-django-studio.po
+source_lang = en
+type = PO
+
+[stanford-openedx.djangojs-partial]
+file_filter = conf/locale/<lang>/LC_MESSAGES/stanford-djangojs-partial.po
+source_file = conf/locale/en/LC_MESSAGES/stanford-djangojs-partial.po
+source_lang = en
+type = PO
+
+[stanford-openedx.djangojs-studio]
+file_filter = conf/locale/<lang>/LC_MESSAGES/stanford-djangojs-studio.po
+source_file = conf/locale/en/LC_MESSAGES/stanford-djangojs-studio.po
 source_lang = en
 type = PO
 
 [stanford-openedx.mako]
-file_filter = conf/locale/<lang>/LC_MESSAGES/stanford_mako.po
-source_file = conf/locale/en/LC_MESSAGES/stanford_mako.po
+file_filter = conf/locale/<lang>/LC_MESSAGES/stanford-mako.po
+source_file = conf/locale/en/LC_MESSAGES/stanford-mako.po
+source_lang = en
+type = PO
+
+[stanford-openedx.mako-studio]
+file_filter = conf/locale/<lang>/LC_MESSAGES/stanford-mako-studio.po
+source_file = conf/locale/en/LC_MESSAGES/stanford-mako-studio.po
 source_lang = en
 type = PO
 
 [stanford-openedx.underscore]
-file_filter = conf/locale/<lang>/LC_MESSAGES/stanford_underscore.po
-source_file = conf/locale/en/LC_MESSAGES/stanford_underscore.po
+file_filter = conf/locale/<lang>/LC_MESSAGES/stanford-underscore.po
+source_file = conf/locale/en/LC_MESSAGES/stanford-underscore.po
+source_lang = en
+type = PO
+
+[stanford-openedx.underscore-studio]
+file_filter = conf/locale/<lang>/LC_MESSAGES/stanford-underscore-studio.po
+source_file = conf/locale/en/LC_MESSAGES/stanford-underscore-studio.po
+source_lang = en
+type = PO
+
+[stanford-openedx.wiki]
+file_filter = conf/locale/<lang>/LC_MESSAGES/stanford-wiki.po
+source_file = conf/locale/en/LC_MESSAGES/stanford-wiki.po
 source_lang = en
 type = PO
 
