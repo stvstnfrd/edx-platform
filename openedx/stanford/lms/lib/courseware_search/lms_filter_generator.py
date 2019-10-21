@@ -2,6 +2,8 @@
 Custom override of SearchFilterGenerator to use course tiles for
 discovery search.
 """
+from six import text_type
+
 from search.filter_generator import SearchFilterGenerator
 
 from branding_stanford.models import TileConfiguration
@@ -25,5 +27,8 @@ class TileSearchFilterGenerator(LmsSearchFilterGenerator):
             ).values_list('course_id', flat=True).order_by('-change_date')
             courses = list(course_tiles_ids)
             if len(courses):
-                field_dictionary['course'] = courses
+                field_dictionary['course'] = [
+                    text_type(course_tile_id)
+                    for course_tile_id in courses
+                ]
         return field_dictionary
