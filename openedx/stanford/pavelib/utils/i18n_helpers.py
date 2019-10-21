@@ -27,6 +27,7 @@ BABEL_COMMAND_TEMPLATE = (
     "--output={output} {template_directory}"
 )
 BASE_DIR = Path('.').abspath()
+DEFAULT_CONFIG = Configuration()
 CONFIG = Configuration(filename=BASE_DIR / 'conf/locale/stanford_config.yaml')
 LOG = logging.getLogger(__name__)
 
@@ -51,45 +52,6 @@ def _extract_babel(file_config, file_output, template_directory='.', working_dir
     )
     execute(babel_command, working_directory)
     return file_output
-
-
-def extract_platform_mako():
-    mako_config = CONFIG.locale_dir / 'stanford_mako.cfg'
-    mako_file = CONFIG.source_messages_dir / 'stanford_mako.po'
-    output = _extract_babel(mako_config, mako_file)
-    return output
-
-
-def extract_platform_underscore():
-    underscore_config = CONFIG.locale_dir / 'babel_underscore.cfg'
-    underscore_file = CONFIG.source_messages_dir / 'stanford_underscore.po'
-    output = _extract_babel(underscore_config, underscore_file)
-    return output
-
-
-def extract_platform_django(file_base='django'):
-    filename = CONFIG.source_messages_dir / file_base + '.po'
-    filename_backup = filename + '.backup'
-    filename_stanford = CONFIG.source_messages_dir / 'stanford_' + file_base + '.po'
-    os.rename(filename, filename_backup)
-    makemessages = 'django-admin.py makemessages -l en'
-    ignores = ' '.join([
-        '--ignore="{}/*"'.format(directory)
-        for directory in CONFIG.ignore_dirs
-    ])
-    if ignores:
-        makemessages += ' ' + ignores
-    if file_base == 'djangojs':
-        makemessages += ' -d djangojs'
-    execute(makemessages)
-    os.rename(filename, filename_stanford)
-    os.rename(filename_backup, filename)
-    return filename_stanford
-
-
-def extract_platform_djangojs():
-    output = extract_platform_django('djangojs')
-    return output
 
 
 def extract_theme_mako():
@@ -153,7 +115,6 @@ def get_theme_dir():
 
 
 def git_add():
-    sh('git add conf/locale')
     sh('git add lms/static/js/i18n')
     subprocess.check_call(
         'git add conf/locale',
@@ -254,25 +215,15 @@ def fix_header(pofile):
     """
     pofile.metadata_is_fuzzy = []
     header = pofile.header
-    fixes = (
-        ('SOME DESCRIPTIVE TITLE', 'Stanford OpenEdX translation file'),
-        ('Translations template for PROJECT.', 'Stanford OpenEdX translation file'),
-        ('YEAR', str(datetime.utcnow().year)),
-        ('ORGANIZATION', 'Stanford University'),
-        ("THE PACKAGE'S COPYRIGHT HOLDER", 'Stanford University'),
-        (
-            'This file is distributed under the same license as the PROJECT project.',
-            'This file is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.'
-        ),
-        (
-            'This file is distributed under the same license as the PACKAGE package.',
-            'This file is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.'
-        ),
-        ('FIRST AUTHOR <EMAIL@ADDRESS>', 'Stanford OpenEdX Team'),
-    )
-    for src, dest in fixes:
-        header = header.replace(src, dest)
-    pofile.header = header
+    year_string = str(datetime.utcnow().year)
+    header_data = [
+        'Stanford OpenEdX translation file',
+        'Copyright (C) ' + year_string + ' Stanford University',
+        'This file is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.',
+        'Stanford OpenEdX Team, ' + year_string + '.',
+        ''
+    ]
+    pofile.header = '\n'.join(header_data)
 
 
 def fix_metadata(pofile):
@@ -286,6 +237,7 @@ def fix_metadata(pofile):
         'Language': 'en',
         'Last-Translator': '',
         'Language-Team': 'English',
+        'Plural-Forms': 'nplurals=2; plural=(n != 1);',
     }
     pofile.metadata.update(fixes)
 
@@ -297,11 +249,7 @@ def merge_translations():
             # Language not yet available in code, fetch from upstream Transifex
             LOG.warn("Fetch upstream translations manually for %s", language)
             break
-        merge_mappings = {
-            'django.po': ['django', 'mako'],
-            'djangojs.po': ['djangojs', 'underscore'],
-        }
-        for existing, targets in merge_mappings.items():
+        for existing, targets in DEFAULT_CONFIG.generate_merge.items():
             for target in targets:
                 _merge_existing_translations(existing, target, language)
         LOG.info("Merged language: %s.", language)
@@ -340,17 +288,17 @@ def _merge_existing_translations(existing, target, language):
     Merge translations from existing file to target file for locale
     language and push up to Transifex
     """
-    target_filename = "stanford_" + target + '.po'
+    target_filename = "stanford-" + target
     target_source = CONFIG.source_messages_dir / target_filename
     common_file = CONFIG.get_messages_dir(language) / 'common.po'
     _merge_pull(target_source, common_file, language, existing)
     _merge_combine(target_source, target_filename, common_file, language)
-    _merge_push(target, language)
+    _merge_push(target.split('.')[0], language)
 
 
 def pull(language):
     LOG.info("Pulling language: %s...", language)
-    command = 'tx pull -l {language} -r "stanford-openedx.*"'.format(
+    command = 'tx pull -f -l {language} -r "stanford-openedx.*"'.format(
         language=language,
     )
     execute(command)
@@ -361,3 +309,24 @@ def push():
     LOG.info('Pushing source files to Transifex...')
     execute('tx push -s -r "stanford-openedx.*"')
     LOG.info('Pushed source files to Transifex.')
+
+
+def rename_platform_pofiles():
+    """
+    Prefix source files with 'stanford-' to push to Stanford Transifex project
+    rather than Open edX. Uses filenames specified in the generate_merge
+    mappings in the default config.yaml, which should match what was extracted.
+    """
+    merge_mapping_values = DEFAULT_CONFIG.generate_merge.itervalues()
+    renamed_files = set()
+    for mapping_filenames in merge_mapping_values:
+        for filename in mapping_filenames:
+            src = DEFAULT_CONFIG.source_messages_dir / filename
+            dst = DEFAULT_CONFIG.source_messages_dir / 'stanford-' + filename
+            if src.exists():
+                LOG.info("Renaming %s", filename)
+                os.rename(src, dst)
+                renamed_files.add(dst)
+            else:
+                LOG.error("%s doesn't exist, check extract command output files.", filename)
+    return renamed_files

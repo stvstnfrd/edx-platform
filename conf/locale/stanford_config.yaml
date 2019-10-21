@@ -132,8 +132,13 @@ generate_merge:
         - privacy.po
         - copyright.po
         - theme.po
-        - stanford_django.po
-        - stanford_mako.po
+        - stanford-django-partial.po
+        - stanford-django-studio.po
+        - stanford-mako.po
+        - stanford-mako-studio.po
+        - stanford-wiki.po
     djangojs.po:
-        - stanford_djangojs.po
-        - stanford_underscore.po
+        - stanford-djangojs-partial.po
+        - stanford-djangojs-studio.po
+        - stanford-underscore.po
+        - stanford-underscore-studio.po
