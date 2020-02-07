@@ -13,12 +13,31 @@ from six import text_type
 
 from courseware import models
 from lms.djangoapps.instructor_analytics.csvs import create_csv_response
+from student.models import CourseAccessRole
 from util.json_request import JsonResponse
 from xmodule.modulestore.django import modulestore
 from xmodule.modulestore.inheritance import own_metadata
 
 # Used to limit the length of list displayed to the screen.
 MAX_SCREEN_LIST_LENGTH = 250
+NON_STUDENT_ROLES = [
+    'instructor',
+    'staff',
+]
+
+
+def get_non_student_list(course_key):
+    """
+    Find all user_ids with instructor or staff roles in student_courseaccessrole table
+    """
+    non_students = CourseAccessRole.objects.filter(
+        course_id=course_key,
+        role__in=NON_STUDENT_ROLES,
+    ).values('user_id').distinct()
+    return [
+        non_student['user_id']
+        for non_student in non_students
+    ]
 
 
 def get_problem_grade_distribution(course_id):
@@ -40,6 +59,8 @@ def get_problem_grade_distribution(course_id):
         course_id__exact=course_id,
         grade__isnull=False,
         module_type__exact="problem",
+    ).exclude(
+        student_id__in=get_non_student_list(course_id),
     ).values('module_state_key', 'grade', 'max_grade').annotate(count_grade=Count('grade'))
 
     prob_grade_distrib = {}
@@ -82,6 +103,8 @@ def get_sequential_open_distrib(course_id):
     db_query = models.StudentModule.objects.filter(
         course_id__exact=course_id,
         module_type__exact="sequential",
+    ).exclude(
+        student_id__in=get_non_student_list(course_id),
     ).values('module_state_key').annotate(count_sequential=Count('module_state_key'))
 
     # Build set of "opened" data for each subsection that has "opened" data
@@ -114,6 +137,8 @@ def get_problem_set_grade_distrib(course_id, problem_set):
         grade__isnull=False,
         module_type__exact="problem",
         module_state_key__in=problem_set,
+    ).exclude(
+        student_id__in=get_non_student_list(course_id),
     ).values(
         'module_state_key',
         'grade',
@@ -444,6 +469,8 @@ def get_students_opened_subsection(request, csv=False):
     students = models.StudentModule.objects.select_related('student').filter(
         module_state_key__exact=module_state_key,
         module_type__exact='sequential',
+    ).exclude(
+        student_id__in=get_non_student_list(course_id),
     ).values('student__username', 'student__profile__name').order_by('student__profile__name')
 
     results = []
@@ -497,6 +524,8 @@ def get_students_problem_grades(request, csv=False):
         module_state_key=module_state_key,
         module_type__exact='problem',
         grade__isnull=False,
+    ).exclude(
+        student_id__in=get_non_student_list(course_id),
     ).values('student__username', 'student__profile__name', 'grade', 'max_grade').order_by('student__profile__name')
 
     results = []
