@@ -18,6 +18,7 @@ from student.models import CourseEnrollment
 from openedx.core.lib.api.view_utils import DeveloperErrorViewMixin
 from openedx.features.content_type_gating.models import ContentTypeGatingConfig
 from openedx.features.course_duration_limits.access import generate_course_expired_message
+from openedx.features.discounts.utils import get_first_purchase_offer_banner_fragment
 from xmodule.course_module import COURSE_VISIBILITY_PUBLIC
 
 from .serializers import CourseInfoSerializer
@@ -117,6 +118,9 @@ class CoursewareInformation(RetrieveAPIView):
 
         # TODO: TNL-7185 Legacy: Refactor to return the expiration date and format the message in the MFE
         overview.course_expired_message = generate_course_expired_message(self.request.user, overview)
+
+        # TODO: TNL-XXXX Legacy: Refactor to return the offer details and format the message in the MFE
+        overview.first_purchase_offer_banner = get_first_purchase_offer_banner_fragment(self.request.user, overview)
 
         course_key = CourseKey.from_string(self.kwargs['course_key_string'])
         overview.content_type_gating_enabled = ContentTypeGatingConfig.enabled_for_enrollment(

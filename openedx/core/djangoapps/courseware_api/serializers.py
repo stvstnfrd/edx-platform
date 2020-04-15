@@ -75,6 +75,7 @@ class CourseInfoSerializer(serializers.Serializer):  # pylint: disable=abstract-
     end = serializers.DateTimeField()
     enrollment_start = serializers.DateTimeField()
     enrollment_end = serializers.DateTimeField()
+    first_purchase_offer_banner = serializers.CharField()
     id = serializers.CharField()  # pylint: disable=invalid-name
     media = _CourseApiMediaCollectionSerializer(source='*')
     name = serializers.CharField(source='display_name_with_default_escaped')
