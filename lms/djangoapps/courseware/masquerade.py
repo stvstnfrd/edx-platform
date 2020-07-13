@@ -69,6 +69,46 @@ class CourseMasquerade(object):
         """
         self.__init__(**state)
 
+    def get_status(self, available):
+        """
+        Retrieve a relevant masquerade status message,
+        ala "You are masquerading as.."
+
+        Returns: a relevant status message, if one exists,
+            else, return None
+
+        Note: We intentionally omit a message for 'staff' users:
+            this is the default status, so we don't need to advertise it.
+        """
+        message = None
+        if self.user_name:
+            message = _("You are masquerading as the following user: {user_name}").format(
+                user_name=self.user_name,
+            )
+        elif self.group_id and self.user_partition_id:
+            group = self._get_active_group_name(available)
+            message = _("You are masquerading as a learner in the {group} group.").format(
+                group=group,
+            )
+        elif self.role == 'student':
+            message = _('You are masquerading as a learner.')
+        return message
+
+    def _get_active_group_name(self, available):
+        """
+        Lookup the active group name, from available options
+
+        Returns: the corresponding group name, if exists,
+            else, return None
+        """
+        for group in available:
+            if (
+                self.group_id == group.get('group_id') and
+                self.user_partition_id == group.get('user_partition_id')
+            ):
+                return group.get('name')
+        return None
+
 
 @method_decorator(login_required, name='dispatch')
 class MasqueradeView(View):
@@ -128,6 +168,7 @@ class MasqueradeView(View):
                     }
                     for group in partition.groups
                 ])
+        data['status'] = course.get_status(data['available'])
         return JsonResponse(data)
 
     @method_decorator(expect_json)
