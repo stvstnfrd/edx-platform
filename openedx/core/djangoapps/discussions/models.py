@@ -2,6 +2,7 @@
 Provide django models to back the discussions app
 """
 from __future__ import annotations
+import logging
 
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -12,8 +13,81 @@ from opaque_keys.edx.django.models import LearningContextKeyField
 from simple_history.models import HistoricalRecords
 
 from lti_consumer.models import LtiConfiguration
+from organizations.models import Organization
 
+from openedx.core.djangoapps.config_model_utils.models import StackedConfigurationModel
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
+
+log = logging.getLogger(__name__)
+
+
+class ProviderFilter(StackedConfigurationModel):
+    allow = models.CharField(
+        blank=True,
+        max_length=100,
+        verbose_name=_('Allow List'),
+        help_text=_('A space-separated list of providers to allow'),
+    )
+    deny = models.CharField(
+        blank=True,
+        max_length=100,
+        verbose_name=_('Deny List'),
+        help_text=_('A space-separated list of providers to deny'),
+    )
+
+    STACKABLE_FIELDS = ('allow', 'deny')
+
+    @classmethod
+    def default_providers(cls) -> list[str]:
+        # TODO: Load this from the entry points
+        return []
+
+    @property
+    def allow_list(self) -> list[str]:
+        if self.allow:
+            return self.allow.split()
+        return []
+
+    @property
+    def deny_list(self) -> list[str]:
+        if self.deny:
+            return self.deny.split()
+        return []
+
+    def __str__(self):
+        return 'ProviderFilter(org="{org}", allow="{allow}", deny="{deny}")'.format(
+            allow=self.allow,
+            deny=self.deny,
+            org=self.org,
+        )
+
+    @property
+    def available_providers(self) -> list[str]:
+        _providers = ProviderFilter.current().default_providers()
+        if self.allow_list:
+            _providers = [
+                provider
+                for provider in _providers
+                if provider in self.allow_list
+            ]
+        if self.deny_list:
+            _providers = [
+                provider
+                for provider in _providers
+                if provider not in self.deny_list
+            ]
+        return _providers
+
+    @classmethod
+    def get(cls, course_key) -> cls:
+        _filter = cls.current(course_key=course_key)
+        return _filter
+
+    @classmethod
+    def get_available_providers(cls, course_key) -> list[str]:
+        _filter = cls.get(course_key)
+        providers = _filter.available_providers
+        return providers
 
 
 class DiscussionsConfiguration(TimeStampedModel):
@@ -90,3 +164,11 @@ class DiscussionsConfiguration(TimeStampedModel):
         except cls.DoesNotExist:
             configuration = cls(context_key=context_key, enabled=False)
         return configuration
+
+    @property
+    def available_providers(self) -> list[str]:
+        return ProviderFilter.current(course_key=self.context_key).available_providers
+
+    @classmethod
+    def get_available_providers(cls, context_key) -> list[str]:
+        return ProviderFilter.current(course_key=context_key).available_providers
