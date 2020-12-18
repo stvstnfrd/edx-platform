@@ -1,10 +1,79 @@
 """
 Perform basic validation of the models
 """
+from unittest.mock import patch
+
 from django.test import TestCase
 from opaque_keys.edx.keys import CourseKey
+from organizations.models import Organization
 
 from ..models import DiscussionsConfiguration
+from ..models import ProviderFilter
+
+DEFAULT_PROVIDERS = [
+    'cs_comments_service',
+    'lti',
+    'test',
+]
+
+
+class OrganizationFilterTest(TestCase):
+
+    def setUp(self):
+        self.course_key = CourseKey.from_string("course-v1:Test+Course+Configured")
+        self.course_key_with_defaults = CourseKey.from_string("course-v1:TestX+Course+Configured")
+        self.organization = Organization(short_name=self.course_key.org)
+        self.organization.save()
+        self.provider_allowed = DEFAULT_PROVIDERS[0]
+        self.provider_denied = DEFAULT_PROVIDERS[1]
+
+    @patch('openedx.core.djangoapps.discussions.models.ProviderFilter.default_providers', return_value=DEFAULT_PROVIDERS)
+    def test_get_nonexistent(self, default_providers):
+        providers = ProviderFilter.get_available_providers(self.course_key_with_defaults)
+        assert len(providers) == len(DEFAULT_PROVIDERS)
+
+    @patch('openedx.core.djangoapps.discussions.models.ProviderFilter.default_providers', return_value=DEFAULT_PROVIDERS)
+    def test_get_allow(self, default_providers):
+        ProviderFilter.objects.create(
+            org=self.course_key.org,
+            allow=self.provider_allowed,
+        )
+        providers = ProviderFilter.get_available_providers(self.course_key)
+        assert self.provider_allowed in providers
+        assert len(providers) == 1
+
+    @patch('openedx.core.djangoapps.discussions.models.ProviderFilter.default_providers', return_value=DEFAULT_PROVIDERS)
+    def test_get_deny(self, default_providers):
+        ProviderFilter.objects.create(
+            org=self.course_key.org,
+            deny=self.provider_denied,
+        )
+        providers = ProviderFilter.get_available_providers(self.course_key)
+        assert self.provider_denied not in providers
+
+    @patch('openedx.core.djangoapps.discussions.models.ProviderFilter.default_providers', return_value=DEFAULT_PROVIDERS)
+    def test_get_allow_and_deny(self, default_providers):
+        ProviderFilter.objects.create(
+            org=self.course_key.org,
+            allow=' '.join([self.provider_allowed, self.provider_denied]),
+            deny=self.provider_denied,
+        )
+        providers = ProviderFilter.get_available_providers(self.course_key)
+        assert len(providers) == 1
+        assert self.provider_denied not in providers
+        assert self.provider_allowed in providers
+
+    @patch('openedx.core.djangoapps.discussions.models.ProviderFilter.default_providers', return_value=DEFAULT_PROVIDERS)
+    def test_get_allow_or_deny(self, default_providers):
+        ProviderFilter.objects.create(
+            org=self.course_key.org,
+            allow=self.provider_allowed,
+            deny=self.provider_denied,
+        )
+        providers = ProviderFilter.get_available_providers(self.course_key)
+        assert len(providers) == 1
+        assert self.provider_denied not in providers
+        assert self.provider_allowed in providers
 
 
 class DiscussionsConfigurationModelTest(TestCase):
