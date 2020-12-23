@@ -7,6 +7,7 @@ import logging
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django_mysql.models import ListCharField
 from jsonfield import JSONField
 from model_utils.models import TimeStampedModel
 from opaque_keys.edx.django.models import LearningContextKeyField
@@ -21,18 +22,48 @@ from openedx.core.djangoapps.content.course_overviews.models import CourseOvervi
 log = logging.getLogger(__name__)
 
 
+def get_default_providers():
+    providers = [
+        'cs_comments_service',
+        'lti-base',
+    ]
+    return providers
+
+
 class ProviderFilter(StackedConfigurationModel):
-    allow = models.CharField(
+    allow = ListCharField(
+        base_field=models.CharField(
+            choices=[
+                (provider, provider)
+                for provider in get_default_providers()
+            ],
+            max_length=20,
+        ),
         blank=True,
-        max_length=100,
+        help_text=_("Comma-separated list of providers to allow, eg: {choices}").format(
+            choices=','.join(get_default_providers()),
+        ),
+        # max_length = (size * (max_length + 1)) # to include the comma
+        max_length=(len(get_default_providers()) * 21),
+        size=len(get_default_providers()),
         verbose_name=_('Allow List'),
-        help_text=_('A space-separated list of providers to allow'),
     )
-    deny = models.CharField(
+    deny = ListCharField(
+        base_field=models.CharField(
+            choices=[
+                (provider, provider)
+                for provider in get_default_providers()
+            ],
+            max_length=20,
+        ),
         blank=True,
-        max_length=100,
+        help_text=_("Comma-separated list of providers to deny, eg: {choices}").format(
+            choices=','.join(get_default_providers()),
+        ),
+        # max_length = (size * (max_length + 1)) # to include the comma
+        max_length=(len(get_default_providers()) * 21),
+        size=len(get_default_providers()),
         verbose_name=_('Deny List'),
-        help_text=_('A space-separated list of providers to deny'),
     )
 
     STACKABLE_FIELDS = ('allow', 'deny')
@@ -45,13 +76,13 @@ class ProviderFilter(StackedConfigurationModel):
     @property
     def allow_list(self) -> list[str]:
         if self.allow:
-            return self.allow.split()
+            return self.allow
         return []
 
     @property
     def deny_list(self) -> list[str]:
         if self.deny:
-            return self.deny.split()
+            return self.deny
         return []
 
     def __str__(self):
