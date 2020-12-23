@@ -36,7 +36,7 @@ class OrganizationFilterTest(TestCase):
     def test_get_allow(self, default_providers):
         ProviderFilter.objects.create(
             org=self.course_key.org,
-            allow=self.provider_allowed,
+            allow=[self.provider_allowed],
         )
         providers = ProviderFilter.get_available_providers(self.course_key)
         assert self.provider_allowed in providers
@@ -46,7 +46,7 @@ class OrganizationFilterTest(TestCase):
     def test_get_deny(self, default_providers):
         ProviderFilter.objects.create(
             org=self.course_key.org,
-            deny=self.provider_denied,
+            deny=[self.provider_denied],
         )
         providers = ProviderFilter.get_available_providers(self.course_key)
         assert self.provider_denied not in providers
@@ -55,8 +55,8 @@ class OrganizationFilterTest(TestCase):
     def test_get_allow_and_deny(self, default_providers):
         ProviderFilter.objects.create(
             org=self.course_key.org,
-            allow=' '.join([self.provider_allowed, self.provider_denied]),
-            deny=self.provider_denied,
+            allow=[self.provider_allowed, self.provider_denied],
+            deny=[self.provider_denied],
         )
         providers = ProviderFilter.get_available_providers(self.course_key)
         assert len(providers) == 1
@@ -67,8 +67,8 @@ class OrganizationFilterTest(TestCase):
     def test_get_allow_or_deny(self, default_providers):
         ProviderFilter.objects.create(
             org=self.course_key.org,
-            allow=self.provider_allowed,
-            deny=self.provider_denied,
+            allow=[self.provider_allowed],
+            deny=[self.provider_denied],
         )
         providers = ProviderFilter.get_available_providers(self.course_key)
         assert len(providers) == 1
