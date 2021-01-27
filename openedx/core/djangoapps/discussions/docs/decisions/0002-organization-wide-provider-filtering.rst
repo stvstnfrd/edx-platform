@@ -31,7 +31,7 @@ Requirements
 ------------
 
 Given a particular organization, we must be able to remove options
-from the list of available discussions providers, during configuration.
+from the list of available discussions providers during configuration.
 
 
 Consideration
