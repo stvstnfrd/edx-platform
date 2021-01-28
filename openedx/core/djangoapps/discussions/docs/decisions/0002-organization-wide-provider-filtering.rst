@@ -143,13 +143,5 @@ interchangeable.
 Discussion
 ----------
 
-Is there a best (or existing?) practice for storing a list of strings in
-the database via django?
-I've seen some custom fields googling around, but for right now, I'm
-just storing a string a splitting/joining it via a helper :shrug:
-
-
-TODO
-----
-
-- Improved django admin configuration
+This PR now uses the `ListCharField` provided by `django-mysql`, already
+in use by `edx-platform`.
